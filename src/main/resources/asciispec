@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# Set INVOCATION_HOME and APP_HOME
+INVOCATION_HOME="$(pwd)"
+cd "$(dirname $0)/.." >/dev/null
+APP_HOME="$(pwd -P)"
+cd "$INVOCATION_HOME" >/dev/null
+
+# Handle recursive calls. This assumes no output base path for the processed files, so that the genereated files are placed next to the original files.
+# All additional parameters are passed on to asciidoctor
+if [ "${1}" == "-R" ]; then
+	find . -name '*.adoc' -exec $0 {} ${@:2} \;
+	exit 0
+fi
+
+# If an output base path was given, handle this by calling this script again with -RX as the first parameter. If the output directory does not exist,
+# it will be created.
+# The following parameters are expected
+# $1: -R=some_path
+# All additional parameters are passed on to asciidoctor
+if [[ ${1} == -R=* ]]; then
+	OUTPUT_BASEPATH="${1:3}"
+	if ! [[ "${OUTPUT_BASEPATH:-1}" == "/" ]]; then
+		OUTPUT_BASEPATH="${OUTPUT_BASEPATH}/"
+	fi
+	find . -name '*.adoc' -exec $0 -RX "$OUTPUT_BASEPATH" "{}" ${@:2} \;
+	exit 0
+fi
+
+# This is a result of a call to this script with -R=some_path. The actual output path for a specific input file will be created automatically.
+# The following parameters are expected:
+# $1: -RX
+# $2: the output base path that was given in the original call to this script
+# $3: the path to the file that is to be processed
+# All additional parameters are passed on to asciidoctor
+if [ "${1}" == "-RX" ]; then
+	OUTPUT_PATH="${2}$(dirname $3)"
+	mkdir -p "${OUTPUT_PATH}"
+	exec $0 "$3" -D "$OUTPUT_PATH" ${@:4}
+	exit 0
+fi
+
+# The classpath is built from absolute paths since this script may be executed from anywhere.
+CLASSPATH="$APP_HOME/lib/asciispec-0.0.1-SNAPSHOT.jar"
+
+# Inform user of what's being passed to AsciidoctorJ
+# echo "AsciiSpec: converting $@"
+
+# The parameters to pass to AsciidoctorJ
+PARAMETERS="-a stylesheet=$APP_HOME/res/styles/foundation.css -a icons=font -a docinfo1 -a docinfodir=$APP_HOME/res/html-templates $@"
+
+# Run AsciidoctorJ and pass on all commandline parameters.
+java -Dfile.encoding=UTF-8 -cp $CLASSPATH org.asciidoctor.cli.AsciidoctorInvoker $PARAMETERS

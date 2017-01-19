@@ -1,0 +1,15 @@
+
+== Chapter 1_2
+
+include::{find}configs/config.adoc[ONCE]
+
+This is from chapter file chap1_2
+
+Here comes chapter 1_2_1
+
+include::{find}sub1sub1/chap1_2_1.adoc[]
+
+
+Then we try again the cwiki macro: cwiki:www.google.de[Google2]
+
+Also, we try the srclnk macro: srclnk:getStartWithQuantityFormat[getStartWithQuantityFormat()]

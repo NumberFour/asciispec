@@ -1,0 +1,138 @@
+:toc:
+
+= Generated Anchors
+
+
+The N4JS-N4 project *eu.numberfour.n4js.jsdoc2spec* generates adoc files for the documentation.
+These adoc files are used to create an online reference and a standalone PDF file.
+Moreover, the generated documentation is included into the stdlib API documentation.
+This stdlib API document merges both generated and manual written documentation.
+
+When including generated adoc content into manual written documents, we might want to reference sections that are located within the included contents.
+Since these references rely on generated anchors used in the generated contents, an understanding of the structure of these anchors would be helpful.
+
+[.language-n4js]
+== Scope
+Anchors in the generated documentation are created for every property of a Class or Interface.
+For example, for every property such as datafields or methods, a section is generated that can be referenced using a generated anchor.
+The following excerpt shows the beginning of the generated contents of the module +n4.lang.Comparable+.
+
+[source,asciidoc]
+----
+= Module n4.lang.Comparable
+
+== Interface Comparable
+
+Any class that supports equality checks should implement this interface.
+Comparable is not similar to Java's comparable. In N4JS, it only provides the equals method.
+
+
+
+[[sec:spec_n4.lang.Comparable.Comparable.equals]]
+[role=memberdoc]
+=== ++Method equals++
+
+[.language-n4js]
+==== Signature
+srclnk:++stdlib_api:packages:eu.numberfour.n4js.base.api:src/n4js/n4/lang/Comparable:Comparable#equals++[``++public abstract equals(other: any): boolean++``]
+
+==== Description
+
+returns true if the provided entity is equal to the current object by loose equality rules.
+Other may be null, in that case, false is to be returned.
+----
+
+The example above contains one generated anchor: `sec:spec_n4.lang.Comparable.Comparable.equals` which references the `equals` method in the interface `Comparable` in the module `n4.lang.Comparable`.
+
+[.language-n4js]
+== General Structure
+Generally, the structure of anchors is similar to the structure of PQNs.
+However, the anchor structure is shorter and of defined length:
+
+[source,plain]
+--
+sec:spec_<module><type><delimiter><property>
+--
+
+module::
+	specifies the name of a module
+
+type::
+	specifies the name of a type, e.g. a class in the module
+
+delimiter::
+	specifies the delimiter between type and property
+
+property::
+	specifies the name of one property in the type
+
+
+The delimiters in anchors differ from the PQN definition.
+PQNs use strings for example like `#` or `@>` to access non static properties or static setters.
+Since these strings contains characters which are permitted in adoc anchors, they are replaced as follows:
+
+Delimiters::
+[cols="h,m,m"]
+|===
+| Name | PQN | Anchor
+
+a|
+non-static property
+
+non-static getter
+
+non-static setter
+
+
+static property
+
+static getter
+
+static setter
+
+a|
+
+#
+
+#<
+
+#>
+
+@
+
+@<
+
+@>
+
+
+a|
+
+.
+
++.getter.+
+
++.setter.+
+
++.static.+
+
++.static.getter.+
+
++.static.setter.+
+
+|===
+
+
+Example: ::
+``sec:spec_n4.lang.Identifiable.Identifiable.getter.id``
+
+[.language-n4js]
+== Special Characters
+Special characters occur in anchors since property names can contain any characters.
+In addition, the iterator symbol, which is used for iterators, often contains the `#` symbol.
+Consequently, anchors have to escape these characters.
+This is done by replacing the special character with a colon and its corresponding unicode number.
+For example, the property name `#iterator` is transformed to `:23iterator`.
+The resulting complete anchor is: `sec:spec_n4.lang.Delegate.Delegate.:23iterator`.
+
+
+

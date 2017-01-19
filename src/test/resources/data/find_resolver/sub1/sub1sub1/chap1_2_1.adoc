@@ -1,0 +1,15 @@
+=== Chapter 1_2_1
+
+include::{find}configs/config.adoc[ONCE]
+
+
+First, we show an image:
+
+image::{find}images/no4.png[]
+
+Now, we show a second image:
+
+image::{find}gate.png[]
+
+
+This is from chapter file chap1_2_1

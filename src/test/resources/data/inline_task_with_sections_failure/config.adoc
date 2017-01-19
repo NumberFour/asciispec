@@ -1,0 +1,36 @@
+////
+Default configuration for AsciiSpec Processors.
+////
+ifndef::config_adoc_include_guard[]
+
+// Include guard
+:config_adoc_include_guard: 1
+
+// ============== General Document Attributes ============== //
+
+// Enabling section numbers and anchors
+:sectnums:
+:sectanchors:
+
+// A Left-aligned table of contents
+:toc: left
+
+////
+Inline Task Macro Config
+The default configuration resolves URLs to 'N4JS IDE Github Issues' and 'N4JS IDE Jira Tasks'.
+
+See https://github.numberfour.eu/NumberFour/asciispec#inline-task-macro for details.
+////
+
+:task_def_GH-: GitHub;IDE Bugs;https://github.com/NumberFour/N4JS/issues/${TASK_ID};../../examples/icons/github.png;GH-${TASK_ID}
+:task_def_IDE-: Jira;IDE Backlog;https://jira.numberfour.eu/browse/IDE-${TASK_ID};../../examples/icons/jira.png;IDE-${TASK_ID}
+
+////
+Inline Cwiki Macro Config
+
+See https://github.numberfour.eu/NumberFour/asciispec#inline-cwiki-macro for  details.
+////
+
+:cwiki_def: https://confluence.numberfour.eu/display/${PATH};https://confluence.numberfour.eu/pages/viewpage.action?pageId=${PAGE_ID};../../examples/icons/jira.png;Confluence entry:${TITLE}
+
+endif::[]

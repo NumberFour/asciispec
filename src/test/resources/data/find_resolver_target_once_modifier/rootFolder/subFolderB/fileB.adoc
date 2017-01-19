@@ -1,0 +1,2 @@
+
+This is file "rootFolder/subFolderB/fileB.adoc".

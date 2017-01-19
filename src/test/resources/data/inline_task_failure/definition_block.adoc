@@ -1,0 +1,12 @@
+include::config.adoc[]
+
+.Definition Site Structural Typing
+[def,title=something]
+--
+If a type T is declared as structural at its definition, _T.defStructural_ is true.
+
+1. The structurally defined type cannot be used on the right hand side of the `instanceof`
+2. A type X is a subtype of a structurally defined type T...
+
+Furthermore...
+--

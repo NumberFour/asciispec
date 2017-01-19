@@ -1,0 +1,6 @@
+= Some Document
+
+mathinclude::commands.tex[]
+
+== This is the first chapter!
+Let's put some inline math $\tee(x)$ that uses the included commands.

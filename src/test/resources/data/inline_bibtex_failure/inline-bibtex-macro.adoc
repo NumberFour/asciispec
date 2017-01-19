@@ -1,0 +1,65 @@
+= Inline BibTex Macro
+:bib-file: ../examples/biblio.bib
+
+An inline macro for generating references loaded from a BibTeX file.
+
+Usage: ::
+`pass:[cite:[ref(pages)]]`
+
+bibliography::[]
+
+
+Attributes: ::
+* *ref* (required): At least one reference must be stated e.g.`ECMA15a`. Multiple references may be added by separating with commas e.g. `ECMA15a,Canning89a`.
+* *pages* (optional): The specific pages of a reference.
+
+Bibliography: ::
+
+The bibliography macro can be added at any point of the source document but must be on a single line with empty lines before and after as the following:
+
+|===
+a|
+_...end of previous block_
+
+`bibliography::[]`
+
+_Beginning of next block..._
+|===
+
+Examples::
+
+[cols="40,60"]
+|===
+| Source | Output
+
+a|
+Two of my favourite books are the ECMAScript Language Specification and F-bounded polymorphism `pass:[cite:[ECMA15a,Canning89a]]`.
+
+Thanks for reading, be sure to check my biblio:
+
+`bibliography::[]`
+a|
+
+Two of my favourite books are the ECMAScript Language Specification and F-bounded polymorphism [<<ECMA15a>>; <<Canning89a>>].
+
+Thanks for reading, be sure to read my biblio:
+
+
+[[ECMA15a]] ECMA. (2015). ECMAScript 2015 Language Specification. Retrieved from http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf
+
+[[Canning89a]] Canning, Peter and Cook, William and Hill, Walter and Olthoff, Walter and Mitchell, John C.. (1989).
+F-bounded Polymorphism for Object-oriented Programming. Retrieved from http://doi.acm.org/10.1145/99370.99392
+
+|===
+
+
+== Configuration
+
+The following line should be added to the *<<../userguide#_configuration_file,Configuration File>>*:
+
+`:bib-file: <path>`
+
+Attributes: ::
+`<path>` can be an absolute path or a path relative to the location of the adoc file being processed.
+In absence of this option, the processor will try to find a `.bib` file in the directory tree beginning at the location of the adoc file recursively.
+

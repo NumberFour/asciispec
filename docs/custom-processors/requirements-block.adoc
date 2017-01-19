@@ -1,0 +1,73 @@
+= Requirements Block
+
+Usage::
+
+[source,asciidoc]
+----
+.title
+[req,id=RSL-3,version=1]
+--
+Contents of the requirement
+--
+----
+
+Attributes::
+* *title* (required):  An anchor is derived from the requirement title and embedded at the beginning of the rendered output.
+* *ID:* (required) The ID in the form *<Prefix>-<Number>*, used to generate an anchor
+* *version*: (required) value is a non-negative integer.
++
+NOTE: Omission of any of the above attributes will print an error to the console and insert a warning text in the generated document.
+* *delimiter*: Lines containing only two hyphens `--` delimit the block. This is required if the block contains empty lines or nested formatting.
+
+== ID Pattern
+
+The purpose of the `<Prefix>-<Number>` ID is to ensure that Requirements are both unique and easily referenceable.
+Currently, the ID may be any string, but should conform to the following conventions:
+
+*<Prefix>*: :: `R` (requirement) followed by the project prefix (i.e. `SL` for `stdlib`)
+*<Number>*: :: The requirement number, currently not validated.
+A validation stage for requirement IDs (detecting duplicates, for instance) is planned.
+
+Example::
+
+The following example demonstrates how to document Requirement pass:[#]3 for stdlib Version 1;
+
+// tag::req.block.example[]
+
+ifdef::env-github[]
+[source,asciidoc]
+----
+.This is the title
+[req,id=RSL-3,version=1]
+--
+My Super Requirement
+--
+----
+
+
+*Req. RSL-3: <<This_is_the_title,This is the title>> (ver. 1)* +
+My Super Requirement
+
+endif::[]
+
+ifndef::env-github[]
+
+[source,asciidoc,subs="quotes"]
+----
+`.This is the title`
+`[req,id=RSL-3,version=1]`
+`--`
+My Super Requirement
+`--`
+----
+
+
+.This is the title
+[req,id=RSL-3,version=1]
+--
+My Super Requirement
+--
+
+endif::[]
+
+// end::req.block.example[]

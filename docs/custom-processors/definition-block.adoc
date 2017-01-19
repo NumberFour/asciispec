@@ -1,0 +1,68 @@
+= Definition Block Documentation
+
+Usage::
+[source,asciidoc]
+----
+.definitionTitle
+[def]
+--
+The content of the definition
+--
+----
+
+Attributes::
+* *definitionTitle* (required): An anchor is derived from the definition title and embedded at the beginning of the rendered output.
+* *delimiter*: Lines containing only two hyphens `--` delimit the block. This is required if the block contains empty lines or nested formatting.
+
+Example::
+
+[source,asciidoc]
+-----
+.Definition Site Structural Typing
+[def]
+--
+If a type T is declared as structural at its definition, _T.defStructural_ is true.
+
+1. The structurally defined type cannot be used on the right hand side of the `instanceof`
+2. A type X is a subtype of a structurally defined type T...
+
+Furthermore...
+--
+-----
+
+Result::
+
+
+// tag::def.block.example[]
+
+ifdef::env-github[]
+
+=== Definition Site Structural Typing
+
+If a type T is declared as structural at its definition, _T.defStructural_ is true.
+
+Constraints (Definition Site Structural Typing):
+
+1. The structurally defined type cannot be used on the right-hand side of the `instanceof`...
+2. A type X is a subtype of a structurally defined type T...
+
+Furthermore...
+---
+endif::[]
+
+ifndef::env-github[]
+
+.Definition Site Structural Typing
+[def]
+--
+If a type T is declared as structural at its definition, _T.defStructural_ is true.
+
+1. The structurally defined type cannot be used on the right hand side of the `instanceof`
+2. A type X is a subtype of a structurally defined type T...
+
+Furthermore...
+--
+
+endif::[]
+
+// end::def.block.example[]

@@ -1,0 +1,18 @@
+# Each of our custom processors must have its extension class listed here in order for AsciidoctorJ to load it.
+# see also http://mrhaki.blogspot.de/2014/08/awesome-asciidoc-write-extensions-using.html
+
+# NOTE: the FindResolverExtension should be listed first, as it resolves paths and includes source text. This
+# newly added text should also be processed by the other macros.
+
+eu.numberfour.asciispec.processors.FindResolverExtension
+eu.numberfour.asciispec.processors.InlineTaskLinkExtension
+eu.numberfour.asciispec.processors.MathIncludeExtension
+eu.numberfour.asciispec.processors.InlineMathExtension
+eu.numberfour.asciispec.processors.MathBlockExtension
+eu.numberfour.asciispec.processors.DefinitionBlockExtension
+eu.numberfour.asciispec.processors.RequirementBlockExtension
+eu.numberfour.asciispec.processors.InlineTaskLinkExtension
+eu.numberfour.asciispec.processors.InlineWikiLinkExtension
+eu.numberfour.asciispec.processors.InlineRequirementLinkExtension
+eu.numberfour.asciispec.processors.CitationExtension
+eu.numberfour.asciispec.processors.SourceLinkExtension

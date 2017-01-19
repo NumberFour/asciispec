@@ -1,0 +1,15 @@
+
+BEGINNING of file "rootFolder/subFolder/other.adoc".
+
+If processed directly, then "rootFolder/config.adoc" should show up here,
+if processed as included file, then nothing must show up here (avoid duplicate) (same line):
+include::{find}config.adoc[ONCE]
+
+If processed directly, then "rootFolder/subFolder/config2.adoc" should show up here,
+if processed as included file, then nothing must show up here (avoid duplicate) (same line):
+include::{find}config2.adoc[ONCE]
+
+File from sibling sub-folder "subFolderB" should show up here (next line):
+include::{find}subFolderB/fileB.adoc[ONCE]
+
+END of file "rootFolder/subFolder/other.adoc".

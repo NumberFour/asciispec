@@ -1,0 +1,95 @@
+:find:
+
+= Inline Source Link (``srclnk``) Macro
+
+An inline macro for generating hyperlinks from program elements such as types or methods to their source code in the code management system (i.e. GitHub).
+This macro is used extensively by the Eclipse export wizard.
+
+
+Usage: ::
+[source,asciidoc,subs="macros"]
++++srclnk:PQN[label]+++
+
+
+Attributes: ::
+* *PQN* (required):
+	The **p**artially **q**ualified **n**ame.
+	Specifies the code element that is linked.
+	See <<pqn.adoc#PQN-def,PQN Definition>> for the PQN's syntax.
+
+* *label* (optional):
+	The label of the link.
+	The label can start/end with markups e.g. for monospace.
+
+In case the PQN or the label contain special characters, the AsciiDoc pass macro (`++`) can be used to escape PQN and/or label.
+
+#Attention:# ::
+The srclnk macro must be specified in a single line.
+Line breaks within this macro are not supported.
+
+
+Examples::
+[cols=2]
+|===
+| Source | Output
+
+a|
+The following source link of the field accessor `size()` contains a complete PQN.
+The link's label is the methods signature.
+
+[source, adoc]
+srclnk:++stdlib_api:packages:
+eu.numberfour.stdlib.model.base.api:
+src/n4js/n4/model/collections/DataList:
+DataList#<sizes++[``++public get size(): int[]++``].
+
+a|
+The following source link of the field accessor `size()` contains a complete PQN.
+The link's label is the methods signature.
+
+link:https://github.numberfour.eu/NumberFour/stdlib_api/blob/master/packages/eu.numberfour.stdlib.model.base.api/src/n4js/n4/model/collections/DataList.n4jsd#L250[+++public get sizes(): int[]+++].
+
+|===
+
+[.language-asciidoc]
+== Configuration
+
+The following commands should be added to the *https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/examples/config.adoc[Configuration File]*:
+
+=== Generated Documentation Directory
+The `gen_adoc` variable specifies the directory which contains all generated documentation.
+It has to be set to parse the `index.idx` file and the generated adoc files, as well.
+
+Variable: ::
+
+`:gen_adoc: <path>`
+
+Attributes: ::
+* `<path>` can be an absolute or relative path to the location of the generated adoc documentation directory.
+Usually, its name is `gen_adoc`.
+
+Example: ::
+`:gen_adoc: data/doc/gen_adoc`
+
+=== Repository Location
+The repository location command specifies one repository, that is, its name, description and url.
+The url is later used to generate complete urls which point to specific source code files of the repository.
+The repository location command can be used multiple times to add multiple repository locations.
+It must be used at least once.
+
+Variable: ::
+
+`:srclnk_repo_def: <repoName>; <description>; <urlPrefix>`
+
+Attributes: ::
+* `<ID>` is the unique identifier of the variable. It has no further semantics.
+* `<urlName>` is the name of the repository. It can be referred from the PQN.
+* `<description>` is a short description of the repository.
+* `<urlPrefix>`
+	is a prefix of every url that navigates to a source code file within the repository.
+	It contains the placeholders `CMS_PATH` and `LINE_NO` which later will be replaced by a specific file and line number, respectively.
+
+Example: ::
+``++:srclnk_repo_def: stdlib_api; Standard lib API; https://github.numberfour.eu/NumberFour/stdlib_api/blob/master/{CMS_PATH}#L{LINE_NO}++``
+
+

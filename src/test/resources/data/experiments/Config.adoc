@@ -1,0 +1,57 @@
+// =========================== AsciiSpec Configuration ========================= //
+
+// Inline Task Macro Config
+// See https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/custom-processors/inline-task-macro.adoc
+:task_def_GH-: GitHub;IDE Bugs;https://github.com/NumberFour/N4JS/issues/{TASK_ID};icons/github.png;GH-{TASK_ID}
+:task_def_IDE-: Jira;IDE Backlog;https://jira.numberfour.eu/browse/IDE-{TASK_ID};icons/jira.png;IDE-{TASK_ID}
+
+// Inline Cwiki Macro Config
+// See https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/custom-processors/inline-cwiki-macro.adoc
+:cwiki_def: https://confluence.numberfour.eu/display/{PATH};https://confluence.numberfour.eu/pages/viewpage.action?pageId={PAGE_ID};icons/jira.png;Confluence entry:{TITLE}
+
+// Source Link Config
+// See https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/custom-processors/inline-srclnk-macro.adoc
+:srclnk_repo_def: stdlib_api;Standard lib API;https://github.numberfour.eu/NumberFour/stdlib_api/blob/master/{CMS_PATH}#L{LINE_NO}
+:gen_adoc_dir: ./gen_adoc/
+
+// Citation Macro - location of .bib file
+:bib-file: biblio.bib
+
+
+// =================== Builtin AsciiDoctor Document Attributes ================= //
+// For more info, see http://asciidoctor.org/docs/user-manual/#builtin-attributes
+
+// Header and Footer info //
+:docinfodir: headers
+:docinfo1:
+
+// Stylesheet settings //
+:stylesdir: styles
+:stylesheet: n4-adoc.css
+
+// Syntax Highlighting //
+:source-highlighter: highlight.js
+:highlightjs-theme: n4jshighlighter
+:highlightjsdir: scripts
+
+// General / Document layout etc. //
+:toc: right
+:doctype: book
+
+// Numbered section titles with auto-generated anchors
+:sectnums:
+:sectanchors:
+
+// Creates a clickable (and copyable) link beside section titles
+:sectlink:
+
+// Link to css instead of embedding
+:linkcss:
+
+// Allows for UI macros, see http://asciidoctor.org/docs/user-manual/#user-interface-macros
+:experimental: true
+
+// Allows links to have attributes like a title, etc.
+// Required by srclnk macro
+:linkattrs:
+

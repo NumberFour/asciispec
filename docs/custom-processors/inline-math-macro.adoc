@@ -1,0 +1,47 @@
+= Inline Math (``math``) Macro
+
+An inline macro for rendering LaTeX math expressions using MathML. The macro supports two syntaxes: The asciidoctor syntax and the LaTeX shorthand syntax.
+
+[.language-asciidoc]
+--
+Usage: ::
+``+++math:EXPRESSION[]+++``
++
+``+++$EXPRESSION$+++``
+--
+
+Attributes: ::
+* *EXPRESSION* (required):
+	A LaTeX math expression that does not contain `\$` characters. To use a `\$` character within a math expression, it must be escaped using a backslash.
+
+#Attention:# ::
+The math macro must be specified in a single line.
+Line breaks within this macro are not supported.
+
+
+Examples::
+[cols=2]
+|===
+| Source | Output
+
+a|
+[source,asciidoc]
+----
+Here is some text with famous inline
+math formulae such as math:E=mc^2[]
+and $C=2 \Pi r$.
+----
+
+a|
+Here is some text with famous inline math formulae
+such as math:E=mc^2[]
+and $C=2 \Pi r$.
+
+|===
+
+
+== Configuration
+
+No configuration required.
+
+It is possible to use the <<math-include,+++mathinclude::[]+++>> macro to include custom LaTeX commands.

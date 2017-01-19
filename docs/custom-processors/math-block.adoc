@@ -1,0 +1,43 @@
+ifndef::env-github[]
+mathinclude::math.tex[]
+endif::[]
+= Math Block Documentation
+
+Description:: The math block is used to write blocks of mathematical formulae.
+* *delimiter*: Lines containing four plus symbols `pass:[++++]` delimit the block. This is required if the block contains empty lines or nested formatting.
+
+Usage::
+[source,asciidoc]
+----
+[math]
+++++
+Some formulae.
+++++
+----
+
+Example::
+
+[source,asciidoc]
+----
+
+[math]
+++++
+\sum_{i=1}^n i = {n(n+1)\over{2}}
+++++
+
+----
+
+ifndef::env-github,basebackend-docbook[]
+== Example
+
+
+The above source will create the following output:
+
+[math]
+++++
+\sum_{i=1}^n i = {n(n+1)\over{2}}
+++++
+
+endif::[]
+
+It is possible to use the <<_math_include_documentation,+++mathinclude::[]+++>> macro to include custom LaTeX commands.

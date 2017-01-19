@@ -1,0 +1,31 @@
+include::config.adoc[]
+= Inline Task Macro
+
+== Level 1 Section
+
+Paragraph task:gh-para[]
+
+---
+
+* Lists task:gh-list[]
+
+|===
+| default formatting of cells ignores all macros task:gh-table[]
+a| cell formatted as AsciiDoc will work task:gh-table[]
+|===
+
+== New Section
+
+Paragraph task:gh-para[]
+
+=== New Section
+
+Paragraph task:gh-para[]
+
+==== New Section
+
+Paragraph task:gh-para[]
+
+===== New Section
+
+Paragraph task:gh-para[]

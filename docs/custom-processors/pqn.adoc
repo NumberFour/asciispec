@@ -1,0 +1,61 @@
+[[PQN-def]]
+= Partially Qualified Names (PQNs)
+
+A partially qualified name is a string that uniquely identifies a source element.
+The following types of source elements can be specified with a PQN:
+
+* properties of types like classes or interfaces,
+* top level elements such as functions and variables.
+
+
+In its longest form, a PQN structure can look like this:
+
+[source]
+----
+<repository>:<repository-path>:<project>:<src-folder>/<module>:<classifier>#<member>
+----
+
+However, the goal of PQNs is to be able to identify source elements with very short names as long as they are still unique.
+Therefore, if a source repository contains only one class with the name "PathSelector", then the string "PathSelector" should also be a PQN of that class.
+If, however, a repository contains another class of the same name at another location, then it is necessary to add further information to the name, beginning at its end.
+Let's assume that two different modules contain a class with the name `PathSelector`.
+In that case, it is necessary to include the module in the PQNs of the classes, e.g. `a/b/module1:PathSelector` and `a/c/module2:PathSelector`.
+
+The syntax of a PQN is defined by the following BNF specifications:
+
+[source,ebnf]
+----
+PQN                   ::= (((((
+						  REPOSITORY_NAME ":")?
+						  REPOSITORY_PATH ":")?
+						  PROJECT_NAME ":")?
+						  SRC_FOLDER_SPEC "/")?
+						  MODULE_SPEC ":")?
+						  LINKABLE_ELEMENT_SPEC
+
+LINKABLE_ELEMENT_SPEC ::= TOPLEVEL_ELEMENT_SPEC | LINKABLE_MEMBER_SPEC
+TOPLEVEL_ELEMENT_SPEC ::= CLASSIFIER_NAME | FUNCTION_NAME
+LINKABLE_MEMBER_SPEC  ::= ((CLASSIFIER_NAME)? DELIMITER)? MEMBER_NAME
+DELIMITER             ::= "#" | "#<" | "#>" | "@" | "@<" | "@>"
+
+REPOSITORY_PATH       ::= PATH
+SRC_FOLDER_SPEC       ::= PATH
+MODULE_SPEC           ::= PATH
+
+PATH                  ::= PATH_ELEMENT ( "/" PATH_ELEMENT )*
+PATH_ELEMENT          ::= CHAR*
+
+REPOSITORY_NAME       ::= CHAR*
+PROJECT_NAME          ::= CHAR*
+CLASSIFIER_NAME       ::= CHAR*
+MEMBER_NAME           ::= CHAR*
+
+----
+
+Note the different versions of the DELIMITER to differentiate between static and non-static members, and also to indicate getters and setters.
+To identify non-static data fields or methods of a class (or interface), a `pass:[#]` is used.
+However, N4JS allows for multiple members to have the same name, e.g. there can be a static member with the same name as an instance member, or a getter/setter pair sharing the same name.
+In such cases, the member is differentiated using the following DELIMITERs: `pass:[#<+` indicates a getter, `+#>+` indicates a setter, `+@+` indicates a static member, `+@<+` indicates a static getter, and `+@>+` indicates a static setter.
+
+Note that the PQN is strictly structured from right to left.
+This means that both, DELIMITER and CLASSIFIER_NAME, must be specified when the MODULE_SPEC is specified, although the BNF indicates otherwise.

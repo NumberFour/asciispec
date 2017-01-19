@@ -1,0 +1,38 @@
+include::Config.adoc[]
+:bib-file: ../citation/example.bib
+
+## Holy Shit It Works!!!!
+
+We have to do something about this! task:GH-40[] And also something about that... task:IDE-2288[title="A very important task."] KTHXBYE!!!1
+
+Some test cwiki:123456[] and some more.
+
+.A title!
+[def]
+--
+asdfasdf
+
+asdf
+--
+
+.A Requirement of the Utmost Importance
+[req,version=1,id=RSL-1]
+--
+This is the body of the requirement. In particular, we reference a task task:GH-114[] right here.
+
+Some more info can also be found in this article right here: cwiki:BR/Home[].
+--
+
+.Another Requirement of Equivalent Importance
+[req, version=2]
+--
+This requirement references that other one. You know it. It's this one: req:RSL-1:1[]. 
+--
+
+Let's add a link to a requirement: req:RSL-1:1[].
+
+
+I'm going to cite something now cite:[Canning89a(2,3),ECMA15a].
+
+bibliography::[]
+

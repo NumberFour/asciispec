@@ -1,0 +1,14 @@
+
+include::{find}config[ONCE]
+
+include::{find}config2[ONCE]
+
+Some text.
+
+include::{find}outerFolder/fileA.adoc[ONCE]
+
+Some more text.
+
+include::subFolder/other.adoc[]
+
+Even more text.

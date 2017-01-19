@@ -1,0 +1,3 @@
+include::Config.adoc[]
+
+Value in subsection 2: {config_option}

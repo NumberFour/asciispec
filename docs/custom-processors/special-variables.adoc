@@ -1,0 +1,76 @@
+:find:
+
+= Special Variables in Asciispec
+
+Some macros of Asciispec implement special variables which can be used by AsciiDoc authors.
+These special variables are readonly.
+
+== The `+++{find}+++` Variable
+
+=== Introduction
+There exist several use cases for adoc documents.
+They are used to generate html pdf files, or they are written manually.
+Moreover, some documents consist of more than one adoc file and thus rely on including other adoc documents.
+In the latter case, also the included documents can be translated separately to generate a PDF for a single chapter only for example.
+
+Several macros such as include, image, cross reference, or other custom macros rely on paths to work appropriately.
+Since we have different use cases mentioned above, we need to specify paths relative to the including document.
+As an example, the adoc file `doc.adoc` specifies the location of the bibliography using the directive [.language-asciidoc]`:bib-file: ../biblio.bib`.
+This path can not always be found when the doc.adoc file is translated both on its own and included from onother files.
+
+The `pass:[{find}]` variable provides the means to specify files relative to the adoc file no matter from where this adoc file was included.
+
+=== Usage
+Syntax: ::
+[.language-asciidoc]``pass:[{find}Target]``
+
+Target: ::
+	an arbitrary file which can include a path
+
+
+Example 1: ::
+[.language-asciidoc]``pass:[:myImageVar: {find}path/to/picture.png]``
+
+Example 2: ::
+[.language-asciidoc]``pass:[image::{find}path/to/picture.png[]]``
+
+=== Semantics
+During the preprocessing of the document, all find variables are replaced by a concrete path to the targeted file.
+This path is relative to the directory of the base/master file.
+In order to replace the target, a search is performed which can have three outcomes:
+
+* No file was found, which results in an error.
+* One file was found.
+* Multiple files were found, which results in a warning.
+
+image::{find}../images/logo.png[]
+
+The search is performed in several directories.
+It starts in the directory of the including file and walks up the folder structure.
+In each of these directories, the target file is searched.
+All matches are collected and the first is returned.
+The search algorithm never descends into a subfolder (except if the target file specifies subfolders).
+
+
+
+=== Warnings and Errors
+
+* *Error: File Not Found*
+	Is issued in case the given target could not be found.
+
+* *Warning: Multiple File Matches*
+	Is issued in case the given target is found at multiple locations.
+	The first match is chosen to be included.
+
+
+
+=== Using `+++{find}+++` on GitHub
+
+In case the an adoc file should also be able to be viewed on GitHub directly, the ``+++{find}+++`` variables can not be resolved by GitHub.
+Consequently, the adoc file might not be displayed correctly, especially with respect to images included via `image::`+++{find}+++`picture.png[]`.
+
+As a solution, the adoc file should define the find variable to an empty string using the following line:
+
+[.language-asciidoc]``:find:``
+
+Using the line above, the image include resolves to `image::picture.png[]`.

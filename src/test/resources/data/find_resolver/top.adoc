@@ -1,0 +1,24 @@
+
+= Main Document Title
+
+include::{find}configs/config.adoc[ONCE]
+
+
+
+
+
+
+First, we show an image:
+
+image::{find}images/no4.png[]
+
+Then we try the cwiki macro: cwiki:www.google.de[Google]
+
+Here comes chapter 1_2
+
+include::{find}sub1/chap1_1.adoc[ONCE, INLINE]
+
+
+Here comes chapter 1_1
+
+include::{find}sub1/chap1_2.adoc[]

@@ -1,0 +1,4 @@
+ifndef::Config_adoc_include_guard[]
+:Config_adoc_include_guard: 1
+:config_option: cloned_value
+endif::[]

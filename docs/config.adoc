@@ -1,0 +1,56 @@
+// =========================== AsciiSpec Configuration ========================= //
+// Inline Task Macro Config
+// See https://github.numberfour.eu/aschaefer/asciispec-tool/tree/master/docs/chapters/custom-processors/inline-task-macro.adoc
+:task_def_GH-: GitHub;IDE Bugs;https://github.numberfour.eu/aschaefer/asciispec-tool/issues/{TASK_ID};images/icons/github.png;GH-{TASK_ID}
+
+// This is a template configuration for the TASK processor. Please replace any generics with specific project information.
+:task_def_IDE-: Jira;IDE Backlog;https://jira.myorg.com/browse/PRJ-{TASK_ID};images/icons/jira.png;PRJ-{TASK_ID}
+
+// Inline Cwiki Macro Config
+// See https://github.numberfour.eu/aschaefer/asciispec-tool/tree/master/docs/chapters/custom-processors/inline-cwiki-macro.adoc
+// This is a template configuration for the TASK processor. Please replace any generics with specific project information.
+:cwiki_def: https://confluence.numberfour.eu/display/{PATH};https://confluence.numberfour.eu/pages/viewpage.action?pageId={PAGE_ID};images/icons/jira.png;Confluence entry:{TITLE}
+
+// Source Link Config
+// https://github.numberfour.eu/aschaefer/asciispec-tool/tree/master/docs/chapters/custom-processors/inline-srclnk-macro.adoc
+//:srclnk_repo_def: stdlib_api;Standard lib API;https://github.numberfour.eu/NumberFour/stdlib_api/blob/master/{CMS_PATH}#L{LINE_NO}
+//:gen_adoc_dir: ./gen_adoc/
+
+// Citation Macro - location of .bib file
+:bib-file: biblio.bib
+
+
+// =================== Builtin AsciiDoctor Document Attributes ================= //
+// For more info, see http://asciidoctor.org/docs/user-manual/#builtin-attributes
+// Header and Footer info //
+:docinfodir: html-templates
+:docinfo1:
+
+// Stylesheet settings //
+:stylesdir: styles
+:stylesheet: foundation.css
+
+// Syntax Highlighting //
+:!source-highlighter:
+
+// General / Document layout etc. //
+:toc: left
+:toclevels: 3
+:doctype: book
+
+// Numbered section titles with auto-generated anchors
+:sectnums:
+:sectanchors:
+
+// Creates a clickable (and copyable) link beside section titles
+:sectlinks:
+
+// Link to css instead of embedding
+:linkcss:
+
+// Allows for UI macros, see http://asciidoctor.org/docs/user-manual/#user-interface-macros
+:experimental: true
+
+// Allows links to have attributes like a title, etc.
+// Note: Required by srclnk macro
+:linkattrs:

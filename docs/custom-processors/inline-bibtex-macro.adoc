@@ -1,0 +1,84 @@
+= Inline BibTex Macro
+
+An inline macro for generating references loaded from a BibTeX file.
+
+[.language-asciidoc]
+--
+Usage: ::
+``+++cite:[ref(pages)]+++``
++
+``+++bibliography::[]+++``
+--
+
+Attributes: ::
+* *ref* (required): At least one reference must be stated e.g. `ECMA15a`. Multiple references may be added by separating with commas e.g. `ECMA15a,Canning89a`.
+* *pages* (optional): The specific pages of a reference.
+
+Bibliography: ::
+
+The bibliography macro can be added at any part of the source document, but the convention for block macros is to have empty lines before and after as follows:
+
+
+// tag::inline.bibtex.example[]
+
+[.language-asciidoc]
+|===
+a|
+_...end of previous block_
+
+``+++bibliography::[]+++``
+
+_Beginning of next block..._
+|===
+
+Examples::
+
+[.language-asciidoc]
+[cols=2]
+|===
+^| Source ^| Output
+
+a|
+``+++:bib-file: ../biblio.bib+++``
+
+Two of my favourite books are the ECMAScript +
+Language Specification and F-bounded +
+polymorphism ``+++cite:[ECMA15a,Canning89a]+++``.
+
+Thanks for reading, be sure to check my biblio.
+
+``[appendix]`` +
+``== Bibliography``
+
+``+++bibliography::[]+++``
+a|
+
+Two of my favourite books are the ECMAScript Language Specification and F-bounded polymorphism <<ECMA15a>>; <<Canning89a>>.
+
+Thanks for reading, be sure to read my biblio.
+
+[discrete]
+== Bibliography
+
+[[ECMA15a]] ECMA. (2015). ECMAScript 2015 Language Specification. Retrieved from http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf
+
+[[Canning89a]] Canning, Peter and Cook, William and Hill, Walter and Olthoff, Walter and Mitchell, John C.. (1989).
+F-bounded Polymorphism for Object-oriented Programming. Retrieved from http://doi.acm.org/10.1145/99370.99392
+
+// end::inline.bibtex.example[]
+
+|===
+
+
+[.language-bash]
+== Configuration
+
+The following line should be added to the *https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/examples/config.adoc[Configuration File]*:
+
+[.language-asciidoc]`:bib-file: <path>`
+
+Attributes: ::
+`<path>` can be an absolute path or a path relative to the location of the adoc file being processed.
+In absence of this option, or if the file denoted by `<path>` cannot be found, the processor will try to find a `.bib` file in the directory tree beginning at the location of the adoc file recursively.
+
+

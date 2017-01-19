@@ -1,0 +1,35 @@
+= Some thing
+:bib-file: ../citation/example.bib
+
+== default syntax
+
+cite:[ref(pages)]
+
+== Used in literal
+
+[source]
+cite:[ref(pages)]
+
+== Pass macro
+
+Here's some more blahfasel just to be able
+to contain a citation pass:[cite:[ref(pages)]] and so on, how boring indeed.
+
+== Inline passthrough
+
++++cite:[ref(pages)]+++
+
+== Pass block
+
+++++
+blahb lahbasdf some block
+that contains a citation cite:[ref(pages)] hahahaha
+ho hum
+++++
+
+
+== Block substitution attribute
+
+[paragraph,subs="none"]
+cite:[ref(pages)]
+

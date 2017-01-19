@@ -1,0 +1,11 @@
+include::Config.adoc[]
+
+Value before subsections in master: {config_option}
+
+include::Sec1.adoc[]
+
+Value between subsections in master: {config_option}
+
+include::Sec2.adoc[]
+
+Value after subsections in master: {config_option}
