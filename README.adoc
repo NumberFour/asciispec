@@ -20,23 +20,25 @@ A documentation toolchain based on http://asciidoctor.org/[AsciiDoctor]. It impl
 *<<docs/custom-processors/inline-math-macro#,math:[ ] - Inline Math>>*: Inserting math expressions. +
 *<<docs/custom-processors/math-block#,[math] - Math Block>>*: Add long math formulae. +
 
-== Requirements
-- http://maven.apache.org/[Apache Maven]
 
 == Build
-To build the project please clone this repository, navigate into the project folder, and run the following maven command:
+
+[horizontal]
+Prerequisite::  http://maven.apache.org/[Apache Maven]
+
+To build the project, clone this repository, navigate to the project folder and run the following command:
+
 [source,bash]
 mvn clean package
 
-After maven has successfully finished building the project, a zip file with the asciispec tool should become available under `asciispec/target/asciispec-bin.zip`
+After maven has successfully finished building the project, a zip file containing the asciispec tool is available under `asciispec/target/asciispec-bin.zip`
 
+[.language-bash]
 == Installation
 Add AsciiSpec to your shell profile with the path to the `asciispec/bin` directory on your system:
 
-[source,bash]
-----
-export PATH=$PATH:~/path/to/asciispec/bin/
-----
+`pass:[export PATH=$PATH:~/path/to/asciispec/bin/]`
+
 See <<docs/troubleshooting#,Troubleshooting>> for alternate shells (*ZSH!*) and Windows installation.
 
 If the AsciiSpec tool is found by your system, running AsciiSpec with the `-h` flag will print a help page:
@@ -45,63 +47,26 @@ If the AsciiSpec tool is found by your system, running AsciiSpec with the `-h` f
 asciispec -h
 
 == Usage
-=== Convert to HTML:
-::
-+
+=== Convert to HTML
 Generates a `sample.html` file in the current directory:
-+
+
 [source,bash]
 asciispec sample.adoc
 
-=== Convert to DocBook:
-::
-+
-Generates a `sample.xml` file in the current directory.
-+
+=== Convert to PDF:
+Generates a `sample.pdf` file in the current directory.
+
 [source,bash]
-asciispec -b docbook sample.adoc
+asciispec -fop sample.adoc
 
-:: DocBook format can be further converter to *PDF* with https://github.com/NumberFour/asciidoctor-fopub[asciidoctor-fopub]
-
-
-=== Build recursively:
-::
-+
-Run in a recursive mode by using the *-R* flag:
-::
-+
-[source,bash]
-asciispec -R
-+
-Converts all files with the `.adoc` extension in the current directory and all subdirectories.
-
-=== Specify destination path for the recursive mode:
-::
-+
-A destination path can be specified for this mode and the conversion process is as follows:
-+
-[source,bash]
-asciispec -R=generated-docs/html
-+
-. The directory `generated-docs/html` is created if it does not exist.
-. `.adoc` to HTML conversion with a target folder `generated-docs/html`.
-. The source directory structure is preserved in the `generated-docs/html` folder relative to where AsciiSpec was run.
-
-=== Help:
-::
-+
+=== Help
 Running `asciispec -h` will print the AsciiDoctor help page. +
 For more options, see the http://asciidoctor.org/docs/user-manual/#cli-options[CLI Options] section of the AsciiDoctor user manual.
 
-
 == Documentation
-- *GitHub pages:*
-:: http://numberfour.github.io/asciispec
-- *Userguide:*
-:: *<<docs/userguide#,Userguide>>*: Common, practical AsciiDoc syntax and AsciiSpec-specific tips.
-- *Docs Index:*
-:: *<<docs/README#,All AsciiSpec Docs>>*: Index of documentation including syntax, AsciiSpec Macros, Tooling, Troubleshooting and more.
-- *References:*
-:: *<<docs/cheatsheet#,AsciiSpec Reference>>*: Using custom features.
-+
-*<<docs/vanilla-asciidoc/asciidoc-cheatsheet#,Vanilla Reference>>*: A syntax cheat sheet for vanilla AsciiDoc syntax.
+
+[horizontal]
+GitHub pages:: *http://numberfour.github.io/asciispec*
+Userguide:: *<<docs/userguide#,Userguide>>*: Common, practical AsciiDoc syntax and AsciiSpec-specific tips.
+Docs Index:: *<<docs/index#,AsciiSpec Specification>>*: Full AsciiSpec documentation.
+Other:: *<<docs/troubleshooting#,Troubleshooting>>*: Common tips for getting started and debugging errors.

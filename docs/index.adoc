@@ -1,7 +1,12 @@
+:find:
 include::{find}config.adoc[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 = AsciiSpec Specification
 Numberfour AG
+
+
+The following is the specification for AsciiSpec, a toolchain based on http://asciidoctor.org/[Asciidoctor] with custom modifications for task management, math support, API documentation and more.
 
 :leveloffset: +1
 
@@ -33,3 +38,8 @@ include::{find}custom-processors/special-variables.adoc[]
 
 
 :leveloffset: -1
+
+[appendix]
+== Bibliography
+
+bibliography::[]

@@ -1,0 +1,39 @@
+= Common Issues
+
+[.language-bash]
+== Installing on Alternate Shells
+
+Adding `asciispec` to an alternate shell is similar to Bash but may have subtle differences. +
+For example, with *ZSH*:
+
+1. Open the *ZSH* profile
++
+`pass:[open ~/.zshrc]`
++
+2. Add the following line:
++
+`pass:[export PATH="~/path/to/asciispec/bin/:$PATH"]`
+
+TIP: Running `echo $SHELL` will print the directory name of the currently-running shell.
+
+[.language-bash]
+== Windows Install
+
+. *_System (Control Panel) => Advanced => Environment Variables => System Variables_*
+. Select `PATH` environment variable and set to `/path/to/asciispec/bin/`.
+. Close all remaining windows by clicking 'OK'.
+. Reopen Command prompt window.
+
+
+Verify Install: ::
+If the AsciiSpec tool is found by your system, running AsciiSpec with the `-h` flag will print a help page:
++
+[source,bash]
+asciispec -h
+
+[.language-bash]
+== OSX Keyboard Layout Issues
+
+For some locales (i.e. German keyboard input), backticks `pass:[``]` used for formatting can cause a problem.
+A custom input source to get rid of auto-diacritics during input is required.
+
