@@ -1,13 +1,14 @@
 = Inline BibTex Macro
 
-An inline macro for generating references loaded from a BibTeX file.
+Load references from a BibTeX file.
 
-[.language-asciidoc]
---
-Usage: ::
-``+++cite:[ref(pages)]+++``
-+
-``+++bibliography::[]+++``
+Usage:
+
+[source,asciidoc]
+----
+cite:[ref(pages)]
+
+bibliography::[]
 --
 
 Attributes: ::

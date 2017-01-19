@@ -1,17 +1,15 @@
 
 = Math Include Documentation
 
+Usage::
+[.language-asciidoc]``+++mathinclude::some/file/path.tex[]+++``
++
+[.language-asciidoc]``+++mathinclude::{find}some_other_file.tex[]+++``
 
 Description::
 The `math include` can include `.tex` files containing custom LaTeX commands to be used in mathematical expressions. It is used in conjunction with <<inline-math-macro.adoc,inline math>> and <<math-block.adoc,math block>>. Multiple math include directives are appended, so it is possible to include several files. All math include directives are processed before the inline math expressions and the math blocks are processed.
 
 The include path may contain the <<special-variables,`+++{find}+++`>> variable. In either case, the processor will search the included file by looking at each parent folder of the indicated path.
-
-
-Usage::
-[.language-asciidoc]``+++mathinclude::some/file/path.tex[]+++``
-+
-[.language-asciidoc]``+++mathinclude::{find}some_other_file.tex[]+++``
 
 [source,asciidoc]
 ----
