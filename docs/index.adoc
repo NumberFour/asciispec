@@ -1,6 +1,7 @@
 :find:
-include::{find}config.adoc[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+include::{find}config.adoc[]
 
 = AsciiSpec Specification
 Numberfour AG
