@@ -9,7 +9,7 @@ Usage:
 cite:[ref(pages)]
 
 bibliography::[]
---
+----
 
 Attributes: ::
 * *ref* (required): At least one reference must be stated e.g. `ECMA15a`. Multiple references may be added by separating with commas e.g. `ECMA15a,Canning89a`.
