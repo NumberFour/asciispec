@@ -26,9 +26,9 @@ To convert to HTML using a different CSS stylesheet, we can pass document attrib
 [source,bash]
 asciispec -a stylesheet=foundation.css userguide.adoc
 
-To convert to PDF, use the `-fop` flag:
+To convert to docbook, use the `-b docbook` flag:
 
-`asciispec -fop userguide.adoc`
+`asciispec -b docbook userguide.adoc`
 
 Most built-in CLI parameters are described in the help page by running `asciispec -h` and in further detail in the http://asciidoctor.org/docs/user-manual/#cli-options[CLI Options] section of the AsciiDoctor user manual.
 

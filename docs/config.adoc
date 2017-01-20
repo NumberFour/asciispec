@@ -1,19 +1,19 @@
 // =========================== AsciiSpec Configuration ========================= //
 // Inline Task Macro Config
 // See https://github.com/NumberFour/asciispec/tree/master/docs/custom-processors/inline-task-macro.adoc
-:task_def_AS-: GitHub;AsciiSpec Bugs;https://github.com/NumberFour/asciispec/issues/{TASK_ID};images/icons/github.png;GH-{TASK_ID}
+:task_def_AS-: GitHub;AsciiSpec Bugs;https://github.com/NumberFour/asciispec/issues/{TASK_ID};images/icons/github.png;AS-{TASK_ID}
 
-// A template configuration for tasks with the 'ORG' prefix. Replace with your own project configuration.
-:task_def_ORG-: Jira;IDE Backlog;https://jira.myorg.com/browse/IDE-{TASK_ID};images/icons/jira.png;IDE-{TASK_ID}
+// A template configuration for additional task prefixes. Replace with your own project configuration.
+:task_def_JIRA-: Jira;My Jira Board;https://jira.myorg.com/browse/JIRA-{TASK_ID};images/icons/jira.png;JIRA-{TASK_ID}
 
 // Inline Cwiki Macro Config
 // See https://github.com/NumberFour/asciispec/tree/master/docs/custom-processors/inline-cwiki-macro.adoc
 // A template configuration for Confluence links. Replace with your own project configuration.
-:cwiki_def: https://confluence.numberfour.eu/display/{PATH};https://confluence.numberfour.eu/pages/viewpage.action?pageId={PAGE_ID};images/icons/jira.png;Confluence entry:{TITLE}
+:cwiki_def: https://confluence.(myorg).com/display/{PATH};https://confluence.(myorg).com/pages/viewpage.action?pageId={PAGE_ID};images/icons/jira.png;Confluence entry:{TITLE}
 
 // Source Link Config
 // See https://github.com/NumberFour/asciispec/tree/master/docs/custom-processors/inline-srclnk-macro.adoc
-:srclnk_repo_def: stdlib_api;My Org API;https://github.myorg.eu/api/blob/master/{CMS_PATH}#L{LINE_NO}
+:srclnk_repo_def: myorg_api;My Org API;https://github.myorg.com/api/blob/master/{CMS_PATH}#L{LINE_NO}
 :gen_adoc_dir: ./gen_adoc/
 
 // Citation Macro - location of .bib file

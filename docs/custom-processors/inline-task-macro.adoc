@@ -8,7 +8,7 @@ task:target[]
 The `inline task macro` creates hyperlinks to Jira task management and GitHub issue-tracking systems.
 
 Attributes::
-* *target:* The project prefix followed by a hyphen and the task number or ID (e.g. N4JS-2773).
+* *target:* The project prefix followed by a hyphen and the task number or ID (e.g. `AS-23`).
 // * *taskTitle:* (optional) The title that will be displayed as an anchor in the generated hyperlink. - Currently Unused
 
 [.language-asciidoc]
@@ -23,8 +23,8 @@ Example: ::
 
 [source,asciidoc]
 ----
-:task_def_N4JS-: GitHub;IDE Bugs;https://github.com/NumberFour/N4JS/issues/${TASK_ID};icons/github.png;N4JS-${TASK_ID}
-:task_def_AS-: Jira;AsciiSpec Bugs;https://github.com/NumberFour/asciispec/issues/${TASK_ID};icons/github.png;AS-${TASK_ID}
+:task_def_AS-: GitHub;AsciiSpec Bugs;https://github.com/NumberFour/asciispec/issues/{TASK_ID};images/icons/github.png;AS-{TASK_ID}
+:task_def_JIRA-: Jira;My Jira Board;https://jira.myorg.com/browse/JIRA-{TASK_ID};images/icons/jira.png;JIRA-{TASK_ID}
 ----
 
 <Prefix>:: The unique prefix by which this repository is identified (`AS-` in `task:AS-40[]`).
@@ -40,9 +40,9 @@ Example: ::
 
 
 ifdef::env-github[]
-AsciiDoc was decided as a suitable syntax for documentation. ``+++task:N4JS-35[title=AsciiDoc Research]+++``
+AsciiDoc was decided as a suitable syntax for documentation. ``+++task:JIRA-35[title=AsciiDoc Research]+++``
 
-AsciiDoc was decided as a suitable syntax for documentation. https://jira.numberfour.eu/browse/N4JS-35[image:../examples/icons/jira.png[]N4JS-35]
+AsciiDoc was decided as a suitable syntax for documentation. https://jira.numberfour.eu/browse/JIRA-35[image:../examples/icons/jira.png[]JIRA-35]
 
 ---
 
@@ -55,9 +55,9 @@ ifndef::env-github[]
 
 Jira Task: ::
 [example]
-AsciiDoc was decided as a suitable syntax for documentation ``+++task:N4JS-35[]+++``.
+AsciiDoc was decided as a suitable syntax for documentation ``+++task:JIRA-35[]+++``.
 
-AsciiDoc was decided as a suitable syntax for documentation. task:N4JS-35[]
+AsciiDoc was decided as a suitable syntax for documentation. task:JIRA-35[]
 
 ---
 

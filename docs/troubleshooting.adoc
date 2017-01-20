@@ -19,6 +19,9 @@ TIP: Running `echo $SHELL` will print the directory name of the currently-runnin
 [.language-bash]
 == Windows Install
 
+Support for Windows will be supported soon.
+
+////
 . *_System (Control Panel) => Advanced => Environment Variables => System Variables_*
 . Select `PATH` environment variable and set to `/path/to/asciispec/bin/`.
 . Close all remaining windows by clicking 'OK'.
@@ -30,6 +33,7 @@ If the AsciiSpec tool is found by your system, running AsciiSpec with the `-h` f
 +
 [source,bash]
 asciispec -h
+////
 
 [.language-bash]
 == OSX Keyboard Layout Issues

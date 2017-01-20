@@ -39,22 +39,22 @@ The link's label is the methods signature.
 
 [source, adoc]
 srclnk:++stdlib_api:packages:
-eu.numberfour.stdlib.model.base.api:
-src/n4js/n4/model/collections/DataList:
+eu.myorg.stdlib.model.base.api:
+src/project/model/collections/DataList:
 DataList#<sizes++[``++public get size(): int[]++``].
 
 a|
 The following source link of the field accessor `size()` contains a complete PQN.
 The link's label is the methods signature.
 
-link:https://github.numberfour.eu/NumberFour/stdlib_api/blob/master/packages/eu.numberfour.stdlib.model.base.api/src/n4js/n4/model/collections/DataList.n4jsd#L250[+++public get sizes(): int[]+++].
+link:https://github.myorg.com/api/blob/master/packages/eu.myorg.stdlib.model.base.api/src/project/model/collections/DataList.n4jsd#L250[+++public get sizes(): int[]+++].
 
 |===
 
 [.language-asciidoc]
 == Configuration
 
-The following commands should be added to the *https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/examples/config.adoc[Configuration File]*:
+The following commands should be added to the *https://github.com/NumberFour/asciispec/blob/master/docs/examples/config.adoc[Configuration File]*:
 
 === Generated Documentation Directory
 The `gen_adoc` variable specifies the directory which contains all generated documentation.
@@ -90,6 +90,6 @@ Attributes: ::
 	It contains the placeholders `CMS_PATH` and `LINE_NO` which later will be replaced by a specific file and line number, respectively.
 
 Example: ::
-``++:srclnk_repo_def: stdlib_api; Standard lib API; https://github.numberfour.eu/NumberFour/stdlib_api/blob/master/{CMS_PATH}#L{LINE_NO}++``
+``++:srclnk_repo_def: stdlib_api; Standard lib API; https://github.com/NumberFour/asciispec/api/blob/master/{CMS_PATH}#L{LINE_NO}++``
 
 

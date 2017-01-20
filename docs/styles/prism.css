@@ -12,7 +12,6 @@ pre[class*="language-"] {
 	text-shadow: 0 1px white;
 	font-family:  'Ubuntu Mono', monospace;
 	text-align: left;
-	white-space: pre;
 	word-spacing: normal;
 	word-break: normal;
 	word-wrap: normal;
@@ -329,4 +328,50 @@ script[type='text/plain'].language-markup {
 	content: attr(data-prompt);
 }
 
+.ebnfkeyword {
+	font-weight: bold;
+	color: #800000;
+}
+
+.ruleheading {
+	font-weight: bold;
+	color: #000000;
+}
+
+.literal {
+	color: #0080ff;
+}
+
+.actions {
+	color: #EE7600;
+}
+
+.ruleterminal {
+	color: #000000;
+	font-weight: bold;
+}
+
+.semi {
+	color: #696969;
+	font-weight: normal;
+}
+
+.multilinecomment {
+	color: #228B22;
+}
+
+.typereference {
+	font-style: italic;
+}
+
+.rulestructure {
+	color: #9932CC;
+}
+
+.token.n4jsannotation{
+	color: #FF00FF;
+	font-weight: normal;
+}
+
 .punctuation + b { display: none; }
+
