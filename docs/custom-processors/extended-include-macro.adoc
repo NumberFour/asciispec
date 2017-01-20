@@ -1,3 +1,5 @@
+:find:
+
 = Extended Include Macro
 
 Asciidoctor already provides an include macro which can still be used as usual.
@@ -10,7 +12,7 @@ The following documentation focuses on the include macro with activated special 
 == `+++{find}+++` Include Macro
 
 The general idea of the `+++{find}+++` variable in an include macro is to search the given file and replace the variable with the path to the matched file.
-In short, it behaves the same like the `+++{find}+++` variable (see: <<special-variables.adoc#find,Special Variables - Find>>), but enables two additional attributes which can be given in the squared brackets of the include macro.
+In short, it behaves the same like the `+++{find}+++` variable (see: <<_special_variables_in_asciispec,Special Variables - Find>>), but enables two additional attributes which can be given in the squared brackets of the include macro.
 
 
 Usage: ::

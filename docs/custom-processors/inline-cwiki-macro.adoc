@@ -15,19 +15,19 @@ Attributes::
 * *cwikiTitle:* (optional) The title that will be displayed as an anchor in the generated hyperlink.
 If no title is declared, the `target` will be used instead.
 
-[discrete]
+[.language-asciidoc]
 == URL Pattern
 
 With most Confluence pages, the *URL path* is derived from the page title, like so:
 
-`confluence.numberfour.eu/display/N4/New+employee+instructions`
+`confluence.numberfour.eu/display/N4/Continuous+Integration`
 
 Not all Confluence pages have associated paths and will otherwise have a *page ID* as with the following:
 
 
 `confluence.numberfour.eu/pages/viewpage.action?pageId=56885484`
 
-A target that contains only numbers (e.g., **+++cwiki:1234[]+++**) will be interpreted as a page ID rather than a page path.
+A target that contains only numbers (e.g., `+++cwiki:1234[]+++`) will be interpreted as a page ID rather than a page path.
 To configure the Inline Cwiki Macro to resolve to correct targets, the format of the URL pattern should be set in the **https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/examples/config.adoc[Configuration File]** as follows:
 
 [source,asciidoc]

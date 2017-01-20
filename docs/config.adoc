@@ -1,20 +1,20 @@
 // =========================== AsciiSpec Configuration ========================= //
 // Inline Task Macro Config
-// See https://github.numberfour.eu/aschaefer/asciispec-tool/tree/master/docs/chapters/custom-processors/inline-task-macro.adoc
-:task_def_GH-: GitHub;IDE Bugs;https://github.numberfour.eu/aschaefer/asciispec-tool/issues/{TASK_ID};images/icons/github.png;GH-{TASK_ID}
+// See https://github.com/NumberFour/asciispec/tree/master/docs/custom-processors/inline-task-macro.adoc
+:task_def_AS-: GitHub;AsciiSpec Bugs;https://github.com/NumberFour/asciispec/issues/{TASK_ID};images/icons/github.png;AS-{TASK_ID}
 
-// This is a template configuration for the TASK processor. Please replace any generics with specific project information.
-:task_def_IDE-: Jira;IDE Backlog;https://jira.myorg.com/browse/PRJ-{TASK_ID};images/icons/jira.png;PRJ-{TASK_ID}
+// A template configuration for additional task prefixes. Replace with your own project configuration.
+:task_def_JIRA-: Jira;My Jira Board;https://jira.myorg.com/browse/JIRA-{TASK_ID};images/icons/jira.png;JIRA-{TASK_ID}
 
 // Inline Cwiki Macro Config
-// See https://github.numberfour.eu/aschaefer/asciispec-tool/tree/master/docs/chapters/custom-processors/inline-cwiki-macro.adoc
-// This is a template configuration for the TASK processor. Please replace any generics with specific project information.
-:cwiki_def: https://confluence.numberfour.eu/display/{PATH};https://confluence.numberfour.eu/pages/viewpage.action?pageId={PAGE_ID};images/icons/jira.png;Confluence entry:{TITLE}
+// See https://github.com/NumberFour/asciispec/tree/master/docs/custom-processors/inline-cwiki-macro.adoc
+// A template configuration for Confluence links. Replace with your own project configuration.
+:cwiki_def: https://confluence.(myorg).com/display/{PATH};https://confluence.(myorg).com/pages/viewpage.action?pageId={PAGE_ID};images/icons/jira.png;Confluence entry:{TITLE}
 
 // Source Link Config
-// https://github.numberfour.eu/aschaefer/asciispec-tool/tree/master/docs/chapters/custom-processors/inline-srclnk-macro.adoc
-//:srclnk_repo_def: stdlib_api;Standard lib API;https://github.numberfour.eu/NumberFour/stdlib_api/blob/master/{CMS_PATH}#L{LINE_NO}
-//:gen_adoc_dir: ./gen_adoc/
+// See https://github.com/NumberFour/asciispec/tree/master/docs/custom-processors/inline-srclnk-macro.adoc
+:srclnk_repo_def: myorg_api;My Org API;https://github.myorg.com/api/blob/master/{CMS_PATH}#L{LINE_NO}
+:gen_adoc_dir: ./gen_adoc/
 
 // Citation Macro - location of .bib file
 :bib-file: biblio.bib
@@ -28,7 +28,6 @@
 
 // Stylesheet settings //
 :stylesdir: styles
-:stylesheet: foundation.css
 
 // Syntax Highlighting //
 :!source-highlighter:

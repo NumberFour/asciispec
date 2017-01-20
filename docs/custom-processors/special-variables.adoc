@@ -5,6 +5,7 @@
 Some macros of Asciispec implement special variables which can be used by AsciiDoc authors.
 These special variables are readonly.
 
+[.language-asciidoc]
 == The `+++{find}+++` Variable
 
 === Introduction

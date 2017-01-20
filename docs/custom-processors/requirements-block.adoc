@@ -15,8 +15,8 @@ Attributes::
 * *title* (required):  An anchor is derived from the requirement title and embedded at the beginning of the rendered output.
 * *ID:* (required) The ID in the form *<Prefix>-<Number>*, used to generate an anchor
 * *version*: (required) value is a non-negative integer.
-+
-NOTE: Omission of any of the above attributes will print an error to the console and insert a warning text in the generated document.
+
+NOTE: Omitting any of the above attributes will print an error to the console and insert a warning text in the generated document.
 * *delimiter*: Lines containing only two hyphens `--` delimit the block. This is required if the block contains empty lines or nested formatting.
 
 == ID Pattern
@@ -52,13 +52,13 @@ endif::[]
 
 ifndef::env-github[]
 
-[source,asciidoc,subs="quotes"]
+[source,asciidoc]
 ----
-`.This is the title`
-`[req,id=RSL-3,version=1]`
-`--`
+.This is the title
+[req,id=RSL-3,version=1]
+--
 My Super Requirement
-`--`
+--
 ----
 
 

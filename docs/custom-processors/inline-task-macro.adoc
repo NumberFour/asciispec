@@ -8,7 +8,7 @@ task:target[]
 The `inline task macro` creates hyperlinks to Jira task management and GitHub issue-tracking systems.
 
 Attributes::
-* *target:* The project prefix followed by a hyphen and the task number or ID (e.g. IDE-2773).
+* *target:* The project prefix followed by a hyphen and the task number or ID (e.g. `AS-23`).
 // * *taskTitle:* (optional) The title that will be displayed as an anchor in the generated hyperlink. - Currently Unused
 
 [.language-asciidoc]
@@ -23,15 +23,15 @@ Example: ::
 
 [source,asciidoc]
 ----
-:task_def_GH-: GitHub;IDE Bugs;https://github.com/NumberFour/N4JS/issues/${TASK_ID};icons/github.png;GH-${TASK_ID}
-:task_def_IDE-: Jira;IDE Backlog;https://jira.numberfour.eu/browse/IDE-${TASK_ID};icons/jira.png;IDE-${TASK_ID}
+:task_def_AS-: GitHub;AsciiSpec Bugs;https://github.com/NumberFour/asciispec/issues/{TASK_ID};images/icons/github.png;AS-{TASK_ID}
+:task_def_JIRA-: Jira;My Jira Board;https://jira.myorg.com/browse/JIRA-{TASK_ID};images/icons/jira.png;JIRA-{TASK_ID}
 ----
 
-<Prefix>:: The unique prefix by which this repository is identified (`GH-` in `task:GH-40[]`).
+<Prefix>:: The unique prefix by which this repository is identified (`AS-` in `task:AS-40[]`).
 <Name>:: The name of the repository.
 <Description>:: A description of the repository, used to generated a tooltip.
 <URL-Pattern>:: The pattern to generate in the links - can contain the following placeholders: +
-* *`{TASK_ID}`*: The suffix of the macro target (`40` in `task:GH-40[]`).
+* *`{TASK_ID}`*: The suffix of the macro target (`40` in `task:AS-40[]`).
 <Icon>:: The relative path to an image used as an icon for the repository.
 <Text-Pattern>:: The text pattern to match to inline task macros in the AsciiDoc source - can also contain the *`{TASK_ID}`* placeholder.
 
@@ -40,32 +40,32 @@ Example: ::
 
 
 ifdef::env-github[]
-AsciiDoc was decided as a suitable syntax for documentation. ``+++task:IDE-2273[title=AsciiDoc Research]+++``
+AsciiDoc was decided as a suitable syntax for documentation. ``+++task:JIRA-35[title=AsciiDoc Research]+++``
 
-AsciiDoc was decided as a suitable syntax for documentation. https://jira.numberfour.eu/browse/IDE-2273[image:../examples/icons/jira.png[]IDE-2273]
+AsciiDoc was decided as a suitable syntax for documentation. https://jira.numberfour.eu/browse/JIRA-35[image:../examples/icons/jira.png[]JIRA-35]
 
 ---
 
-A bug has already ``+++task:GH-135[]+++`` been filed...
+A bug has already ``+++task:AS-35[]+++`` been filed...
 
-A bug has already been filed... https://github.com/NumberFour/n4js/issues/135[image:../examples/icons/github.png[]GH-135]
+A bug has already been filed... https://github.com/NumberFour/n4js/issues/135[image:../examples/icons/github.png[]AS-35]
 endif::[]
 
 ifndef::env-github[]
 
 Jira Task: ::
 [example]
-AsciiDoc was decided as a suitable syntax for documentation ``+++task:IDE-2273[]+++``.
+AsciiDoc was decided as a suitable syntax for documentation ``+++task:JIRA-35[]+++``.
 
-AsciiDoc was decided as a suitable syntax for documentation. task:IDE-2273[]
+AsciiDoc was decided as a suitable syntax for documentation. task:JIRA-35[]
 
 ---
 
 Github Issue: ::
 [example]
-A bug has already ``+++task:GH-135[]+++`` been filed...
+A bug has already ``+++task:AS-35[]+++`` been filed...
 
-A bug has already been filed... task:GH-135[]
+A bug has already been filed... task:AS-35[]
 
 endif::[]
 

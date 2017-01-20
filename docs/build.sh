@@ -34,10 +34,4 @@ fopub index.xml
 rm index.xml
 mv index.pdf ./$GEN_FOLDER/
 
-# running "./build.sh -l" will launch index.html after build
-if [ "${1}" == "--launch" ] || [ "${1}" == "-l" ]; then
-open ./$GEN_FOLDER/index.html
-exit 0
-fi
-
 echo DONE: AsciiSpec conversion finished.
