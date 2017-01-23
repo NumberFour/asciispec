@@ -58,18 +58,15 @@
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_definition_block_documentation">1. Definition Block Documentation</a></li>
-<li><a href="#_extended_include_macro">2. Extended Include Macro</a>
+<li><a href="#_requirements_block">2. Requirements Block</a>
 <ul class="sectlevel2">
-<li><a href="#__code_find_code_include_macro">2.1. <code>{find}</code> Include Macro</a></li>
-<li><a href="#__code_api_code_include_macro">2.2. <code>{api}</code> Include Macro</a></li>
-<li><a href="#__code_src_code_include_macro">2.3. <code>{src}</code> Include Macro</a></li>
+<li><a href="#_id_pattern">2.1. ID Pattern</a></li>
 </ul>
 </li>
-<li><a href="#_generated_anchors">3. Generated Anchors</a>
+<li><a href="#_inline_task_macro">3. Inline Task Macro</a>
 <ul class="sectlevel2">
-<li><a href="#_scope">3.1. Scope</a></li>
-<li><a href="#_general_structure">3.2. General Structure</a></li>
-<li><a href="#_special_characters">3.3. Special Characters</a></li>
+<li><a href="#_url_pattern">3.1. URL Pattern</a></li>
+<li><a href="#_examples">3.2. Examples</a></li>
 </ul>
 </li>
 <li><a href="#_inline_bibtex_macro">4. Inline BibTex Macro</a>
@@ -77,40 +74,47 @@
 <li><a href="#_configuration">4.1. Configuration</a></li>
 </ul>
 </li>
-<li><a href="#_inline_cwiki_macro">5. Inline Cwiki Macro</a></li>
+<li><a href="#_inline_cwiki_macro">5. Inline Cwiki Macro</a>
+<ul class="sectlevel2">
+<li><a href="#_url_pattern_2">5.1. URL Pattern</a></li>
+</ul>
+</li>
 <li><a href="#_inline_math_code_math_code_macro">6. Inline Math (<code>math</code>) Macro</a>
 <ul class="sectlevel2">
 <li><a href="#_configuration_2">6.1. Configuration</a></li>
 </ul>
 </li>
-<li><a href="#_inline_source_link_code_srclnk_code_macro">7. Inline Source Link (<code>srclnk</code>) Macro</a>
+<li><a href="#_math_block_documentation">7. Math Block Documentation</a>
 <ul class="sectlevel2">
-<li><a href="#_configuration_3">7.1. Configuration</a>
+<li><a href="#_example">7.1. Example</a></li>
+</ul>
+</li>
+<li><a href="#_math_include_documentation">8. Math Include Documentation</a></li>
+<li><a href="#_inline_source_link_code_srclnk_code_macro">9. Inline Source Link (<code>srclnk</code>) Macro</a>
+<ul class="sectlevel2">
+<li><a href="#_configuration_3">9.1. Configuration</a>
 <ul class="sectlevel3">
-<li><a href="#_generated_documentation_directory">7.1.1. Generated Documentation Directory</a></li>
-<li><a href="#_repository_location">7.1.2. Repository Location</a></li>
+<li><a href="#_generated_documentation_directory">9.1.1. Generated Documentation Directory</a></li>
+<li><a href="#_repository_location">9.1.2. Repository Location</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_inline_task_macro">8. Inline Task Macro</a>
+<li><a href="#_extended_include_macro">10. Extended Include Macro</a>
 <ul class="sectlevel2">
-<li><a href="#_url_pattern_2">8.1. URL Pattern</a></li>
-<li><a href="#_examples">8.2. Examples</a></li>
+<li><a href="#__code_find_code_include_macro">10.1. <code>{find}</code> Include Macro</a></li>
+<li><a href="#__code_api_code_include_macro">10.2. <code>{api}</code> Include Macro</a></li>
+<li><a href="#__code_src_code_include_macro">10.3. <code>{src}</code> Include Macro</a></li>
 </ul>
 </li>
-<li><a href="#_math_block_documentation">9. Math Block Documentation</a>
+<li><a href="#_generated_anchors">11. Generated Anchors</a>
 <ul class="sectlevel2">
-<li><a href="#_example">9.1. Example</a></li>
+<li><a href="#_scope">11.1. Scope</a></li>
+<li><a href="#_general_structure">11.2. General Structure</a></li>
+<li><a href="#_special_characters">11.3. Special Characters</a></li>
 </ul>
 </li>
-<li><a href="#_math_include_documentation">10. Math Include Documentation</a></li>
-<li><a href="#PQN-def">11. Partially Qualified Names (PQNs)</a></li>
-<li><a href="#_requirements_block">12. Requirements Block</a>
-<ul class="sectlevel2">
-<li><a href="#_id_pattern">12.1. ID Pattern</a></li>
-</ul>
-</li>
+<li><a href="#PQN-def">12. Partially Qualified Names (PQNs)</a></li>
 <li><a href="#_special_variables_in_asciispec">13. Special Variables in Asciispec</a>
 <ul class="sectlevel2">
 <li><a href="#_the_code_find_code_variable">13.1. The <code>{find}</code> Variable</a>
@@ -124,10 +128,18 @@
 </li>
 </ul>
 </li>
+<li><a href="#_bibliography_2">Appendix A: Bibliography</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following is the specification for AsciiSpec, a toolchain based on <a href="http://asciidoctor.org/">Asciidoctor</a> with custom modifications for task management, math support, API documentation and more.</p>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_definition_block_documentation"><a class="anchor" href="#_definition_block_documentation"></a><a class="link" href="#_definition_block_documentation">1. Definition Block Documentation</a></h2>
 <div class="sectionbody">
@@ -208,299 +220,224 @@ Furthermore...
 </div>
 </div>
 <div class="sect1">
-<h2 id="_extended_include_macro"><a class="anchor" href="#_extended_include_macro"></a><a class="link" href="#_extended_include_macro">2. Extended Include Macro</a></h2>
+<h2 id="_requirements_block"><a class="anchor" href="#_requirements_block"></a><a class="link" href="#_requirements_block">2. Requirements Block</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Asciidoctor already provides an include macro which can still be used as usual.
-However, if the include macro starts with specific variables after the double colon, a special handling of the include macro is activated.
-As of now, only one specific variable exists, which is <code>{find}</code> as in <code>include::{find}myFile[]</code>.
-Despite having some special handling when using specific variables, the usual behaviour of the built-in include is still preserved and all its attributes can still be used.
-The following documentation focuses on the include macro with activated special handling.</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Usage</dt>
+</dl>
 </div>
-<div class="sect2 language-asciidoc">
-<h3 id="__code_find_code_include_macro"><a class="anchor" href="#__code_find_code_include_macro"></a><a class="link" href="#__code_find_code_include_macro">2.1. <code>{find}</code> Include Macro</a></h3>
-<div class="paragraph">
-<p>The general idea of the <code>{find}</code> variable in an include macro is to search the given file and replace the variable with the path to the matched file.
-In short, it behaves the same like the <code>{find}</code> variable (see: <a href="special-variables.html#find">Special Variables - Find</a>), but enables two additional attributes which can be given in the squared brackets of the include macro.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">.title
+[req,id=RSL-3,version=1]
+--
+Contents of the requirement
+--</code></pre>
+</div>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">Usage: </dt>
-<dd>
-<p><code class="language-asciidoc">include::{find}Target[Attributes]</code></p>
-</dd>
-<dt class="hdlist1">With: </dt>
+<dt class="hdlist1">Attributes</dt>
 <dd>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Target</strong> (required):
-The name of the file whose contents shall be included.
-The file name can contain directories.
-The extension <code>.adoc</code> can be omitted.</p>
+<p><strong>title</strong> (required):  An anchor is derived from the requirement title and embedded at the beginning of the rendered output.</p>
 </li>
 <li>
-<p><strong>Attributes</strong> (optional):</p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>FILE_ONCE</strong>: Includes the same file only once.</p>
+<p><strong>ID:</strong> (required) The ID in the form <strong>&lt;Prefix&gt;-&lt;Number&gt;</strong>, used to generate an anchor</p>
 </li>
 <li>
-<p><strong>TARGET_ONCE</strong> (alias <strong>ONCE</strong>): Includes the same target only once.</p>
-</li>
-<li>
-<p>(all other include attributes such as 'lines')</p>
+<p><strong>version</strong>: (required) value is a non-negative integer.</p>
 </li>
 </ul>
 </div>
-</li>
-</ul>
-</div>
-</dd>
-<dt class="hdlist1">Warnings and Errors: </dt>
-<dd>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Error: File Not Found</strong>
-Is issued in case the given target could not be found.</p>
-</li>
-<li>
-<p><strong>Error: Circular Dependency</strong>
-Is issued in case the included files depend on each other.
-The last file which would create a circular dependency cycle is omitted.
-This error is only issued if all include macros of the cycle use the <code>{find}</code> macro.</p>
-</li>
-<li>
-<p><strong>Warning: Cant Find Circular Dependencies</strong>
-Is issued in case one or more includes do not use the <code>{find}</code> macro.
-Despite this issue, circular dependencies can still be found if all of the causing files are included using the <code>{find}</code> macro.</p>
-</li>
-<li>
-<p><strong>Warning: Multiple File Matches</strong>
-Is issued in case the given target is found at multiple locations.
-The first match is chosen to be included.</p>
-</li>
-<li>
-<p><strong>Warning: Inconsistent Use of Attributes</strong>
-Is issued in case one of the attributes is used inconsistently.
-The TARGET_ONCE attribute is supposed to be used at none or at all includes with the same target.
-The FILE_ONCE attribute is supposed to be used at none or at all includes matching the same file.</p>
-</li>
-</ul>
-</div>
-</dd>
-<dt class="hdlist1">Example: </dt>
-<dd>
-<p>The following line includes the file <code>file.adoc</code> in the subdir <code>dir</code>.
-The location of that file is found by the <code>{find}</code> directive (see: <a href="#special-variables">[special-variables]</a>).
-The attribute <code>ONCE</code> is the shorthand form for <code>TARGET_ONCE</code>.</p>
 </dd>
 </dl>
 </div>
-<div class="paragraph">
-<p><code class="language-asciidoc">include::{find}dir/file.adoc[ONCE]</code></p>
-</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title=""></i>
+</td>
+<td class="content">
+Omitting any of the above attributes will print an error to the console and insert a warning text in the generated document.
+* <strong>delimiter</strong>: Lines containing only two hyphens <code>--</code> delimit the block. This is required if the block contains empty lines or nested formatting.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect2">
-<h3 id="__code_api_code_include_macro"><a class="anchor" href="#__code_api_code_include_macro"></a><a class="link" href="#__code_api_code_include_macro">2.2. <code>{api}</code> Include Macro</a></h3>
+<h3 id="_id_pattern"><a class="anchor" href="#_id_pattern"></a><a class="link" href="#_id_pattern">2.1. ID Pattern</a></h3>
 <div class="paragraph">
-<p>Includes generated adoc (of StdLib API) text which previously was generated by the exporter wizard.
-Uses a PQN to reference the section which is to be included.
-(tbd)</p>
+<p>The purpose of the <code>&lt;Prefix&gt;-&lt;Number&gt;</code> ID is to ensure that Requirements are both unique and easily referenceable.
+Currently, the ID may be any string, but should conform to the following conventions:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>&lt;Prefix&gt;</strong>: </dt>
+<dd>
+<p><code>R</code> (requirement) followed by the project prefix (i.e. <code>SL</code> for <code>stdlib</code>)</p>
+</dd>
+<dt class="hdlist1"><strong>&lt;Number&gt;</strong>: </dt>
+<dd>
+<p>The requirement number, currently not validated.
+A validation stage for requirement IDs (detecting duplicates, for instance) is planned.</p>
+</dd>
+<dt class="hdlist1">Example</dt>
+<dd>
+<p>The following example demonstrates how to document Requirement #3 for stdlib Version 1;</p>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">.This is the title
+[req,id=RSL-3,version=1]
+--
+My Super Requirement
+--</code></pre>
 </div>
 </div>
-<div class="sect2">
-<h3 id="__code_src_code_include_macro"><a class="anchor" href="#__code_src_code_include_macro"></a><a class="link" href="#__code_src_code_include_macro">2.3. <code>{src}</code> Include Macro</a></h3>
+<div class="openblock requirement">
+<div class="content">
 <div class="paragraph">
-<p>Includes source code (of StdLib API) from GitHub.
-Uses a PQN to reference the source element (e.g. a method) which is to be included.
-(tbd)</p>
+<p><a id="Req-RSL-3"></a><strong>Req. RSL-3:</strong> <a href="#Req-RSL-3">This is the title</a> (ver. 1)</p>
+</div>
+<div class="paragraph">
+<p>My Super Requirement</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_generated_anchors"><a class="anchor" href="#_generated_anchors"></a><a class="link" href="#_generated_anchors">3. Generated Anchors</a></h2>
+<h2 id="_inline_task_macro"><a class="anchor" href="#_inline_task_macro"></a><a class="link" href="#_inline_task_macro">3. Inline Task Macro</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>The N4JS-N4 project <strong>eu.numberfour.n4js.jsdoc2spec</strong> generates adoc files for the documentation.
-These adoc files are used to create an online reference and a standalone PDF file.
-Moreover, the generated documentation is included into the stdlib API documentation.
-This stdlib API document merges both generated and manual written documentation.</p>
-</div>
-<div class="paragraph">
-<p>When including generated adoc content into manual written documents, we might want to reference sections that are located within the included contents.
-Since these references rely on generated anchors used in the generated contents, an understanding of the structure of these anchors would be helpful.</p>
-</div>
-<div class="sect2 language-n4js">
-<h3 id="_scope"><a class="anchor" href="#_scope"></a><a class="link" href="#_scope">3.1. Scope</a></h3>
-<div class="paragraph">
-<p>Anchors in the generated documentation are created for every property of a Class or Interface.
-For example, for every property such as datafields or methods, a section is generated that can be referenced using a generated anchor.
-The following excerpt shows the beginning of the generated contents of the module n4.lang.Comparable.</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Usage</dt>
+</dl>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">= Module n4.lang.Comparable
-
-== Interface Comparable
-
-Any class that supports equality checks should implement this interface.
-Comparable is not similar to Java's comparable. In N4JS, it only provides the equals method.
-
-
-
-[[sec:spec_n4.lang.Comparable.Comparable.equals]]
-[role=memberdoc]
-=== ++Method equals++
-
-[.language-n4js]
-==== Signature
-srclnk:++stdlib_api:packages:eu.numberfour.n4js.base.api:src/n4js/n4/lang/Comparable:Comparable#equals++[``++public abstract equals(other: any): boolean++``]
-
-==== Description
-
-returns true if the provided entity is equal to the current object by loose equality rules.
-Other may be null, in that case, false is to be returned.</code></pre>
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">task:target[]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The example above contains one generated anchor: <code>sec:spec_n4.lang.Comparable.Comparable.equals</code> which references the <code>equals</code> method in the interface <code>Comparable</code> in the module <code>n4.lang.Comparable</code>.</p>
-</div>
-</div>
-<div class="sect2 language-n4js">
-<h3 id="_general_structure"><a class="anchor" href="#_general_structure"></a><a class="link" href="#_general_structure">3.2. General Structure</a></h3>
-<div class="paragraph">
-<p>Generally, the structure of anchors is similar to the structure of PQNs.
-However, the anchor structure is shorter and of defined length:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-plain" data-lang="plain">sec:spec_&lt;module&gt;&lt;type&gt;&lt;delimiter&gt;&lt;property&gt;</code></pre>
-</div>
+<p>The <code>inline task macro</code> creates hyperlinks to Jira task management and GitHub issue-tracking systems.</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">module</dt>
+<dt class="hdlist1">Attributes</dt>
 <dd>
-<p>specifies the name of a module</p>
-</dd>
-<dt class="hdlist1">type</dt>
-<dd>
-<p>specifies the name of a type, e.g. a class in the module</p>
-</dd>
-<dt class="hdlist1">delimiter</dt>
-<dd>
-<p>specifies the delimiter between type and property</p>
-</dd>
-<dt class="hdlist1">property</dt>
-<dd>
-<p>specifies the name of one property in the type</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>target:</strong> The project prefix followed by a hyphen and the task number or ID (e.g. <code>AS-23</code>).</p>
+</li>
+</ul>
+</div>
 </dd>
 </dl>
 </div>
+<div class="sect2 language-asciidoc">
+<h3 id="_url_pattern"><a class="anchor" href="#_url_pattern"></a><a class="link" href="#_url_pattern">3.1. URL Pattern</a></h3>
 <div class="paragraph">
-<p>The delimiters in anchors differ from the PQN definition.
-PQNs use strings for example like <code>#</code> or <code>@&gt;</code> to access non static properties or static setters.
-Since these strings contains characters which are permitted in adoc anchors, they are replaced as follows:</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Delimiters</dt>
-</dl>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">PQN</th>
-<th class="tableblock halign-left valign-top">Anchor</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>non-static property</p>
+<p>Specifying which repository to link to is done by adding a URL pattern to the
+<a href="https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/userguide.adoc#configuration-file">config file</a> in the following format:</p>
 </div>
 <div class="paragraph">
-<p>non-static getter</p>
+<p><code>:task_def_&lt;Prefix&gt;: &lt;Name&gt;;&lt;Description&gt;;&lt;URL-Pattern&gt;;&lt;Icon&gt;;&lt;TextPatterns&gt;</code></p>
 </div>
-<div class="paragraph">
-<p>non-static setter</p>
-</div>
-<div class="paragraph">
-<p>static property</p>
-</div>
-<div class="paragraph">
-<p>static getter</p>
-</div>
-<div class="paragraph">
-<p>static setter</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>#</p>
-</div>
-<div class="paragraph">
-<p>#&lt;</p>
-</div>
-<div class="paragraph">
-<p>#&gt;</p>
-</div>
-<div class="paragraph">
-<p>@</p>
-</div>
-<div class="paragraph">
-<p>@&lt;</p>
-</div>
-<div class="paragraph">
-<p>@&gt;</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>.</p>
-</div>
-<div class="paragraph">
-<p>.getter.</p>
-</div>
-<div class="paragraph">
-<p>.setter.</p>
-</div>
-<div class="paragraph">
-<p>.static.</p>
-</div>
-<div class="paragraph">
-<p>.static.getter.</p>
-</div>
-<div class="paragraph">
-<p>.static.setter.</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Example: </dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">:task_def_AS-: GitHub;AsciiSpec Bugs;https://github.com/NumberFour/asciispec/issues/{TASK_ID};images/icons/github.png;AS-{TASK_ID}
+:task_def_JIRA-: Jira;My Jira Board;https://jira.myorg.com/browse/JIRA-{TASK_ID};images/icons/jira.png;JIRA-{TASK_ID}</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">&lt;Prefix&gt;</dt>
 <dd>
-<p><code>sec:spec_n4.lang.Identifiable.Identifiable.getter.id</code></p>
+<p>The unique prefix by which this repository is identified (<code>AS-</code> in <code>task:AS-40[]</code>).</p>
+</dd>
+<dt class="hdlist1">&lt;Name&gt;</dt>
+<dd>
+<p>The name of the repository.</p>
+</dd>
+<dt class="hdlist1">&lt;Description&gt;</dt>
+<dd>
+<p>A description of the repository, used to generated a tooltip.</p>
+</dd>
+<dt class="hdlist1">&lt;URL-Pattern&gt;</dt>
+<dd>
+<p>The pattern to generate in the links - can contain the following placeholders:<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>{TASK_ID}</code></strong>: The suffix of the macro target (<code>40</code> in <code>task:AS-40[]</code>).</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">&lt;Icon&gt;</dt>
+<dd>
+<p>The relative path to an image used as an icon for the repository.</p>
+</dd>
+<dt class="hdlist1">&lt;Text-Pattern&gt;</dt>
+<dd>
+<p>The text pattern to match to inline task macros in the AsciiDoc source - can also contain the <strong><code>{TASK_ID}</code></strong> placeholder.</p>
 </dd>
 </dl>
 </div>
 </div>
-<div class="sect2 language-n4js">
-<h3 id="_special_characters"><a class="anchor" href="#_special_characters"></a><a class="link" href="#_special_characters">3.3. Special Characters</a></h3>
+<div class="sect2 language-asciidoc">
+<h3 id="_examples"><a class="anchor" href="#_examples"></a><a class="link" href="#_examples">3.2. Examples</a></h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Jira Task: </dt>
+</dl>
+</div>
+<div class="exampleblock">
+<div class="content">
+AsciiDoc was decided as a suitable syntax for documentation <code>task:JIRA-35[]</code>.
+</div>
+</div>
 <div class="paragraph">
-<p>Special characters occur in anchors since property names can contain any characters.
-In addition, the iterator symbol, which is used for iterators, often contains the <code>#</code> symbol.
-Consequently, anchors have to escape these characters.
-This is done by replacing the special character with a colon and its corresponding unicode number.
-For example, the property name <code>#iterator</code> is transformed to <code>:23iterator</code>.
-The resulting complete anchor is: <code>sec:spec_n4.lang.Delegate.Delegate.:23iterator</code>.</p>
+<p>AsciiDoc was decided as a suitable syntax for documentation. </p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<a href="https://jira.myorg.com/browse/JIRA-35" title="My Jira Board"><span class="image"><img src="images/icons/jira.png" alt=""></span>JIRA-35</a>
+</div>
+</div>
+<hr>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Github Issue: </dt>
+</dl>
+</div>
+<div class="exampleblock">
+<div class="content">
+A bug has already <code>task:AS-35[]</code> been filed&#8230;&#8203;
+</div>
+</div>
+<div class="paragraph">
+<p>A bug has already been filed&#8230;&#8203; </p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<a href="https://github.com/NumberFour/asciispec/issues/35" title="AsciiSpec Bugs"><span class="image"><img src="images/icons/github.png" alt=""></span>AS-35</a>
+</div>
 </div>
 </div>
 </div>
@@ -509,21 +446,16 @@ The resulting complete anchor is: <code>sec:spec_n4.lang.Delegate.Delegate.:23it
 <h2 id="_inline_bibtex_macro"><a class="anchor" href="#_inline_bibtex_macro"></a><a class="link" href="#_inline_bibtex_macro">4. Inline BibTex Macro</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>An inline macro for generating references loaded from a BibTeX file.</p>
+<p>Load references from a BibTeX file.</p>
 </div>
-<div class="openblock language-asciidoc">
-<div class="content">
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Usage: </dt>
-<dd>
-<p><code>cite:[ref(pages)]</code></p>
 <div class="paragraph">
-<p><code>bibliography::[]</code></p>
+<p>Usage:</p>
 </div>
-</dd>
-</dl>
-</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">cite:[ref(pages)]
+
+bibliography::[]</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -683,12 +615,13 @@ If no title is declared, the <code>target</code> will be used instead.</p>
 </dd>
 </dl>
 </div>
-<h3 id="_url_pattern" class="discrete">URL Pattern</h3>
+<div class="sect2 language-asciidoc">
+<h3 id="_url_pattern_2"><a class="anchor" href="#_url_pattern_2"></a><a class="link" href="#_url_pattern_2">5.1. URL Pattern</a></h3>
 <div class="paragraph">
 <p>With most Confluence pages, the <strong>URL path</strong> is derived from the page title, like so:</p>
 </div>
 <div class="paragraph">
-<p><code>confluence.numberfour.eu/display/N4/New+employee+instructions</code></p>
+<p><code>confluence.numberfour.eu/display/N4/Continuous+Integration</code></p>
 </div>
 <div class="paragraph">
 <p>Not all Confluence pages have associated paths and will otherwise have a <strong>page ID</strong> as with the following:</p>
@@ -697,7 +630,7 @@ If no title is declared, the <code>target</code> will be used instead.</p>
 <p><code>confluence.numberfour.eu/pages/viewpage.action?pageId=56885484</code></p>
 </div>
 <div class="paragraph">
-<p>A target that contains only numbers (e.g., <strong>cwiki:1234[]</strong>) will be interpreted as a page ID rather than a page path.
+<p>A target that contains only numbers (e.g., <code>cwiki:1234[]</code>) will be interpreted as a page ID rather than a page path.
 To configure the Inline Cwiki Macro to resolve to correct targets, the format of the URL pattern should be set in the <strong><a href="https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/examples/config.adoc">Configuration File</a></strong> as follows:</p>
 </div>
 <div class="listingblock">
@@ -732,7 +665,7 @@ Documented at <strong>cwiki:BR/Continuous+Integration[title=Continuous Integrati
 </div>
 </div>
 <div class="paragraph">
-<p>Documented at <span class="image"><a class="image" href="https://confluence.myowncompanywebsite.com/display/BR/Continuous+Integration"><img src="images/icons/jira.png" alt="Continuous Integration" title="Continuous Integration"></a></span><a href="https://confluence.myowncompanywebsite.com/display/BR/Continuous+Integration" title="Continuous Integration">Confluence entry:Continuous Integration</a>&#8230;&#8203;</p>
+<p>Documented at <span class="image"><a class="image" href="https://confluence.(myorg).com/display/BR/Continuous+Integration"><img src="images/icons/jira.png" alt="Continuous Integration" title="Continuous Integration"></a></span><a href="https://confluence.(myorg).com/display/BR/Continuous+Integration" title="Continuous Integration">Confluence entry:Continuous Integration</a>&#8230;&#8203;</p>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -740,7 +673,8 @@ See the <strong>cwiki:56885484["MacOS Devices wiki entry"]</strong> to connect t
 </div>
 </div>
 <div class="paragraph">
-<p>See the <span class="image"><a class="image" href="https://confluence.myowncompanywebsite.com/pages/viewpage.action?pageId=56885484"><img src="images/icons/jira.png" alt="MacOS Devices wiki entry" title="MacOS Devices wiki entry"></a></span><a href="https://confluence.myowncompanywebsite.com/pages/viewpage.action?pageId=56885484" title="MacOS Devices wiki entry">Confluence entry:MacOS Devices wiki entry</a> to connect to&#8230;&#8203;</p>
+<p>See the <span class="image"><a class="image" href="https://confluence.(myorg).com/pages/viewpage.action?pageId=56885484"><img src="images/icons/jira.png" alt="MacOS Devices wiki entry" title="MacOS Devices wiki entry"></a></span><a href="https://confluence.(myorg).com/pages/viewpage.action?pageId=56885484" title="MacOS Devices wiki entry">Confluence entry:MacOS Devices wiki entry</a> to connect to&#8230;&#8203;</p>
+</div>
 </div>
 </div>
 </div>
@@ -826,7 +760,94 @@ and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi><mo>=</mo><mn>2</
 </div>
 </div>
 <div class="sect1">
-<h2 id="_inline_source_link_code_srclnk_code_macro"><a class="anchor" href="#_inline_source_link_code_srclnk_code_macro"></a><a class="link" href="#_inline_source_link_code_srclnk_code_macro">7. Inline Source Link (<code>srclnk</code>) Macro</a></h2>
+<h2 id="_math_block_documentation"><a class="anchor" href="#_math_block_documentation"></a><a class="link" href="#_math_block_documentation">7. Math Block Documentation</a></h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>The math block is used to write blocks of mathematical formulae.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>delimiter</strong>: Lines containing four plus symbols <code>++++</code> delimit the block. This is required if the block contains empty lines or nested formatting.</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Usage</dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[math]
+++++
+Some formulae.
+++++</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Example</dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[math]
+++++
+\sum_{i=1}^n i = {n(n+1)\over{2}}
+++++</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example"><a class="anchor" href="#_example"></a><a class="link" href="#_example">7.1. Example</a></h3>
+<div class="paragraph">
+<p>The above source will create the following output:</p>
+</div>
+<div class="openblock">
+<div class="content">
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>i</mi><mo>=</mo><mfrac><mrow><mi>n</mi><mfenced close=")" open="("><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></mfenced></mrow><mn>2</mn></mfrac></math>
+</div>
+</div>
+<div class="paragraph">
+<p>It is possible to use the <a href="#_math_include_documentation">mathinclude::[]</a> macro to include custom LaTeX commands.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_math_include_documentation"><a class="anchor" href="#_math_include_documentation"></a><a class="link" href="#_math_include_documentation">8. Math Include Documentation</a></h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Usage</dt>
+<dd>
+<p><code class="language-asciidoc">mathinclude::some/file/path.tex[]</code></p>
+<div class="paragraph">
+<p><code class="language-asciidoc">mathinclude::{find}some_other_file.tex[]</code></p>
+</div>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>The <code>math include</code> can include <code>.tex</code> files containing custom LaTeX commands to be used in mathematical expressions. It is used in conjunction with <a href="#inline-math-macro.adoc">inline math</a> and <a href="#math-block.adoc">math block</a>. Multiple math include directives are appended, so it is possible to include several files. All math include directives are processed before the inline math expressions and the math blocks are processed.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The include path may contain the <a href="#special-variables"><code>{find}</code></a> variable. In either case, the processor will search the included file by looking at each parent folder of the indicated path.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[math]
+++++
+Some maths that can use the LaTeX commands from the included file.
+++++</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_inline_source_link_code_srclnk_code_macro"><a class="anchor" href="#_inline_source_link_code_srclnk_code_macro"></a><a class="link" href="#_inline_source_link_code_srclnk_code_macro">9. Inline Source Link (<code>srclnk</code>) Macro</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>An inline macro for generating hyperlinks from program elements such as types or methods to their source code in the code management system (i.e. GitHub).
@@ -897,8 +918,8 @@ The link&#8217;s label is the methods signature.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-adoc" data-lang="adoc">srclnk:++stdlib_api:packages:
-eu.numberfour.stdlib.model.base.api:
-src/n4js/n4/model/collections/DataList:
+eu.myorg.stdlib.model.base.api:
+src/project/model/collections/DataList:
 DataList#&lt;sizes++[``++public get size(): int[]++``].</code></pre>
 </div>
 </div></div></td>
@@ -907,18 +928,18 @@ DataList#&lt;sizes++[``++public get size(): int[]++``].</code></pre>
 The link&#8217;s label is the methods signature.</p>
 </div>
 <div class="paragraph">
-<p><a href="https://github.numberfour.eu/NumberFour/stdlib_api/blob/master/packages/eu.numberfour.stdlib.model.base.api/src/n4js/n4/model/collections/DataList.n4jsd#L250">public get sizes(): int[]</a>.</p>
+<p><a href="https://github.myorg.com/api/blob/master/packages/eu.myorg.stdlib.model.base.api/src/project/model/collections/DataList.n4jsd#L250">public get sizes(): int[]</a>.</p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
 <div class="sect2 language-asciidoc">
-<h3 id="_configuration_3"><a class="anchor" href="#_configuration_3"></a><a class="link" href="#_configuration_3">7.1. Configuration</a></h3>
+<h3 id="_configuration_3"><a class="anchor" href="#_configuration_3"></a><a class="link" href="#_configuration_3">9.1. Configuration</a></h3>
 <div class="paragraph">
-<p>The following commands should be added to the <strong><a href="https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/examples/config.adoc">Configuration File</a></strong>:</p>
+<p>The following commands should be added to the <strong><a href="https://github.com/NumberFour/asciispec/blob/master/docs/examples/config.adoc">Configuration File</a></strong>:</p>
 </div>
 <div class="sect3">
-<h4 id="_generated_documentation_directory"><a class="anchor" href="#_generated_documentation_directory"></a><a class="link" href="#_generated_documentation_directory">7.1.1. Generated Documentation Directory</a></h4>
+<h4 id="_generated_documentation_directory"><a class="anchor" href="#_generated_documentation_directory"></a><a class="link" href="#_generated_documentation_directory">9.1.1. Generated Documentation Directory</a></h4>
 <div class="paragraph">
 <p>The <code>gen_adoc</code> variable specifies the directory which contains all generated documentation.
 It has to be set to parse the <code>index.idx</code> file and the generated adoc files, as well.</p>
@@ -948,7 +969,7 @@ Usually, its name is <code>gen_adoc</code>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_repository_location"><a class="anchor" href="#_repository_location"></a><a class="link" href="#_repository_location">7.1.2. Repository Location</a></h4>
+<h4 id="_repository_location"><a class="anchor" href="#_repository_location"></a><a class="link" href="#_repository_location">9.1.2. Repository Location</a></h4>
 <div class="paragraph">
 <p>The repository location command specifies one repository, that is, its name, description and url.
 The url is later used to generate complete urls which point to specific source code files of the repository.
@@ -984,7 +1005,7 @@ It contains the placeholders <code>CMS_PATH</code> and <code>LINE_NO</code> whic
 </dd>
 <dt class="hdlist1">Example: </dt>
 <dd>
-<p><code>:srclnk_repo_def: stdlib_api; Standard lib API; https://github.numberfour.eu/NumberFour/stdlib_api/blob/master/{CMS_PATH}#L{LINE_NO}</code></p>
+<p><code>:srclnk_repo_def: stdlib_api; Standard lib API; https://github.com/NumberFour/asciispec/api/blob/master/{CMS_PATH}#L{LINE_NO}</code></p>
 </dd>
 </dl>
 </div>
@@ -993,226 +1014,305 @@ It contains the placeholders <code>CMS_PATH</code> and <code>LINE_NO</code> whic
 </div>
 </div>
 <div class="sect1">
-<h2 id="_inline_task_macro"><a class="anchor" href="#_inline_task_macro"></a><a class="link" href="#_inline_task_macro">8. Inline Task Macro</a></h2>
+<h2 id="_extended_include_macro"><a class="anchor" href="#_extended_include_macro"></a><a class="link" href="#_extended_include_macro">10. Extended Include Macro</a></h2>
 <div class="sectionbody">
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Usage</dt>
-</dl>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">task:target[]</code></pre>
-</div>
-</div>
 <div class="paragraph">
-<p>The <code>inline task macro</code> creates hyperlinks to Jira task management and GitHub issue-tracking systems.</p>
+<p>Asciidoctor already provides an include macro which can still be used as usual.
+However, if the include macro starts with specific variables after the double colon, a special handling of the include macro is activated.
+As of now, only one specific variable exists, which is <code>{find}</code> as in <code>include::{find}myFile[]</code>.
+Despite having some special handling when using specific variables, the usual behaviour of the built-in include is still preserved and all its attributes can still be used.
+The following documentation focuses on the include macro with activated special handling.</p>
+</div>
+<div class="sect2 language-asciidoc">
+<h3 id="__code_find_code_include_macro"><a class="anchor" href="#__code_find_code_include_macro"></a><a class="link" href="#__code_find_code_include_macro">10.1. <code>{find}</code> Include Macro</a></h3>
+<div class="paragraph">
+<p>The general idea of the <code>{find}</code> variable in an include macro is to search the given file and replace the variable with the path to the matched file.
+In short, it behaves the same like the <code>{find}</code> variable (see: <a href="#_special_variables_in_asciispec">Special Variables - Find</a>), but enables two additional attributes which can be given in the squared brackets of the include macro.</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">Attributes</dt>
+<dt class="hdlist1">Usage: </dt>
+<dd>
+<p><code class="language-asciidoc">include::{find}Target[Attributes]</code></p>
+</dd>
+<dt class="hdlist1">With: </dt>
 <dd>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>target:</strong> The project prefix followed by a hyphen and the task number or ID (e.g. IDE-2773).</p>
+<p><strong>Target</strong> (required):
+The name of the file whose contents shall be included.
+The file name can contain directories.
+The extension <code>.adoc</code> can be omitted.</p>
+</li>
+<li>
+<p><strong>Attributes</strong> (optional):</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>FILE_ONCE</strong>: Includes the same file only once.</p>
+</li>
+<li>
+<p><strong>TARGET_ONCE</strong> (alias <strong>ONCE</strong>): Includes the same target only once.</p>
+</li>
+<li>
+<p>(all other include attributes such as 'lines')</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
 </dd>
-</dl>
+<dt class="hdlist1">Warnings and Errors: </dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Error: File Not Found</strong>
+Is issued in case the given target could not be found.</p>
+</li>
+<li>
+<p><strong>Error: Circular Dependency</strong>
+Is issued in case the included files depend on each other.
+The last file which would create a circular dependency cycle is omitted.
+This error is only issued if all include macros of the cycle use the <code>{find}</code> macro.</p>
+</li>
+<li>
+<p><strong>Warning: Cant Find Circular Dependencies</strong>
+Is issued in case one or more includes do not use the <code>{find}</code> macro.
+Despite this issue, circular dependencies can still be found if all of the causing files are included using the <code>{find}</code> macro.</p>
+</li>
+<li>
+<p><strong>Warning: Multiple File Matches</strong>
+Is issued in case the given target is found at multiple locations.
+The first match is chosen to be included.</p>
+</li>
+<li>
+<p><strong>Warning: Inconsistent Use of Attributes</strong>
+Is issued in case one of the attributes is used inconsistently.
+The TARGET_ONCE attribute is supposed to be used at none or at all includes with the same target.
+The FILE_ONCE attribute is supposed to be used at none or at all includes matching the same file.</p>
+</li>
+</ul>
 </div>
-<div class="sect2 language-asciidoc">
-<h3 id="_url_pattern_2"><a class="anchor" href="#_url_pattern_2"></a><a class="link" href="#_url_pattern_2">8.1. URL Pattern</a></h3>
-<div class="paragraph">
-<p>Specifying which repository to link to is done by adding a URL pattern to the
-<a href="https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/userguide.adoc#configuration-file">config file</a> in the following format:</p>
-</div>
-<div class="paragraph">
-<p><code>:task_def_&lt;Prefix&gt;: &lt;Name&gt;;&lt;Description&gt;;&lt;URL-Pattern&gt;;&lt;Icon&gt;;&lt;TextPatterns&gt;</code></p>
-</div>
-<div class="dlist">
-<dl>
+</dd>
 <dt class="hdlist1">Example: </dt>
-</dl>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">:task_def_GH-: GitHub;IDE Bugs;https://github.com/NumberFour/N4JS/issues/${TASK_ID};icons/github.png;GH-${TASK_ID}
-:task_def_IDE-: Jira;IDE Backlog;https://jira.numberfour.eu/browse/IDE-${TASK_ID};icons/jira.png;IDE-${TASK_ID}</code></pre>
-</div>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">&lt;Prefix&gt;</dt>
 <dd>
-<p>The unique prefix by which this repository is identified (<code>GH-</code> in <code>task:GH-40[]</code>).</p>
-</dd>
-<dt class="hdlist1">&lt;Name&gt;</dt>
-<dd>
-<p>The name of the repository.</p>
-</dd>
-<dt class="hdlist1">&lt;Description&gt;</dt>
-<dd>
-<p>A description of the repository, used to generated a tooltip.</p>
-</dd>
-<dt class="hdlist1">&lt;URL-Pattern&gt;</dt>
-<dd>
-<p>The pattern to generate in the links - can contain the following placeholders:<br></p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong><code>{TASK_ID}</code></strong>: The suffix of the macro target (<code>40</code> in <code>task:GH-40[]</code>).</p>
-</li>
-</ul>
-</div>
-</dd>
-<dt class="hdlist1">&lt;Icon&gt;</dt>
-<dd>
-<p>The relative path to an image used as an icon for the repository.</p>
-</dd>
-<dt class="hdlist1">&lt;Text-Pattern&gt;</dt>
-<dd>
-<p>The text pattern to match to inline task macros in the AsciiDoc source - can also contain the <strong><code>{TASK_ID}</code></strong> placeholder.</p>
+<p>The following line includes the file <code>file.adoc</code> in the subdir <code>dir</code>.
+The location of that file is found by the <code>{find}</code> directive (see: <a href="#special-variables">[special-variables]</a>).
+The attribute <code>ONCE</code> is the shorthand form for <code>TARGET_ONCE</code>.</p>
 </dd>
 </dl>
-</div>
-</div>
-<div class="sect2 language-asciidoc">
-<h3 id="_examples"><a class="anchor" href="#_examples"></a><a class="link" href="#_examples">8.2. Examples</a></h3>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Jira Task: </dt>
-</dl>
-</div>
-<div class="exampleblock">
-<div class="content">
-AsciiDoc was decided as a suitable syntax for documentation <code>task:PRJ-2273[]</code>.
-</div>
 </div>
 <div class="paragraph">
-<p>AsciiDoc was decided as a suitable syntax for documentation. </p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<a href="https://jira.myowncompanywebsite.com/browse/PRJ-2273" title="IDE Backlog"><span class="image"><img src="images/icons/jira.png" alt=""></span>PRJ-2273</a>
-</div>
-</div>
-<hr>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Github Issue: </dt>
-</dl>
-</div>
-<div class="exampleblock">
-<div class="content">
-A bug has already <code>task:GH-135[]</code> been filed&#8230;&#8203;
-</div>
-</div>
-<div class="paragraph">
-<p>A bug has already been filed&#8230;&#8203; </p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<a href="https://github.com/NumberFour/asciispec/issues/135" title="AsciiSpec Bugs"><span class="image"><img src="images/icons/github.png" alt=""></span>GH-135</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_math_block_documentation"><a class="anchor" href="#_math_block_documentation"></a><a class="link" href="#_math_block_documentation">9. Math Block Documentation</a></h2>
-<div class="sectionbody">
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Description</dt>
-<dd>
-<p>The math block is used to write blocks of mathematical formulae.</p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>delimiter</strong>: Lines containing four plus symbols <code>++++</code> delimit the block. This is required if the block contains empty lines or nested formatting.</p>
-</li>
-</ul>
-</div>
-</dd>
-<dt class="hdlist1">Usage</dt>
-</dl>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[math]
-++++
-Some formulae.
-++++</code></pre>
-</div>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Example</dt>
-</dl>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[math]
-++++
-\sum_{i=1}^n i = {n(n+1)\over{2}}
-++++</code></pre>
+<p><code class="language-asciidoc">include::{find}dir/file.adoc[ONCE]</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_example"><a class="anchor" href="#_example"></a><a class="link" href="#_example">9.1. Example</a></h3>
+<h3 id="__code_api_code_include_macro"><a class="anchor" href="#__code_api_code_include_macro"></a><a class="link" href="#__code_api_code_include_macro">10.2. <code>{api}</code> Include Macro</a></h3>
 <div class="paragraph">
-<p>The above source will create the following output:</p>
-</div>
-<div class="openblock">
-<div class="content">
-<math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>i</mi><mo>=</mo><mfrac><mrow><mi>n</mi><mfenced close=")" open="("><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></mfenced></mrow><mn>2</mn></mfrac></math>
+<p>Includes generated adoc (of StdLib API) text which previously was generated by the exporter wizard.
+Uses a PQN to reference the section which is to be included.
+(tbd)</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="__code_src_code_include_macro"><a class="anchor" href="#__code_src_code_include_macro"></a><a class="link" href="#__code_src_code_include_macro">10.3. <code>{src}</code> Include Macro</a></h3>
 <div class="paragraph">
-<p>It is possible to use the <a href="#_math_include_documentation">mathinclude::[]</a> macro to include custom LaTeX commands.</p>
+<p>Includes source code (of StdLib API) from GitHub.
+Uses a PQN to reference the source element (e.g. a method) which is to be included.
+(tbd)</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_math_include_documentation"><a class="anchor" href="#_math_include_documentation"></a><a class="link" href="#_math_include_documentation">10. Math Include Documentation</a></h2>
+<h2 id="_generated_anchors"><a class="anchor" href="#_generated_anchors"></a><a class="link" href="#_generated_anchors">11. Generated Anchors</a></h2>
 <div class="sectionbody">
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Description</dt>
-<dd>
-<p>The <code>math include</code> can include <code>.tex</code> files containing custom LaTeX commands to be used in mathematical expressions. It is used in conjunction with <a href="#inline-math-macro.adoc">inline math</a> and <a href="#math-block.adoc">math block</a>. Multiple math include directives are appended, so it is possible to include several files. All math include directives are processed before the inline math expressions and the math blocks are processed.</p>
-</dd>
-</dl>
+<div class="paragraph">
+<p>The N4JS-N4 project <strong>eu.numberfour.n4js.jsdoc2spec</strong> generates adoc files for the documentation.
+These adoc files are used to create an online reference and a standalone PDF file.
+Moreover, the generated documentation is included into the stdlib API documentation.
+This stdlib API document merges both generated and manual written documentation.</p>
 </div>
 <div class="paragraph">
-<p>The include path may contain the <a href="#special-variables"><code>{find}</code></a> variable. In either case, the processor will search the included file by looking at each parent folder of the indicated path.</p>
+<p>When including generated adoc content into manual written documents, we might want to reference sections that are located within the included contents.
+Since these references rely on generated anchors used in the generated contents, an understanding of the structure of these anchors would be helpful.</p>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Usage</dt>
-<dd>
-<p><code class="language-asciidoc">mathinclude::some/file/path.tex[]</code></p>
+<div class="sect2 language-n4js">
+<h3 id="_scope"><a class="anchor" href="#_scope"></a><a class="link" href="#_scope">11.1. Scope</a></h3>
 <div class="paragraph">
-<p><code class="language-asciidoc">mathinclude::{find}some_other_file.tex[]</code></p>
-</div>
-</dd>
-</dl>
+<p>Anchors in the generated documentation are created for every property of a Class or Interface.
+For example, for every property such as datafields or methods, a section is generated that can be referenced using a generated anchor.
+The following excerpt shows the beginning of the generated contents of the module n4.lang.Comparable.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[math]
-++++
-Some maths that can use the LaTeX commands from the included file.
-++++</code></pre>
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">= Module n4.lang.Comparable
+
+== Interface Comparable
+
+Any class that supports equality checks should implement this interface.
+Comparable is not similar to Java's comparable. In N4JS, it only provides the equals method.
+
+
+
+[[sec:spec_n4.lang.Comparable.Comparable.equals]]
+[role=memberdoc]
+=== ++Method equals++
+
+[.language-n4js]
+==== Signature
+srclnk:++stdlib_api:packages:eu.numberfour.n4js.base.api:src/n4js/n4/lang/Comparable:Comparable#equals++[``++public abstract equals(other: any): boolean++``]
+
+==== Description
+
+returns true if the provided entity is equal to the current object by loose equality rules.
+Other may be null, in that case, false is to be returned.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The example above contains one generated anchor: <code>sec:spec_n4.lang.Comparable.Comparable.equals</code> which references the <code>equals</code> method in the interface <code>Comparable</code> in the module <code>n4.lang.Comparable</code>.</p>
+</div>
+</div>
+<div class="sect2 language-n4js">
+<h3 id="_general_structure"><a class="anchor" href="#_general_structure"></a><a class="link" href="#_general_structure">11.2. General Structure</a></h3>
+<div class="paragraph">
+<p>Generally, the structure of anchors is similar to the structure of PQNs.
+However, the anchor structure is shorter and of defined length:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-plain" data-lang="plain">sec:spec_&lt;module&gt;&lt;type&gt;&lt;delimiter&gt;&lt;property&gt;</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">module</dt>
+<dd>
+<p>specifies the name of a module</p>
+</dd>
+<dt class="hdlist1">type</dt>
+<dd>
+<p>specifies the name of a type, e.g. a class in the module</p>
+</dd>
+<dt class="hdlist1">delimiter</dt>
+<dd>
+<p>specifies the delimiter between type and property</p>
+</dd>
+<dt class="hdlist1">property</dt>
+<dd>
+<p>specifies the name of one property in the type</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The delimiters in anchors differ from the PQN definition.
+PQNs use strings for example like <code>#</code> or <code>@&gt;</code> to access non static properties or static setters.
+Since these strings contains characters which are permitted in adoc anchors, they are replaced as follows:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Delimiters</dt>
+</dl>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">PQN</th>
+<th class="tableblock halign-left valign-top">Anchor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>non-static property</p>
+</div>
+<div class="paragraph">
+<p>non-static getter</p>
+</div>
+<div class="paragraph">
+<p>non-static setter</p>
+</div>
+<div class="paragraph">
+<p>static property</p>
+</div>
+<div class="paragraph">
+<p>static getter</p>
+</div>
+<div class="paragraph">
+<p>static setter</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>#</p>
+</div>
+<div class="paragraph">
+<p>#&lt;</p>
+</div>
+<div class="paragraph">
+<p>#&gt;</p>
+</div>
+<div class="paragraph">
+<p>@</p>
+</div>
+<div class="paragraph">
+<p>@&lt;</p>
+</div>
+<div class="paragraph">
+<p>@&gt;</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>.</p>
+</div>
+<div class="paragraph">
+<p>.getter.</p>
+</div>
+<div class="paragraph">
+<p>.setter.</p>
+</div>
+<div class="paragraph">
+<p>.static.</p>
+</div>
+<div class="paragraph">
+<p>.static.getter.</p>
+</div>
+<div class="paragraph">
+<p>.static.setter.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Example: </dt>
+<dd>
+<p><code>sec:spec_n4.lang.Identifiable.Identifiable.getter.id</code></p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2 language-n4js">
+<h3 id="_special_characters"><a class="anchor" href="#_special_characters"></a><a class="link" href="#_special_characters">11.3. Special Characters</a></h3>
+<div class="paragraph">
+<p>Special characters occur in anchors since property names can contain any characters.
+In addition, the iterator symbol, which is used for iterators, often contains the <code>#</code> symbol.
+Consequently, anchors have to escape these characters.
+This is done by replacing the special character with a colon and its corresponding unicode number.
+For example, the property name <code>#iterator</code> is transformed to <code>:23iterator</code>.
+The resulting complete anchor is: <code>sec:spec_n4.lang.Delegate.Delegate.:23iterator</code>.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="PQN-def"><a class="anchor" href="#PQN-def"></a><a class="link" href="#PQN-def">11. Partially Qualified Names (PQNs)</a></h2>
+<h2 id="PQN-def"><a class="anchor" href="#PQN-def"></a><a class="link" href="#PQN-def">12. Partially Qualified Names (PQNs)</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>A partially qualified name is a string that uniquely identifies a source element.
@@ -1287,110 +1387,13 @@ This means that both, DELIMITER and CLASSIFIER_NAME, must be specified when the 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_requirements_block"><a class="anchor" href="#_requirements_block"></a><a class="link" href="#_requirements_block">12. Requirements Block</a></h2>
-<div class="sectionbody">
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Usage</dt>
-</dl>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">.title
-[req,id=RSL-3,version=1]
---
-Contents of the requirement
---</code></pre>
-</div>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Attributes</dt>
-<dd>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>title</strong> (required):  An anchor is derived from the requirement title and embedded at the beginning of the rendered output.</p>
-</li>
-<li>
-<p><strong>ID:</strong> (required) The ID in the form <strong>&lt;Prefix&gt;-&lt;Number&gt;</strong>, used to generate an anchor</p>
-</li>
-<li>
-<p><strong>version</strong>: (required) value is a non-negative integer.</p>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Omission of any of the above attributes will print an error to the console and insert a warning text in the generated document.
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p><strong>delimiter</strong>: Lines containing only two hyphens <code>--</code> delimit the block. This is required if the block contains empty lines or nested formatting.</p>
-</li>
-</ul>
-</div>
-</dd>
-</dl>
-</div>
-<div class="sect2">
-<h3 id="_id_pattern"><a class="anchor" href="#_id_pattern"></a><a class="link" href="#_id_pattern">12.1. ID Pattern</a></h3>
-<div class="paragraph">
-<p>The purpose of the <code>&lt;Prefix&gt;-&lt;Number&gt;</code> ID is to ensure that Requirements are both unique and easily referenceable.
-Currently, the ID may be any string, but should conform to the following conventions:</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1"><strong>&lt;Prefix&gt;</strong>: </dt>
-<dd>
-<p><code>R</code> (requirement) followed by the project prefix (i.e. <code>SL</code> for <code>stdlib</code>)</p>
-</dd>
-<dt class="hdlist1"><strong>&lt;Number&gt;</strong>: </dt>
-<dd>
-<p>The requirement number, currently not validated.
-A validation stage for requirement IDs (detecting duplicates, for instance) is planned.</p>
-</dd>
-<dt class="hdlist1">Example</dt>
-<dd>
-<p>The following example demonstrates how to document Requirement #3 for stdlib Version 1;</p>
-</dd>
-</dl>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc"><code>.This is the title</code>
-<code>[req,id=RSL-3,version=1]</code>
-<code>--</code>
-My Super Requirement
-<code>--</code></code></pre>
-</div>
-</div>
-<div class="openblock requirement">
-<div class="content">
-<div class="paragraph">
-<p><a id="Req-RSL-3"></a><strong>Req. RSL-3:</strong> <a href="#Req-RSL-3">This is the title</a> (ver. 1)</p>
-</div>
-<div class="paragraph">
-<p>My Super Requirement</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="_special_variables_in_asciispec"><a class="anchor" href="#_special_variables_in_asciispec"></a><a class="link" href="#_special_variables_in_asciispec">13. Special Variables in Asciispec</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Some macros of Asciispec implement special variables which can be used by AsciiDoc authors.
 These special variables are readonly.</p>
 </div>
-<div class="sect2">
+<div class="sect2 language-asciidoc">
 <h3 id="_the_code_find_code_variable"><a class="anchor" href="#_the_code_find_code_variable"></a><a class="link" href="#_the_code_find_code_variable">13.1. The <code>{find}</code> Variable</a></h3>
 <div class="sect3">
 <h4 id="_introduction"><a class="anchor" href="#_introduction"></a><a class="link" href="#_introduction">13.1.1. Introduction</a></h4>
@@ -1501,10 +1504,20 @@ Consequently, the adoc file might not be displayed correctly, especially with re
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_bibliography_2"><a class="anchor" href="#_bibliography_2"></a><a class="link" href="#_bibliography_2">Appendix A: Bibliography</a></h2>
+<div class="sectionbody">
+<div class="openblock bibliography">
+<div class="content">
+
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-20 15:34:08 CET
+Last updated 2017-01-23 11:59:53 CET
 </div>
 </div>
 <div class="social">
@@ -1516,17 +1529,18 @@ Last updated 2017-01-20 15:34:08 CET
 // Toggle the table of contents
 $( "button#tocbutton" ).click(function() {
   if ($("#tocbutton").css('left') == '25px') {
-    $( "#tocbutton" ).animate({left: '215px'},"slow");
+    $( "#tocbutton" ).animate({left: '270px'},"slow");
     $( "#toc.toc2" ).animate({left: '0'},"slow");
     $( "#menubar" ).animate({left: '215px'},"slow");
-    $( "#header, #content, #footnotes, #footer, .social" ).animate({left: '230px'},"slow");
-    $( "body.toc2").css("max-width", "80%");
+    $( "#header, #content, #footnotes, #footer" ).animate({left: '260px'},"slow");
+    $( "body.toc2").css("max-width", "75%");
+    $( "#menubar" ).css("max-width", "80%");
 }
   else {
     $( "#menubar" ).animate({left: '10px'},"slow");
     $( "#tocbutton" ).animate({left: '25px'},"slow");
-    $( "#toc.toc2" ).animate({left: '-13rem'},"slow");
-    $( "#header, #content, #footnotes, #footer, .social" ).animate({left: '40px'},"slow");
+    $( "#toc.toc2" ).animate({left: '-260px'},"slow");
+    $( "#header, #content, #footnotes, #footer" ).animate({left: '40px'},"slow");
     $( "body.toc2").css("max-width", "90%");
 }
 });

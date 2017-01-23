@@ -297,17 +297,12 @@ b.button:before { content: "["; padding: 0 3px 0 2px; }
 
 b.button:after { content: "]"; padding: 0 2px 0 3px; }
 
-#header, #content, #footnotes, #footer { max-width:1300px; margin-right: 80px; margin-top: 0; margin-bottom: 0; *zoom: 1; position: relative; padding-left: 0.9375em; padding-right: 0.9375em; left:40px; }
-
-@media only screen and (max-width: 1360px) {
-	#toc {width: 200px }
-}
-
+#header, #content, #footnotes, #footer { max-width:1300px; margin-right: 80px; margin-top: 0; margin-bottom: 0;  position: relative; padding-left: 0.9375em; padding-right: 0.9375em; left: 40px;}
 
 #header:before, #header:after, #content:before, #content:after, #footnotes:before, #footnotes:after, #footer:before, #footer:after { content: " "; display: table; }
 #header:after, #content:after, #footnotes:after, #footer:after { clear: both; }
 
-#content { margin-top: 1.25em; }
+#content { margin-top: 1.25em; padding-right: 0px; margin-right: 115px; }
 
 #content:before { content: none; }
 
@@ -427,18 +422,18 @@ div#features-nav li:before {
 @media only screen and (min-width: 768px) { 
   #toctitle { padding-top: 0px; font-size: 1.375em; }
   body.toc2 { padding-left: 2em; padding-right: 1em; }
-  #toc.toc2 { margin-top: 0 !important; background-color: #f2f2f2; position: fixed; width: 200px; left: 0; top: 0; border-right: 1px solid #dddddd; border-top-width: 0 !important; border-bottom-width: 0 !important; z-index: 1000; padding: 1.25em 0.25em 0em 0.25em; height: 100%; overflow: auto; }
+  #toc.toc2 { margin-top: 0 !important; background-color: #f2f2f2; position: fixed; width: 260px; left: 0; top: 0; border-right: 1px solid #dddddd; border-top-width: 0 !important; border-bottom-width: 0 !important; z-index: 1000; padding: 1.25em 0.25em 0em 0.25em; height: 100%; overflow: auto; }
   #toc.toc2 #toctitle { margin-top: 0; margin-bottom: 0.8rem; font-size: 1.2em; padding-left: 1em;}
   #toc.toc2 > ul { font-size: 0.9em; margin-bottom: 0; }
   #toc.toc2 ul ul { margin-left: 6px;  }
   #toc.toc2 ul.sectlevel0 ul.sectlevel1 { padding-left: 0; margin-top: 0.5em; margin-bottom: 0.5em; }
   body.toc2.toc-right { padding-left: 2em; padding-right: 2em; }
-  body.toc2.toc-right #toc.toc2 { border-right-width: 0; border-left: 1px solid #dddddd; left: auto; right: -13rem; } }
-  body.toc2.toc-left #toc.toc2 { left: -13rem; } }
+  body.toc2.toc-right #toc.toc2 { border-right-width: 0; border-left: 1px solid #dddddd; left: auto; right: -260px; } }
+  body.toc2.toc-left #toc.toc2 { left: -260px; }
 @media only screen and (min-width: 1535px) { 
   body.toc2 { padding-left: 2em; padding-right: 2em; }
   #toctitle { padding-top: 0rem; font-size: 1.375em; }
-  #toc.toc2 { width: 13em; }
+  #toc.toc2 { width: 260px; }
   #toc.toc2 #toctitle { font-size: 1.375em; }
   #toc.toc2 > ul { font-size: 0.95em; }
   #toc.toc2 ul ul { padding-left: 0; }
@@ -450,21 +445,13 @@ div#features-nav li:before {
 #footer {  padding: 1.25em; padding-bottom: 0rem;  margin-top: 2rem; color: white}
 div.social  {    
 	padding: 1.25em;
-	padding-left: 20%
+	padding-left: 20%;
     padding-bottom: 0rem;
     margin-top: 2rem;
-    position: absolute;
     color: white;  }
 div.social > ul li { margin-left:15%; color: white; line-height: 1.44; font-size: 1.2em; font-weight: 800; font-style: bold; position: relative; list-style: none; list-style-type: none; display: inline; text-decoration: none; }
-div.social > ul a:visited { color: #244D82; }
-div.social > ul a:hover { color: #F7D425; } 
 
 #bottomright {float: right;}
-
-
-@media only screen and (max-width: 1050px) {
-	body {max-width: 100%;}
-}
 
 #footer-text { color: #dddddd; line-height: 1.44; }
 
@@ -500,14 +487,10 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 .exampleblock > .content > :first-child { margin-top: 0; }
 .exampleblock > .content > :last-child { margin-bottom: 0; }
 
-.sidebarblock { position: absolute; border-style: solid; width: 100px; border-width: 1px; border-color: #d9d9d9; right: -85px; padding: .1rem; background: #f2f2f2; -webkit-border-radius: 0; border-radius: 0; text-align: left; border-radius: 5px; overflow-wrap: break-word;}
+.sidebarblock { position: absolute; border-style: solid; width: 90px; border-width: 1px; border-color: #d9d9d9; right: -90px; padding: .1rem; background: #f2f2f2; -webkit-border-radius: 0; border-radius: 0; text-align: left; border-radius: 5px;}
 .sidebarblock > :first-child { margin-top: 0; }
 .sidebarblock > :last-child { margin-bottom: 0; }
 .sidebarblock > .content > .title { color: #6999d6; margin-top: 0; }
-
-@media only screen and (max-width: 1560px) { 
-.sidebarblock { position: absolute; right: -50px; }
-}
 
 .exampleblock > .content > :last-child > :last-child, .exampleblock > .content .olist > ol > li:last-child > :last-child, .exampleblock > .content .ulist > ul > li:last-child > :last-child, .exampleblock > .content .qlist > ol > li:last-child > :last-child, .sidebarblock > .content > :last-child > :last-child, .sidebarblock > .content .olist > ol > li:last-child > :last-child, .sidebarblock > .content .ulist > ul > li:last-child > :last-child, .sidebarblock > .content .qlist > ol > li:last-child > :last-child { margin-bottom: 0; }
 
@@ -526,8 +509,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 
 .listingblock > .content { position: relative; }
 /*
-Uncomment this section if using default syntax highlighters
-
+If reverting to builtin syntax highlighter, uncomment this section for source code blocks
 .listingblock code[data-lang]:before { display: none; content: attr(data-lang); position: absolute; font-size: 0.75em; top: 0.425rem; right: 0.5rem; line-height: 1; text-transform: uppercase; color: #999; }
 
 .listingblock:hover code[data-lang]:before { display: block; }
@@ -837,7 +819,7 @@ div.slicknav_menu {
     color: white;
     padding-bottom: 2rem;
     background: url("logo.png");
-    background-position: 35px 0;
+    background-position: 100px 0;
     background-repeat: no-repeat;
 }
 
@@ -878,6 +860,7 @@ li.slicknav_parent.slicknav_open  {
     div.slicknav_menu {
         display: block;
         color: white
+        
     }
     #mobile-banner {
         display: block;
@@ -924,8 +907,7 @@ div.slicknav_menu li:last-of-type
 #menubar ul {list-style: none; }
 #menubar a {text-decoration: none;}
 #menubar li {margin-left: 0;}
-#menubar {    height: 90px;position: relative;color: white;font-size: 1.9rem;border-bottom: #595959;border-bottom: 2px solid #dddddd;}
-
+#menubar { height: 90px;max-width: 1280px;position: relative;margin-left: 50px;color: white;font-size: 1.9rem;border-bottom: #595959;border-bottom: 2px solid #dddddd;}
 #menubar img {
     padding-left: 45px;
     margin-top: 15px;
@@ -949,6 +931,13 @@ div.slicknav_menu li:last-of-type
     visibility: hidden;
     display: none;
   }
+}
+
+@media only screen and (max-width: 768px) {
+	body.toc2.toc-right #tocbutton {visibility: hidden;}
+	#toc.toc2 { display:none;}
+	#header, #content, #footnotes, #footer {  margin-left: 0px; left: 0px;}
+	body.toc2 {left: 0px;}
 }
 
 @media only screen and (max-width: 500px) {
@@ -1168,7 +1157,7 @@ body.toc2.toc-left #tocbutton {
 	z-index: 998;
 	border: none;
 	left: 25px;
-	top: 30px;
+	top: 25px;
 	background: url("bars-blue.png") no-repeat center 50%;
 
 }
@@ -1188,16 +1177,11 @@ body.toc2.toc-right a:hover.back-to-top {
 		z-index: 100000;
 	}
 }
-@media only screen and (max-width: 768px) {
-	body.toc2.toc-right #tocbutton {visibility: hidden;}
-	#toc.toc2 {width: 100%;}
-	#header, #content, #footnotes, #footer {  margin-left: 0px; max-width: 100%;}
-}
 
 @media only screen and (max-width: 768px) {
 	body.toc2.toc-left #tocbutton {visibility: hidden;}
 	#toc.toc2 {width: 100%; left: 0px;}
-	#header, #content, #footnotes, #footer {  margin-left: 0px; ,margin-right: 50px }
+	#header, #content, #footnotes, #footer {  margin-left: 0px; margin-right: 50px; }
 }
 
 @media only screen and (max-width: 1462px) {
