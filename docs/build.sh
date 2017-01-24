@@ -6,20 +6,18 @@
 set -e +x -v
 
 ########## Directory Locations ###########
-# output folder:
+# Output folder:
 GEN_FOLDER=generated-docs/html
-
 rm -rf ./$GEN_FOLDER/; mkdir -p ./$GEN_FOLDER/
 
-echo INFO: Copying resources to ./$GEN_FOLDER/
+# Copy resources to ./$GEN_FOLDER/
 cp -r scripts styles images ./$GEN_FOLDER/
 
-echo INFO: AsciiSpec Generating HTML
+######## Build HTML for gh-pages ########
+PARAMS="-a stylesheet=foundation.css -D $GEN_FOLDER/"
 
-####################### Build HTML for gh-pages #######################
-asciispec -a stylesheet=foundation.css -a docinfodir=html-templates -D $GEN_FOLDER/ index.adoc
-
-echo INFO: AsciiSpec HTML conversion Done
+asciispec $PARAMS -a docinfodir=html-templates index.adoc
+asciispec $PARAMS -a docinfodir=html-templates/userguide userguide.adoc
 
 # running "./build.sh -p" (preview) will skip PDF and launch index.html
 if [ "${1}" == "--preview" ] || [ "${1}" == "-p" ]; then
@@ -28,10 +26,9 @@ exit 0
 fi
 
 ####### Build PDF for gh-pages download #######
-echo INFO: AsciiSpec Generating PDF
 asciispec -b docbook index.adoc
-fopub index.xml
-rm index.xml
-mv index.pdf ./$GEN_FOLDER/
+asciispec -b docbook userguide.adoc
+fopub index.xml && fopub userguide.xml
+rm *.xml && mv *.pdf ./$GEN_FOLDER/
 
 echo DONE: AsciiSpec conversion finished.

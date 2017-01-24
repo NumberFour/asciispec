@@ -3,6 +3,7 @@ include::config.adoc[]
 endif::[]
 
 :find:
+:toc: left
 
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -13,7 +14,7 @@ This userguide covers the basics of common and practical AsciiDoc syntax along w
 [.language-bash]
 == Converting Documents with AsciiSpec
 
-To convert this file with AsciiSpec, `cd` to the docs directory and run:
+To convert this document with AsciiSpec, `cd` to the docs directory and run:
 
 [source,bash]
 asciispec userguide.adoc
@@ -24,7 +25,7 @@ Using CLI options::
 To convert to HTML using a different CSS stylesheet, we can pass document attributes via the command line using the `-a` flag:
 
 [source,bash]
-asciispec -a stylesheet=foundation.css userguide.adoc
+asciispec -a stylesheet=mystyle.css mydoc.adoc
 
 To convert to docbook, use the `-b docbook` flag:
 
@@ -32,8 +33,35 @@ To convert to docbook, use the `-b docbook` flag:
 
 Most built-in CLI parameters are described in the help page by running `asciispec -h` and in further detail in the http://asciidoctor.org/docs/user-manual/#cli-options[CLI Options] section of the AsciiDoctor user manual.
 
+=== PDF
 
-// TODO: add man page for custom features
+Apache FOP (Formatting Objects Processor) is required for higher quality *PDF* generation.
+A fork with custom PDF styling and syntax highlighting can be found at the following location:
+
+https://github.com/NumberFour/asciidoctor-fopub
+
+1. Clone the Asciidoctor Fopub repository
++
+```
+git clone https://github.com/NumberFour/asciidoctor-fopub.git
+```
+2. Add the `asciidoctor-fopub/bin` directory to your shell profile:
++
+```bash
+export PATH=$PATH:~/path/to/asciidoctor-fopub/bin/
+```
+3. Confirm successful install using an empty `fopub` command.
++
+```bash
+$ fopub
+~/path/to/asciidoctor-fopub/bin/fopub: You must specify a DocBook v4.5 or DocBook v5 XML source file as the first command argument
+```
+4. Convert XML to PDF using the following:
++
+```bash
+fopub myfile.xml
+```
+
 
 === Configuration File
 
@@ -166,7 +194,7 @@ will create a block as expected:
 
 image::images/logo.png[]
 
-_beginning of next block..._
+beginning of next block...
 ----
 
 *_Output_*
