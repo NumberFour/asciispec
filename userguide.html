@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>AsciiSpec Userguide</title>
+<link rel="stylesheet" href="styles/foundation.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<!-- ************* Meta ************* -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<!-- ************* OpenGraph ************-->
+<meta name="description" content="AsciiSpec">
+
+<!-- ************* Back-to-top JQuery ************* -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="scripts/nav-mobile.js"></script>
+
+<!-- ******** Stylesheet ******-->
+<script src="styles/foundation.css"></script>
+
+<!-- ******** Prism.js Syntax Highlighter ******-->
+<script src="scripts/prism.js"></script>
+<link href="styles/prism.css" rel="stylesheet" />
+
+<!-- ******** MathJax CDN ******-->
+<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+
+<!-- ****************** NavBar ****************** -->
+<div id="menubar">
+    <div class="banner">
+      <a href="index.html"><img src="images/logo.png" alt="AsciiSpec"></a>
+    </div>
+<ul class="fa-ul">
+	<li><a href="userguide.pdf"><i class="fa fa-file-pdf-o"></i>Download as PDF</a></li>
+	<li><a href="index.html">Docs index</a></li>
+</ul>
+</div>
+<button id="tocbutton"><i class="fa fa-bars" aria-hidden="true"></i>TOC</button>
+</head>
+<body class="book toc2 toc-left">
+<div id="header">
+<h1>AsciiSpec Userguide</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_converting_documents_with_asciispec">1. Converting Documents with AsciiSpec</a>
+<ul class="sectlevel2">
+<li><a href="#_pdf">1.1. PDF</a></li>
+<li><a href="#_configuration_file">1.2. Configuration File</a></li>
+</ul>
+</li>
+<li><a href="#_asciidoctor_syntax">2. AsciiDoctor Syntax</a>
+<ul class="sectlevel2">
+<li><a href="#_blocks">2.1. Blocks</a>
+<ul class="sectlevel3">
+<li><a href="#_optional_attributes">2.1.1. Optional Attributes</a></li>
+</ul>
+</li>
+<li><a href="#_block_macro">2.2. Block Macro</a></li>
+<li><a href="#_inline_macro">2.3. Inline Macro</a></li>
+<li><a href="#_document_attributes_variables">2.4. Document Attributes &amp; Variables</a>
+<ul class="sectlevel3">
+<li><a href="#_header_attributes">2.4.1. Header Attributes</a></li>
+</ul>
+</li>
+<li><a href="#_tables">2.5. Tables</a></li>
+<li><a href="#_blocks_2">2.6. Blocks</a>
+<ul class="sectlevel3">
+<li><a href="#_titles_attributes">2.6.1. Titles &amp; attributes</a></li>
+</ul>
+</li>
+<li><a href="#_source_code">2.7. Source Code</a></li>
+<li><a href="#_admonition_blocks">2.8. Admonition Blocks</a></li>
+<li><a href="#_media">2.9. Media</a></li>
+</ul>
+</li>
+<li><a href="#_asciispec_processors">3. AsciiSpec Processors</a></li>
+<li><a href="#_general_tips">4. General Tips</a>
+<ul class="sectlevel2">
+<li><a href="#_colons">4.1. Colons</a></li>
+</ul>
+</li>
+<li><a href="#_resources">5. Resources</a>
+<ul class="sectlevel2">
+<li><a href="#_sublime_text_packages">5.1. Sublime Text packages</a></li>
+<li><a href="#_document_converters">5.2. Document Converters</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>This userguide covers the basics of common and practical AsciiDoc syntax along with basic tips for using AsciiSpec for documentation.</p>
+</div>
+</div>
+</div>
+<div class="sect1 language-bash">
+<h2 id="_converting_documents_with_asciispec"><a class="anchor" href="#_converting_documents_with_asciispec"></a><a class="link" href="#_converting_documents_with_asciispec">1. Converting Documents with AsciiSpec</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To convert this document with AsciiSpec, <code>cd</code> to the docs directory and run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">asciispec userguide.adoc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will use the default backend and convert the <code>userguide.adoc</code> sample document to a HTML file called <code>userguide.html</code>.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Using CLI options</dt>
+<dd>
+<p>To convert to HTML using a different CSS stylesheet, we can pass document attributes via the command line using the <code>-a</code> flag:</p>
+</dd>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">asciispec -a stylesheet=mystyle.css mydoc.adoc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To convert to docbook, use the <code>-b docbook</code> flag:</p>
+</div>
+<div class="paragraph">
+<p><code>asciispec -b docbook userguide.adoc</code></p>
+</div>
+<div class="paragraph">
+<p>Most built-in CLI parameters are described in the help page by running <code>asciispec -h</code> and in further detail in the <a href="http://asciidoctor.org/docs/user-manual/#cli-options">CLI Options</a> section of the AsciiDoctor user manual.</p>
+</div>
+<div class="sect2">
+<h3 id="_pdf"><a class="anchor" href="#_pdf"></a><a class="link" href="#_pdf">1.1. PDF</a></h3>
+<div class="paragraph">
+<p>Apache FOP (Formatting Objects Processor) is required for higher quality <strong>PDF</strong> generation.
+A fork with custom PDF styling and syntax highlighting can be found at the following location:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/NumberFour/asciidoctor-fopub" class="bare">https://github.com/NumberFour/asciidoctor-fopub</a></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Clone the Asciidoctor Fopub repository</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>git clone https://github.com/NumberFour/asciidoctor-fopub.git</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add the <code>asciidoctor-fopub/bin</code> directory to your shell profile:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">export PATH=$PATH:~/path/to/asciidoctor-fopub/bin/</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Confirm successful install using an empty <code>fopub</code> command.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ fopub
+~/path/to/asciidoctor-fopub/bin/fopub: You must specify a DocBook v4.5 or DocBook v5 XML source file as the first command argument</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Convert XML to PDF using the following:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">fopub myfile.xml</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_file"><a class="anchor" href="#_configuration_file"></a><a class="link" href="#_configuration_file">1.2. Configuration File</a></h3>
+<div class="paragraph">
+<p>AsciiSpec processors with configurable target URLs have to be set up by means of a configuration file.
+For this case,<code>config.adoc</code> can be copied to the location of the source document and used as a template.
+The following line of code must be included at the top of your source document:</p>
+</div>
+<div class="paragraph">
+<p><code>include::config.adoc[]</code></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title=""></i>
+</td>
+<td class="content">
+To configure a specific processor, see the <a href="#_asciispec_processors">AsciiSpec Processors</a> section below.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1 language-asciidoc">
+<h2 id="_asciidoctor_syntax"><a class="anchor" href="#_asciidoctor_syntax"></a><a class="link" href="#_asciidoctor_syntax">2. AsciiDoctor Syntax</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In order that we understand the use of AsciiSpec processors, it&#8217;s important to know the context in which they function.
+This section provides a brief overview of how an AsciiDoc document is structured.
+The following list is a simplified overview of the AsciiDoctor AST:</p>
+</div>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+<code>Document</code>
+</td>
+<td class="hdlist2">
+<p>The document contains <code>Sections</code> and <code>Blocks</code> that make up the document and holds the document attributes.</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+<code>Section</code>
+</td>
+<td class="hdlist2">
+<p>Models sections in the document and dictates the structure of the <code>Document</code> tree.</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+<code>Blocks</code>
+</td>
+<td class="hdlist2">
+<p>Content within a <code>Section</code>, differentiated by <strong>context</strong> such as 'paragraph' or 'image'.</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+<code>Lists</code>, <code>Tables</code>, <code>ListItems</code>&#8230;&#8203;
+</td>
+<td class="hdlist2">
+<p>Nested content within a <code>Block</code>. Can also themselves be <code>Blocks</code>.</p>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_blocks"><a class="anchor" href="#_blocks"></a><a class="link" href="#_blocks">2.1. Blocks</a></h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Usage</dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[quote]
+Before I came here I was confused about this subject.
+Having listened to your lecture I am still confused.
+But on a higher level.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Blocks are content in a section with styles or <code>contexts</code> such as paragraphs, source listings, images, etc.
+Square brackets <code>[]</code> are used to indicate the style of the block that follows and an empty line will indicate that the block has finished.
+All plain text of one or more lines will be parsed as a <code>block</code> with the 'paragraph' style by default, therefore:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">It was the best of times..
+
+// Is the same as writing the following:
+
+[paragraph]
+It was the best of times..</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To style a block with a source <code>listing</code> context, we use <code>[source]</code> as with this example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[source]
+export public class Fibonacci {
+ public seq()  {</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Output: </dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>export public class Fibonacci {
+ public seq()  {</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_optional_attributes"><a class="anchor" href="#_optional_attributes"></a><a class="link" href="#_optional_attributes">2.1.1. Optional Attributes</a></h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">.Fibonacci.n4js
+[source,n4js]
+----
+export public class Fibonacci {
+ public seq()  {
+
+      var arr = [];
+// etc...
+----</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the first line we have demonstrated how to add a <em>title</em> to a block. This is done using a full stop followed by the title (<code>Fibonacci.n4js</code>).
+A title can be added in this way to many different block types by default.</p>
+</div>
+<div class="paragraph">
+<p>In line 2 of the example above we declare some attributes for the block.
+The first attribute is to set the block context as <code>source</code> and the second attribute is the listing language - <code>n4js</code>.</p>
+</div>
+<div class="paragraph">
+<p>Notice the use of four hyphens to delimit the block: <code>----</code> this indicates to the parser where the block begins and ends.
+The listing block can then also include the empty line:</p>
+</div>
+<div class="paragraph">
+<p><strong><em>Output:</em></strong></p>
+</div>
+<div class="listingblock">
+<div class="title">Fibonacci.n4js</div>
+<div class="content">
+<pre class="highlight"><code class="language-n4js" data-lang="n4js">export public class Fibonacci {
+ public seq()  {
+
+      var arr = [];
+// etc...</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_block_macro"><a class="anchor" href="#_block_macro"></a><a class="link" href="#_block_macro">2.2. Block Macro</a></h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Usage: </dt>
+<dd>
+<p><code>toc::[]</code></p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Block macros are used to create a block member in a document.
+The above example creates a table of contents block at that position in the document (to enable this feature, see <a href="#Document Attributes">setting document attributes</a> below).</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>Block</code> vs. <code>Block Macro</code></dt>
+<dd>
+<p>The difference here is that with a block macro, all parameters that dictate how the block is rendered are contained within the macro delcaration.
+The already-existing lines of AsciiDoc source that follow the macro are not formatted or changed by its use.</p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title=""></i>
+</td>
+<td class="content">
+As with <code>Blocks</code>, we must also prepend and append the <code>Block Macro</code> with an empty line.
+The following is an example of a block macro to insert a new block with the <code>image</code> context followed by the resulting output:
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong><em>Source:</em></strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">The following image macro is not rendered, +
+it is considered the last line of this pargraph block. +
+image::images/logo.png[]
+
+Leaving an empty line before and after the image block macro +
+will create a block as expected:
+
+image::images/logo.png[]
+
+beginning of next block...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong><em>Output</em></strong></p>
+</div>
+<div class="paragraph">
+<p>The following image macro is not rendered,<br>
+it is considered the last line of this pargraph block.<br>
+image::images/logo.png[]</p>
+</div>
+<div class="paragraph">
+<p>Leaving an empty line before and after the image block macro<br>
+will create a block as expected:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/logo.png" alt="logo">
+</div>
+</div>
+<div class="paragraph">
+<p><em>beginning of next block&#8230;&#8203;</em></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_inline_macro"><a class="anchor" href="#_inline_macro"></a><a class="link" href="#_inline_macro">2.3. Inline Macro</a></h3>
+<div class="paragraph">
+<p>Inline macros are similar to <a href="#_block_macro">block macros</a> except that the macro is replaced by inline content.
+The syntax is different in that we use a single colon <code>:</code> instead of two <code>::</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">We can simply insert a logo image:images/logo.png[Logo] directly into our paragraph...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can simply insert a logo <span class="image"><img src="images/logo.png" alt="Logo"></span> directly into our paragraph&#8230;&#8203;</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Optional Attributes</dt>
+<dd>
+<p>In the above example, we have included some optional attributes in the square brackets that close the inline macro.
+The first attribute is the 'Alt Text' of the image, followed by the width and height of the image.
+The same method of passing attributes can be applied to the <a href="#_block_macro">block macro</a> above e.g.<br></p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><code>image::images/logo.png[Logo,15,18]</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_document_attributes_variables"><a class="anchor" href="#_document_attributes_variables"></a><a class="link" href="#_document_attributes_variables">2.4. Document Attributes &amp; Variables</a></h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Usage: </dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">:attribute: value
+
+{attribute}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Setting document attributes is done by adding an attribute entry line as <code>:attribute: value</code> above.
+Variables are declared using <code>{}</code> curly brackets and can be used for substitutions.
+Attributes can be inserted anywhere in a document unless they are specific <em>header attributes</em> as described in the next section.
+Here are two examples of setting an attribute via an attribute entry line and using inline shorthand:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Source</th>
+<th class="tableblock halign-left valign-top">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">By attribute entry line:
+
+:country: Spain
+We should travel to {country}!
+
+Attributes can be set inline too:
+We should {set:country:France} travel to {country}!</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>By attribute entry line:</p>
+</div>
+<div class="paragraph">
+<p>We should travel to {country}!</p>
+</div>
+<div class="paragraph">
+<p>Attributes can be set inline too:
+We should  travel to France!</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>An example of a common document attribute is <code>imagesdir</code> which specifies the images directory.
+<code>imagesdir</code> is empty by default, therefore, <code>image:a.jpg[]</code> will look for <code>a.jpg</code> in the same directory as the source document.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">:imagesdir: images</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Setting <code>imagesdir</code> as above saves the time of typing out the full path every time we use the <code>image:[]</code> macro.<br>
+Usually this is done once per document but can be used multiple times:</p>
+</div>
+<div class="listingblock">
+<div class="title">Setting Document Attributes</div>
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">:imagesdir: images/icons
+
+image:github.png[]
+
+image:jira.png[]
+
+:imagesdir: images
+
+image:logo.png[]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Output:</strong></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="github.png" alt="github"></span></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="jira.png" alt="jira"></span></p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="logo.png" alt="logo"></span></p>
+</div>
+<div class="sect3">
+<h4 id="_header_attributes"><a class="anchor" href="#_header_attributes"></a><a class="link" href="#_header_attributes">2.4.1. Header Attributes</a></h4>
+<div class="paragraph">
+<p>A header starts with a document title followed by two optional lines defining author and revision information.<br>
+Finally, document-wide settings are defined by means of <em>header attributes</em> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">= AsciiSpec Documentation
+Brian Thomas Smith
+First Draft
+:toc: right</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An example header attribute is <code>:toc:</code> which sets the position of the Table of Contents in the destination document.
+The above example right-aligns the Table of Contents.
+Another option is to enable the use of the <code>toc::[]</code> block macro to insert a Table of Contents block in any section:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">= AsciiSpec Documentation
+Brian Thomas Smith
+First Draft
+:toc: macro
+
+// A Table of Contents is rendered here by default
+
+== Section two
+
+toc::[] // But will be rendered here instead</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A full table of the available built-in document attributes, see the <a href="http://asciidoctor.org/docs/user-manual/#builtin-attributes">Built-in Attributes</a> section in the AsciiDoctor User Manual.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tables"><a class="anchor" href="#_tables"></a><a class="link" href="#_tables">2.5. Tables</a></h3>
+<div class="paragraph">
+<p>Table blocks are delimited by a character (usually a pipe <code>|</code>) and three equals symbols (<code>|===</code>);</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">|===
+| Hello | world
+|===</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hello</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">world</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>A different character can be used to delimit cells by substituting the pipe <code>|</code> with the separator you wish to use.
+A comma can be used exactly as above to separate cells in the following way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">,===
+, Hello , World
+,===</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title=""></i>
+</td>
+<td class="content">
+Using commas in this way can provide an easy solution to including CSV values (<code>include::mydata.csv[]</code>) into a table without having to reformat the included document.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Formatting tables:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[cols="h,d"]
+|===
+| Backend 3+h| Description
+
+| html (or html5) 3+| HTML5, styled with CSS3 (default).
+| pdf 3+| PDF, a portable document format. Requires the asciidoctor-pdf gem.
+|===</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the above table, formatting attributes <strong>3+</strong> are used. The ^ caret symbol is used to centre-align the text and <strong>3+</strong> indicates that the cell spans three consecutive columns.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Backend</th>
+<th class="tableblock halign-center valign-top" colspan="3">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">html (or html5)</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">HTML5, styled with CSS3 (default).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pdf</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">PDF, a portable document format. Requires the asciidoctor-pdf gem.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>A full overview of the possibilities to create complex tables can be found in the <a href="http://www.asciidoctor.org/docs/user-manual/#tables">tables section</a> of the User Manual.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_blocks_2"><a class="anchor" href="#_blocks_2"></a><a class="link" href="#_blocks_2">2.6. Blocks</a></h3>
+<div class="paragraph">
+<p>Content can be formatted in blocks as with the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[quote,Enrico Fermi,Notes on Quantum Mechanics (1954)]
+Before I came here I was confused about this subject.
+Having listened to your lecture I am still confused.
+But on a higher level.</code></pre>
+</div>
+</div>
+<div class="quoteblock">
+<blockquote>
+Before I came here I was confused about this subject. Having listened to your lecture I am still confused. But on a higher level.
+</blockquote>
+<div class="attribution">
+&#8212; Enrico Fermi<br>
+<cite>Notes on Quantum Mechanics (1954)</cite>
+</div>
+</div>
+<div class="paragraph">
+<p>For a full list of block types see the <a href="http://asciidoctor.org/docs/user-manual/#built-in-blocks-summary">AsciiDoctor User Manual: built-in blocks summary</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_titles_attributes"><a class="anchor" href="#_titles_attributes"></a><a class="link" href="#_titles_attributes">2.6.1. Titles &amp; attributes</a></h4>
+<div class="paragraph">
+<p>Adding a title to a block of content is done by adding a fullstop followed by the title text in the line previous to the block.
+We can add further attributes which are relevant to the type of block. In the case of a <code>[verse]</code> block, we can attribute the author and the source of the content separated with commas like so: <code>[verse, Carl Sagan, Cosmos]</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">.Deep Thought of the Day
+[verse, Carl Sagan, Cosmos: A Personal Voyage]
+If you want to make an apple pie from scratch, you must first create the universe.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above is rendered as follows:</p>
+</div>
+<div class="verseblock">
+<pre class="content">If you want to make an apple pie from scratch, you must first create the universe.</pre>
+<div class="attribution">
+&#8212; Carl Sagan<br>
+<cite>Cosmos: A Personal Voyage</cite>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_source_code"><a class="anchor" href="#_source_code"></a><a class="link" href="#_source_code">2.7. Source Code</a></h3>
+<div class="paragraph">
+<p>There are a few easy ways of including source code in our documents. Listing blocks are defined using <code>[source]</code> and are delimited with <code>----</code>.
+In our case, we have added a custom N4JS language theme in the <code>scripts</code> folder:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">.Custom N4JS highlighting theme
+[source,n4js]
+ export public class Fibonacci {
+ public seq()  {
+      var arr = [];
+          var a = 0;
+          var b = 1;
+...</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Custom N4JS highlighting theme</div>
+<div class="content">
+<pre class="highlight"><code class="language-n4js" data-lang="n4js"> export public class Fibonacci {
+ public seq()  {
+      var arr = [];
+          var a = 0;
+          var b = 1;
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can specify the language we want to highlight as the first attribute in the source block. In the following, we have written <code>[source,html]</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;title&gt;Title&lt;/title&gt;
+&lt;style&gt;body {width: 500px;}&lt;/style&gt;
+&lt;script type="application/javascript"&gt;
+  function $init() {return true;}
+&lt;/script</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_admonition_blocks"><a class="anchor" href="#_admonition_blocks"></a><a class="link" href="#_admonition_blocks">2.8. Admonition Blocks</a></h3>
+<div class="paragraph">
+<p>A useful feature built-in to AsciiDoctor is the inclusion of admonition blocks.
+By default, the following admonition blocks are available; <code>TIP</code>, <code>NOTE</code>, <code>IMPORTANT</code>, <code>CAUTION</code>, <code>WARNING</code>.
+They render as with the <code>WARNING</code> block below, except with different icons.</p>
+</div>
+<div class="paragraph">
+<p><strong>Source:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">`WARNING:` Don't divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Output:</strong></p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title=""></i>
+</td>
+<td class="content">
+Don&#8217;t divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_media"><a class="anchor" href="#_media"></a><a class="link" href="#_media">2.9. Media</a></h3>
+<div class="videoblock">
+<div class="content">
+<iframe width="800" height="600" src="https://www.youtube.com/embed/3NjQ9b3pgIg?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
+<div class="paragraph">
+<p>The above video is embedded with the following syntax: <code>video::3NjQ9b3pgIg[youtube,800,600]</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">.A lovely screenshot
+image::images/logo.png[]</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/logo.png" alt="logo">
+</div>
+<div class="title">Figure 1. A lovely screenshot</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_asciispec_processors"><a class="anchor" href="#_asciispec_processors"></a><a class="link" href="#_asciispec_processors">3. AsciiSpec Processors</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For custom AsciiSpec features, see the <a href="https://github.com/NumberFour/asciispec/blob/master/docs/index.adoc">AsciiSpec Processors</a> index.</p>
+</div>
+</div>
+</div>
+<div class="sect1 language-asciidoc">
+<h2 id="_general_tips"><a class="anchor" href="#_general_tips"></a><a class="link" href="#_general_tips">4. General Tips</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_colons"><a class="anchor" href="#_colons"></a><a class="link" href="#_colons">4.1. Colons</a></h3>
+<div class="paragraph">
+<p>When learning AsciiDoc syntax, it can be confusing whether to use one or two colons for certain macros.
+The rule is as follows:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-center valign-middle">Syntax</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Inline</p></th>
+<td class="tableblock halign-center valign-middle"><p class="tableblock"><code>:</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">We can include this <code>image:test.png[]</code> inline</p></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Block</p></th>
+<td class="tableblock halign-center valign-middle"><p class="tableblock"><code>::</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The following Table of Contents<br></p>
+</div>
+<div class="paragraph">
+<p><code>toc::[]</code><br></p>
+</div>
+<div class="paragraph">
+<p>cannot be declared inline.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_resources"><a class="anchor" href="#_resources"></a><a class="link" href="#_resources">5. Resources</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong><a href="https://github.com/NumberFour/asciispec#documentation">AsciiSpec Docs</a></strong> - NumberFour AsciiSpec Documentation<br>
+<strong><a href="http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/">AsciiDoc Syntax Quick Reference</a></strong> - Covers most standard formatting needs.<br>
+<strong><a href="http://asciidoctor.org/docs/user-manual/">AsciiDoctor User Manual</a></strong> - Reference Manual detailing document attributes, conversion settings, extended features etc.<br></p>
+</div>
+<div class="sect2">
+<h3 id="_sublime_text_packages"><a class="anchor" href="#_sublime_text_packages"></a><a class="link" href="#_sublime_text_packages">5.1. Sublime Text packages</a></h3>
+<div class="paragraph">
+<p><strong><a href="https://packagecontrol.io/packages/OmniMarkupPreviewer">OmniMarkup Preview</a></strong> - Serves a live preview to a browser for realtime editing.<br>
+<strong><a href="https://github.com/bsmith-n4/N4-MarkupPreview">OmniMarkup Custom Fork</a></strong> - A custom fork that provides styles and syntax highlighting aligned with AsciiSpec.<br>
+<strong><a href="https://github.com/asciidoctor/sublimetext-asciidoc">Sublime Text AsciiDoc Package</a></strong> - Syntax highlighting, snippets, keymaps and more.<br></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_document_converters"><a class="anchor" href="#_document_converters"></a><a class="link" href="#_document_converters">5.2. Document Converters</a></h3>
+<div class="paragraph">
+<p><strong><a href="https://github.com/opendevise/kramdown-asciidoc">Kramdown</a></strong> - Easily convert GitHub Flavoured Markdown (<code>.md</code>) to AsciiDoc (<code>.adoc</code>).<br>
+<strong><a href="http://pandoc.org/">Pandoc</a></strong> - A universal document converter.<br></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-01-24 14:20:56 CET
+</div>
+</div>
+<div class="social">
+
+<ul class="fa-ul">
+<li><a href="https://github.com/NumberFour/asciispec"><i class="fa-li fa fa-github"></i>AsciiSpec</a></li>
+
+</ul>
+</div>
+<script>
+// Toggle the table of contents
+$( "button#tocbutton" ).click(function() {
+  if ($("#tocbutton").css('left') == '25px') {
+    $( "#tocbutton" ).animate({left: '270px'},"slow");
+    $( "#toc.toc2" ).animate({left: '0'},"slow");
+    $( "#menubar" ).animate({left: '215px'},"slow");
+    $( "#header, #content, #footnotes, #footer" ).animate({left: '260px'},"slow");
+    $( "body.toc2").css("max-width", "75%");
+    $( "#menubar" ).css("max-width", "80%");
+}
+  else {
+    $( "#menubar" ).animate({left: '10px'},"slow");
+    $( "#tocbutton" ).animate({left: '25px'},"slow");
+    $( "#toc.toc2" ).animate({left: '-260px'},"slow");
+    $( "#header, #content, #footnotes, #footer" ).animate({left: '40px'},"slow");
+    $( "body.toc2").css("max-width", "90%");
+}
+});
+</script>
+
+<script>
+
+// ########## Initialise mobile menu #############
+
+  $(function(){
+    $('#menu').slicknav();
+  });
+</script>
+<script type="text/javascript">
+
+// ########## Back-to-top Button #############
+
+$('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
+var amountScrolled = 300;
+$(window).scroll(function() {
+if ( $(window).scrollTop() > amountScrolled ) {
+	$('a.back-to-top').fadeIn('slow');
+} else {
+	$('a.back-to-top').fadeOut('slow');
+}
+});
+$('a.back-to-top, a.simple-back-to-top').click(function() {
+$('html, body').animate({
+	scrollTop: 0
+}, 700);
+return false;
+});
+</script>
+</body>
+</html>
