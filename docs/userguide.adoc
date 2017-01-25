@@ -134,9 +134,9 @@ export public class Fibonacci {
 
 [source,asciidoc]
 -----
-.Fibonacci.n4js
-[source,n4js]
-----
+.Fibonacci.n4js // <1>
+[source,n4js]   // <2>
+----  			// <3>
 export public class Fibonacci {
  public seq()  {
 
@@ -144,14 +144,9 @@ export public class Fibonacci {
 // etc...
 ----
 -----
-
-In the first line we have demonstrated how to add a _title_ to a block. This is done using a full stop followed by the title (`Fibonacci.n4js`).
-A title can be added in this way to many different block types by default.
-
-In line 2 of the example above we declare some attributes for the block.
-The first attribute is to set the block context as `source` and the second attribute is the listing language - `n4js`.
-
-Notice the use of four hyphens to delimit the block: `----` this indicates to the parser where the block begins and ends.
+<1> In the first line we have demonstrated how to add a _title_ to a block. This is done using a full stop followed by the title `Fibonacci.n4js` (note there is no space). A title can be added in this way to many different block types by default.
+<2> Setting a `source` context and the language is `N4JS`.
+<3> Notice the use of four hyphens to delimit the block: `----` this indicates to the parser where the block begins and ends.
 The listing block can then also include the empty line:
 
 *_Output:_*
@@ -165,6 +160,125 @@ export public class Fibonacci {
       var arr = [];
 // etc...
 ----
+
+==== Github Flavored Markdown
+
+Some common Github Markdown is also supported, such as backticks used for code listings:
+
+[source,asciidoc]
+----
+```n4js
+export public class Fibonacci {
+ public seq()  {
+
+      var arr = [];
+// etc...
+```
+----
+
+==== Apply CSS classes
+
+CSS classes can be added to content with the syntax `[.CssClass]` in the following way:
+
+[source,asciidoc]
+----
+[.small]
+This paragraph is assigned the `small` CSS class.
+----
+
+*Output:*
+
+[.small]
+This paragraph is assigned the `small` CSS class.
+
+===== Inline
+
+CSS classes can be set inline when switching the language to be highlighted in inline source code:
+
+[horizontal]
+Asciidoc::
++
+[source,asciidoc]
+The favicon is located at [language-html]`<a href="icons/favicon.ico"/>` in your header
+Result::
+The favicon is located at [language-html]`<a href="icons/favicon.ico"/>` in your header
+
+The default way of adding CSS classes to blocks in Asciidoc is with the syntax `[.css-class]` on the preceding line:
+[horizontal]
+Asciidoc::
++
+[source,asciidoc]
+----
+[.blue]
+Lovely Calming Blue Text on the Entire Paragraph.
+----
+Result::
++
+[.blue]
+Lovely Calming Blue Text on the Entire Paragraph.
+*SO...*::
+Instead of writing [language-adoc]`[language-html]` before every piece of inline code I want highlighted, I can set a CSS class to a paragraph.
+[horizontal]
+Asciidoc::
++
+[source,asciidoc]
+----
+[.language-html]
+The favicon was set at `<a href="icons/favicon.ico"/>` in your header. The next
+thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
+----
+Result::
++
+[.language-html]
+The favicon was set at `<a href="icons/favicon.ico"/>` in your header. The next
+thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
+== Write Even Less!
+Instead of setting a CSS class on every single paragraph, it's also possible to set a class on a section. This is done like so:
+[cols=2]
+|===
+a|[source,asciidoc]
+----
+[.language-css]
+== Write less!
+Everything enclosed in backticks in this
+section gets styled with `@media
+print {code {text-shadow: none;}}`
+syntax highlighting.
+----
+a|
+*Result:*
+[.language-css]
+== Write less!
+Everything enclosed in backticks in this
+section gets styled with `@media
+print {code {text-shadow: none;}}`
+syntax highlighting.
+|===
+
+===== Open Blocks
+
+CSS classes can span multiple blocks when applied to an open block (delimited by two hyphens `--`):
+
+[source,asciidoc]
+----
+[.red]
+--
+This paragraph is assigned the `red` CSS class.
+
+- [x] All text will be colored red
+--
+----
+
+*Output:*
+
+[.red]
+--
+This paragraph is assigned the `red` CSS class.
+
+- [x] All text will be colored red
+--
+
+
 
 === Block Macro
 
@@ -249,19 +363,10 @@ Here are two examples of setting an attribute via an attribute entry line and us
 a|
 [source,asciidoc]
 ----
-By attribute entry line:
-
-:country: Spain
-We should travel to {country}!
-
 Attributes can be set inline too:
 We should {set:country:France} travel to {country}!
 ----
 a|
-By attribute entry line:
-
-:country: Spain
-We should travel to {country}!
 
 Attributes can be set inline too:
 We should {set:country:France} travel to {country}!
@@ -276,6 +381,8 @@ An example of a common document attribute is `imagesdir` which specifies the ima
 :imagesdir: images
 ----
 
+////
+Document variables temporarily broken, see: https://github.com/NumberFour/asciispec/issues/13
 
 Setting `imagesdir` as above saves the time of typing out the full path every time we use the `image:[]` macro. +
 Usually this is done once per document but can be used multiple times:
@@ -299,15 +406,15 @@ image:logo.png[]
 
 :imagesdir: images/icons
 
-image:github.png[]
+image:{find}github.png[]
 
-image:jira.png[]
+image:{find}jira.png[]
 
 :imagesdir: images
 
 image:logo.png[]
 
-
+////
 ==== Header Attributes
 A header starts with a document title followed by two optional lines defining author and revision information. +
 Finally, document-wide settings are defined by means of _header attributes_ :
@@ -477,7 +584,7 @@ They render as with the `WARNING` block below, except with different icons.
 *Source:*
 
 [source,asciidoc]
-`WARNING:` Don't divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
+WARNING: Don't divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
 
 *Output:*
 
