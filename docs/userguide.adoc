@@ -45,16 +45,16 @@ https://github.com/NumberFour/asciidoctor-fopub
 ```
 git clone https://github.com/NumberFour/asciidoctor-fopub.git
 ```
-2. Add the `asciidoctor-fopub/bin` directory to your shell profile:
+2. Add the `asciidoctor-fopub/` directory to your shell profile:
 +
 ```bash
-export PATH=$PATH:~/path/to/asciidoctor-fopub/bin/
+export PATH=$PATH:~/path/to/asciidoctor-fopub/
 ```
-3. Confirm successful install using an empty `fopub` command.
+3. Confirm successful install using the `which fopub` command.
 +
 ```bash
-$ fopub
-~/path/to/asciidoctor-fopub/bin/fopub: You must specify a DocBook v4.5 or DocBook v5 XML source file as the first command argument
+$ which fopub
+~/path/to/fopub: You must specify a DocBook v4.5 or DocBook v5 XML source file as the first command argument
 ```
 4. Convert XML to PDF using the following:
 +
@@ -89,6 +89,38 @@ The following list is a simplified overview of the AsciiDoctor AST:
 
 `Lists`, `Tables`, `ListItems`...:: Nested content within a `Block`. Can also themselves be `Blocks`.
 
+=== Sections
+
+Section levels are set using equals symbols (`= title`) followed by a space and the title. They must be preceded by an empty line:
+
+.Section Levels
+[source,adoc]
+----
+= Document Title (Level 0)
+
+== Level 1 Section Title
+
+=== Level 2 Section Title
+
+==== Level 3 Section Title
+
+===== Level 4 Section Title
+
+== Another Level 1 Section Title
+----
+
+Documents with two Level 0 (`=`) Sections need the `:doctype: book` sttribute set.
+
+It's illegal to skip section like so:
+
+[source,adoc]
+----
+== Level 1 Section
+
+==== Level 3 Section - Error!
+----
+
+
 === Blocks
 
 Usage::
@@ -101,36 +133,34 @@ Having listened to your lecture I am still confused.
 But on a higher level.
 ----
 
+The above content will be rendered as follows:
+
+[quote,Enrico Fermi,Notes on Quantum Mechanics (1954)]
+Before I came here I was confused about this subject. Having listened to your lecture I am still confused. But on a higher level.
+
+
 Blocks are content in a section with styles or `contexts` such as paragraphs, source listings, images, etc.
-Square brackets `[]` are used to indicate the style of the block that follows and an empty line will indicate that the block has finished.
+Square brackets `[]` are used to indicate the style of the block and an empty line indicates that the block has finished.
 All plain text of one or more lines will be parsed as a `block` with the 'paragraph' style by default, therefore:
 
 [source,asciidoc]
------
+----
 It was the best of times..
 
 // Is the same as writing the following:
 
 [paragraph]
 It was the best of times..
------
+----
+
+
+A list of built-in block types can be found in the http://asciidoctor.org/docs/user-manual/#built-in-blocks-summary[AsciiDoctor User Manual: built-in blocks summary].
+
+==== Titles & attributes
+
+Adding a title to a block of content is done by adding a fullstop followed by the title text in the line previous to the block.
 
 To style a block with a source `listing` context, we use `[source]` as with this example:
-
-[source,asciidoc]
-----
-[source]
-export public class Fibonacci {
- public seq()  {
-----
-
-Output: ::
-
-[source]
-export public class Fibonacci {
- public seq()  {
-
-==== Optional Attributes
 
 [source,asciidoc]
 -----
@@ -146,8 +176,7 @@ export public class Fibonacci {
 -----
 <1> In the first line we have demonstrated how to add a _title_ to a block. This is done using a full stop followed by the title `Fibonacci.n4js` (note there is no space). A title can be added in this way to many different block types by default.
 <2> Setting a `source` context and the language is `N4JS`.
-<3> Notice the use of four hyphens to delimit the block: `----` this indicates to the parser where the block begins and ends.
-The listing block can then also include the empty line:
+<3> Notice the use of four hyphens to delimit the block: `----` (see <<Delimiters>>) this indicates to the parser where the block begins and ends. The listing block can then also include the empty line:
 
 *_Output:_*
 
@@ -160,6 +189,112 @@ export public class Fibonacci {
       var arr = [];
 // etc...
 ----
+
+We can add more attributes relevant to the type of block.
+In the case of a `[verse]` block, we can set the author and the source separated with commas like so: `[verse, Carl Sagan, Cosmos]`.
+
+[source,asciidoc]
+----
+.Deep Thought of the Day
+[verse, Carl Sagan, Cosmos: A Personal Voyage]
+If you want to make an apple pie from scratch, you must first create the universe.
+----
+
+The above is rendered as follows:
+
+.Deep Thought of the Day
+[verse, Carl Sagan, Cosmos: A Personal Voyage]
+If you want to make an apple pie from scratch, you must first create the universe.
+
+==== Admonition Blocks
+
+A useful feature built-in to AsciiDoctor is the inclusion of admonition blocks.
+By default, the following admonition blocks are available; `TIP`, `NOTE`, `IMPORTANT`, `CAUTION`, `WARNING`.
+They render as with the `WARNING` block below, except with different icons.
+
+*Source:*
+
+[source,asciidoc]
+WARNING: Don't divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
+
+*Output:*
+
+WARNING: Don't divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
+
+==== Delimiters
+
+For all built-in blocks, the square brackets containing the block type (e.g. `[source]`) can be omitted and their delimiters will be used to determine the block type instead. For source blocks, this is four hyphens (`----`);
+
+[source,adoc]
+-----
+----
+my code() {
+
+// etc...
+----
+-----
+
+*Output:*
+
+----
+my code() {
+
+// etc...
+----
+
+===== Nesting Blocks
+
+Blocks can contain other blocks:
+
+[source,asciidoc]
+-----
+.Nested Listing
+====
+See the following code snippet:
+
+----
+my code() {
+
+// etc...
+----
+
+====
+-----
+
+*Output:*
+
+
+.Nested Listing
+====
+See the following code snippet, for example:
+
+----
+my code() {
+
+// etc...
+----
+
+====
+
+TIP: This is convenient, but, of course, no positional attributes i.e. `[blocktype,attr1,attr2]` can be specified.
+
+Nesting blocks of the same type is done using an extra delimiter on the containing block like the following:
+
+.Containing Example
+=====
+A brief introduction
+
+.Nested Example
+====
+See the following code snippet:
+
+----
+// etc...
+----
+
+====
+=====
+
 
 ==== Github Flavored Markdown
 
@@ -178,82 +313,99 @@ export public class Fibonacci {
 
 ==== Apply CSS classes
 
-CSS classes can be added to content with the syntax `[.CssClass]` in the following way:
-
-[source,asciidoc]
-----
-[.small]
-This paragraph is assigned the `small` CSS class.
-----
-
-*Output:*
-
-[.small]
-This paragraph is assigned the `small` CSS class.
-
-===== Inline
-
-CSS classes can be set inline when switching the language to be highlighted in inline source code:
-
-[horizontal]
-Asciidoc::
-+
-[source,asciidoc]
-The favicon is located at [language-html]`<a href="icons/favicon.ico"/>` in your header
-Result::
-The favicon is located at [language-html]`<a href="icons/favicon.ico"/>` in your header
-
 The default way of adding CSS classes to blocks in Asciidoc is with the syntax `[.css-class]` on the preceding line:
 [horizontal]
 Asciidoc::
 +
 [source,asciidoc]
 ----
-[.blue]
-Lovely Calming Blue Text on the Entire Paragraph.
+[.small]
+This paragraph is assigned the `small` CSS class.
 ----
-Result::
+Output::
 +
-[.blue]
-Lovely Calming Blue Text on the Entire Paragraph.
-*SO...*::
-Instead of writing [language-adoc]`[language-html]` before every piece of inline code I want highlighted, I can set a CSS class to a paragraph.
+[.small]
+This paragraph is assigned the `small` CSS class.
+
+It's also possible using the `role` attribute:
+
 [horizontal]
 Asciidoc::
 +
 [source,asciidoc]
 ----
-[.language-html]
-The favicon was set at `<a href="icons/favicon.ico"/>` in your header. The next
-thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
+[role=blue]
+Lovely Calming Blue Text on the Entire Paragraph.
 ----
-Result::
+Output::
 +
+[role=blue]
+Lovely Calming Blue Text on the Entire Paragraph.
+
+===== Inline
+
+When syntax highlighting using http://prismjs.com/[Prism.js], CSS classes can be set inline and the language of inline source code can be set as follows:
+
+.Set Syntax Highlighting Language Inline
+[source,asciidoc]
+The favicon is located [language-html]`<a href="icons/favicon.ico"/>` in your header. +
+The next thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
+
+*Output:* The favicon is located [language-html]`<a href="icons/favicon.ico"/>` in your header. +
+The next thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
+
+
+Instead of writing [language-adoc]`[language-html]` before every piece of inline code I want highlighted, I can set a CSS class to a paragraph. All inline source code within that paragraph will then be highlighted with the language specified:
+
+[source,asciidoc]
+----
 [.language-html]
-The favicon was set at `<a href="icons/favicon.ico"/>` in your header. The next
-thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
-== Write Even Less!
-Instead of setting a CSS class on every single paragraph, it's also possible to set a class on a section. This is done like so:
+The favicon was set at `<a href="icons/favicon.ico"/>` in your header. +
+The next thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
+----
+
+*Output:*
+
+[.language-html]
+The favicon was set at `<a href="icons/favicon.ico"/>` in your header. +
+The next thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
+
+==== Applying CSS Classes to Sections
+
+Instead of setting a CSS class on every paragraph, it's also possible to set a class on a section.
+This is done like so:
+
 [cols=2]
 |===
+^|Source ^| Output
+
 a|[source,asciidoc]
 ----
 [.language-css]
 == Write less!
 Everything enclosed in backticks in this
-section gets styled with `@media
+section gets styled with correct CSS `@media
 print {code {text-shadow: none;}}`
 syntax highlighting.
+
+=== The `font-weight: bold;` attribute
+
+Always use `font-weight: bold;` to get your point across...
 ----
 a|
-*Result:*
 [.language-css]
 == Write less!
 Everything enclosed in backticks in this
-section gets styled with `@media
+section gets styled with correct CSS `@media
 print {code {text-shadow: none;}}`
 syntax highlighting.
+
+=== The `font-weight: bold;` attribute
+
+Always use `font-weight: bold;` to get your point across...
 |===
+
+TIP: The highest section level that a CSS class can be applied on is the Level 1 (`==`) and all contained sections will inherit this class.
 
 ===== Open Blocks
 
@@ -500,95 +652,6 @@ In the above table, formatting attributes *3+* are used. The +++^+++ caret symbo
 |===
 
 A full overview of the possibilities to create complex tables can be found in the http://www.asciidoctor.org/docs/user-manual/#tables[tables section] of the User Manual.
-
-=== Blocks
-
-Content can be formatted in blocks as with the following:
-
-[source,asciidoc]
-----
-[quote,Enrico Fermi,Notes on Quantum Mechanics (1954)]
-Before I came here I was confused about this subject.
-Having listened to your lecture I am still confused.
-But on a higher level.
-----
-
-[quote,Enrico Fermi,Notes on Quantum Mechanics (1954)]
-Before I came here I was confused about this subject. Having listened to your lecture I am still confused. But on a higher level.
-
-
-For a full list of block types see the http://asciidoctor.org/docs/user-manual/#built-in-blocks-summary[AsciiDoctor User Manual: built-in blocks summary].
-
-==== Titles & attributes
-
-Adding a title to a block of content is done by adding a fullstop followed by the title text in the line previous to the block.
-We can add further attributes which are relevant to the type of block. In the case of a `[verse]` block, we can attribute the author and the source of the content separated with commas like so: `[verse, Carl Sagan, Cosmos]`.
-
-[source,asciidoc]
-----
-.Deep Thought of the Day
-[verse, Carl Sagan, Cosmos: A Personal Voyage]
-If you want to make an apple pie from scratch, you must first create the universe.
-----
-
-The above is rendered as follows:
-
-.Deep Thought of the Day
-[verse, Carl Sagan, Cosmos: A Personal Voyage]
-If you want to make an apple pie from scratch, you must first create the universe.
-
-=== Source Code
-
-There are a few easy ways of including source code in our documents. Listing blocks are defined using `[source]` and are delimited with `----`.
-In our case, we have added a custom N4JS language theme in the `scripts` folder:
-
-
-[source,asciidoc]
-----
-.Custom N4JS highlighting theme
-[source,n4js]
- export public class Fibonacci {
- public seq()  {
-      var arr = [];
-          var a = 0;
-          var b = 1;
-...
-----
-
-.Custom N4JS highlighting theme
-[source,n4js]
- export public class Fibonacci {
- public seq()  {
-      var arr = [];
-          var a = 0;
-          var b = 1;
-...
-
-
-We can specify the language we want to highlight as the first attribute in the source block. In the following, we have written `[source,html]`:
-
-[source,html]
-<!DOCTYPE html>
-<title>Title</title>
-<style>body {width: 500px;}</style>
-<script type="application/javascript">
-  function $init() {return true;}
-</script
-
-=== Admonition Blocks
-
-A useful feature built-in to AsciiDoctor is the inclusion of admonition blocks.
-By default, the following admonition blocks are available; `TIP`, `NOTE`, `IMPORTANT`, `CAUTION`, `WARNING`.
-They render as with the `WARNING` block below, except with different icons.
-
-*Source:*
-
-[source,asciidoc]
-WARNING: Don't divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
-
-*Output:*
-
-WARNING: Don't divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
 
 
 === Media
