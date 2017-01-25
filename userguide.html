@@ -59,6 +59,8 @@
 <li><a href="#_blocks">2.1. Blocks</a>
 <ul class="sectlevel3">
 <li><a href="#_optional_attributes">2.1.1. Optional Attributes</a></li>
+<li><a href="#_github_flavored_markdown">2.1.2. Github Flavored Markdown</a></li>
+<li><a href="#_apply_css_classes">2.1.3. Apply CSS classes</a></li>
 </ul>
 </li>
 <li><a href="#_block_macro">2.2. Block Macro</a></li>
@@ -309,9 +311,9 @@ export public class Fibonacci {
 <h4 id="_optional_attributes"><a class="anchor" href="#_optional_attributes"></a><a class="link" href="#_optional_attributes">2.1.1. Optional Attributes</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">.Fibonacci.n4js
-[source,n4js]
-----
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">.Fibonacci.n4js <i class="conum" data-value="1"></i><b>(1)</b>
+[source,n4js]   <i class="conum" data-value="2"></i><b>(2)</b>
+----  			<i class="conum" data-value="3"></i><b>(3)</b>
 export public class Fibonacci {
  public seq()  {
 
@@ -320,17 +322,22 @@ export public class Fibonacci {
 ----</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>In the first line we have demonstrated how to add a <em>title</em> to a block. This is done using a full stop followed by the title (<code>Fibonacci.n4js</code>).
-A title can be added in this way to many different block types by default.</p>
-</div>
-<div class="paragraph">
-<p>In line 2 of the example above we declare some attributes for the block.
-The first attribute is to set the block context as <code>source</code> and the second attribute is the listing language - <code>n4js</code>.</p>
-</div>
-<div class="paragraph">
-<p>Notice the use of four hyphens to delimit the block: <code>----</code> this indicates to the parser where the block begins and ends.
-The listing block can then also include the empty line:</p>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>In the first line we have demonstrated how to add a <em>title</em> to a block. This is done using a full stop followed by the title <code>Fibonacci.n4js</code> (note there is no space). A title can be added in this way to many different block types by default.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Setting a <code>source</code> context and the language is <code>N4JS</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Notice the use of four hyphens to delimit the block: <code>----</code> this indicates to the parser where the block begins and ends.
+The listing block can then also include the empty line:</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p><strong><em>Output:</em></strong></p>
@@ -343,6 +350,207 @@ The listing block can then also include the empty line:</p>
 
       var arr = [];
 // etc...</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_github_flavored_markdown"><a class="anchor" href="#_github_flavored_markdown"></a><a class="link" href="#_github_flavored_markdown">2.1.2. Github Flavored Markdown</a></h4>
+<div class="paragraph">
+<p>Some common Github Markdown is also supported, such as backticks used for code listings:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">```n4js
+export public class Fibonacci {
+ public seq()  {
+
+      var arr = [];
+// etc...
+```</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_apply_css_classes"><a class="anchor" href="#_apply_css_classes"></a><a class="link" href="#_apply_css_classes">2.1.3. Apply CSS classes</a></h4>
+<div class="paragraph">
+<p>CSS classes can be added to content with the syntax <code>[.CssClass]</code> in the following way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[.small]
+This paragraph is assigned the `small` CSS class.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Output:</strong></p>
+</div>
+<div class="paragraph small">
+<p>This paragraph is assigned the <code>small</code> CSS class.</p>
+</div>
+<div class="sect4">
+<h5 id="_inline"><a class="anchor" href="#_inline"></a><a class="link" href="#_inline">Inline</a></h5>
+<div class="paragraph">
+<p>CSS classes can be set inline when switching the language to be highlighted in inline source code:</p>
+</div>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+Asciidoc
+</td>
+<td class="hdlist2">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">The favicon is located at [language-html]`&lt;a href="icons/favicon.ico"/&gt;` in your header</code></pre>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+Result
+</td>
+<td class="hdlist2">
+<p>The favicon is located at <code class="language-html">&lt;a href="icons/favicon.ico"/&gt;</code> in your header</p>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The default way of adding CSS classes to blocks in Asciidoc is with the syntax <code>[.css-class]</code> on the preceding line:</p>
+</div>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+Asciidoc
+</td>
+<td class="hdlist2">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[.blue]
+Lovely Calming Blue Text on the Entire Paragraph.</code></pre>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+Result
+</td>
+<td class="hdlist2">
+<div class="paragraph blue">
+<p>Lovely Calming Blue Text on the Entire Paragraph.</p>
+</div>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+<strong>SO&#8230;&#8203;</strong>
+</td>
+<td class="hdlist2">
+<p>Instead of writing <code class="language-adoc">[language-html]</code> before every piece of inline code I want highlighted, I can set a CSS class to a paragraph.</p>
+</td>
+</tr>
+</table>
+</div>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+Asciidoc
+</td>
+<td class="hdlist2">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[.language-html]
+The favicon was set at `&lt;a href="icons/favicon.ico"/&gt;` in your header. The next
+thing was the menubar: `&lt;div id="menubar"&gt;` which contained a list `&lt;ul class="fa-ul"&gt;`...</code></pre>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+Result
+</td>
+<td class="hdlist2">
+<div class="paragraph language-html">
+<p>The favicon was set at <code>&lt;a href="icons/favicon.ico"/&gt;</code> in your header. The next
+thing was the menubar: <code>&lt;div id="menubar"&gt;</code> which contained a list <code>&lt;ul class="fa-ul"&gt;</code>&#8230;&#8203;
+== Write Even Less!
+Instead of setting a CSS class on every single paragraph, it&#8217;s also possible to set a class on a section. This is done like so:</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[.language-css]
+== Write less!
+Everything enclosed in backticks in this
+section gets styled with `@media
+print {code {text-shadow: none;}}`
+syntax highlighting.</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><strong>Result:</strong></p>
+</div>
+<div class="sect1 language-css">
+<h2 id="_write_less"><a class="anchor" href="#_write_less"></a><a class="link" href="#_write_less">1. Write less!</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Everything enclosed in backticks in this
+section gets styled with <code>@media
+print {code {text-shadow: none;}}</code>
+syntax highlighting.</p>
+</div>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_open_blocks"><a class="anchor" href="#_open_blocks"></a><a class="link" href="#_open_blocks">Open Blocks</a></h5>
+<div class="paragraph">
+<p>CSS classes can span multiple blocks when applied to an open block (delimited by two hyphens <code>--</code>):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[.red]
+--
+This paragraph is assigned the `red` CSS class.
+
+- [x] All text will be colored red
+--</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Output:</strong></p>
+</div>
+<div class="openblock red">
+<div class="content">
+<div class="paragraph">
+<p>This paragraph is assigned the <code>red</code> CSS class.</p>
+</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> All text will be colored red</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -484,22 +692,11 @@ Here are two examples of setting an attribute via an attribute entry line and us
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">By attribute entry line:
-
-:country: Spain
-We should travel to {country}!
-
-Attributes can be set inline too:
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">Attributes can be set inline too:
 We should {set:country:France} travel to {country}!</code></pre>
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>By attribute entry line:</p>
-</div>
-<div class="paragraph">
-<p>We should travel to {country}!</p>
-</div>
-<div class="paragraph">
 <p>Attributes can be set inline too:
 We should  travel to France!</p>
 </div></div></td>
@@ -514,36 +711,6 @@ We should  travel to France!</p>
 <div class="content">
 <pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">:imagesdir: images</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>Setting <code>imagesdir</code> as above saves the time of typing out the full path every time we use the <code>image:[]</code> macro.<br>
-Usually this is done once per document but can be used multiple times:</p>
-</div>
-<div class="listingblock">
-<div class="title">Setting Document Attributes</div>
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">:imagesdir: images/icons
-
-image:github.png[]
-
-image:jira.png[]
-
-:imagesdir: images
-
-image:logo.png[]</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Output:</strong></p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="github.png" alt="github"></span></p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="jira.png" alt="jira"></span></p>
-</div>
-<div class="paragraph">
-<p><span class="image"><img src="logo.png" alt="logo"></span></p>
 </div>
 <div class="sect3">
 <h4 id="_header_attributes"><a class="anchor" href="#_header_attributes"></a><a class="link" href="#_header_attributes">2.4.1. Header Attributes</a></h4>
@@ -780,7 +947,7 @@ They render as with the <code>WARNING</code> block below, except with different 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">`WARNING:` Don't divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..</code></pre>
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">WARNING: Don't divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -906,7 +1073,7 @@ The rule is as follows:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-25 11:39:51 CET
+Last updated 2017-01-25 11:42:57 CET
 </div>
 </div>
 <div class="social">
