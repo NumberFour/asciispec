@@ -11,6 +11,8 @@ The following is the specification for AsciiSpec, a toolchain based on http://as
 
 :leveloffset: +1
 
+include::{find}cheat-sheet.adoc[]
+
 include::{find}custom-processors/definition-block.adoc[]
 
 include::{find}custom-processors/requirements-block.adoc[]

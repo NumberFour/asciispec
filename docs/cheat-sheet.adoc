@@ -1,0 +1,51 @@
+= AsciiSpec Cheat Sheet
+
+
+// tag::aspec-cheat-sheet[]
+
+[.language-adoc]
+
+[cols="h,3a"]
+|===
+^| Name ^| Source
+
+| Inline Task Macro
+a|
+``+++task:taskId[]+++``
+
+| Inline BibTeX Macro
+a|
+
+``+++cite:[ref,ref2(optionalPage)]+++``
+
+``+++bibliography::[]+++``
+
+| Inline Cwiki Macro
+
+a|
+``+++cwiki:path[title=Hyperlinked Text]+++``
+
+``+++cwiki:pageID[title=Hyperlinked Text]+++``
+
+| Definition Block
+a|
+`.title` +
+`[def]` +
+`--` +
+My Definition +
+`--`
+
+
+| Requirements Block
+a|
+`.This is the title` +
+`[req,id=RSL-3,version=1]` +
+`--` +
+My Super Requirement +
+`--`
+
+|===
+
+// end::aspec-cheat-sheet[]
+
+For the full specification of all AsciiSpec features, see https://numberfour.github.io/asciispec/[AsciiSpec Processors].
