@@ -6,7 +6,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 = AsciiSpec Userguide
 :toc: left
+:revnumber: 2.0
 :find:
+
 
 This userguide covers the basics of common and practical AsciiDoc syntax along with tips for using AsciiSpec.
 
@@ -77,7 +79,7 @@ The following line of code must be included at the top of your source document:
 
 `+++include::config.adoc[]+++`
 
-TIP: To configure a specific processor, see <<https://numberfour.github.io/asciispec,AsciiSpec Processors>>.
+TIP: To configure a specific processor, see https://numberfour.github.io/asciispec[AsciiSpec Processors].
 
 [.language-asciidoc]
 == AsciiDoctor Syntax
@@ -229,7 +231,7 @@ By default, the following admonition blocks are available;
 * `CAUTION`
 * `WARNING`
 
-They render as with the `WARNING` block below, except with different icons.
+They render as with the `WARNING` block below, except with different <<Icons>>.
 
 WARNING: Don't divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which...
 
@@ -373,8 +375,6 @@ See the following code snippet:
 
 a|
 
-[source,adoc]
-------
 .Outer Example
 =====
 
@@ -392,7 +392,6 @@ See the following code snippet:
 
 =====
 
-------
 |===
 
 
@@ -400,7 +399,7 @@ See the following code snippet:
 
 ==== Github Flavored Markdown
 
-Some common Github Markdown is also supported, such as backticks used for code listings:
+Some common https://guides.github.com/features/mastering-markdown/[Github Markdown] is also supported, such as backticks used for code listings:
 
 [source,asciidoc]
 ----
@@ -510,12 +509,12 @@ When syntax highlighting using http://prismjs.com/[Prism.js] (AsciiSpec default)
 a|
 
 [source,asciidoc]
-The favicon is located [language-html]`<a href="icons/favicon.ico"/>` in your header.
+The favicon is located [language-html]`<a href="favicon.ico"/>` in your header.
 The next thing was the menubar: `<div id="menubar">` ...
 
 a|
 
-The favicon is located [language-html]`<a href="icons/favicon.ico"/>` in your header.
+The favicon is located [language-html]`<a href="favicon.ico"/>` in your header.
 The next thing was the menubar: `<div id="menubar">`...
 |===
 ====
@@ -530,7 +529,7 @@ a|
 [source,asciidoc]
 ----
 [.language-html]
-The favicon was set at `<a href="icons/favicon.ico"/>` in your header.
+The favicon was set at `<a href="favicon.ico"/>` in your header.
 The next thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
 ----
 
@@ -539,7 +538,7 @@ a|
 
 
 [.language-html]
-The favicon was set at `<a href="icons/favicon.ico"/>` in your header. +
+The favicon was set at `<a href="favicon.ico"/>` in your header. +
 The next thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
 
 |===
@@ -745,7 +744,78 @@ Usage: ::
 Setting document attributes is done by adding an attribute entry line as `:attribute: value` above.
 Variables are declared using `{}` curly brackets and can be used for substitutions.
 Attributes can be inserted anywhere in a document unless they are specific _header attributes_ as described in the next section.
-Here are two examples of setting an attribute via an attribute entry line and using inline shorthand:
+
+.Document Attributes
+====
+
+[cols="3,2"]
+|===
+^|Source ^|Output
+
+a|
+[source,asciidoc]
+----
+:revnumber: 2.0 // <1>
+
+Last modified:: {docdatetime} + // <2>
+Revision:: {revnumber}.
+----
+<1> The revision number needs to be set, otherwise the attribute in the last line will be empty.
+<2> `pass:[{docdatetime}]` is automatically set to last time the source document is modified
+
+a|
+
+:revnumber: 1.0
+
+Last modified:: {docdatetime} +
+Revision:: {revnumber}.
+
+|===
+
+Document attributes can be evaluated using the `pass:[ifdef::[]]` macro to create some interesting logic.
+The line below checks if there is an attribute `revnumber` and if it exists, include the content in the square brackets:
+
+[source,asciidoc]
+\ifdef::revnumber[This document has a version number of {revnumber}.]
+
+*Output:*
+
+ifdef::revnumber[This document has a version number of {revnumber}.]
+
+---
+
+This can also be done using larger blocks of content as follows:
+
+[cols=2]
+|===
+^| Source ^| Output
+
+
+a|
+[source,asciidoc]
+----
+\ifeval::[2 > 1]
+2 is more than 1
+
+This content will be included.
+\endif::[]
+
+----
+a|
+ifeval::[2 > 1]
+2 is more than 1
+
+This content will be included.
+endif::[]
+
+|===
+
+====
+
+.Setting Attributes Inline
+====
+
+The following two examples set an attribute using inline shorthand:
 
 [cols=2]
 |===
@@ -764,6 +834,11 @@ We should {set:country:France} travel to {country}!
 
 |===
 
+
+====
+////
+Document variables temporarily broken, see: https://github.com/NumberFour/asciispec/issues/13
+
 An example of a common document attribute is `imagesdir` which specifies the images directory.
 `imagesdir` is empty by default, therefore, `+image:a.jpg[]+` will look for `a.jpg` in the same directory as the source document.
 
@@ -771,9 +846,6 @@ An example of a common document attribute is `imagesdir` which specifies the ima
 ----
 :imagesdir: images
 ----
-
-////
-Document variables temporarily broken, see: https://github.com/NumberFour/asciispec/issues/13
 
 Setting `imagesdir` as above saves the time of typing out the full path every time we use the `image:[]` macro. +
 Usually this is done once per document but can be used multiple times:
@@ -969,7 +1041,35 @@ include::cheat-sheet.adoc[]
 
 :leveloffset: -1
 
+[.language-asciidoc]
 == Tips
+
+=== Icons
+
+When the attribute `:icons: font` is set, http://fontawesome.io/cheatsheet/[Font Awesome] icons can be used inline using the macro `pass:[icon:name[]]`.
+
+.Inline Icons Example
+====
+
+[cols=2]
+|===
+^|Source ^| Output
+
+a|
+[source,asciidoc]
+----
+This is forbidden! icon:fire[]
+
+The source is on icon:github[]
+----
+
+a|
+This is forbidden! icon:fire[]
+
+The source is on icon:github[]
+
+|===
+====
 
 === Colons
 
