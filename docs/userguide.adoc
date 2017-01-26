@@ -11,25 +11,20 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 This userguide covers the basics of common and practical AsciiDoc syntax along with tips for using AsciiSpec.
 
 [.language-bash]
-== Converting Documents with AsciiSpec
+== Converting Documents
 
 To convert this document with AsciiSpec, `cd` to the docs directory and run:
 
 [source,bash]
 asciispec userguide.adoc
 
-This will use the default backend and convert the `userguide.adoc` sample document to a HTML file called `userguide.html`.
-
-Using CLI options::
-To convert to HTML using a different CSS stylesheet, we can pass document attributes via the command line using the `-a` flag:
+This will use the default HTML and create a file called `userguide.html`. +
+To convert to HTML using a different CSS stylesheet, <<Document Attributes & Variables,document attributes>> are passed using the `-a` flag:
 
 [source,bash]
-asciispec -a stylesheet=mystyle.css mydoc.adoc
+asciispec -a stylesheet=mystyle.css userguide.adoc
 
-Another common CLI option is `-D` which is to select a destination directory.
-Assuming a folder `output` exists in the current directory, you would use the following command to generate `userguide.html` there:
-
-`asciispec -D output userguide.adoc`
+TIP: Passing a document attribute via the command line will override that value if it has already been set in the source document.
 
 === Docbook / XML
 
@@ -82,7 +77,7 @@ The following line of code must be included at the top of your source document:
 
 `+++include::config.adoc[]+++`
 
-TIP: To configure a specific processor, see the <<AsciiSpec Processors>> section below.
+TIP: To configure a specific processor, see <<https://numberfour.github.io/asciispec,AsciiSpec Processors>>.
 
 [.language-asciidoc]
 == AsciiDoctor Syntax
@@ -420,46 +415,37 @@ export public class Fibonacci {
 
 ==== Apply CSS classes
 
-The default way of adding CSS classes to blocks in Asciidoc is with the syntax `[.css-class]` on the preceding line or by using the `role=` attribute:
+CSS classes can be added to blocks in Asciidoc by using the the 'dot-prefix' syntax `[.css-class]` on the preceding line or by using the `role=` attribute:
 
 .Applying CSS Classes
 ====
 
 [cols=2]
 |===
-^| Dot Prefix ^| Role=
+^| Source ^| Output
 
 a|
 
 [source,asciidoc]
 ----
-[.small]
-This paragraph is assigned the `small` CSS class.
-----
-
-a|
-
-[source,asciidoc]
-----
-[role=blue]
-Lovely Calming Blue Text on the Entire Paragraph.
-----
-
-
-a|
-[.small]
-This paragraph is assigned the `small` CSS class.
-
-
-a|
+[.xx-large]
+This paragraph is assigned the `xx-large` CSS class.
 
 [role=blue]
-Lovely Calming Blue Text on the Entire Paragraph.
+Lovely Calming Blue Text on every character of the brief, yet poignant sentence.
+----
+
+
+a|
+[.xx-large]
+This paragraph is assigned the `xx-large` CSS class.
+
+[role=blue]
+Lovely Calming Blue Text on every character of the brief, yet poignant sentence.
 
 |===
 
-It's also possible to apply CSS classes to code blocks. This is useful for changing the text size for long console logs, for instance:
-Let's set the CSS class `xx-small` on the source block below using the following line:
+Let's set the CSS class `xx-small` on the source block below using the using the `role=` attribute to change the text size for this long console log:
 
 `[source,bash,role=xx-small]`
 
@@ -604,7 +590,7 @@ a|
 . First Item
 .. Second Item
 
-=== Feature 1
+=== Feature A
 
 This feature needs documentation!
 
@@ -623,7 +609,7 @@ a|
 . First Item
 .. Second Item
 
-=== Feature 1
+=== Feature A
 
 This feature needs documentation!
 
@@ -639,6 +625,12 @@ Fully Documented, see:
 
 CSS classes can span multiple blocks or paragraphs when delimited by two hyphens `--`:
 
+[cols=2]
+|===
+^|Source ^| Output
+
+a|
+
 [source,asciidoc]
 ----
 [.red]
@@ -647,18 +639,20 @@ This paragraph is assigned the `red` CSS class.
 
 - [x] All these list items will be red, too!
 --
+
+The next paragraph will be styled as usual
+
 ----
-
-*Output:*
-
+a|
 [.red]
 --
 This paragraph is assigned the `red` CSS class.
 
-- [x] All these list items will be red, too!ed
+- [x] All these list items will be red, too!
 --
+The next paragraph will be styled as usual
 
-
+|===
 
 === Block Macro
 
@@ -677,43 +671,60 @@ The following is an example of a block macro to insert a new block with the `ima
 
 *_Source:_*
 
+.Blocks and empty lines
+====
+
+[cols=2]
+|===
+^|Source ^| Output
+
+a|
 [source,asciidoc]
 ----
-The following image macro is not rendered, +
-it is considered the last line of this pargraph block. +
+The following image is considered the last line of this pargraph block.
 image::images/logo.png[]
 
-Leaving an empty line before and after the image block macro +
-will create a block as expected:
+Leaving an empty line before and after the image block macro will create a block as expected:
 
 image::images/logo.png[]
 
 beginning of next block...
 ----
 
-*_Output_*
+a|
 
-The following image macro is not rendered, +
-it is considered the last line of this pargraph block. +
+The following image macro is considered the last line of this pargraph block.
 image::images/logo.png[]
 
-Leaving an empty line before and after the image block macro +
+Leaving an empty line before and after the image block macro
 will create a block as expected:
 
 image::images/logo.png[]
 
 _beginning of next block..._
 
+|===
+
+====
+
 === Inline Macro
 
-Inline macros are similar to <<Block Macro,block macros>> except that the macro is replaced by inline content.
+Inline macros are similar to <<Block Macro,block macros>> except that the macro is replaced by inline content. +
 The syntax is different in that we use a single colon `:` instead of two `::`
 
+[cols=2]
+|===
+^| Source, ^| Output
+
+a|
 [source,asciidoc]
-We can simply insert a logo image:images/logo.png[Logo] directly into our paragraph...
+----
+We can insert a logo image:images/logo.png[Logo] directly into our paragraph...
+----
+a|
 
-We can simply insert a logo image:images/logo.png[Logo] directly into our paragraph...
-
+We can insert a logo image:images/logo.png[Logo] directly into our paragraph...
+|===
 Optional Attributes::
 In the above example, we have included some optional attributes in the square brackets that close the inline macro.
 The first attribute is the 'Alt Text' of the image, followed by the width and height of the image.
@@ -831,7 +842,8 @@ A full table of the available built-in document attributes, see the http://ascii
 
 === Tables
 
-Table blocks are delimited by a character (usually a pipe `|`) and three equals symbols (`|===`);
+Table blocks are typically delimited by a character (usually a pipe `|`) and three equals symbols (`|===`);
+
 
 [source,asciidoc]
 ----
@@ -844,9 +856,17 @@ Table blocks are delimited by a character (usually a pipe `|`) and three equals 
 | Hello | world
 |===
 
-A different character can be used to delimit cells by substituting the pipe `|` with the separator you wish to use.
+.Tables and CSV
+====
+
+
+
+
 A comma can be used exactly as above to separate cells in the following way:
 
+[cols=2]
+|===
+a|
 [source,asciidoc]
 ----
 ,===
@@ -854,7 +874,21 @@ A comma can be used exactly as above to separate cells in the following way:
 ,===
 ----
 
-TIP: Using commas in this way can provide an easy solution to including CSV values (`include::mydata.csv[]`) into a table without having to reformat the included document.
+A different character can be used to delimit cells by substituting the pipe with the separator you wish to use.
+
+a|
+
+Using commas in this way can provide an easy solution to including CSV values (`include::mydata.csv[]`) into a table without having to reformat the data:
+[source,adoc,subs="macros"]
+----
+[cols=6]
+,===
+pass:[include::music.csv[]]
+,===
+----
+|===
+
+====
 
 Formatting tables:
 
@@ -901,12 +935,41 @@ image::images/logo.png[]
 image::images/logo.png[]
 
 
-== AsciiSpec Processors
+[.language-adoc]
+=== Includes
 
-For custom AsciiSpec features, see the https://github.com/NumberFour/asciispec/blob/master/docs/index.adoc[AsciiSpec Processors] index.
+[cols="h,m,a"]
+|===
+|Type | Source | Output
 
-[.language-asciidoc]
-== General Tips
+| Include tags |
+
+tag::tagname[] +
+
+end::tagname[]  | N/A - Usually these tags are added in commented lines
+| Include |
+\include::filename.adoc[leveloffset=offset]
+
+\include::file2.adoc[tags=tagname,tagname2]
+
+\include::file3.adoc[lines=ranges,indent=depth]
+| Includes referenced file(s) dictated by the comma-separated attributes.
+|===
+
+
+////
+
+################# Includes ###############
+
+////
+
+:leveloffset: +1
+
+include::cheat-sheet.adoc[]
+
+:leveloffset: -1
+
+== Tips
 
 === Colons
 
@@ -926,14 +989,17 @@ a| The following Table of Contents +
 
 `toc::[]` +
 
-cannot be declared inline.
+cannot be used inline.
 |===
 
+
+[appendix]
 == Resources
 
 *https://github.com/NumberFour/asciispec#documentation[AsciiSpec Docs]* - NumberFour AsciiSpec Documentation +
 *http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[AsciiDoc Syntax Quick Reference]* - Covers most standard formatting needs. +
 *http://asciidoctor.org/docs/user-manual/[AsciiDoctor User Manual]* - Reference Manual detailing document attributes, conversion settings, extended features etc. +
+
 
 === Sublime Text packages
 
@@ -943,6 +1009,5 @@ cannot be declared inline.
 
 === Document Converters
 
-*https://github.com/opendevise/kramdown-asciidoc[Kramdown]* - Easily convert GitHub Flavoured Markdown (``.md``) to AsciiDoc (``.adoc``). +
 *http://pandoc.org/[Pandoc]* - A universal document converter. +
 
