@@ -45,6 +45,9 @@
 <body class="book toc2 toc-left">
 <div id="header">
 <h1>AsciiSpec Userguide</h1>
+<div class="details">
+<span id="revnumber">version 2.0</span>
+</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -83,7 +86,8 @@
 <li><a href="#_asciispec_cheat_sheet">3. AsciiSpec Cheat Sheet</a></li>
 <li><a href="#_tips">4. Tips</a>
 <ul class="sectlevel2">
-<li><a href="#_colons">4.1. Colons</a></li>
+<li><a href="#_icons">4.1. Icons</a></li>
+<li><a href="#_colons">4.2. Colons</a></li>
 </ul>
 </li>
 <li><a href="#_resources">Appendix A: Resources</a>
@@ -220,7 +224,7 @@ The following line of code must be included at the top of your source document:<
 <i class="fa icon-tip" title=""></i>
 </td>
 <td class="content">
-To configure a specific processor, see &lt;&lt;<a href="https://numberfour.github.io/asciispec,AsciiSpec" class="bare">https://numberfour.github.io/asciispec,AsciiSpec</a> Processors&gt;&gt;.
+To configure a specific processor, see <a href="https://numberfour.github.io/asciispec">AsciiSpec Processors</a>.
 </td>
 </tr>
 </table>
@@ -458,7 +462,7 @@ By default, the following admonition blocks are available;</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>They render as with the <code>WARNING</code> block below, except with different icons.</p>
+<p>They render as with the <code>WARNING</code> block below, except with different <a href="#_icons">Icons</a>.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -677,24 +681,22 @@ See the following code snippet:
 </tr>
 </table>
 </div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<td class="tableblock halign-left valign-top"><div><div class="exampleblock">
+<div class="title">Example 3. Outer Example</div>
 <div class="content">
-<pre class="highlight"><code class="language-adoc" data-lang="adoc">.Outer Example
-=====
-
-.Inner Example
-====
-
-See the following code snippet:
-
-[source,html]
-----
-&lt;div id="footnotes"&gt;
-----
-
-====
-
-=====</code></pre>
+<div class="exampleblock">
+<div class="title">Example 4. Inner Example</div>
+<div class="content">
+<div class="paragraph">
+<p>See the following code snippet:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;div id="footnotes"&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div></div></td>
 </tr>
@@ -705,7 +707,7 @@ See the following code snippet:
 <div class="sect3">
 <h4 id="_github_flavored_markdown"><a class="anchor" href="#_github_flavored_markdown"></a><a class="link" href="#_github_flavored_markdown">2.2.4. Github Flavored Markdown</a></h4>
 <div class="paragraph">
-<p>Some common Github Markdown is also supported, such as backticks used for code listings:</p>
+<p>Some common <a href="https://guides.github.com/features/mastering-markdown/">Github Markdown</a> is also supported, such as backticks used for code listings:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -842,12 +844,12 @@ Downloaded: https://repo.maven.apache....
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">The favicon is located [language-html]`&lt;a href="icons/favicon.ico"/&gt;` in your header.
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">The favicon is located [language-html]`&lt;a href="favicon.ico"/&gt;` in your header.
 The next thing was the menubar: `&lt;div id="menubar"&gt;` ...</code></pre>
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>The favicon is located <code class="language-html">&lt;a href="icons/favicon.ico"/&gt;</code> in your header.
+<p>The favicon is located <code class="language-html">&lt;a href="favicon.ico"/&gt;</code> in your header.
 The next thing was the menubar: <code>&lt;div id="menubar"&gt;</code>&#8230;&#8203;</p>
 </div></div></td>
 </tr>
@@ -871,14 +873,14 @@ All inline source code within that paragraph will then be highlighted with the l
 <td class="tableblock halign-left valign-top"><div><div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[.language-html]
-The favicon was set at `&lt;a href="icons/favicon.ico"/&gt;` in your header.
+The favicon was set at `&lt;a href="favicon.ico"/&gt;` in your header.
 The next thing was the menubar: `&lt;div id="menubar"&gt;` which contained a list `&lt;ul class="fa-ul"&gt;`...</code></pre>
 </div>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph language-html">
-<p>The favicon was set at <code>&lt;a href="icons/favicon.ico"/&gt;</code> in your header.<br>
+<p>The favicon was set at <code>&lt;a href="favicon.ico"/&gt;</code> in your header.<br>
 The next thing was the menubar: <code>&lt;div id="menubar"&gt;</code> which contained a list <code>&lt;ul class="fa-ul"&gt;</code>&#8230;&#8203;</p>
 </div></div></td>
 </tr>
@@ -1203,8 +1205,113 @@ The same method of passing attributes can be applied to the <a href="#_block_mac
 <div class="paragraph">
 <p>Setting document attributes is done by adding an attribute entry line as <code>:attribute: value</code> above.
 Variables are declared using <code>{}</code> curly brackets and can be used for substitutions.
-Attributes can be inserted anywhere in a document unless they are specific <em>header attributes</em> as described in the next section.
-Here are two examples of setting an attribute via an attribute entry line and using inline shorthand:</p>
+Attributes can be inserted anywhere in a document unless they are specific <em>header attributes</em> as described in the next section.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 7. Document Attributes</div>
+<div class="content">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 60%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Source</th>
+<th class="tableblock halign-center valign-top">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">:revnumber: 2.0 <i class="conum" data-value="1"></i><b>(1)</b>
+
+Last modified:: {docdatetime} + <i class="conum" data-value="2"></i><b>(2)</b>
+Revision:: {revnumber}.</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The revision number needs to be set, otherwise the attribute in the last line will be empty.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>{docdatetime}</code> is automatically set to last time the source document is modified</td>
+</tr>
+</table>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="dlist">
+<dl>
+<dt class="hdlist1">Last modified</dt>
+<dd>
+<p>2017-01-26 18:10:57 CET<br></p>
+</dd>
+<dt class="hdlist1">Revision</dt>
+<dd>
+<p>2.0.</p>
+</dd>
+</dl>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Document attributes can be evaluated using the <code>ifdef::[]</code> macro to create some interesting logic.
+The line below checks if there is an attribute <code>revnumber</code> and if it exists, include the content in the square brackets:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">ifdef::revnumber[This document has a version number of {revnumber}.]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Output:</strong></p>
+</div>
+<hr>
+<div class="paragraph">
+<p>This can also be done using larger blocks of content as follows:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Source</th>
+<th class="tableblock halign-center valign-top">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">ifeval::[2 &gt; 1]
+2 is more than 1
+
+This content will be included.
+endif::[]</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>2 is more than 1</p>
+</div>
+<div class="paragraph">
+<p>This content will be included.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="exampleblock">
+<div class="title">Example 8. Setting Attributes Inline</div>
+<div class="content">
+<div class="paragraph">
+<p>The following two examples set an attribute using inline shorthand:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -1232,13 +1339,6 @@ We should  travel to France!</p>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>An example of a common document attribute is <code>imagesdir</code> which specifies the images directory.
-<code>imagesdir</code> is empty by default, therefore, <code>image:a.jpg[]</code> will look for <code>a.jpg</code> in the same directory as the source document.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">:imagesdir: images</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -1304,7 +1404,7 @@ toc::[] // But will be rendered here instead</code></pre>
 </tbody>
 </table>
 <div class="exampleblock">
-<div class="title">Example 7. Tables and CSV</div>
+<div class="title">Example 9. Tables and CSV</div>
 <div class="content">
 <div class="paragraph">
 <p>A comma can be used exactly as above to separate cells in the following way:</p>
@@ -1514,11 +1614,51 @@ My Super Requirement<br>
 </div>
 </div>
 </div>
-<div class="sect1">
+<div class="sect1 language-asciidoc">
 <h2 id="_tips"><a class="anchor" href="#_tips"></a><a class="link" href="#_tips">4. Tips</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_colons"><a class="anchor" href="#_colons"></a><a class="link" href="#_colons">4.1. Colons</a></h3>
+<h3 id="_icons"><a class="anchor" href="#_icons"></a><a class="link" href="#_icons">4.1. Icons</a></h3>
+<div class="paragraph">
+<p>When the attribute <code>:icons: font</code> is set, <a href="http://fontawesome.io/cheatsheet/">Font Awesome</a> icons can be used inline using the macro <code>icon:name[]</code>.</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 10. Inline Icons Example</div>
+<div class="content">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Source</th>
+<th class="tableblock halign-center valign-top">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">This is forbidden! icon:fire[]
+
+The source is on icon:github[]</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>This is forbidden! <span class="icon"><i class="fa fa-fire"></i></span></p>
+</div>
+<div class="paragraph">
+<p>The source is on <span class="icon"><i class="fa fa-github"></i></span></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_colons"><a class="anchor" href="#_colons"></a><a class="link" href="#_colons">4.2. Colons</a></h3>
 <div class="paragraph">
 <p>When learning AsciiDoc syntax, it can be confusing whether to use one or two colons for certain macros.
 The rule is as follows:</p>
@@ -1601,7 +1741,8 @@ The rule is as follows:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-26 16:43:39 CET
+Version 2.0<br>
+Last updated 2017-01-26 18:10:57 CET
 </div>
 </div>
 <div class="social">
