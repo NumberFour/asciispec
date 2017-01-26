@@ -2,14 +2,13 @@ ifndef::env-github[]
 include::config.adoc[]
 endif::[]
 
-:find:
-:toc: left
-
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 = AsciiSpec Userguide
+:toc: left
+:find:
 
-This userguide covers the basics of common and practical AsciiDoc syntax along with basic tips for using AsciiSpec for documentation.
+This userguide covers the basics of common and practical AsciiDoc syntax along with tips for using AsciiSpec.
 
 [.language-bash]
 == Converting Documents with AsciiSpec
@@ -27,7 +26,14 @@ To convert to HTML using a different CSS stylesheet, we can pass document attrib
 [source,bash]
 asciispec -a stylesheet=mystyle.css mydoc.adoc
 
-To convert to docbook, use the `-b docbook` flag:
+Another common CLI option is `-D` which is to select a destination directory.
+Assuming a folder `output` exists in the current directory, you would use the following command to generate `userguide.html` there:
+
+`asciispec -D output userguide.adoc`
+
+=== Docbook / XML
+
+To convert to docbook (`.xml`), use the `-b docbook` flag:
 
 `asciispec -b docbook userguide.adoc`
 
@@ -54,7 +60,7 @@ export PATH=$PATH:~/path/to/asciidoctor-fopub/
 +
 ```bash
 $ which fopub
-~/path/to/fopub: You must specify a DocBook v4.5 or DocBook v5 XML source file as the first command argument
+~/path/to/fopub
 ```
 4. Convert XML to PDF using the following:
 +
@@ -62,6 +68,11 @@ $ which fopub
 fopub myfile.xml
 ```
 
+An example command to convert from asciidoc to PDF would then look something like the following:
+
+```bash
+asciispec -b docbook myfile.adoc && fopub myfile.xml
+```
 
 === Configuration File
 
@@ -109,9 +120,9 @@ Section levels are set using equals symbols (`= title`) followed by a space and 
 == Another Level 1 Section Title
 ----
 
-Documents with two Level 0 (`=`) Sections need the `:doctype: book` sttribute set.
+Documents with two Level 0 (`=`) Sections need the `:doctype: book` attribute set.
 
-It's illegal to skip section like so:
+It's illegal to skip section:
 
 [source,adoc]
 ----
@@ -174,7 +185,7 @@ export public class Fibonacci {
 // etc...
 ----
 -----
-<1> In the first line we have demonstrated how to add a _title_ to a block. This is done using a full stop followed by the title `Fibonacci.n4js` (note there is no space). A title can be added in this way to many different block types by default.
+<1> In the first line we add a _title_ to a block. This is done using a full stop followed by the title `Fibonacci.n4js` (note there is no space). A title can be added in this way to many different block types by default.
 <2> Setting a `source` context and the language is `N4JS`.
 <3> Notice the use of four hyphens to delimit the block: `----` (see <<Delimiters>>) this indicates to the parser where the block begins and ends. The listing block can then also include the empty line:
 
@@ -208,43 +219,99 @@ If you want to make an apple pie from scratch, you must first create the univers
 
 ==== Admonition Blocks
 
-A useful feature built-in to AsciiDoctor is the inclusion of admonition blocks.
-By default, the following admonition blocks are available; `TIP`, `NOTE`, `IMPORTANT`, `CAUTION`, `WARNING`.
-They render as with the `WARNING` block below, except with different icons.
-
-*Source:*
+*Usage:*
 
 [source,asciidoc]
-WARNING: Don't divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
+WARNING: Don't divide by zero...
 
-*Output:*
 
-WARNING: Don't divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
+A useful feature built-in to AsciiDoctor is the inclusion of admonition blocks.
+By default, the following admonition blocks are available;
+
+* `TIP`
+* `NOTE`
+* `IMPORTANT`
+* `CAUTION`
+* `WARNING`
+
+They render as with the `WARNING` block below, except with different icons.
+
+WARNING: Don't divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which...
+
+The standard block syntax can also be used if the admonition spans multiple paragraphs:
+
+.Delimited Admonition Block
+====
+
+[cols=2]
+|===
+^| Source ^| Output
+
+a|
+[source,adoc]
+----
+[WARNING]
+--
+Don't divide by zero.
+
+In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
+--
+----
+a|
+[WARNING]
+--
+Don't divide by zero.
+
+In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
+--
+|===
+====
 
 ==== Delimiters
 
 For all built-in blocks, the square brackets containing the block type (e.g. `[source]`) can be omitted and their delimiters will be used to determine the block type instead. For source blocks, this is four hyphens (`----`);
+
+TIP: This is convenient, but, of course, no positional attributes i.e. `[blocktype,attr1,attr2]` can be specified. In the case of listing blocks, this means no language can be specified for highlighting in the default manner e.g. `[source,java]`.
+
+.Set Block Type by Delmiter
+====
+
+[cols=2]
+|===
+^| Source ^| Output
+
+a|
 
 [source,adoc]
 -----
 ----
 my code() {
 
-// etc...
+string example...
 ----
 -----
-
-*Output:*
+a|
 
 ----
 my code() {
 
-// etc...
+string example...
 ----
+
+|===
+====
+
+For a full list of delimiters, refer to the http://asciidoctor.org/docs/user-manual/#built-in-blocks-summary[Asciidoctor User Manual: Built-in Block Summary].
 
 ===== Nesting Blocks
 
 Blocks can contain other blocks:
+
+[cols=2]
+|===
+^| Source ^| Output
+
+a|
 
 [source,asciidoc]
 -----
@@ -261,7 +328,7 @@ my code() {
 ====
 -----
 
-*Output:*
+a|
 
 
 .Nested Listing
@@ -276,24 +343,64 @@ my code() {
 
 ====
 
-TIP: This is convenient, but, of course, no positional attributes i.e. `[blocktype,attr1,attr2]` can be specified.
+|===
 
-Nesting blocks of the same type is done using an extra delimiter on the containing block like the following:
+Nesting blocks of the same type is done using a different number of delimiters:
 
-.Containing Example
-=====
-A brief introduction
+[cols=2]
+|===
+^| Source ^| Output
 
-.Nested Example
-====
+a|
+
+[source,adoc]
+------
+.Outer Example
+===== // <1>
+
+.Inner Example
+==== // <2>
+
 See the following code snippet:
 
+[source,html]
 ----
-// etc...
+<div id="footnotes">
 ----
 
 ====
+
 =====
+
+------
+<1> Outer delimiter uses 5 characters
+<2> Inner delimiter uses 4 characters
+
+a|
+
+[source,adoc]
+------
+.Outer Example
+=====
+
+.Inner Example
+====
+
+See the following code snippet:
+
+[source,html]
+----
+<div id="footnotes">
+----
+
+====
+
+=====
+
+------
+|===
+
+
 
 
 ==== Github Flavored Markdown
@@ -313,67 +420,150 @@ export public class Fibonacci {
 
 ==== Apply CSS classes
 
-The default way of adding CSS classes to blocks in Asciidoc is with the syntax `[.css-class]` on the preceding line:
-[horizontal]
-Asciidoc::
-+
+The default way of adding CSS classes to blocks in Asciidoc is with the syntax `[.css-class]` on the preceding line or by using the `role=` attribute:
+
+.Applying CSS Classes
+====
+
+[cols=2]
+|===
+^| Dot Prefix ^| Role=
+
+a|
+
 [source,asciidoc]
 ----
 [.small]
 This paragraph is assigned the `small` CSS class.
 ----
-Output::
-+
+
+a|
+
+[source,asciidoc]
+----
+[role=blue]
+Lovely Calming Blue Text on the Entire Paragraph.
+----
+
+
+a|
 [.small]
 This paragraph is assigned the `small` CSS class.
 
-It's also possible using the `role` attribute:
 
-[horizontal]
-Asciidoc::
-+
-[source,asciidoc]
-----
-[role=blue]
-Lovely Calming Blue Text on the Entire Paragraph.
-----
-Output::
-+
+a|
+
 [role=blue]
 Lovely Calming Blue Text on the Entire Paragraph.
 
-===== Inline
+|===
 
-When syntax highlighting using http://prismjs.com/[Prism.js], CSS classes can be set inline and the language of inline source code can be set as follows:
+It's also possible to apply CSS classes to code blocks. This is useful for changing the text size for long console logs, for instance:
+Let's set the CSS class `xx-small` on the source block below using the following line:
 
-.Set Syntax Highlighting Language Inline
-[source,asciidoc]
-The favicon is located [language-html]`<a href="icons/favicon.ico"/>` in your header. +
-The next thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
-
-*Output:* The favicon is located [language-html]`<a href="icons/favicon.ico"/>` in your header. +
-The next thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
-
-
-Instead of writing [language-adoc]`[language-html]` before every piece of inline code I want highlighted, I can set a CSS class to a paragraph. All inline source code within that paragraph will then be highlighted with the language specified:
-
-[source,asciidoc]
-----
-[.language-html]
-The favicon was set at `<a href="icons/favicon.ico"/>` in your header. +
-The next thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
-----
+`[source,bash,role=xx-small]`
 
 *Output:*
 
+[source,bash,role=xx-small]
+----
+Downloading: https://repo.maven.apache.org/maven2/com/google/guava/guava/13.0-rc2/guava-13.0-rc2.pom
+Downloaded: https://repo.maven.apache.org/maven2/com/google/guava/guava/13.0-rc2/guava-13.0-rc2.pom (6 KB at 60.0 KB/sec)
+Downloading: http://www2.ph.ed.ac.uk/maven2/com/google/guava/guava-parent/13.0-rc2/guava-parent-13.0-rc2.pom
+Downloading: https://repo.maven.apache.org/maven2/com/google/guava/guava-parent/13.0-rc2/guava-parent-13.0-rc2.pom
+Downloaded: https://repo.maven.apache.org/maven2/com/google/guava/guava-parent/13.0-rc2/guava-parent-13.0-rc2.pom (3 KB at 29.0 KB/sec)
+Downloading: http://www2.ph.ed.ac.uk/maven2/com/google/guava/guava/13.0/guava-13.0.pom
+Downloading: https://repo.maven.apache.org/maven2/com/google/guava/guava/13.0/guava-13.0.pom
+Downloaded: https://repo.maven.apache.org/maven2/com/google/guava/guava/13.0/guava-13.0.pom (6 KB at 60.0 KB/sec)
+...
+----
+
+
+When using GFM footnote:[<<Github Flavored Markdown>>], it's possible with the following syntax:
+
+[cols=2]
+|===
+
+a|
+
+[source,adoc]
+----
+[.xx-small]
+```bash
+Downloaded: https://repo.maven.apache....
+```
+----
+
+a|
+
+[source,adoc]
+----
+[.xx-small.language-bash] // <1>
+```
+Downloaded: https://repo.maven.apache....
+```
+----
+<1> An example of setting multiple CSS classes on a block: `xx-small` and `language-bash` for Prism syntax highlighting.
+|===
+
+====
+
+
+===== Inline
+
+When syntax highlighting using http://prismjs.com/[Prism.js] (AsciiSpec default), CSS classes can be set inline and the language of inline source code can be set as follows:
+
+
+.Change Inline Syntax Highlighting Language
+====
+
+[cols=]
+|===
+^| Source ^| Output
+
+a|
+
+[source,asciidoc]
+The favicon is located [language-html]`<a href="icons/favicon.ico"/>` in your header.
+The next thing was the menubar: `<div id="menubar">` ...
+
+a|
+
+The favicon is located [language-html]`<a href="icons/favicon.ico"/>` in your header.
+The next thing was the menubar: `<div id="menubar">`...
+|===
+====
+
+.Set Syntax Highlighter Language per Block
+====
+Instead of writing [language-adoc]`[language-html]` before every piece of inline code, a CSS class can be set to a paragraph or block.
+All inline source code within that paragraph will then be highlighted with the language specified:
+
+|===
+a|
+[source,asciidoc]
+----
+[.language-html]
+The favicon was set at `<a href="icons/favicon.ico"/>` in your header.
+The next thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
+----
+
+a|
+
+
+
 [.language-html]
 The favicon was set at `<a href="icons/favicon.ico"/>` in your header. +
 The next thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
 
+|===
+
+====
+
 ==== Applying CSS Classes to Sections
 
-Instead of setting a CSS class on every paragraph, it's also possible to set a class on a section.
-This is done like so:
+It's also possible to set a class on a section. The highest section level that a CSS class can be applied on is the Level 1 (`==`) and all contained sections will inherit this class.
+
 
 [cols=2]
 |===
@@ -403,13 +593,51 @@ syntax highlighting.
 === The `font-weight: bold;` attribute
 
 Always use `font-weight: bold;` to get your point across...
+
+
+a|
+[source,asciidoc]
+----
+[.todo]
+== Summary
+
+. First Item
+.. Second Item
+
+=== Feature 1
+
+This feature needs documentation!
+
+== Overview // <1>
+
+Fully Documented, see:
+
+----
+<1> Notice that *subsections* will inherit the CSS class specified, but the next section of the same level or higher will not. In this example, the `Overview` section does not have the `todo` class.
+
+a|
+
+[.todo]
+== Summary
+
+. First Item
+.. Second Item
+
+=== Feature 1
+
+This feature needs documentation!
+
+== Overview
+
+Fully Documented, see:
+
+
 |===
 
-TIP: The highest section level that a CSS class can be applied on is the Level 1 (`==`) and all contained sections will inherit this class.
 
-===== Open Blocks
+===== Delimited by Open Blocks
 
-CSS classes can span multiple blocks when applied to an open block (delimited by two hyphens `--`):
+CSS classes can span multiple blocks or paragraphs when delimited by two hyphens `--`:
 
 [source,asciidoc]
 ----
@@ -417,7 +645,7 @@ CSS classes can span multiple blocks when applied to an open block (delimited by
 --
 This paragraph is assigned the `red` CSS class.
 
-- [x] All text will be colored red
+- [x] All these list items will be red, too!
 --
 ----
 
@@ -427,7 +655,7 @@ This paragraph is assigned the `red` CSS class.
 --
 This paragraph is assigned the `red` CSS class.
 
-- [x] All text will be colored red
+- [x] All these list items will be red, too!ed
 --
 
 
