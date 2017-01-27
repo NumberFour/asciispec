@@ -1,0 +1,88 @@
+ifndef::env-github[]
+include::config.adoc[]
+endif::[]
+
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+= AsciiSpec Setup
+:toc: left
+:find:
+
+== Installation
+Add AsciiSpec to your shell profile with the path to the `asciispec/bin` directory on your system:
+
+`pass:[export PATH=$PATH:~/path/to/asciispec/bin/]`
+
+If the AsciiSpec tool is found by your system, running AsciiSpec with the `-h` flag will print a help page:
+
+[source,bash]
+asciispec -h
+
+[.language-bash]
+== Converting Documents
+
+To convert this document with AsciiSpec, `cd` to the docs directory and run:
+
+[source,bash]
+asciispec userguide.adoc
+
+This will use the default HTML and create a file called `userguide.html`. +
+To convert to HTML using a different CSS stylesheet, <<Document Attributes & Variables,document attributes>> are passed using the `-a` flag:
+
+[source,bash]
+asciispec -a stylesheet=mystyle.css userguide.adoc
+
+TIP: Passing a document attribute via the command line will override that value if it has already been set in the source document.
+
+=== Docbook / XML
+
+To convert to docbook (`.xml`), use the `-b docbook` flag:
+
+`asciispec -b docbook userguide.adoc`
+
+Most built-in CLI parameters are described in the help page by running `asciispec -h` and in further detail in the http://asciidoctor.org/docs/user-manual/#cli-options[CLI Options] section of the AsciiDoctor user manual.
+
+=== PDF
+
+Apache FOP (Formatting Objects Processor) is required for higher quality *PDF* generation.
+A fork with custom PDF styling and syntax highlighting can be found at the following location:
+
+https://github.com/NumberFour/asciidoctor-fopub
+
+1. Clone the Asciidoctor Fopub repository
++
+```
+git clone https://github.com/NumberFour/asciidoctor-fopub.git
+```
+2. Add the `asciidoctor-fopub/` directory to your shell profile:
++
+```bash
+export PATH=$PATH:~/path/to/asciidoctor-fopub/
+```
+3. Confirm successful install using the `which fopub` command.
++
+```bash
+$ which fopub
+~/path/to/fopub
+```
+4. Convert XML to PDF using the following:
++
+```bash
+fopub myfile.xml
+```
+
+An example command to convert from asciidoc to PDF would then look something like the following:
+
+```bash
+asciispec -b docbook myfile.adoc && fopub myfile.xml
+```
+
+=== Configuration File
+
+AsciiSpec processors with configurable target URLs have to be set up by means of a configuration file.
+For this case,`config.adoc` can be copied to the location of the source document and used as a template.
+The following line of code must be included at the top of your source document:
+
+`+++include::config.adoc[]+++`
+
+TIP: To configure a specific processor, see https://numberfour.github.io/asciispec[AsciiSpec Processors].

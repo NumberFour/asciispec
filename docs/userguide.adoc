@@ -8,81 +8,15 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :toc: left
 :revnumber: 2.0
 :find:
+:release: 2
 
 
 This userguide covers the basics of common and practical AsciiDoc syntax along with tips for using AsciiSpec.
 
-[.language-bash]
-== Converting Documents
 
-To convert this document with AsciiSpec, `cd` to the docs directory and run:
-
-[source,bash]
-asciispec userguide.adoc
-
-This will use the default HTML and create a file called `userguide.html`. +
-To convert to HTML using a different CSS stylesheet, <<Document Attributes & Variables,document attributes>> are passed using the `-a` flag:
-
-[source,bash]
-asciispec -a stylesheet=mystyle.css userguide.adoc
-
-TIP: Passing a document attribute via the command line will override that value if it has already been set in the source document.
-
-=== Docbook / XML
-
-To convert to docbook (`.xml`), use the `-b docbook` flag:
-
-`asciispec -b docbook userguide.adoc`
-
-Most built-in CLI parameters are described in the help page by running `asciispec -h` and in further detail in the http://asciidoctor.org/docs/user-manual/#cli-options[CLI Options] section of the AsciiDoctor user manual.
-
-=== PDF
-
-Apache FOP (Formatting Objects Processor) is required for higher quality *PDF* generation.
-A fork with custom PDF styling and syntax highlighting can be found at the following location:
-
-https://github.com/NumberFour/asciidoctor-fopub
-
-1. Clone the Asciidoctor Fopub repository
-+
-```
-git clone https://github.com/NumberFour/asciidoctor-fopub.git
-```
-2. Add the `asciidoctor-fopub/` directory to your shell profile:
-+
-```bash
-export PATH=$PATH:~/path/to/asciidoctor-fopub/
-```
-3. Confirm successful install using the `which fopub` command.
-+
-```bash
-$ which fopub
-~/path/to/fopub
-```
-4. Convert XML to PDF using the following:
-+
-```bash
-fopub myfile.xml
-```
-
-An example command to convert from asciidoc to PDF would then look something like the following:
-
-```bash
-asciispec -b docbook myfile.adoc && fopub myfile.xml
-```
-
-=== Configuration File
-
-AsciiSpec processors with configurable target URLs have to be set up by means of a configuration file.
-For this case,`config.adoc` can be copied to the location of the source document and used as a template.
-The following line of code must be included at the top of your source document:
-
-`+++include::config.adoc[]+++`
-
-TIP: To configure a specific processor, see https://numberfour.github.io/asciispec[AsciiSpec Processors].
 
 [.language-asciidoc]
-== AsciiDoctor Syntax
+== Document Structure
 
 In order that we understand the use of AsciiSpec processors, it's important to know the context in which they function.
 This section provides a brief overview of how an AsciiDoc document is structured.
@@ -128,8 +62,8 @@ It's illegal to skip section:
 ==== Level 3 Section - Error!
 ----
 
-
-=== Blocks
+[.language-asciidoc]
+== Blocks
 
 Usage::
 
@@ -164,7 +98,7 @@ It was the best of times..
 
 A list of built-in block types can be found in the http://asciidoctor.org/docs/user-manual/#built-in-blocks-summary[AsciiDoctor User Manual: built-in blocks summary].
 
-==== Titles & attributes
+=== Titles & attributes
 
 Adding a title to a block of content is done by adding a fullstop followed by the title text in the line previous to the block.
 
@@ -214,7 +148,44 @@ The above is rendered as follows:
 [verse, Carl Sagan, Cosmos: A Personal Voyage]
 If you want to make an apple pie from scratch, you must first create the universe.
 
-==== Admonition Blocks
+=== Delimiters
+
+For all built-in blocks, the square brackets containing the block type (e.g. `[source]`) can be omitted and their delimiters will be used to determine the block type instead. For source blocks, this is four hyphens (`----`);
+
+TIP: This is convenient, but, of course, no positional attributes i.e. `[blocktype,attr1,attr2]` can be specified. In the case of listing blocks, this means no language can be specified for highlighting in the default manner e.g. `[source,java]`.
+
+.Set Block Type by Delmiter
+====
+
+[cols=2]
+|===
+^| Source ^| Output
+
+a|
+
+[source,adoc]
+-----
+----
+my code() {
+
+string example...
+----
+-----
+a|
+
+----
+my code() {
+
+string example...
+----
+
+|===
+====
+
+For a full list of delimiters, refer to the http://asciidoctor.org/docs/user-manual/#built-in-blocks-summary[Asciidoctor User Manual: Built-in Block Summary].
+
+
+=== Admonition Blocks
 
 *Usage:*
 
@@ -264,43 +235,7 @@ In ordinary arithmetic, the expression has no meaning, as there is no number whi
 |===
 ====
 
-==== Delimiters
-
-For all built-in blocks, the square brackets containing the block type (e.g. `[source]`) can be omitted and their delimiters will be used to determine the block type instead. For source blocks, this is four hyphens (`----`);
-
-TIP: This is convenient, but, of course, no positional attributes i.e. `[blocktype,attr1,attr2]` can be specified. In the case of listing blocks, this means no language can be specified for highlighting in the default manner e.g. `[source,java]`.
-
-.Set Block Type by Delmiter
-====
-
-[cols=2]
-|===
-^| Source ^| Output
-
-a|
-
-[source,adoc]
------
-----
-my code() {
-
-string example...
-----
------
-a|
-
-----
-my code() {
-
-string example...
-----
-
-|===
-====
-
-For a full list of delimiters, refer to the http://asciidoctor.org/docs/user-manual/#built-in-blocks-summary[Asciidoctor User Manual: Built-in Block Summary].
-
-===== Nesting Blocks
+=== Nesting Blocks
 
 Blocks can contain other blocks:
 
@@ -397,7 +332,7 @@ See the following code snippet:
 
 
 
-==== Github Flavored Markdown
+=== Github Flavored Markdown
 
 Some common https://guides.github.com/features/mastering-markdown/[Github Markdown] is also supported, such as backticks used for code listings:
 
@@ -412,7 +347,8 @@ export public class Fibonacci {
 ```
 ----
 
-==== Apply CSS classes
+[.language-asciidoc]
+== CSS classes
 
 CSS classes can be added to blocks in Asciidoc by using the the 'dot-prefix' syntax `[.css-class]` on the preceding line or by using the `role=` attribute:
 
@@ -424,6 +360,8 @@ CSS classes can be added to blocks in Asciidoc by using the the 'dot-prefix' syn
 ^| Source ^| Output
 
 a|
+
+[[block-css-class]]
 
 [source,asciidoc]
 ----
@@ -455,11 +393,6 @@ Let's set the CSS class `xx-small` on the source block below using the using the
 Downloading: https://repo.maven.apache.org/maven2/com/google/guava/guava/13.0-rc2/guava-13.0-rc2.pom
 Downloaded: https://repo.maven.apache.org/maven2/com/google/guava/guava/13.0-rc2/guava-13.0-rc2.pom (6 KB at 60.0 KB/sec)
 Downloading: http://www2.ph.ed.ac.uk/maven2/com/google/guava/guava-parent/13.0-rc2/guava-parent-13.0-rc2.pom
-Downloading: https://repo.maven.apache.org/maven2/com/google/guava/guava-parent/13.0-rc2/guava-parent-13.0-rc2.pom
-Downloaded: https://repo.maven.apache.org/maven2/com/google/guava/guava-parent/13.0-rc2/guava-parent-13.0-rc2.pom (3 KB at 29.0 KB/sec)
-Downloading: http://www2.ph.ed.ac.uk/maven2/com/google/guava/guava/13.0/guava-13.0.pom
-Downloading: https://repo.maven.apache.org/maven2/com/google/guava/guava/13.0/guava-13.0.pom
-Downloaded: https://repo.maven.apache.org/maven2/com/google/guava/guava/13.0/guava-13.0.pom (6 KB at 60.0 KB/sec)
 ...
 ----
 
@@ -494,29 +427,47 @@ Downloaded: https://repo.maven.apache....
 ====
 
 
-===== Inline
+=== Inline Syntax Highlighting (HTML)
 
-When syntax highlighting using http://prismjs.com/[Prism.js] (AsciiSpec default), CSS classes can be set inline and the language of inline source code can be set as follows:
+When using http://prismjs.com/[Prism.js] (AsciiSpec default), CSS classes can be set inline using `[language-name]` before the code. +
+Note that with blocks, a full stop before the CSS class is necessary, see <<block-css-class,the above example>>.
 
+*Usage:* Make sure the charset `[language-html]pass:[`]<meta charset="utf-8" />pass:[`]` is set correctly.
+
+*Output:* Make sure the charset [language-html]`<meta charset="utf-8" />` is set correctly.
+
+The following example demonstrates some common cases of switching the language of inline syntax highlighting;
 
 .Change Inline Syntax Highlighting Language
 ====
 
-[cols=]
+[cols=1]
 |===
-^| Source ^| Output
+^| Source
 
 a|
 
 [source,asciidoc]
-The favicon is located [language-html]`<a href="favicon.ico"/>` in your header.
-The next thing was the menubar: `<div id="menubar">` ...
+Check the [language-html]`<a href="favicon.ico"/>` favicon in the header. // <1>
+Set the following id: `<div id="menubar">` on the menubar. +			  // <2>
+Inline AsciiDoc macros (`macro:[]`) are useful!							  // <3>
+
+^h| Output
 
 a|
 
-The favicon is located [language-html]`<a href="favicon.ico"/>` in your header.
-The next thing was the menubar: `<div id="menubar">`...
+The favicon is located [language-html]`<a href="favicon.ico"/>` in the header. +
+The menu bar was given the following id: `<div id="menubar">`. +
+Inline AsciiDoc macros (`macro:[]`) are useful!
 |===
+
+<1> Only the first inline HTML listing is highlighted.
+<2> The second piece of code is highlighted as AsciiDoc, hence the coloration (or lack thereof).
+<3> Asciidoc is highlighted correctly.
+
+NOTE: The `[language-html]` CSS class is overriding one already set on this section, see <<Applying CSS Classes to Sections>>. +
+There is a lot of AsciiDoc to highlight in this document and so the parent section <<CSS classes>> has been assigned the class `[.language-adoc]`.
+
 ====
 
 .Set Syntax Highlighter Language per Block
@@ -545,7 +496,7 @@ The next thing was the menubar: `<div id="menubar">` which contained a list `<ul
 
 ====
 
-==== Applying CSS Classes to Sections
+=== Applying CSS Classes to Sections
 
 It's also possible to set a class on a section. The highest section level that a CSS class can be applied on is the Level 1 (`==`) and all contained sections will inherit this class.
 
@@ -557,7 +508,7 @@ It's also possible to set a class on a section. The highest section level that a
 a|[source,asciidoc]
 ----
 [.language-css]
-== Write less!
+== CSS
 Everything enclosed in backticks in this
 section gets styled with correct CSS `@media
 print {code {text-shadow: none;}}`
@@ -569,7 +520,7 @@ Always use `font-weight: bold;` to get your point across...
 ----
 a|
 [.language-css]
-== Write less!
+== CSS
 Everything enclosed in backticks in this
 section gets styled with correct CSS `@media
 print {code {text-shadow: none;}}`
@@ -579,6 +530,14 @@ syntax highlighting.
 
 Always use `font-weight: bold;` to get your point across...
 
+|===
+
+Some custom CSS has been added to the Foundation stylesheet specifically for styling large sections in this manner. +
+One useful class is `[.todo]` which is demonstrated here;
+
+[cols=2]
+|===
+^|Source ^| Output
 
 a|
 [source,asciidoc]
@@ -589,16 +548,18 @@ a|
 . First Item
 .. Second Item
 
-=== Feature A
+=== Feature A 	// <1>
 
 This feature needs documentation!
 
-== Overview // <1>
+== Overview 	// <2>
 
-Fully Documented, see:
+Fully Documented, see...
 
 ----
-<1> Notice that *subsections* will inherit the CSS class specified, but the next section of the same level or higher will not. In this example, the `Overview` section does not have the `todo` class.
+<1> *Subsections* will inherit the CSS class specified
+<2> The next section of the same level or higher will not inherit this class. +
+In this example, the `Overview` section does not have the `todo` class.
 
 a|
 
@@ -614,13 +575,11 @@ This feature needs documentation!
 
 == Overview
 
-Fully Documented, see:
-
-
+Fully Documented, see...
 |===
 
 
-===== Delimited by Open Blocks
+=== Delimited by Open Blocks
 
 CSS classes can span multiple blocks or paragraphs when delimited by two hyphens `--`:
 
@@ -653,24 +612,20 @@ The next paragraph will be styled as usual
 
 |===
 
-=== Block Macro
+[.language-asciidoc]
+== Block Macro
 
 Usage: ::
-`+++toc::[]+++`
+`+++macroname::[parameters]+++`
 
-Block macros are used to create a block member in a document.
-The above example creates a table of contents block at that position in the document (to enable this feature, see <<Document Attributes,setting document attributes>> below).
+Block macros are used to create a block member in a document. +
+A block macro must be on a single line by itself with an empty line before and after.
 
-`Block` vs. `Block Macro`::
-The difference here is that with a block macro, all parameters that dictate how the block is rendered are contained within the macro delcaration.
-The already-existing lines of AsciiDoc source that follow the macro are not formatted or changed by its use.
+The `toc::[]` macro creates a table of contents block at that position in the document (to enable this feature, see <<Document Attributes,setting document attributes>> below).
 
-TIP: As with `Blocks`, we must also prepend and append the `Block Macro` with an empty line.
-The following is an example of a block macro to insert a new block with the `image` context followed by the resulting output:
+Another common block macro is the `image::[]` macro;
 
-*_Source:_*
-
-.Blocks and empty lines
+.Block Macro
 ====
 
 [cols=2]
@@ -680,7 +635,7 @@ The following is an example of a block macro to insert a new block with the `ima
 a|
 [source,asciidoc]
 ----
-The following image is considered the last line of this pargraph block.
+The following image is considered the last line of this pargraph.
 image::images/logo.png[]
 
 Leaving an empty line before and after the image block macro will create a block as expected:
@@ -692,7 +647,7 @@ beginning of next block...
 
 a|
 
-The following image macro is considered the last line of this pargraph block.
+The following image macro is considered the last line of this pargraph.
 image::images/logo.png[]
 
 Leaving an empty line before and after the image block macro
@@ -706,7 +661,8 @@ _beginning of next block..._
 
 ====
 
-=== Inline Macro
+[.language-asciidoc]
+== Inline Macro
 
 Inline macros are similar to <<Block Macro,block macros>> except that the macro is replaced by inline content. +
 The syntax is different in that we use a single colon `:` instead of two `::`
@@ -731,7 +687,8 @@ The same method of passing attributes can be applied to the <<Block Macro,block 
 
 `image::images/logo.png[Logo,15,18]`.
 
-=== Document Attributes & Variables
+[.language-asciidoc]
+== Document Attributes & Variables
 
 Usage: ::
 
@@ -757,7 +714,7 @@ a|
 ----
 :revnumber: 2.0 // <1>
 
-Last modified:: {docdatetime} + // <2>
+Last modified:: {docdatetime}  // <2>
 Revision:: {revnumber}.
 ----
 <1> The revision number needs to be set, otherwise the attribute in the last line will be empty.
@@ -765,7 +722,7 @@ Revision:: {revnumber}.
 
 a|
 
-:revnumber: 1.0
+:revnumber: 2.0
 
 Last modified:: {docdatetime} +
 Revision:: {revnumber}.
@@ -773,44 +730,57 @@ Revision:: {revnumber}.
 |===
 
 Document attributes can be evaluated using the `pass:[ifdef::[]]` macro to create some interesting logic.
-The line below checks if there is an attribute `revnumber` and if it exists, include the content in the square brackets:
-
+The line below checks if the backend is `HTML5` and if it is, the content in the square brackets will be included:
 [source,asciidoc]
-\ifdef::revnumber[This document has a version number of {revnumber}.]
+\ifdef::backend-html5[This content is included in HTML5 output.]
 
 *Output:*
 
-ifdef::revnumber[This document has a version number of {revnumber}.]
+ifdef::backend-html5[This content is included in HTML5 output.]
 
----
+====
 
-This can also be done using larger blocks of content as follows:
+.Evaluating Statements
+====
+
+The previous example shows how to include a single line of content into a document using an inline ifdef. +
+The same can also be done using blocks as follows:
 
 [cols=2]
 |===
 ^| Source ^| Output
 
 
+
 a|
-[source,asciidoc]
-----
-\ifeval::[2 > 1]
-2 is more than 1
 
-This content will be included.
-\endif::[]
+task:ASC-13[]
+
+[source,asciidoc,subs="macros"]
+----
+pass:[ifeval::[2 + 2 != 5]]
+
+- [x] Two plus two does not a five make.
+
+- [x] Rules of mathematics still behave as expected.
+
+pass:[endif::[]]
 
 ----
 a|
-ifeval::[2 > 1]
-2 is more than 1
+ifeval::[2 + 2 != 5]
+- [x] Two plus two does not a five make.
 
-This content will be included.
+- [x] Rules of mathematics still behave as expected.
 endif::[]
-
 |===
 
+
+
+
+
 ====
+
 
 .Setting Attributes Inline
 ====
@@ -836,7 +806,9 @@ We should {set:country:France} travel to {country}!
 
 
 ====
+
 ////
+
 Document variables temporarily broken, see: https://github.com/NumberFour/asciispec/issues/13
 
 An example of a common document attribute is `imagesdir` which specifies the images directory.
@@ -878,7 +850,10 @@ image:{find}jira.png[]
 image:logo.png[]
 
 ////
-==== Header Attributes
+
+[.language-asciidoc]
+== Header Attributes
+
 A header starts with a document title followed by two optional lines defining author and revision information. +
 Finally, document-wide settings are defined by means of _header attributes_ :
 
@@ -911,8 +886,8 @@ toc::[] // But will be rendered here instead
 
 A full table of the available built-in document attributes, see the http://asciidoctor.org/docs/user-manual/#builtin-attributes[Built-in Attributes] section in the AsciiDoctor User Manual.
 
-
-=== Tables
+[.language-asciidoc]
+== Tables
 
 Table blocks are typically delimited by a character (usually a pipe `|`) and three equals symbols (`|===`);
 
@@ -950,14 +925,15 @@ A different character can be used to delimit cells by substituting the pipe with
 
 a|
 
-Using commas in this way can provide an easy solution to including CSV values (`include::mydata.csv[]`) into a table without having to reformat the data:
 [source,adoc,subs="macros"]
 ----
 [cols=6]
 ,===
-pass:[include::music.csv[]]
+pass:[include::music-collection.csv[]]
 ,===
 ----
+Using commas in this way can provide an easy solution to including CSV values (`include::mydata.csv[]`) into a table without having to reformat the data:
+
 |===
 
 ====
@@ -987,23 +963,23 @@ In the above table, formatting attributes *3+* are used. The +++^+++ caret symbo
 
 A full overview of the possibilities to create complex tables can be found in the http://www.asciidoctor.org/docs/user-manual/#tables[tables section] of the User Manual.
 
+[.language-asciidoc]
+== Rich Media
 
-=== Media
-
+Embed youtube content using the syntax `video::3NjQ9b3pgIg[youtube,800,600]`
 
 video::3NjQ9b3pgIg[youtube,800,600]
 
-The above video is embedded with the following syntax: `video::3NjQ9b3pgIg[youtube,800,600]`
 
 :imagesdir:
 
 [source,asciidoc]
 ----
-.A lovely screenshot
+.A tiny screenshot
 image::images/logo.png[]
 ----
 
-.A lovely screenshot
+.A tiny screenshot
 image::images/logo.png[]
 
 
@@ -1014,11 +990,6 @@ image::images/logo.png[]
 |===
 |Type | Source | Output
 
-| Include tags |
-
-tag::tagname[] +
-
-end::tagname[]  | N/A - Usually these tags are added in commented lines
 | Include |
 \include::filename.adoc[leveloffset=offset]
 
@@ -1026,14 +997,13 @@ end::tagname[]  | N/A - Usually these tags are added in commented lines
 
 \include::file3.adoc[lines=ranges,indent=depth]
 | Includes referenced file(s) dictated by the comma-separated attributes.
+| Include tags |
+
+tag::tagname[] +
+
+end::tagname[]  | These tags should be added in commented lines in the *included* document.
 |===
 
-
-////
-
-################# Includes ###############
-
-////
 
 :leveloffset: +1
 
@@ -1043,6 +1013,116 @@ include::cheat-sheet.adoc[]
 
 [.language-asciidoc]
 == Tips
+
+=== Newlines & Line Breaks
+
+New lines are consumed by AsciiDoctor, so in order to preserve line breaks, add a plus symbol at the end of a line or the `[%hardbreaks]` attribute;
+
+.Line Breaks
+====
+[cols="3,2"]
+|===
+^|Source ^|Output
+
+a|
+[source,asciidoc]
+----
+A short line. +
+A slightly longer line. +
+A conclusion.
+
+[%hardbreaks]
+I believe in the power
+of the imagination
+to remake the world
+
+----
+a|
+A short line. +
+A slightly longer line. +
+A conclusion.
+
+[%hardbreaks]
+I believe in the power
+of the imagination
+to remake the world
+
+|===
+====
+
+=== Escaping Characters / Macros
+
+Escaping characters characters used for formatting can be done using plus symbols:
+
+[cols="3,2"]
+|===
+^|Source ^|Output
+
+a|
+[source,asciidoc]
+----
+A single asterisk: +*+ And a few literal characters ++* _ `++
+----
+a|
+A single asterisk: +*+ And a few literal characters ++* _ `++
+//`
+|===
+
+Backslashes can also be used to escape AsciiDoc formatting:
+
+[cols="3,2"]
+|===
+^|Source ^|Output
+
+a|
+[source,asciidoc]
+----
+Escape \*bold* formatting +
+Escape dou\**ble aster**isks
+----
+a|
+Escape \*bold* formatting +
+Escape dou\\**ble aster**isks
+
+|===
+
+The pass macro is also a useful way of escaping long sequences of complicated formatting.
+
+
+[cols="3,2"]
+|===
+^|Source ^|Output
+
+a|
+[source,asciidoc]
+----
+pass:[*bold*, __unde**rsc__ores, double aster**isks] +
+\pass:[*bold*, __unde**rsc__ores, double aster**isks] // <1>
+
+\{revnumber} 	// <2>
+
++\+{revnumber}	// <3>
+
+
+----
+<1> The pass macro and variables can be escaped using a backslash.
+<2> A backslash escapes variable substitution
+<3> Preventing the escaped variable
+a|
+
+pass:[*bold*, __unde**rsc__ores, double aster**isks] +
+\pass:[*bold*, __unde**rsc__ores, double aster**isks]
+
+\{revnumber}
+
++\+{revnumber}
+
+|===
+
+
+
+
+
 
 === Icons
 
@@ -1111,17 +1191,3 @@ cannot be used inline.
 
 *http://pandoc.org/[Pandoc]* - A universal document converter. +
 
-
-////
-
-No citations used yet
-
-ifndef::env-github[]
-
-[appendix]
-== Bibliography
-
-bibliography::[]
-
-endif::[]
-////

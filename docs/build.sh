@@ -21,6 +21,7 @@ HEADERS="-a docinfodir=html-templates"
 asciispec $PARAMS $HEADERS index.adoc
 asciispec $PARAMS $HEADERS/userguide userguide.adoc
 asciispec $PARAMS $HEADERS/spec spec.adoc
+asciispec $PARAMS $HEADERS/setup setup.adoc
 
 # running "./build.sh -p" (preview) will skip PDF and launch index.html
 if [ "${1}" == "--preview" ] || [ "${1}" == "-p" ]; then
@@ -31,7 +32,8 @@ fi
 ####### Build PDF for gh-pages download #######
 asciispec -b docbook spec.adoc
 asciispec -b docbook userguide.adoc
-fopub spec.xml && fopub userguide.xml
+asciispec -b docbook setup.adoc
+fopub spec.xml && fopub userguide.xml && fopub setup.adoc
 rm *.xml && mv *.pdf ./$GEN_FOLDER/
 
 echo DONE: AsciiSpec conversion finished.
