@@ -36,8 +36,15 @@
       <a href="index.html"><img src="images/logo.png" alt="AsciiSpec"></a>
     </div>
 <ul class="fa-ul">
-	<li><a href="userguide.pdf"><i class="fa fa-file-pdf-o"></i>Download as PDF</a></li>
-	<li><a href="index.html">Docs index</a></li>
+	<li>
+    <li><a href="index.html"><i class="fa fa-info-circle"></i> Documentation</a>
+      <ul>
+        <li><a href="userguide.html"><i class="fa fa-book"></i> Userguide</a></li>
+        <li><a href="spec.html"><i class="fa fa-code"></i> Specification</a></li>
+    </ul>
+    </li>
+  </li>
+  <li><a href="userguide.pdf"><i class="fa fa-file-pdf-o"></i>Download as PDF</a></li>
 </ul>
 </div>
 <button id="tocbutton"><i class="fa fa-bars" aria-hidden="true"></i>TOC</button>
@@ -96,7 +103,6 @@
 <li><a href="#_document_converters">A.2. Document Converters</a></li>
 </ul>
 </li>
-<li><a href="#_bibliography">Appendix B: Bibliography</a></li>
 </ul>
 </div>
 </div>
@@ -1247,7 +1253,7 @@ Revision:: {revnumber}.</code></pre>
 <dl>
 <dt class="hdlist1">Last modified</dt>
 <dd>
-<p>2017-01-26 18:10:57 CET<br></p>
+<p>2017-01-27 13:01:43 CET<br></p>
 </dd>
 <dt class="hdlist1">Revision</dt>
 <dd>
@@ -1607,11 +1613,36 @@ My Super Requirement<br>
 <code>--</code></p>
 </div></div></td>
 </tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Extended Include</p></th>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>include::{find}myfile.adoc[]</code></p>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Inline Source Link</p></th>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>srclnk:[DataList#&lt;sizes]</code></p>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Inline Math</p></th>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>math:E=mc^2[]</code><br>
+<code>$C=2 \Pi r$</code></p>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Math Block</p></th>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p><code>[math]</code><br>
+<code>++++</code><br>
+<code>\sum_{i=1}^n i = {n(n+1)\over{2}}</code><br>
+<code>++++</code></p>
+</div></div></td>
+</tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>For the full specification of all AsciiSpec features, see <a href="https://numberfour.github.io/asciispec/">AsciiSpec Processors</a>.</p>
-</div>
 </div>
 </div>
 <div class="sect1 language-asciidoc">
@@ -1724,14 +1755,6 @@ The rule is as follows:</p>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_bibliography"><a class="anchor" href="#_bibliography"></a><a class="link" href="#_bibliography">Appendix B: Bibliography</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>bibliography::[]</p>
-</div>
-</div>
-</div>
 </div>
 <div id="footnotes">
 <hr>
@@ -1742,7 +1765,7 @@ The rule is as follows:</p>
 <div id="footer">
 <div id="footer-text">
 Version 2.0<br>
-Last updated 2017-01-26 18:10:57 CET
+Last updated 2017-01-27 13:01:43 CET
 </div>
 </div>
 <div class="social">
