@@ -3,6 +3,7 @@
 // See https://github.com/NumberFour/asciispec/tree/master/docs/custom-processors/inline-task-macro.adoc
 :task_def_ASC-: GitHub;AsciiSpec Bugs;https://github.com/NumberFour/asciispec/issues/{TASK_ID};images/icons/github.png;AS-{TASK_ID}
 
+
 // A template configuration for additional task prefixes. Replace with your own project configuration.
 :task_def_JIRA-: Jira;My Jira Board;https://jira.myorg.com/browse/JIRA-{TASK_ID};images/icons/jira.png;JIRA-{TASK_ID}
 
@@ -18,7 +19,6 @@
 
 // Citation Macro - location of .bib file
 :bib-file: biblio.bib
-
 
 // =================== Builtin AsciiDoctor Document Attributes ================= //
 // For more info, see http://asciidoctor.org/docs/user-manual/#builtin-attributes

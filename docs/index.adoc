@@ -9,6 +9,12 @@ Numberfour AG
 [source,adoc]
 ----
 task:ASCII-SPEC[]
+
+.A Documentation Tool
+[def]
+--
+
+--
 ----
 
 AsciiSpec is a toolchain based on http://asciidoctor.org/[Asciidoctor] with custom modifications for task management, math support, API documentation and more.

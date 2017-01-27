@@ -1,0 +1,156 @@
+
+= Tips
+
+[.language-asciidoc]
+== Newlines & Line Breaks
+
+New lines are consumed by AsciiDoctor, so in order to preserve line breaks, add a plus symbol at the end of a line or the `[%hardbreaks]` attribute;
+
+.Line Breaks
+====
+[cols="3,2"]
+|===
+^|Source ^|Output
+
+a|
+[source,asciidoc]
+----
+A short line. +
+A slightly longer line. +
+A conclusion.
+
+[%hardbreaks]
+I believe in the power
+of the imagination
+to remake the world
+
+----
+a|
+A short line. +
+A slightly longer line. +
+A conclusion.
+
+[%hardbreaks]
+I believe in the power
+of the imagination
+to remake the world
+
+|===
+====
+
+[.language-asciidoc]
+== Escaping Characters / Macros
+
+Escaping characters characters used for formatting can be done using plus symbols:
+
+[cols="3,2"]
+|===
+^|Source ^|Output
+
+a|
+[source,asciidoc]
+----
+A single asterisk: +*+ And a few literal characters ++* _ `++
+----
+a|
+A single asterisk: +*+ And a few literal characters ++* _ `++
+//`
+|===
+
+Backslashes can also be used to escape AsciiDoc formatting:
+
+[cols="3,2"]
+|===
+^|Source ^|Output
+
+a|
+[source,asciidoc]
+----
+Escape \*bold* formatting +
+Escape dou\**ble aster**isks
+----
+a|
+Escape \*bold* formatting +
+Escape dou\\**ble aster**isks
+
+|===
+
+The pass macro is also a useful way of escaping long sequences of complicated formatting.
+
+
+[cols="3,2"]
+|===
+^|Source ^|Output
+
+a|
+[source,asciidoc]
+----
+pass:[*bold*, __unde**rsc__ores, double aster**isks] +
+\pass:[*bold*, __unde**rsc__ores, double aster**isks] // <1>
+
+\{revnumber} 	// <2>
+
++\+{revnumber}	// <3>
+
+
+----
+<1> The pass macro and variables can be escaped using a backslash.
+<2> A backslash escapes variable substitution
+<3> Preventing the escaped variable
+a|
+
+pass:[*bold*, __unde**rsc__ores, double aster**isks] +
+\pass:[*bold*, __unde**rsc__ores, double aster**isks]
+
+\{revnumber}
+
++\+{revnumber}
+|===
+
+== Icons
+
+When the attribute `:icons: font` is set, http://fontawesome.io/cheatsheet/[Font Awesome] icons can be used inline using the macro `pass:[icon:name[]]`.
+
+.Inline Icons Example
+====
+
+[cols=2]
+|===
+^|Source ^| Output
+
+a|
+[source,asciidoc]
+----
+This is forbidden! icon:fire[]
+
+The source is on icon:github[]
+----
+
+a|
+This is forbidden! icon:fire[]
+
+The source is on icon:github[]
+
+|===
+====
+
+== Colons
+
+When learning AsciiDoc syntax, it can be confusing whether to use one or two colons for certain macros.
+The rule is as follows:
+
+[cols="h,^.^m,2d"]
+|===
+| Type | Syntax | Example
+
+| Inline
+| :
+| We can include this `\image:test.png[]` inline
+| Block
+| ::
+a| The following Table of Contents +
+
+`toc::[]` +
+
+cannot be used inline.
+|===
