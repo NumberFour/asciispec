@@ -52,7 +52,7 @@ a|
 
 | Inline Source Link
 a|
-`+++srclnk:[DataList#<sizes]+++`
+`+++srclnk:[DataList#&lt;sizes]+++`
 
 | Inline Math
 a|
