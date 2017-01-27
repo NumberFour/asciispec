@@ -33,7 +33,7 @@ fi
 asciispec -b docbook spec.adoc
 asciispec -b docbook userguide.adoc
 asciispec -b docbook setup.adoc
-fopub spec.xml && fopub userguide.xml && fopub setup.adoc
+fopub spec.xml && fopub userguide.xml && fopub setup.xml
 rm *.xml && mv *.pdf ./$GEN_FOLDER/
 
 echo DONE: AsciiSpec conversion finished.
