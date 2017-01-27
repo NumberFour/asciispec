@@ -1,0 +1,52 @@
+:find:
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+include::{find}config.adoc[]
+
+= AsciiSpec Specification
+Numberfour AG
+
+The following is the specification for AsciiSpec, a toolchain based on http://asciidoctor.org/[Asciidoctor] with custom modifications for task management, math support, API documentation and more.
+
+
+:leveloffset: +1
+
+include::{find}cheat-sheet.adoc[]
+
+include::{find}custom-processors/definition-block.adoc[]
+
+include::{find}custom-processors/requirements-block.adoc[]
+
+include::{find}custom-processors/inline-task-macro.adoc[]
+
+include::{find}custom-processors/inline-bibtex-macro.adoc[]
+
+include::{find}custom-processors/inline-cwiki-macro.adoc[]
+
+include::{find}custom-processors/inline-math-macro.adoc[]
+
+include::{find}custom-processors/math-block.adoc[]
+
+include::{find}custom-processors/math-include.adoc[]
+
+include::{find}custom-processors/inline-srclnk-macro.adoc[]
+
+include::{find}custom-processors/extended-include-macro.adoc[]
+
+include::{find}custom-processors/generatedAnchors.adoc[]
+
+include::{find}custom-processors/pqn.adoc[]
+
+include::{find}custom-processors/special-variables.adoc[]
+
+
+:leveloffset: -1
+
+ifndef::env-github[]
+
+[appendix]
+== Bibliography
+
+bibliography::[]
+
+endif::[]

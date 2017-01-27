@@ -44,8 +44,30 @@ a|
 My Super Requirement +
 `--`
 
+| Extended Include
+a|
+
+`+++include::{find}myfile.adoc[]+++`
+
+
+| Inline Source Link
+a|
+`+++srclnk:[DataList#<sizes]+++`
+
+| Inline Math
+a|
+`+++math:E=mc^2[]+++` +
+`+++$C=2 \Pi r$+++`
+
+| Math Block
+a|
+
+`[math]` +
+`pass:[++++]` +
+`\sum_{i=1}^n i = {n(n+1)\over{2}}` +
+`pass:[++++]`
+
 |===
 
 // end::aspec-cheat-sheet[]
 
-For the full specification of all AsciiSpec features, see https://numberfour.github.io/asciispec/[AsciiSpec Processors].

@@ -46,9 +46,9 @@ AsciiDoc was decided as a suitable syntax for documentation. https://jira.number
 
 ---
 
-A bug has already ``+++task:AS-35[]+++`` been filed...
+A bug has already ``+++task:ASC-35[]+++`` been filed...
 
-A bug has already been filed... https://github.com/NumberFour/n4js/issues/135[image:../examples/icons/github.png[]AS-35]
+A bug has already been filed... https://github.com/NumberFour/n4js/issues/135[image:../examples/icons/github.png[]ASC-35]
 endif::[]
 
 ifndef::env-github[]
@@ -63,9 +63,9 @@ AsciiDoc was decided as a suitable syntax for documentation. task:JIRA-35[]
 
 Github Issue: ::
 [example]
-A bug has already ``+++task:AS-35[]+++`` been filed...
+A bug has already ``+++task:ASC-35[]+++`` been filed...
 
-A bug has already been filed... task:AS-35[]
+A bug has already been filed... task:ASC-35[]
 
 endif::[]
 
