@@ -1,7 +1,7 @@
 // =========================== AsciiSpec Configuration ========================= //
 // Inline Task Macro Config
 // See https://github.com/NumberFour/asciispec/tree/master/docs/custom-processors/inline-task-macro.adoc
-:task_def_AS-: GitHub;AsciiSpec Bugs;https://github.com/NumberFour/asciispec/issues/{TASK_ID};images/icons/github.png;AS-{TASK_ID}
+:task_def_ASC-: GitHub;AsciiSpec Bugs;https://github.com/NumberFour/asciispec/issues/{TASK_ID};images/icons/github.png;AS-{TASK_ID}
 
 // A template configuration for additional task prefixes. Replace with your own project configuration.
 :task_def_JIRA-: Jira;My Jira Board;https://jira.myorg.com/browse/JIRA-{TASK_ID};images/icons/jira.png;JIRA-{TASK_ID}
@@ -14,7 +14,7 @@
 // Source Link Config
 // See https://github.com/NumberFour/asciispec/tree/master/docs/custom-processors/inline-srclnk-macro.adoc
 :srclnk_repo_def: myorg_api;My Org API;https://github.myorg.com/api/blob/master/{CMS_PATH}#L{LINE_NO}
-:gen_adoc_dir: ./gen_adoc/
+// :gen_adoc_dir: ./gen_adoc/
 
 // Citation Macro - location of .bib file
 :bib-file: biblio.bib
@@ -22,6 +22,7 @@
 
 // =================== Builtin AsciiDoctor Document Attributes ================= //
 // For more info, see http://asciidoctor.org/docs/user-manual/#builtin-attributes
+
 // Header and Footer info //
 :docinfodir: html-templates
 :docinfo1:

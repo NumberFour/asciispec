@@ -13,11 +13,14 @@ rm -rf ./$GEN_FOLDER/; mkdir -p ./$GEN_FOLDER/
 # Copy resources to ./$GEN_FOLDER/
 cp -r scripts styles images ./$GEN_FOLDER/
 
-######## Build HTML for gh-pages ########
+######## Set HTML conversion parameters for all docs ########
 PARAMS="-a stylesheet=foundation.css -D $GEN_FOLDER/"
+HEADERS="-a docinfodir=html-templates"
 
-asciispec $PARAMS -a docinfodir=html-templates index.adoc
-asciispec $PARAMS -a docinfodir=html-templates/userguide userguide.adoc
+######## Build HTML with params ########
+asciispec $PARAMS $HEADERS index.adoc
+asciispec $PARAMS $HEADERS/userguide userguide.adoc
+asciispec $PARAMS $HEADERS/spec spec.adoc
 
 # running "./build.sh -p" (preview) will skip PDF and launch index.html
 if [ "${1}" == "--preview" ] || [ "${1}" == "-p" ]; then
@@ -26,9 +29,9 @@ exit 0
 fi
 
 ####### Build PDF for gh-pages download #######
-asciispec -b docbook index.adoc
+asciispec -b docbook spec.adoc
 asciispec -b docbook userguide.adoc
-fopub index.xml && fopub userguide.xml
+fopub spec.xml && fopub userguide.xml
 rm *.xml && mv *.pdf ./$GEN_FOLDER/
 
 echo DONE: AsciiSpec conversion finished.

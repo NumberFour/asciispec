@@ -1111,6 +1111,11 @@ cannot be used inline.
 
 *http://pandoc.org/[Pandoc]* - A universal document converter. +
 
+
+////
+
+No citations used yet
+
 ifndef::env-github[]
 
 [appendix]
@@ -1119,3 +1124,4 @@ ifndef::env-github[]
 bibliography::[]
 
 endif::[]
+////

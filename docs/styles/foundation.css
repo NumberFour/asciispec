@@ -335,7 +335,7 @@ b.button:after { content: "]"; padding: 0 2px 0 3px; }
     content: "";
     margin-left: -.75em;
     margin-right: .4em;
-    color: #244d82
+    color: #2ba6cb
 }
 
 
@@ -349,7 +349,7 @@ div.ulist li:before {
     margin-bottom: -.75em;
     margin-right: 0;
     line-height: 1rem;
-    color: #244d82
+    color: #2ba6cb
 
 }
 
@@ -383,7 +383,7 @@ div#faq li:before {
     margin-bottom: -.75em;
     margin-right: 0;
     line-height: 1rem;
-    color: #244d82
+    color: #2ba6cb
 }
 
 #features-nav {
@@ -415,7 +415,7 @@ div#features-nav li:before {
     margin-bottom: -.75em;
     margin-right: 0;
     line-height: 1rem;
-    color: #244d82
+    color: #2ba6cb
 }
 
 
@@ -977,7 +977,6 @@ div.slicknav_menu li:last-of-type
     font-weight: 400;
     /* padding-top: 2rem; */
     webkit-transition: color .15s;
-    margin-left: 280px;
     -moz-transition: color .15s;
     -o-transition: color .15s;
     transition: color .15s;
@@ -990,6 +989,7 @@ div.slicknav_menu li:last-of-type
 #menubar > ul {
     margin-right: 12px;
     margin-top: 1px;
+    margin-left: 280px;
 }
 
 #menubar > ul > li > a:hover {color: #F7D425; }
@@ -1002,9 +1002,7 @@ body.home li.home, body.tech li.tech {font-weight:bold; }
     background-color: #FFFFFF; /* rgb(15,26,54); top menu color */
     text-align: left;
     position: absolute;
-    top: 55px;
-    left: 50%;
-    margin-left: -90px;
+    top: 0px;
 -webkit-transition: all .3s .1s;
    -moz-transition: all .3s .1s;
      -o-transition: all .3s .1s;
@@ -1027,6 +1025,7 @@ body.home li.home, body.tech li.tech {font-weight:bold; }
     visibility: visible;
 }
 
+/*
 #menubar > ul > li > ul:before{
     content: '';
     display: block;
@@ -1038,7 +1037,7 @@ body.home li.home, body.tech li.tech {font-weight:bold; }
     left: 10%;
     margin-left: -10px;
 }
-
+*/
 #menubar > ul ul > li { position: relative;}
 
 #menubar ul ul a{
@@ -1054,7 +1053,8 @@ body.home li.home, body.tech li.tech {font-weight:bold; }
         transition: background-color .1s;
 }
 
-#menubar ul ul a:hover {background-color: #244D82; color: #F7D425;}
+
+#menubar ul ul a:hover {background-color: #2ba6cb; color: #F7D425;}
 
 #menubar ul ul ul {
     visibility: hidden;
@@ -1083,7 +1083,7 @@ body.home li.home, body.tech li.tech {font-weight:bold; }
 
 
 #menubar ul ul a:hover{
-    background-color: #244D82;
+    background-color: #2ba6cb;
     color: #F7D425;
 }
 
