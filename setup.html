@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<title>AsciiSpec Setup</title>
+<link rel="stylesheet" href="styles/foundation.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<!-- ************* Meta ************* -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<!-- ************* OpenGraph ************-->
+<meta name="description" content="AsciiSpec">
+
+<!-- ************* Back-to-top JQuery ************* -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="scripts/nav-mobile.js"></script>
+
+<!-- ******** Stylesheet ******-->
+<script src="styles/foundation.css"></script>
+
+<!-- ******** Prism.js Syntax Highlighter ******-->
+<script src="scripts/prism.js"></script>
+<link href="styles/prism.css" rel="stylesheet" />
+
+<!-- ******** MathJax CDN ******-->
+<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+
+<!-- ****************** NavBar ****************** -->
+<div id="menubar">
+    <div class="banner">
+      <a href="index.html"><img src="images/logo.png" alt="AsciiSpec"></a>
+    </div>
+<ul class="fa-ul">
+	<li>
+    <li><a href="index.html"><i class="fa fa-info-circle"></i> Documentation</a>
+      <ul>
+        <li><a href="userguide.html"><i class="fa fa-book"></i> Userguide</a></li>
+        <li><a href="setup.html"><i class="fa fa-cogs"></i> Setup</a></li>
+        <li><a href="spec.html"><i class="fa fa-code"></i> Specification</a></li>
+    </ul>
+    </li>
+  </li>
+  <li><a href="userguide.pdf"><i class="fa fa-file-pdf-o"></i>Download as PDF</a></li>
+</ul>
+</div>
+<button id="tocbutton"><i class="fa fa-bars" aria-hidden="true"></i>TOC</button>
+</head>
+<body class="book toc2 toc-left">
+<div id="header">
+<h1>AsciiSpec Setup</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_installation">1. Installation</a></li>
+<li><a href="#_converting_documents">2. Converting Documents</a>
+<ul class="sectlevel2">
+<li><a href="#_docbook_xml">2.1. Docbook / XML</a></li>
+<li><a href="#_pdf">2.2. PDF</a></li>
+<li><a href="#_configuration_file">2.3. Configuration File</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_installation"><a class="anchor" href="#_installation"></a><a class="link" href="#_installation">1. Installation</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Add AsciiSpec to your shell profile with the path to the <code>asciispec/bin</code> directory on your system:</p>
+</div>
+<div class="paragraph">
+<p><code>export PATH=$PATH:~/path/to/asciispec/bin/</code></p>
+</div>
+<div class="paragraph">
+<p>If the AsciiSpec tool is found by your system, running AsciiSpec with the <code>-h</code> flag will print a help page:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">asciispec -h</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1 language-bash">
+<h2 id="_converting_documents"><a class="anchor" href="#_converting_documents"></a><a class="link" href="#_converting_documents">2. Converting Documents</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To convert this document with AsciiSpec, <code>cd</code> to the docs directory and run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">asciispec userguide.adoc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will use the default HTML and create a file called <code>userguide.html</code>.<br>
+To convert to HTML using a different CSS stylesheet, <a href="#Document Attributes &amp; Variables">document attributes</a> are passed using the <code>-a</code> flag:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">asciispec -a stylesheet=mystyle.css userguide.adoc</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title=""></i>
+</td>
+<td class="content">
+Passing a document attribute via the command line will override that value if it has already been set in the source document.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_docbook_xml"><a class="anchor" href="#_docbook_xml"></a><a class="link" href="#_docbook_xml">2.1. Docbook / XML</a></h3>
+<div class="paragraph">
+<p>To convert to docbook (<code>.xml</code>), use the <code>-b docbook</code> flag:</p>
+</div>
+<div class="paragraph">
+<p><code>asciispec -b docbook userguide.adoc</code></p>
+</div>
+<div class="paragraph">
+<p>Most built-in CLI parameters are described in the help page by running <code>asciispec -h</code> and in further detail in the <a href="http://asciidoctor.org/docs/user-manual/#cli-options">CLI Options</a> section of the AsciiDoctor user manual.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pdf"><a class="anchor" href="#_pdf"></a><a class="link" href="#_pdf">2.2. PDF</a></h3>
+<div class="paragraph">
+<p>Apache FOP (Formatting Objects Processor) is required for higher quality <strong>PDF</strong> generation.
+A fork with custom PDF styling and syntax highlighting can be found at the following location:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/NumberFour/asciidoctor-fopub" class="bare">https://github.com/NumberFour/asciidoctor-fopub</a></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Clone the Asciidoctor Fopub repository</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>git clone https://github.com/NumberFour/asciidoctor-fopub.git</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Add the <code>asciidoctor-fopub/</code> directory to your shell profile:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">export PATH=$PATH:~/path/to/asciidoctor-fopub/</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Confirm successful install using the <code>which fopub</code> command.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ which fopub
+~/path/to/fopub</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Convert XML to PDF using the following:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">fopub myfile.xml</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>An example command to convert from asciidoc to PDF would then look something like the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">asciispec -b docbook myfile.adoc &amp;&amp; fopub myfile.xml</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuration_file"><a class="anchor" href="#_configuration_file"></a><a class="link" href="#_configuration_file">2.3. Configuration File</a></h3>
+<div class="paragraph">
+<p>AsciiSpec processors with configurable target URLs have to be set up by means of a configuration file.
+For this case,<code>config.adoc</code> can be copied to the location of the source document and used as a template.
+The following line of code must be included at the top of your source document:</p>
+</div>
+<div class="paragraph">
+<p><code>include::config.adoc[]</code></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title=""></i>
+</td>
+<td class="content">
+To configure a specific processor, see <a href="https://numberfour.github.io/asciispec">AsciiSpec Processors</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-01-27 18:13:00 CET
+</div>
+</div>
+<div class="social">
+
+<ul class="fa-ul">
+<li><a href="https://github.com/NumberFour/asciispec"><i class="fa-li fa fa-github"></i>AsciiSpec Repository</a></li>
+
+</ul>
+</div>
+<script>
+// Toggle the table of contents
+$( "button#tocbutton" ).click(function() {
+  if ($("#tocbutton").css('left') == '25px') {
+    $( "#tocbutton" ).animate({left: '270px'},"slow");
+    $( "#toc.toc2" ).animate({left: '0'},"slow");
+    $( "#menubar" ).animate({left: '215px'},"slow");
+    $( "#header, #content, #footnotes, #footer" ).animate({left: '260px'},"slow");
+    $( "body.toc2").css("max-width", "75%");
+    $( "#menubar" ).css("max-width", "80%");
+}
+  else {
+    $( "#menubar" ).animate({left: '10px'},"slow");
+    $( "#tocbutton" ).animate({left: '25px'},"slow");
+    $( "#toc.toc2" ).animate({left: '-260px'},"slow");
+    $( "#header, #content, #footnotes, #footer" ).animate({left: '40px'},"slow");
+    $( "body.toc2").css("max-width", "90%");
+}
+});
+</script>
+
+<script>
+
+// ########## Initialise mobile menu #############
+
+  $(function(){
+    $('#menu').slicknav();
+  });
+</script>
+<script type="text/javascript">
+
+// ########## Back-to-top Button #############
+
+$('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
+var amountScrolled = 300;
+$(window).scroll(function() {
+if ( $(window).scrollTop() > amountScrolled ) {
+	$('a.back-to-top').fadeIn('slow');
+} else {
+	$('a.back-to-top').fadeOut('slow');
+}
+});
+$('a.back-to-top, a.simple-back-to-top').click(function() {
+$('html, body').animate({
+	scrollTop: 0
+}, 700);
+return false;
+});
+</script>
+</body>
+</html>
