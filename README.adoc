@@ -73,7 +73,6 @@ For more options, see the http://asciidoctor.org/docs/user-manual/#cli-options[C
 == Documentation
 
 [horizontal]
-GitHub pages:: *http://numberfour.github.io/asciispec*
-Userguide:: https://numberfour.github.io/asciispec/userguide.html[Userguide]: Setup instructions and common syntax tips.
-Docs Index:: *<<docs/index#,AsciiSpec Specification>>*: Full AsciiSpec documentation.
-Other:: *<<docs/troubleshooting#,Troubleshooting>>*: Common tips for getting started and debugging errors.
+HTML Documentation:: *http://numberfour.github.io/asciispec*
+Userguide:: https://numberfour.github.io/asciispec/userguide.html[Userguide]: Introduction to AsciiDoc syntax and some basic AsciiSpec usage tips.
+Other:: *<<docs/troubleshooting#,Troubleshooting>>*: Help for getting started and debugging installation errors.
