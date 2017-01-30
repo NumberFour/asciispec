@@ -1,6 +1,7 @@
-:find:
 
 = Tips
+:find:
+:revnumber: 2.0
 
 [.language-asciidoc]
 == Newlines & Line Breaks
