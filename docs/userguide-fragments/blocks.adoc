@@ -158,7 +158,8 @@ a|
 --
 Don't divide by zero.
 
-In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
+In ordinary arithmetic, the expression has no meaning,
+as there is no number which, multiplied by 0..
 --
 ----
 a|
@@ -166,7 +167,8 @@ a|
 --
 Don't divide by zero.
 
-In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
+In ordinary arithmetic, the expression has no meaning,
+as there is no number which, multiplied by 0..
 --
 |===
 ====
@@ -289,10 +291,12 @@ Another common block macro is the `image::[]` macro;
 a|
 [source,asciidoc]
 ----
-The following image is considered the last line of this pargraph.
+The following image is considered
+the last line of this pargraph.
 image::../images/logo.png[]
 
-Leaving an empty line before and after the image block macro will create a block as expected:
+Leaving an empty line before and after the
+image block macro will create a block as expected:
 
 image::../images/logo.png[]
 
@@ -301,11 +305,12 @@ beginning of next block...
 
 a|
 
-The following image macro is considered the last line of this pargraph.
+The following image macro is considered
+the last line of this pargraph.
 image::../images/logo.png[]
 
-Leaving an empty line before and after the image block macro
-will create a block as expected:
+Leaving an empty line before and after
+the image block macro will create a block as expected:
 
 image::../images/logo.png[]
 
