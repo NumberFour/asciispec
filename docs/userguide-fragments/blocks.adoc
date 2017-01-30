@@ -2,7 +2,8 @@
 [.language-asciidoc]
 = Blocks
 :find:
-:imagesdir: ../images
+
+
 Usage::
 
 [source,asciidoc]
@@ -295,12 +296,12 @@ a|
 ----
 The following image is considered
 the last line of this pargraph.
-pass:[image::{find}../images/logo.png[]]
+pass:[image::{find}images/logo.png[]]
 
 Leaving an empty line before and after the
 image block macro will create a block as expected:
 
-pass:[image::{find}../images/logo.png[]]
+pass:[image::{find}images/logo.png[]]
 
 beginning of next block...
 ----
@@ -309,12 +310,12 @@ a|
 
 The following image macro is considered
 the last line of this pargraph.
-image::{find}../images/logo.png[]
+image::{find}images/logo.png[]
 
 Leaving an empty line before and after
 the image block macro will create a block as expected:
 
-image::{find}../images/logo.png[]
+image::{find}images/logo.png[]
 
 _beginning of next block..._
 
