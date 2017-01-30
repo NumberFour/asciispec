@@ -2,7 +2,8 @@
 [.language-asciidoc]
 = Blocks
 :find:
-:imagesdir: ../images
+
+
 Usage::
 
 [source,asciidoc]
@@ -286,12 +287,6 @@ Another common block macro is the `image::[]` macro;
 .Block Macro
 ====
 
-{set:imagesdir:../images}
-
-ifdef::env-github[:imagesdir: ../images]
-
-
-
 [cols=2]
 |===
 ^|Source ^| Output
@@ -301,12 +296,12 @@ a|
 ----
 The following image is considered
 the last line of this pargraph.
-pass:[image::logo.png[]]
+pass:[image::{find}images/logo.png[]]
 
 Leaving an empty line before and after the
 image block macro will create a block as expected:
 
-pass:[image::logo.png[]]
+pass:[image::{find}images/logo.png[]]
 
 beginning of next block...
 ----
@@ -315,12 +310,12 @@ a|
 
 The following image macro is considered
 the last line of this pargraph.
-image::logo.png[]
+image::{find}images/logo.png[]
 
 Leaving an empty line before and after
 the image block macro will create a block as expected:
 
-image::logo.png[]
+image::{find}images/logo.png[]
 
 _beginning of next block..._
 
