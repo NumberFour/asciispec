@@ -262,18 +262,6 @@ cannot be used inline.
 [.language-asciidoc]
 == Media
 
-:imagesdir:
-
-[source,asciidoc]
-----
-.A Small Logo
-image::{find}../images/logo.png[]
-----
-
-.A Small Logo
-image::{find}../images/logo.png[]
-
-
 Embed youtube content using the syntax `video::3NjQ9b3pgIg[youtube,800,600]`.
 
 video::3NjQ9b3pgIg[youtube,800,600]
