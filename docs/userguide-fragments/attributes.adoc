@@ -1,0 +1,224 @@
+[.language-asciidoc]
+= Attributes & Variables
+
+Usage: ::
+
+[source,asciidoc]
+----
+:attribute: value
+
+{attribute}
+----
+
+[.language-adoc]
+Setting document attributes is done by adding an attribute entry line as `:attribute: value` above.
+Variables are declared using `{}` curly brackets and can be used for substitutions.
+Attributes can be inserted anywhere in a document unless they are specific _header attributes_ as described in the next section.
+
+.Document Attributes
+====
+
+[cols="3,2"]
+|===
+^|Source ^|Output
+
+a|
+[source,asciidoc]
+----
+:revnumber: 2.0 // <1>
+
+Last modified:: {docdatetime}  // <2>
+Revision:: {revnumber}.
+----
+<1> The revision number needs to be set, otherwise the attribute in the last line will be empty.
+<2> `pass:[{docdatetime}]` is automatically set to last time the source document is modified
+
+a|
+
+:revnumber: 2.0
+
+Last modified:: {docdatetime} +
+Revision:: {revnumber}.
+
+|===
+
+Document attributes can be evaluated using the `pass:[ifdef::[]]` macro to create some interesting logic.
+The line below checks if the backend is `HTML5` and if it is, the content in the square brackets will be included:
+[source,asciidoc]
+\ifdef::backend-html5[This content is included in HTML5 output.]
+
+*Output:*
+
+ifdef::backend-html5[This content is included in HTML5 output.]
+
+====
+
+.Evaluating Statements
+====
+
+The previous example shows how to include a single line of content into a document using an inline ifdef. +
+The same can also be done using blocks as follows:
+
+[cols=2]
+|===
+^| Source ^| Output
+
+
+
+a|
+
+task:ASC-13[]
+
+[source,asciidoc,subs="macros"]
+----
+pass:[ifeval::[2 + 2 != 5]]
+
+- [x] Two plus two does not a five make.
+
+- [x] Rules of mathematics still behave as expected.
+
+pass:[endif::[]]
+
+----
+a|
+ifeval::[2 + 2 != 5]
+- [x] Two plus two does not a five make.
+
+- [x] Rules of mathematics still behave as expected.
+endif::[]
+|===
+
+
+
+
+
+====
+
+
+.Setting Attributes Inline
+====
+
+The following two examples set an attribute using inline shorthand:
+
+[cols=2]
+|===
+| Source | Output
+
+a|
+[source,asciidoc]
+----
+Attributes can be set inline too:
+We should {set:country:France} travel to {country}!
+----
+a|
+
+Attributes can be set inline too:
+We should {set:country:France} travel to {country}!
+
+|===
+
+
+====
+
+////
+
+Document variables temporarily broken, see: https://github.com/NumberFour/asciispec/issues/13
+
+An example of a common document attribute is `imagesdir` which specifies the images directory.
+`imagesdir` is empty by default, therefore, `+image:a.jpg[]+` will look for `a.jpg` in the same directory as the source document.
+
+[source,asciidoc]
+----
+:imagesdir: images
+----
+
+Setting `imagesdir` as above saves the time of typing out the full path every time we use the `image:[]` macro. +
+Usually this is done once per document but can be used multiple times:
+
+.Setting Document Attributes
+[source,asciidoc]
+----
+:imagesdir: images/icons
+
+image:github.png[]
+
+image:jira.png[]
+
+:imagesdir: images
+
+image:logo.png[]
+
+----
+
+*Output:*
+
+:imagesdir: images/icons
+
+image:{find}github.png[]
+
+image:{find}jira.png[]
+
+:imagesdir: images
+
+image:logo.png[]
+
+////
+
+[.language-asciidoc]
+== Header Attributes
+
+A header starts with a document title followed by two optional lines defining author and revision information. +
+Finally, document-wide settings are defined by means of _header attributes_ :
+
+[source,asciidoc]
+----
+= AsciiSpec Documentation
+Brian Thomas Smith
+First Draft
+:toc: right
+----
+
+An example header attribute is `:toc:` which sets the position of the Table of Contents in the destination document.
+The above example right-aligns the Table of Contents.
+Another option is to enable the use of the `toc::[]` block macro to insert a Table of Contents block in any section:
+
+[source,asciidoc]
+----
+= AsciiSpec Documentation
+Brian Thomas Smith
+First Draft
+:toc: macro
+
+// A Table of Contents is rendered here by default
+
+== Section two
+
+toc::[] // But will be rendered here instead
+----
+
+A full table of the available built-in document attributes, see the http://asciidoctor.org/docs/user-manual/#builtin-attributes[Built-in Attributes] section in the AsciiDoctor User Manual.
+
+== Special Variables
+
+AsciiSpec introduces the concept of a special `\{find}` variable which is designed to resolve paths. The `\{find}` variable provides the means to specify files relative to the `.adoc` file no matter from where this `.adoc` file was included.
+
+*Usage:*
+
+[source,asciidoc]
+----
+:myImageVar: {find}path/to/picture.png
+image::{find}path/to/picture.png[]
+----
+
+For complete documentation on this variable, see https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/special-variables.adoc[Special Variables].
+
+=== Using `+++{find}+++` on GitHub
+
+The ``+++{find}+++`` variables _cannot be resolved by GitHub_ and consequently, the adoc file might not be displayed correctly, especially with respect to images.
+
+As a solution, the adoc file should define the find variable to an empty string using the following line:
+
+[.language-asciidoc]``:find:``
+
+Using the line above, the image include resolves to `image::picture.png[]`.
+

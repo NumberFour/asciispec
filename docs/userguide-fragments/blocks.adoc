@@ -1,0 +1,394 @@
+[.language-asciidoc]
+= Blocks
+
+Usage::
+
+[source,asciidoc]
+----
+[quote]
+Before I came here I was confused about this subject.
+Having listened to your lecture I am still confused.
+But on a higher level.
+----
+
+The above content will be rendered as follows:
+
+[quote,Enrico Fermi,Notes on Quantum Mechanics (1954)]
+Before I came here I was confused about this subject. Having listened to your lecture I am still confused. But on a higher level.
+
+
+Blocks are content in a section with styles or `contexts` such as paragraphs, source listings, images, etc.
+Square brackets `[]` are used to indicate the style of the block and an empty line indicates that the block has finished.
+All plain text of one or more lines will be parsed as a `block` with the 'paragraph' style by default, therefore:
+
+[source,asciidoc]
+----
+It was the best of times..
+
+// Is the same as writing the following:
+
+[paragraph]
+It was the best of times..
+----
+
+
+A list of built-in block types can be found in the http://asciidoctor.org/docs/user-manual/#built-in-blocks-summary[AsciiDoctor User Manual: built-in blocks summary].
+
+== Titles & attributes
+
+Adding a title to a block of content is done by adding a fullstop followed by the title text in the line previous to the block.
+
+To style a block with a source `listing` context, we use `[source]` as with this example:
+
+[source,asciidoc]
+-----
+.Fibonacci.n4js // <1>
+[source,n4js]   // <2>
+----  			// <3>
+export public class Fibonacci {
+ public seq()  {
+
+      var arr = [];
+// etc...
+----
+-----
+<1> In the first line we add a _title_ to a block. This is done using a full stop followed by the title `Fibonacci.n4js` (note there is no space). A title can be added in this way to many different block types by default.
+<2> Setting a `source` context and the language is `N4JS`.
+<3> Notice the use of four hyphens to delimit the block: `----` (see <<Delimiters>>) this indicates to the parser where the block begins and ends. The listing block can then also include the empty line:
+
+*_Output:_*
+
+.Fibonacci.n4js
+[source,n4js]
+----
+export public class Fibonacci {
+ public seq()  {
+
+      var arr = [];
+// etc...
+----
+
+We can add more attributes relevant to the type of block.
+In the case of a `[verse]` block, we can set the author and the source separated with commas like so: `[verse, Carl Sagan, Cosmos]`.
+
+[source,asciidoc]
+----
+.Deep Thought of the Day
+[verse, Carl Sagan, Cosmos: A Personal Voyage]
+If you want to make an apple pie from scratch, you must first create the universe.
+----
+
+The above is rendered as follows:
+
+.Deep Thought of the Day
+[verse, Carl Sagan, Cosmos: A Personal Voyage]
+If you want to make an apple pie from scratch, you must first create the universe.
+
+== Delimiters
+
+For all built-in blocks, the square brackets containing the block type (e.g. `[source]`) can be omitted and their delimiters will be used to determine the block type instead. For source blocks, this is four hyphens (`----`);
+
+TIP: This is convenient, but, of course, no positional attributes i.e. `[blocktype,attr1,attr2]` can be specified. In the case of listing blocks, this means no language can be specified for highlighting in the default manner e.g. `[source,java]`.
+
+.Set Block Type by Delmiter
+====
+
+[cols=2]
+|===
+^| Source ^| Output
+
+a|
+
+[source,adoc]
+-----
+----
+my code() {
+
+string example...
+----
+-----
+a|
+
+----
+my code() {
+
+string example...
+----
+
+|===
+====
+
+For a full list of delimiters, refer to the http://asciidoctor.org/docs/user-manual/#built-in-blocks-summary[Asciidoctor User Manual: Built-in Block Summary].
+
+
+== Admonition Blocks
+
+*Usage:*
+
+[source,asciidoc]
+WARNING: Don't divide by zero...
+
+
+A useful feature built-in to AsciiDoctor is the inclusion of admonition blocks.
+By default, the following admonition blocks are available;
+
+* `TIP`
+* `NOTE`
+* `IMPORTANT`
+* `CAUTION`
+* `WARNING`
+
+They render as with the `WARNING` block below, except with different <<Icons>>.
+
+WARNING: Don't divide by zero. In ordinary arithmetic, the expression has no meaning, as there is no number which...
+
+The standard block syntax can also be used if the admonition spans multiple paragraphs:
+
+.Delimited Admonition Block
+====
+
+[cols=2]
+|===
+^| Source ^| Output
+
+a|
+[source,adoc]
+----
+[WARNING]
+--
+Don't divide by zero.
+
+In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
+--
+----
+a|
+[WARNING]
+--
+Don't divide by zero.
+
+In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
+--
+|===
+====
+
+== Nesting Blocks
+
+Blocks can contain other blocks:
+
+[cols=2]
+|===
+^| Source ^| Output
+
+a|
+
+[source,asciidoc]
+-----
+.Nested Listing
+====
+See the following code snippet:
+
+----
+my code() {
+
+// etc...
+----
+
+====
+-----
+
+a|
+
+
+.Nested Listing
+====
+See the following code snippet, for example:
+
+----
+my code() {
+
+// etc...
+----
+
+====
+
+|===
+
+Nesting blocks of the same type is done using a different number of delimiters:
+
+[cols=2]
+|===
+^| Source ^| Output
+
+a|
+
+[source,adoc]
+------
+.Outer Example
+===== // <1>
+
+.Inner Example
+==== // <2>
+
+See the following code snippet:
+
+[source,html]
+----
+<div id="footnotes">
+----
+
+====
+
+=====
+
+------
+<1> Outer delimiter uses 5 characters
+<2> Inner delimiter uses 4 characters
+
+a|
+
+.Outer Example
+=====
+
+.Inner Example
+====
+
+See the following code snippet:
+
+[source,html]
+----
+<div id="footnotes">
+----
+
+====
+
+=====
+
+|===
+
+
+[.language-asciidoc]
+== Block Macro
+
+Usage: ::
+`+++macrotype::attributes[additional parameters]+++`
+
+Block macros are used to create a block member in a document. +
+A block macro must be on a single line by itself with an empty line before and after.
+
+The `toc::[]` macro creates a table of contents block at that position in the document (to enable this feature, see <<Document Attributes,setting document attributes>> below).
+
+Another common block macro is the `image::[]` macro;
+
+.Block Macro
+====
+
+[cols=2]
+|===
+^|Source ^| Output
+
+a|
+[source,asciidoc]
+----
+The following image is considered the last line of this pargraph.
+image::../images/logo.png[]
+
+Leaving an empty line before and after the image block macro will create a block as expected:
+
+image::../images/logo.png[]
+
+beginning of next block...
+----
+
+a|
+
+The following image macro is considered the last line of this pargraph.
+image::../images/logo.png[]
+
+Leaving an empty line before and after the image block macro
+will create a block as expected:
+
+image::../images/logo.png[]
+
+_beginning of next block..._
+
+|===
+
+====
+
+
+[.language-asciidoc]
+== Tables
+
+Table blocks are typically delimited by a character (usually a pipe `|`) and three equals symbols (`|===`);
+
+
+[source,asciidoc]
+----
+|===
+| Hello | world
+|===
+----
+
+|===
+| Hello | world
+|===
+
+.Tables and CSV
+====
+
+
+
+
+A comma can be used exactly as above to separate cells in the following way:
+
+[cols=2]
+|===
+a|
+[source,asciidoc]
+----
+,===
+, Hello , World
+,===
+----
+
+A different character can be used to delimit cells by substituting the pipe with the separator you wish to use.
+
+a|
+
+[source,adoc,subs="macros"]
+----
+[cols=6]
+,===
+pass:[include::music-collection.csv[]]
+,===
+----
+Using commas in this way can provide an easy solution to including CSV values (`include::mydata.csv[]`) into a table without having to reformat the data:
+
+|===
+
+====
+
+Formatting tables:
+
+[source,asciidoc]
+----
+[cols="h,d"]
+|===
+| Backend 3+h| Description
+
+| html (or html5) 3+| HTML5, styled with CSS3 (default).
+| pdf 3+| PDF, a portable document format. Requires the asciidoctor-pdf gem.
+|===
+----
+
+In the above table, formatting attributes *3+* are used. The +++^+++ caret symbol is used to centre-align the text and *3+* indicates that the cell spans three consecutive columns.
+
+
+|===
+| Backend 3+^| Description
+
+| html (or html5) 3+| HTML5, styled with CSS3 (default).
+| pdf 3+| PDF, a portable document format. Requires the asciidoctor-pdf gem.
+|===
+
+A full overview of the possibilities to create complex tables can be found in the http://www.asciidoctor.org/docs/user-manual/#tables[tables section] of the User Manual.

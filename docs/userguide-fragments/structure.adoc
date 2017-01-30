@@ -1,0 +1,91 @@
+= Document Structure
+
+
+In order that we understand the use of AsciiSpec processors, it's important to know the context in which they function.
+This section provides a brief overview of how an AsciiDoc document is structured.
+The following list is a simplified overview of the AsciiDoctor AST:
+
+[horizontal]
+`Document`:: The document contains `Sections` and `Blocks` that make up the document and holds the document attributes.
+
+`Section`:: Models sections in the document and dictates the structure of the `Document` tree.
+
+`Blocks`:: Content within a `Section`, differentiated by *context* such as 'paragraph' or 'image'.
+
+`Lists`, `Tables`, `ListItems`...:: Nested content within a `Block`. Can also themselves be `Blocks`.
+
+[.language-adoc]
+== Sections
+
+Section levels are set using equals symbols (`= title`) followed by a space and the title. They must be preceded by an empty line:
+
+.Section Levels
+[source,adoc]
+----
+= Document Title (Level 0)
+
+== Level 1 Section Title
+
+=== Level 2 Section Title
+
+==== Level 3 Section Title
+
+===== Level 4 Section Title
+
+== Another Level 1 Section Title
+----
+
+Documents with two Level 0 (`=`) Sections need the `:doctype: book` attribute set.
+
+It's illegal to skip section:
+
+[source,adoc]
+----
+== Level 1 Section
+
+==== Level 3 Section - Error!
+----
+
+=== Styling Sections
+
+The most useful styles that can be added to a section are `[bibliography]` and `[appendix]`.
+The next example demonstrates how to style a section as an Appendix:
+
+.Styling Sections
+====
+
+
+[cols=2]
+|===
+^|Source ^| Output
+
+a|
+
+[source,asciidoc]
+----
+[appendix]
+== Common Terms
+
+The following is a list of common terms used...
+
+[appendix]
+== Comparison of Frameworks
+
+Let's examine the effectiveness of each...
+----
+
+a|
+
+[appendix]
+== Common Terms
+
+The following is a list of common terms used...
+
+[appendix]
+== Comparison of Frameworks
+
+Let's examine the effectiveness of each...
+
+|===
+
+====

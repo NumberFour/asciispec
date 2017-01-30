@@ -1,0 +1,25 @@
+
+= Inline Macro
+
+Inline macros are similar to <<Block Macro,block macros>> except that the macro is replaced by inline content. +
+The syntax is different in that we use a single colon `:` instead of two `::`
+
+[cols=2]
+|===
+^| Source, ^| Output
+
+a|
+[source,asciidoc]
+----
+We can insert a logo image:images/logo.png[Logo] directly into our paragraph...
+----
+a|
+
+We can insert a logo image:images/logo.png[Logo] directly into our paragraph...
+|===
+Optional Attributes::
+In the above example, we have included some optional attributes in the square brackets that close the inline macro.
+The first attribute is the 'Alt Text' of the image, followed by the width and height of the image.
+The same method of passing attributes can be applied to the <<Block Macro,block macro>> above e.g. +
+
+`image::images/logo.png[Logo,15,18]`.
