@@ -1,5 +1,3 @@
-:find:
-
 ifndef::env-github[]
 include::{find}config.adoc[]
 endif::[]
@@ -10,6 +8,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :toc: left
 :revnumber: 2.0
 :release: 2
+:find:
+
 
 This userguide covers the basics of common and practical AsciiDoc syntax along with tips for using AsciiSpec.
 

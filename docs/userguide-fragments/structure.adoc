@@ -76,13 +76,13 @@ Let's examine the effectiveness of each...
 
 a|
 
-[appendix]
-== Common Terms
+[discrete]
+== Appendix A: Common Terms
 
 The following is a list of common terms used...
 
-[appendix]
-== Comparison of Frameworks
+[discrete]
+== Appendix B: Comparison of Frameworks
 
 Let's examine the effectiveness of each...
 
