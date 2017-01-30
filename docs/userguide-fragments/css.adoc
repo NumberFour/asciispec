@@ -21,7 +21,8 @@ a|
 This paragraph is assigned the `xx-large` CSS class.
 
 [role=blue]
-Lovely Calming Blue Text on every character of the brief, yet poignant sentence.
+Lovely Calming Blue Text on every character
+of the brief, yet poignant sentence.
 ----
 
 
@@ -30,7 +31,8 @@ a|
 This paragraph is assigned the `xx-large` CSS class.
 
 [role=blue]
-Lovely Calming Blue Text on every character of the brief, yet poignant sentence.
+Lovely Calming Blue Text on every character
+of the brief, yet poignant sentence.
 
 |===
 
@@ -101,8 +103,8 @@ a|
 
 [source,asciidoc]
 Check the [language-html]`<a href="favicon.ico"/>` favicon in the header. // <1>
-Set the following id: `<div id="menubar">` on the menubar. +			  // <2>
-Inline AsciiDoc macros (`macro:[]`) are useful!							  // <3>
+Set the following id: `<div id="menubar">` on the menubar. + // <2>
+Inline AsciiDoc macros (`macro:[]`) are useful! // <3>
 
 ^h| Output
 

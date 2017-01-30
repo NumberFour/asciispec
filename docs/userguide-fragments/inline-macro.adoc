@@ -11,11 +11,11 @@ The syntax is different in that we use a single colon `:` instead of two `::`
 a|
 [source,asciidoc]
 ----
-We can insert a logo image:images/logo.png[Logo] directly into our paragraph...
+Insert images image:images/logo.png[Logo] in paragraphs.
 ----
 a|
 
-We can insert a logo image:images/logo.png[Logo] directly into our paragraph...
+Insert images image:images/logo.png[Logo] in paragraphs.
 |===
 Optional Attributes::
 In the above example, we have included some optional attributes in the square brackets that close the inline macro.

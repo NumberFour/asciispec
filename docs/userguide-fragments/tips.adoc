@@ -54,12 +54,12 @@ a|
 Item
 
 * Second
-+ 		// <1>
++ 	// <1>
 Item
 
 ** And a source block:
 +
-						// <2>
+	// <2>
 [source,adoc]
 task:ASC-123[]
 ----
@@ -199,18 +199,17 @@ a|
 > the present is our past.
 |===
 
-== Indented Literal Block
+== Literal Block Shorthand
 
-A shorthand method of creating a literal block is to add indentation or spaces or tabs:
+A shorthand method of creating a literal block is to add indentation to a block. Spaces or tabs on the first line will indent a block as a literal:
 
 *Source:*
 
 [source,asciidoc]
 ----
- A Single Space // <1>
-Or a Tab will Suffice!
+ A Single Space
+	Or a Tab will Suffice!
 ----
-<1> Line one begins with a single space
 
 == Icons
 
