@@ -487,7 +487,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 .exampleblock > .content > :first-child { margin-top: 0; }
 .exampleblock > .content > :last-child { margin-bottom: 0; }
 
-.sidebarblock { position: absolute; border-style: solid; width: 90px; border-width: 1px; border-color: #d9d9d9; right: -90px; padding: .1rem; background: #f2f2f2; -webkit-border-radius: 0; border-radius: 0; text-align: left; border-radius: 5px;}
+.sidebarblock { position: absolute; border-style: solid; width: 90px; border-width: 1px; border-color: #d9d9d9; right: -90px; padding: .1rem; background: #f2f2f2; -webkit-border-radius: 0; border-radius: 0; text-align: left; border-radius: 5px;word-break: break-word;font-size: smaller;}
 .sidebarblock > :first-child { margin-top: 0; }
 .sidebarblock > :last-child { margin-bottom: 0; }
 .sidebarblock > .content > .title { color: #6999d6; margin-top: 0; }

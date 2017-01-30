@@ -24,7 +24,7 @@ end::tagname[]  | These tags should be added in commented lines in the *included
 
 |===
 
-When including multiple documents that begin with <<sections,Level 0 Sections>> (`= Section Title`), the following method can be used to ensure the sections are offset correctly;
+When including multiple documents that begin with <<_sections,Level 0 Sections>> (`= Section Title`), the following method can be used to ensure the sections are offset correctly;
 
 .Level Offset for Multiple Includes
 ====

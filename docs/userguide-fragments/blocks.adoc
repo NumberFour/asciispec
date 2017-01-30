@@ -2,6 +2,7 @@
 [.language-asciidoc]
 = Blocks
 :find:
+:imagesdir: ../images
 Usage::
 
 [source,asciidoc]
@@ -290,16 +291,16 @@ Another common block macro is the `image::[]` macro;
 ^|Source ^| Output
 
 a|
-[source,asciidoc]
+[source,asciidoc,subs="macros"]
 ----
 The following image is considered
 the last line of this pargraph.
-image::{find}../images/logo.png[]
+pass:[image::{find}../images/logo.png[]]
 
 Leaving an empty line before and after the
 image block macro will create a block as expected:
 
-image::{find}../images/logo.png[]
+pass:[image::{find}../images/logo.png[]]
 
 beginning of next block...
 ----
@@ -342,9 +343,6 @@ Table blocks are typically delimited by a character (usually a pipe `|`) and thr
 .Tables and CSV
 ====
 
-
-
-
 A comma can be used exactly as above to separate cells in the following way:
 
 [cols=2]
@@ -378,9 +376,8 @@ Formatting tables:
 
 [source,asciidoc]
 ----
-[cols="h,d"]
 |===
-| Backend 3+h| Description
+| Backend 3+^| Description
 
 | html (or html5) 3+| HTML5, styled with CSS3 (default).
 | pdf 3+| PDF, a portable document format. Requires the asciidoctor-pdf gem.
@@ -401,6 +398,6 @@ A full overview of the possibilities to create complex tables can be found in th
 
 == Custom AsciiSpec Blocks
 
-For examples of custom AsciiSpec blocks (definition and requirements), refer to the <<AsciiSpec Cheat Sheet>> and for comprehensive documentation, see the AsciiSpec processor file:///Users/brian.smith/N4repos/asciispec/docs/generated-docs/html/spec.html[Specification].
+For examples of custom AsciiSpec blocks (definition and requirements), refer to the <<AsciiSpec Cheat Sheet>> and for comprehensive documentation, see the AsciiSpec processor https://numberfour.github.io/asciispec/spec.html[Specification].
 
 
