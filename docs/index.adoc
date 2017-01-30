@@ -13,11 +13,12 @@ task:ASCII-SPEC[]
 .A Documentation Tool
 [def]
 --
-
+- [x] Based on Asciidoctor
+- [x] With custom Extensions!
 --
 ----
 
-AsciiSpec is a toolchain based on http://asciidoctor.org/[Asciidoctor] with custom modifications for task management, math support, API documentation and more.
+AsciiSpec is a toolchain based on http://asciidoctor.org/[Asciidoctor] with custom modifications for task management, MathML generation, API documentation and more.
 
 include::{find}cheat-sheet.adoc[leveloffset=1]
 

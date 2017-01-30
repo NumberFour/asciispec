@@ -7,7 +7,7 @@ set -e +x -v
 
 ########## Directory Locations ###########
 # Output folder:
-GEN_FOLDER=generated-docs/html
+GEN_FOLDER=generated-docs/
 rm -rf ./$GEN_FOLDER/; mkdir -p ./$GEN_FOLDER/
 
 # Copy resources to ./$GEN_FOLDER/

@@ -1,0 +1,45 @@
+:find:
+
+= Includes
+
+[cols="h,m,a",role="language-asciidoc"]
+|===
+|Type | Source | Output
+
+| Include |
+\include::filename.adoc[leveloffset=offset]
+
+\include::file2.adoc[tags=tagname,tagname2]
+
+\include::file3.adoc[lines=ranges,indent=depth]
+| Includes referenced file(s) dictated by the comma-separated attributes. +
+The `\{find}` variable may be used. See https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/special-variables.adoc[Special Variables].
+
+
+| Include tags |
+
+tag::tagname[] +
+
+end::tagname[]  | These tags should be added in commented lines in the *included* document.
+
+|===
+
+When including multiple documents that begin with <<_sections,Level 0 Sections>> (`= Section Title`), the following method can be used to ensure the sections are offset correctly;
+
+.Level Offset for Multiple Includes
+====
+
+[source,adoc]
+----
+:leveloffset: +1
+
+\include::{find}userguide-fragments/structure.adoc[]
+
+\include::{find}userguide-fragments/blocks.adoc[]
+
+// etc...
+
+:leveloffset: -1
+----
+
+====

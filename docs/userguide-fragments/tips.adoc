@@ -1,5 +1,7 @@
 
 = Tips
+:find:
+:revnumber: 2.0
 
 [.language-asciidoc]
 == Newlines & Line Breaks
@@ -37,6 +39,53 @@ to remake the world
 
 |===
 ====
+
+.List Continuation
+====
+
+[cols="3,2"]
+|===
+^|Source ^|Output
+
+a|
+[source,asciidoc]
+----
+* First
+
+Item
+
+* Second
++ 	// <1>
+Item
+
+** And a source block:
++
+	// <2>
+[source,adoc]
+task:ASC-123[]
+----
+<1> Plus symbol continues the list indentation
+<2> Empty lines are allowed.
+a|
+* First
+
+Item
+
+* Second
++
+
+Item
+
+** And a source block:
++
+
+[source,adoc]
+task:ASC-123[]
+
+|===
+====
+
+
 
 [.language-asciidoc]
 == Escaping Characters / Macros
@@ -107,6 +156,60 @@ pass:[*bold*, __unde**rsc__ores, double aster**isks] +
 +\+{revnumber}
 |===
 
+== Github Flavored Markdown
+
+Some common https://guides.github.com/features/mastering-markdown/[Github Markdown] is also supported, such as backticks used for code listings:
+
+[source,asciidoc]
+----
+```n4js
+export public class Fibonacci {
+ public seq()  {
+
+      var arr = [];
+// etc...
+```
+----
+
+List items and checkboxes are also supported:
+
+[cols=2]
+|===
+a|
+[source,adoc]
+----
+- [x] Done!
+- [ ] Not Done!
+
+# This is an <h1> tag
+## This is an <h2> tag
+
+> We're living the future so
+> the present is our past.
+----
+a|
+- [x] Done!
+- [ ] Not Done!
+
+# This is an <h1> tag
+## This is an <h2> tag
+
+> We're living the future so
+> the present is our past.
+|===
+
+== Literal Block Shorthand
+
+A shorthand method of creating a literal block is to add indentation to a block. Spaces or tabs on the first line will indent a block as a literal:
+
+*Source:*
+
+[source,asciidoc]
+----
+ A Single Space
+	Or a Tab will Suffice!
+----
+
 == Icons
 
 When the attribute `:icons: font` is set, http://fontawesome.io/cheatsheet/[Font Awesome] icons can be used inline using the macro `pass:[icon:name[]]`.
@@ -121,19 +224,20 @@ When the attribute `:icons: font` is set, http://fontawesome.io/cheatsheet/[Font
 a|
 [source,asciidoc]
 ----
-This is forbidden! icon:fire[]
+Be Careful! icon:fire[]
 
-The source is on icon:github[]
+The source is on icon:github[] GitHub!
 ----
 
 a|
-This is forbidden! icon:fire[]
+Be Careful! icon:fire[]
 
-The source is on icon:github[]
+The source is on icon:github[] GitHub!
 
 |===
 ====
 
+[.language-adoc]
 == Colons
 
 When learning AsciiDoc syntax, it can be confusing whether to use one or two colons for certain macros.
@@ -154,3 +258,32 @@ a| The following Table of Contents +
 
 cannot be used inline.
 |===
+
+[.language-asciidoc]
+== Media
+
+:imagesdir:
+
+[source,asciidoc]
+----
+.A Small Logo
+image::{find}../images/logo.png[]
+----
+
+.A Small Logo
+image::{find}../images/logo.png[]
+
+
+Embed youtube content using the syntax `video::3NjQ9b3pgIg[youtube,800,600]`.
+
+video::3NjQ9b3pgIg[youtube,800,600]
+
+Vimeo can be embedded using a similar syntax: `video::67480300[vimeo]`
+
+=== Audio
+
+Audio files can also be added to a HTML document using the `audio` macro:
+
+`audio::soundfiles/Cherry-MX-Blue.mp3[options="autoplay,loop"]`
+
+

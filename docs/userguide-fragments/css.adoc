@@ -1,0 +1,268 @@
+= CSS classes
+
+[.language-adoc]
+CSS classes can be added to blocks in Asciidoc by using the the 'dot-prefix' syntax `[.css-class]` on the preceding line or by using the `role=` attribute:
+
+[.language-adoc]
+.Applying CSS Classes
+====
+
+[cols=2]
+|===
+^| Source ^| Output
+
+a|
+
+[[block-css-class]]
+
+[source,asciidoc]
+----
+[.xx-large]
+This paragraph is assigned the `xx-large` CSS class.
+
+[role=blue]
+Lovely Calming Blue Text on every character
+of the brief, yet poignant sentence.
+----
+
+
+a|
+[.xx-large]
+This paragraph is assigned the `xx-large` CSS class.
+
+[role=blue]
+Lovely Calming Blue Text on every character
+of the brief, yet poignant sentence.
+
+|===
+
+Let's set the CSS class `xx-small` on the source block below using the using the `role=` attribute to change the text size for this long console log:
+
+`[source,bash,role=xx-small]`
+
+*Output:*
+
+[source,bash,role=xx-small]
+----
+Downloading: https://repo.maven.apache.org/maven2/com/google/guava/guava/13.0-rc2/guava-13.0-rc2.pom
+Downloaded: https://repo.maven.apache.org/maven2/com/google/guava/guava/13.0-rc2/guava-13.0-rc2.pom (6 KB at 60.0 KB/sec)
+Downloading: http://www2.ph.ed.ac.uk/maven2/com/google/guava/guava-parent/13.0-rc2/guava-parent-13.0-rc2.pom
+...
+----
+
+
+When using GFM footnote:[<<Github Flavored Markdown>>], it's possible with the following syntax:
+
+[cols=2]
+|===
+
+a|
+
+[source,adoc]
+----
+[.xx-small]
+```bash
+Downloaded: https://repo.maven.apache....
+```
+----
+
+a|
+
+[source,adoc]
+----
+[.xx-small.language-bash] // <1>
+```
+Downloaded: https://repo.maven.apache....
+```
+----
+<1> An example of setting multiple CSS classes on a block: `xx-small` and `language-bash` for Prism syntax highlighting.
+|===
+
+====
+
+[.language-adoc]
+== Inline Syntax Highlighting (HTML)
+
+When using http://prismjs.com/[Prism.js] (AsciiSpec default), CSS classes can be set inline using `[language-name]` before the code. +
+Note that with blocks, a full stop before the CSS class is necessary, see <<block-css-class,the above example>>.
+
+*Usage:* Make sure the charset `[language-html]pass:[`]<meta charset="utf-8" />pass:[`]` is set correctly.
+
+*Output:* Make sure the charset [language-html]`<meta charset="utf-8" />` is set correctly.
+
+The following example demonstrates some common cases of switching the language of inline syntax highlighting;
+
+.Change Inline Syntax Highlighting Language
+====
+
+[cols=1]
+|===
+^| Source
+
+a|
+
+[source,asciidoc]
+Check the [language-html]`<a href="favicon.ico"/>` favicon in the header. // <1>
+Set the following id: `<div id="menubar">` on the menubar. + // <2>
+Inline AsciiDoc macros (`macro:[]`) are useful! // <3>
+
+^h| Output
+
+a|
+
+The favicon is located [language-html]`<a href="favicon.ico"/>` in the header. +
+The menu bar was given the following id: `<div id="menubar">`. +
+Inline AsciiDoc macros (`macro:[]`) are useful!
+|===
+
+<1> Only the first inline HTML listing is highlighted.
+<2> The second piece of code is highlighted as AsciiDoc, hence the coloration (or lack thereof).
+<3> Asciidoc is highlighted correctly.
+
+NOTE: The `[language-html]` CSS class is overriding one already set on this section, see <<Applying CSS Classes to Sections>>. +
+There is a lot of AsciiDoc to highlight in this document and so the parent section <<CSS classes>> has been assigned the class `[.language-adoc]`.
+
+====
+
+.Set Syntax Highlighter Language per Block
+====
+Instead of writing [language-adoc]`[language-html]` before every piece of inline code, a CSS class can be set to a paragraph or block.
+All inline source code within that paragraph will then be highlighted with the language specified:
+
+|===
+a|
+[source,asciidoc]
+----
+[.language-html]
+The favicon was set at `<a href="favicon.ico"/>` in your header.
+The next thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
+----
+
+a|
+
+
+
+[.language-html]
+The favicon was set at `<a href="favicon.ico"/>` in your header. +
+The next thing was the menubar: `<div id="menubar">` which contained a list `<ul class="fa-ul">`...
+
+|===
+
+====
+
+[.language-adoc]
+== Applying CSS Classes to Sections
+
+It's also possible to set a class on a section. The highest section level that a CSS class can be applied on is the Level 1 (`==`) and all contained sections will inherit this class.
+
+
+[cols=2]
+|===
+^|Source ^| Output
+
+a|[source,asciidoc]
+----
+[.language-css]
+== CSS
+Everything enclosed in backticks in this
+section gets styled with correct CSS `@media
+print {code {text-shadow: none;}}`
+syntax highlighting.
+
+=== The `font-weight: bold;` attribute
+
+Always use `font-weight: bold;` to get your point across...
+----
+a|
+[.language-css]
+== CSS
+Everything enclosed in backticks in this
+section gets styled with correct CSS `@media
+print {code {text-shadow: none;}}`
+syntax highlighting.
+
+=== The `font-weight: bold;` attribute
+
+Always use `font-weight: bold;` to get your point across...
+
+|===
+
+Some custom CSS has been added to the Foundation stylesheet specifically for styling large sections in this manner. +
+One useful class is `[.todo]` which is demonstrated here;
+
+[cols=2]
+|===
+^|Source ^| Output
+
+a|
+[source,asciidoc]
+----
+[.todo]
+== Summary
+
+. First Item
+.. Second Item
+
+=== Feature A 	// <1>
+
+This feature needs documentation!
+
+== Overview 	// <2>
+
+Fully Documented, see...
+
+----
+<1> *Subsections* will inherit the CSS class specified
+<2> The next section of the same level or higher will not inherit this class. +
+In this example, the `Overview` section does not have the `todo` class.
+
+a|
+
+[.todo]
+== Summary
+
+. First Item
+.. Second Item
+
+=== Feature A
+
+This feature needs documentation!
+
+== Overview
+
+Fully Documented, see...
+|===
+
+
+== Delimited by Open Blocks
+
+CSS classes can span multiple blocks or paragraphs when delimited by two hyphens `--`:
+
+[cols=2]
+|===
+^|Source ^| Output
+
+a|
+
+[source,asciidoc]
+----
+[.red]
+--
+This paragraph is assigned the `red` CSS class.
+
+- [x] All these list items will be red, too!
+--
+
+The next paragraph will be styled as usual
+
+----
+a|
+[.red]
+--
+This paragraph is assigned the `red` CSS class.
+
+- [x] All these list items will be red, too!
+--
+The next paragraph will be styled as usual
+
+|===

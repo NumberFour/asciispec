@@ -1,0 +1,41 @@
+
+= Inline Macro
+
+Inline macros are similar to <<Block Macro,block macros>> except that the macro is replaced by inline content. +
+The syntax is different in that we use a single colon `:` instead of two `::`
+
+[cols=2]
+|===
+^| Source, ^| Output
+
+a|
+[source,asciidoc]
+----
+Insert images image:images/logo.png[Logo] in paragraphs.
+----
+a|
+
+Insert images image:images/logo.png[Logo] in paragraphs.
+|===
+Optional Attributes::
+In the above example, we have included some optional attributes in the square brackets that close the inline macro.
+The first attribute is the 'Alt Text' of the image, followed by the width and height of the image.
+The same method of passing attributes can be applied to the <<Block Macro,block macro>> above e.g. +
+
+`image::images/logo.png[Logo,15,18]`.
+
+== Footnotes
+
+Footnotes
+
+== Inline AsciiSpec Macros
+
+AsciiSpec provides it's own custom inline macros for a variety of purposes.
+Examples of these macros can be found in the <<AsciiSpec Cheat Sheet>> and comprehensive documentation on configuration is detailed in the https://numberfour.github.io/asciispec/spec.html[Specification].
+
+An example `config.adoc` file for configuring these processors is located here:
+
+https://github.com/NumberFour/asciispec/blob/master/docs/config.adoc
+
+NOTE: The functionality of these macros is not supported when viewing source `.adoc` files on GitHub.
+
