@@ -286,6 +286,12 @@ Another common block macro is the `image::[]` macro;
 .Block Macro
 ====
 
+{set:imagesdir:../images}
+
+ifdef::env-github[:imagesdir: ../images]
+
+
+
 [cols=2]
 |===
 ^|Source ^| Output
@@ -295,12 +301,12 @@ a|
 ----
 The following image is considered
 the last line of this pargraph.
-pass:[image::{find}../images/logo.png[]]
+pass:[image::logo.png[]]
 
 Leaving an empty line before and after the
 image block macro will create a block as expected:
 
-pass:[image::{find}../images/logo.png[]]
+pass:[image::logo.png[]]
 
 beginning of next block...
 ----
@@ -309,12 +315,12 @@ a|
 
 The following image macro is considered
 the last line of this pargraph.
-image::{find}../images/logo.png[]
+image::logo.png[]
 
 Leaving an empty line before and after
 the image block macro will create a block as expected:
 
-image::{find}../images/logo.png[]
+image::logo.png[]
 
 _beginning of next block..._
 
