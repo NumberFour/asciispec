@@ -1,6 +1,7 @@
+
 [.language-asciidoc]
 = Blocks
-
+:find:
 Usage::
 
 [source,asciidoc]
@@ -293,12 +294,12 @@ a|
 ----
 The following image is considered
 the last line of this pargraph.
-image::../images/logo.png[]
+image::{find}../images/logo.png[]
 
 Leaving an empty line before and after the
 image block macro will create a block as expected:
 
-image::../images/logo.png[]
+image::{find}../images/logo.png[]
 
 beginning of next block...
 ----
@@ -307,12 +308,12 @@ a|
 
 The following image macro is considered
 the last line of this pargraph.
-image::../images/logo.png[]
+image::{find}../images/logo.png[]
 
 Leaving an empty line before and after
 the image block macro will create a block as expected:
 
-image::../images/logo.png[]
+image::{find}../images/logo.png[]
 
 _beginning of next block..._
 
@@ -397,3 +398,9 @@ In the above table, formatting attributes *3+* are used. The +++^+++ caret symbo
 |===
 
 A full overview of the possibilities to create complex tables can be found in the http://www.asciidoctor.org/docs/user-manual/#tables[tables section] of the User Manual.
+
+== Custom AsciiSpec Blocks
+
+For examples of custom AsciiSpec blocks (definition and requirements), refer to the <<AsciiSpec Cheat Sheet>> and for comprehensive documentation, see the AsciiSpec processor file:///Users/brian.smith/N4repos/asciispec/docs/generated-docs/html/spec.html[Specification].
+
+

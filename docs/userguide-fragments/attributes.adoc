@@ -198,17 +198,18 @@ toc::[] // But will be rendered here instead
 
 A full table of the available built-in document attributes, see the http://asciidoctor.org/docs/user-manual/#builtin-attributes[Built-in Attributes] section in the AsciiDoctor User Manual.
 
+[.language-asciidoc]
 == Special Variables
 
 AsciiSpec introduces the concept of a special `\{find}` variable which is designed to resolve paths. The `\{find}` variable provides the means to specify files relative to the `.adoc` file no matter from where this `.adoc` file was included.
 
 *Usage:*
 
-[source,asciidoc]
-----
-:myImageVar: {find}path/to/picture.png
-image::{find}path/to/picture.png[]
-----
+
+`pass:[:myImageVar: {find}path/to/picture.png]`
+
+`pass:[image::{find}path/to/picture.png[]]`
+
 
 For complete documentation on this variable, see https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/special-variables.adoc[Special Variables].
 
