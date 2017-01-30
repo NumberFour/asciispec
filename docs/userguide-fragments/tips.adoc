@@ -262,13 +262,15 @@ cannot be used inline.
 [.language-asciidoc]
 == Media
 
-:imagesdir:
+{set:imagesdir:../images}
 
 [source,asciidoc]
 ----
 .A Small Logo
 image::{find}../images/logo.png[]
 ----
+
+{set:imagesdir:../images}
 
 .A Small Logo
 image::{find}../images/logo.png[]
