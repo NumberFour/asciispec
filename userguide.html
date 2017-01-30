@@ -61,7 +61,11 @@
 <ul class="sectlevel1">
 <li><a href="#_document_structure">1. Document Structure</a>
 <ul class="sectlevel2">
-<li><a href="#_sections">1.1. Sections</a></li>
+<li><a href="#_sections">1.1. Sections</a>
+<ul class="sectlevel3">
+<li><a href="#_styling_sections">1.1.1. Styling Sections</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_blocks">2. Blocks</a>
@@ -70,33 +74,43 @@
 <li><a href="#_delimiters">2.2. Delimiters</a></li>
 <li><a href="#_admonition_blocks">2.3. Admonition Blocks</a></li>
 <li><a href="#_nesting_blocks">2.4. Nesting Blocks</a></li>
-<li><a href="#_github_flavored_markdown">2.5. Github Flavored Markdown</a></li>
+<li><a href="#_block_macro">2.5. Block Macro</a></li>
+<li><a href="#_tables">2.6. Tables</a></li>
+<li><a href="#_custom_asciispec_blocks">2.7. Custom AsciiSpec Blocks</a></li>
 </ul>
 </li>
-<li><a href="#_css_classes">3. CSS classes</a>
+<li><a href="#_attributes_variables">3. Attributes &amp; Variables</a>
 <ul class="sectlevel2">
-<li><a href="#_inline_syntax_highlighting_html">3.1. Inline Syntax Highlighting (HTML)</a></li>
-<li><a href="#_applying_css_classes_to_sections">3.2. Applying CSS Classes to Sections</a></li>
-<li><a href="#_delimited_by_open_blocks">3.3. Delimited by Open Blocks</a></li>
+<li><a href="#_header_attributes">3.1. Header Attributes</a></li>
+<li><a href="#_special_variables">3.2. Special Variables</a>
+<ul class="sectlevel3">
+<li><a href="#_using_code_find_code_on_github">3.2.1. Using <code>{find}</code> on GitHub</a></li>
 </ul>
 </li>
-<li><a href="#_block_macro">4. Block Macro</a></li>
-<li><a href="#_inline_macro">5. Inline Macro</a></li>
-<li><a href="#_document_attributes_variables">6. Document Attributes &amp; Variables</a></li>
-<li><a href="#_header_attributes">7. Header Attributes</a></li>
-<li><a href="#_tables">8. Tables</a></li>
-<li><a href="#_rich_media">9. Rich Media</a>
-<ul class="sectlevel2">
-<li><a href="#_includes">9.1. Includes</a></li>
 </ul>
 </li>
-<li><a href="#_asciispec_cheat_sheet">10. AsciiSpec Cheat Sheet</a></li>
-<li><a href="#_tips">11. Tips</a>
+<li><a href="#_includes">4. Includes</a></li>
+<li><a href="#_css_classes">5. CSS classes</a>
 <ul class="sectlevel2">
-<li><a href="#_newlines_line_breaks">11.1. Newlines &amp; Line Breaks</a></li>
-<li><a href="#_escaping_characters_macros">11.2. Escaping Characters / Macros</a></li>
-<li><a href="#_icons">11.3. Icons</a></li>
-<li><a href="#_colons">11.4. Colons</a></li>
+<li><a href="#_inline_syntax_highlighting_html">5.1. Inline Syntax Highlighting (HTML)</a></li>
+<li><a href="#_applying_css_classes_to_sections">5.2. Applying CSS Classes to Sections</a></li>
+<li><a href="#_delimited_by_open_blocks">5.3. Delimited by Open Blocks</a></li>
+</ul>
+</li>
+<li><a href="#_asciispec_cheat_sheet">6. AsciiSpec Cheat Sheet</a></li>
+<li><a href="#_tips">7. Tips</a>
+<ul class="sectlevel2">
+<li><a href="#_newlines_line_breaks">7.1. Newlines &amp; Line Breaks</a></li>
+<li><a href="#_escaping_characters_macros">7.2. Escaping Characters / Macros</a></li>
+<li><a href="#_github_flavored_markdown">7.3. Github Flavored Markdown</a></li>
+<li><a href="#_literal_block_shorthand">7.4. Literal Block Shorthand</a></li>
+<li><a href="#_icons">7.5. Icons</a></li>
+<li><a href="#_colons">7.6. Colons</a></li>
+<li><a href="#_media">7.7. Media</a>
+<ul class="sectlevel3">
+<li><a href="#_audio">7.7.1. Audio</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_resources">Appendix A: Resources</a>
@@ -116,7 +130,7 @@
 </div>
 </div>
 </div>
-<div class="sect1 language-asciidoc">
+<div class="sect1">
 <h2 id="_document_structure"><a class="anchor" href="#_document_structure"></a><a class="link" href="#_document_structure">1. Document Structure</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -160,7 +174,7 @@ The following list is a simplified overview of the AsciiDoctor AST:</p>
 </tr>
 </table>
 </div>
-<div class="sect2">
+<div class="sect2 language-adoc">
 <h3 id="_sections"><a class="anchor" href="#_sections"></a><a class="link" href="#_sections">1.1. Sections</a></h3>
 <div class="paragraph">
 <p>Section levels are set using equals symbols (<code>= title</code>) followed by a space and the title. They must be preceded by an empty line:</p>
@@ -192,6 +206,59 @@ The following list is a simplified overview of the AsciiDoctor AST:</p>
 <pre class="highlight"><code class="language-adoc" data-lang="adoc">== Level 1 Section
 
 ==== Level 3 Section - Error!</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_styling_sections"><a class="anchor" href="#_styling_sections"></a><a class="link" href="#_styling_sections">1.1.1. Styling Sections</a></h4>
+<div class="paragraph">
+<p>The most useful styles that can be added to a section are <code>[bibliography]</code> and <code>[appendix]</code>.
+The next example demonstrates how to style a section as an Appendix:</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 1. Styling Sections</div>
+<div class="content">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Source</th>
+<th class="tableblock halign-center valign-top">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[appendix]
+== Common Terms
+
+The following is a list of common terms used...
+
+[appendix]
+== Comparison of Frameworks
+
+Let's examine the effectiveness of each...</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="sect2">
+<h3 id="_common_terms"><a class="anchor" href="#_common_terms"></a><a class="link" href="#_common_terms">Appendix A: Common Terms</a></h3>
+<div class="paragraph">
+<p>The following is a list of common terms used&#8230;&#8203;</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_comparison_of_frameworks"><a class="anchor" href="#_comparison_of_frameworks"></a><a class="link" href="#_comparison_of_frameworks">Appendix B: Comparison of Frameworks</a></h3>
+<div class="paragraph">
+<p>Let&#8217;s examine the effectiveness of each&#8230;&#8203;</p>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -333,7 +400,7 @@ This is convenient, but, of course, no positional attributes i.e. <code>[blockty
 </table>
 </div>
 <div class="exampleblock">
-<div class="title">Example 1. Set Block Type by Delmiter</div>
+<div class="title">Example 2. Set Block Type by Delmiter</div>
 <div class="content">
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -425,7 +492,7 @@ Don&#8217;t divide by zero. In ordinary arithmetic, the expression has no meanin
 <p>The standard block syntax can also be used if the admonition spans multiple paragraphs:</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 2. Delimited Admonition Block</div>
+<div class="title">Example 3. Delimited Admonition Block</div>
 <div class="content">
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -446,7 +513,8 @@ Don&#8217;t divide by zero. In ordinary arithmetic, the expression has no meanin
 --
 Don't divide by zero.
 
-In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..
+In ordinary arithmetic, the expression has no meaning,
+as there is no number which, multiplied by 0..
 --</code></pre>
 </div>
 </div></div></td>
@@ -461,7 +529,8 @@ In ordinary arithmetic, the expression has no meaning, as there is no number whi
 <p>Don&#8217;t divide by zero.</p>
 </div>
 <div class="paragraph">
-<p>In ordinary arithmetic, the expression has no meaning, as there is no number which, multiplied by 0..</p>
+<p>In ordinary arithmetic, the expression has no meaning,
+as there is no number which, multiplied by 0..</p>
 </div>
 </td>
 </tr>
@@ -506,7 +575,7 @@ my code() {
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div><div class="exampleblock">
-<div class="title">Example 3. Nested Listing</div>
+<div class="title">Example 4. Nested Listing</div>
 <div class="content">
 <div class="paragraph">
 <p>See the following code snippet, for example:</p>
@@ -570,10 +639,10 @@ See the following code snippet:
 </table>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div><div class="exampleblock">
-<div class="title">Example 3. Outer Example</div>
+<div class="title">Example 4. Outer Example</div>
 <div class="content">
 <div class="exampleblock">
-<div class="title">Example 4. Inner Example</div>
+<div class="title">Example 5. Inner Example</div>
 <div class="content">
 <div class="paragraph">
 <p>See the following code snippet:</p>
@@ -591,33 +660,510 @@ See the following code snippet:
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="_github_flavored_markdown"><a class="anchor" href="#_github_flavored_markdown"></a><a class="link" href="#_github_flavored_markdown">2.5. Github Flavored Markdown</a></h3>
+<div class="sect2 language-asciidoc">
+<h3 id="_block_macro"><a class="anchor" href="#_block_macro"></a><a class="link" href="#_block_macro">2.5. Block Macro</a></h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Usage: </dt>
+<dd>
+<p><code>macrotype::attributes[additional parameters]</code></p>
+</dd>
+</dl>
+</div>
 <div class="paragraph">
-<p>Some common <a href="https://guides.github.com/features/mastering-markdown/">Github Markdown</a> is also supported, such as backticks used for code listings:</p>
+<p>Block macros are used to create a block member in a document.<br>
+A block macro must be on a single line by itself with an empty line before and after.</p>
+</div>
+<div class="paragraph">
+<p>The <code>toc::[]</code> macro creates a table of contents block at that position in the document (to enable this feature, see <a href="#Document Attributes">setting document attributes</a> below).</p>
+</div>
+<div class="paragraph">
+<p>Another common block macro is the <code>image::[]</code> macro;</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 4. Block Macro</div>
+<div class="content">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Source</th>
+<th class="tableblock halign-center valign-top">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>The following image is considered
+the last line of this pargraph.
+image::{find}../images/logo.png[]
+
+Leaving an empty line before and after the
+image block macro will create a block as expected:
+
+image::{find}../images/logo.png[]
+
+beginning of next block...</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>The following image macro is considered
+the last line of this pargraph.
+image::../images/logo.png[]</p>
+</div>
+<div class="paragraph">
+<p>Leaving an empty line before and after
+the image block macro will create a block as expected:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/logo.png" alt="logo">
+</div>
+</div>
+<div class="paragraph">
+<p><em>beginning of next block&#8230;&#8203;</em></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2 language-asciidoc">
+<h3 id="_tables"><a class="anchor" href="#_tables"></a><a class="link" href="#_tables">2.6. Tables</a></h3>
+<div class="paragraph">
+<p>Table blocks are typically delimited by a character (usually a pipe <code>|</code>) and three equals symbols (<code>|===</code>);</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">```n4js
-export public class Fibonacci {
- public seq()  {
-
-      var arr = [];
-// etc...
-```</code></pre>
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">|===
+| Hello | world
+|===</code></pre>
 </div>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hello</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">world</p></td>
+</tr>
+</tbody>
+</table>
+<div class="exampleblock">
+<div class="title">Example 5. Tables and CSV</div>
+<div class="content">
+<div class="paragraph">
+<p>A comma can be used exactly as above to separate cells in the following way:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">,===
+, Hello , World
+,===</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A different character can be used to delimit cells by substituting the pipe with the separator you wish to use.</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre>[cols=6]
+,===
+include::music-collection.csv[]
+,===</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using commas in this way can provide an easy solution to including CSV values (<code>include::mydata.csv[]</code>) into a table without having to reformat the data:</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="paragraph">
+<p>Formatting tables:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">|===
+| Backend 3+^| Description
+
+| html (or html5) 3+| HTML5, styled with CSS3 (default).
+| pdf 3+| PDF, a portable document format. Requires the asciidoctor-pdf gem.
+|===</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the above table, formatting attributes <strong>3+</strong> are used. The ^ caret symbol is used to centre-align the text and <strong>3+</strong> indicates that the cell spans three consecutive columns.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Backend</th>
+<th class="tableblock halign-center valign-top" colspan="3">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">html (or html5)</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">HTML5, styled with CSS3 (default).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pdf</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">PDF, a portable document format. Requires the asciidoctor-pdf gem.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>A full overview of the possibilities to create complex tables can be found in the <a href="http://www.asciidoctor.org/docs/user-manual/#tables">tables section</a> of the User Manual.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_custom_asciispec_blocks"><a class="anchor" href="#_custom_asciispec_blocks"></a><a class="link" href="#_custom_asciispec_blocks">2.7. Custom AsciiSpec Blocks</a></h3>
+<div class="paragraph">
+<p>For examples of custom AsciiSpec blocks (definition and requirements), refer to the <a href="#_asciispec_cheat_sheet">AsciiSpec Cheat Sheet</a> and for comprehensive documentation, see the AsciiSpec processor <a href="https://numberfour.github.io/asciispec/spec.html">Specification</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1 language-asciidoc">
-<h2 id="_css_classes"><a class="anchor" href="#_css_classes"></a><a class="link" href="#_css_classes">3. CSS classes</a></h2>
+<h2 id="_attributes_variables"><a class="anchor" href="#_attributes_variables"></a><a class="link" href="#_attributes_variables">3. Attributes &amp; Variables</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>CSS classes can be added to blocks in Asciidoc by using the the 'dot-prefix' syntax <code>[.css-class]</code> on the preceding line or by using the <code>role=</code> attribute:</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Usage: </dt>
+</dl>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">:attribute: value
+
+{attribute}</code></pre>
+</div>
+</div>
+<div class="paragraph language-adoc">
+<p>Setting document attributes is done by adding an attribute entry line as <code>:attribute: value</code> above.
+Variables are declared using <code>{}</code> curly brackets and can be used for substitutions.
+Attributes can be inserted anywhere in a document unless they are specific <em>header attributes</em> as described in the next section.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 3. Applying CSS Classes</div>
+<div class="title">Example 6. Document Attributes</div>
+<div class="content">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 60%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Source</th>
+<th class="tableblock halign-center valign-top">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">:revnumber: 2.0 <i class="conum" data-value="1"></i><b>(1)</b>
+
+Last modified:: {docdatetime}  <i class="conum" data-value="2"></i><b>(2)</b>
+Revision:: {revnumber}.</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The revision number needs to be set, otherwise the attribute in the last line will be empty.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>{docdatetime}</code> is automatically set to last time the source document is modified</td>
+</tr>
+</table>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="dlist">
+<dl>
+<dt class="hdlist1">Last modified</dt>
+<dd>
+<p>2017-01-30 14:55:58 CET<br></p>
+</dd>
+<dt class="hdlist1">Revision</dt>
+<dd>
+<p>2.0.</p>
+</dd>
+</dl>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Document attributes can be evaluated using the <code>ifdef::[]</code> macro to create some interesting logic.
+The line below checks if the backend is <code>HTML5</code> and if it is, the content in the square brackets will be included:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">ifdef::backend-html5[This content is included in HTML5 output.]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Output:</strong></p>
+</div>
+<div class="paragraph">
+<p>This content is included in HTML5 output.</p>
+</div>
+</div>
+</div>
+<div class="exampleblock">
+<div class="title">Example 7. Evaluating Statements</div>
+<div class="content">
+<div class="paragraph">
+<p>The previous example shows how to include a single line of content into a document using an inline ifdef.<br>
+The same can also be done using blocks as follows:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Source</th>
+<th class="tableblock halign-center valign-top">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>ifeval::[2 + 2 != 5]
+
+- [x] Two plus two does not a five make.
+
+- [x] Rules of mathematics still behave as expected.
+
+endif::[]</pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> Two plus two does not a five make.</p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> Rules of mathematics still behave as expected.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="sidebarblock">
+<div class="content">
+<a href="https://github.com/NumberFour/asciispec/issues/13" title="AsciiSpec Bugs"><span class="image"><img src="../images/images/icons/github.png" alt=""></span>AS-13</a>
+</div>
+</div>
+</div>
+</div>
+<div class="exampleblock">
+<div class="title">Example 8. Setting Attributes Inline</div>
+<div class="content">
+<div class="paragraph">
+<p>The following two examples set an attribute using inline shorthand:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Source</th>
+<th class="tableblock halign-left valign-top">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">Attributes can be set inline too:
+We should {set:country:France} travel to {country}!</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Attributes can be set inline too:
+We should  travel to France!</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2 language-asciidoc">
+<h3 id="_header_attributes"><a class="anchor" href="#_header_attributes"></a><a class="link" href="#_header_attributes">3.1. Header Attributes</a></h3>
+<div class="paragraph">
+<p>A header starts with a document title followed by two optional lines defining author and revision information.<br>
+Finally, document-wide settings are defined by means of <em>header attributes</em> :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">= AsciiSpec Documentation
+Brian Thomas Smith
+First Draft
+:toc: right</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An example header attribute is <code>:toc:</code> which sets the position of the Table of Contents in the destination document.
+The above example right-aligns the Table of Contents.
+Another option is to enable the use of the <code>toc::[]</code> block macro to insert a Table of Contents block in any section:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">= AsciiSpec Documentation
+Brian Thomas Smith
+First Draft
+:toc: macro
+
+// A Table of Contents is rendered here by default
+
+== Section two
+
+toc::[] // But will be rendered here instead</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A full table of the available built-in document attributes, see the <a href="http://asciidoctor.org/docs/user-manual/#builtin-attributes">Built-in Attributes</a> section in the AsciiDoctor User Manual.</p>
+</div>
+</div>
+<div class="sect2 language-asciidoc">
+<h3 id="_special_variables"><a class="anchor" href="#_special_variables"></a><a class="link" href="#_special_variables">3.2. Special Variables</a></h3>
+<div class="paragraph">
+<p>AsciiSpec introduces the concept of a special <code>{find}</code> variable which is designed to resolve paths. The <code>{find}</code> variable provides the means to specify files relative to the <code>.adoc</code> file no matter from where this <code>.adoc</code> file was included.</p>
+</div>
+<div class="paragraph">
+<p><strong>Usage:</strong></p>
+</div>
+<div class="paragraph">
+<p><code>:myImageVar: {find}path/to/picture.png</code></p>
+</div>
+<div class="paragraph">
+<p><code>image::{find}path/to/picture.png[]</code></p>
+</div>
+<div class="paragraph">
+<p>For complete documentation on this variable, see <a href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/special-variables.adoc">Special Variables</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_using_code_find_code_on_github"><a class="anchor" href="#_using_code_find_code_on_github"></a><a class="link" href="#_using_code_find_code_on_github">3.2.1. Using <code>{find}</code> on GitHub</a></h4>
+<div class="paragraph">
+<p>The <code>{find}</code> variables <em>cannot be resolved by GitHub</em> and consequently, the adoc file might not be displayed correctly, especially with respect to images.</p>
+</div>
+<div class="paragraph">
+<p>As a solution, the adoc file should define the find variable to an empty string using the following line:</p>
+</div>
+<div class="paragraph">
+<p><code class="language-asciidoc">:find:</code></p>
+</div>
+<div class="paragraph">
+<p>Using the line above, the image include resolves to <code>image::picture.png[]</code>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_includes"><a class="anchor" href="#_includes"></a><a class="link" href="#_includes">4. Includes</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread language-asciidoc">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Source</th>
+<th class="tableblock halign-left valign-top">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Include</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>include::filename.adoc[leveloffset=offset]
+</code></p><p class="tableblock"><code>include::file2.adoc[tags=tagname,tagname2]
+</code></p><p class="tableblock"><code>include::file3.adoc[lines=ranges,indent=depth]</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>Includes referenced file(s) dictated by the comma-separated attributes.<br>
+The <code>{find}</code> variable may be used. See <a href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/special-variables.adoc">Special Variables</a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<th class="tableblock halign-left valign-top"><p class="tableblock">Include tags</p></th>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tag::tagname[]<br>
+</code></p><p class="tableblock"><code>end::tagname[]</code></p></td>
+<td class="tableblock halign-left valign-top"><div><div class="paragraph">
+<p>These tags should be added in commented lines in the <strong>included</strong> document.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>When including multiple documents that begin with <a href="#_sections">Level 0 Sections</a> (<code>= Section Title</code>), the following method can be used to ensure the sections are offset correctly;</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 9. Level Offset for Multiple Includes</div>
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-adoc" data-lang="adoc">:leveloffset: +1
+
+include::userguide-fragments/structure.adoc[]
+
+include::userguide-fragments/blocks.adoc[]
+
+// etc...
+
+:leveloffset: -1</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_css_classes"><a class="anchor" href="#_css_classes"></a><a class="link" href="#_css_classes">5. CSS classes</a></h2>
+<div class="sectionbody">
+<div class="paragraph language-adoc">
+<p>CSS classes can be added to blocks in Asciidoc by using the the 'dot-prefix' syntax <code>[.css-class]</code> on the preceding line or by using the <code>role=</code> attribute:</p>
+</div>
+<div class="exampleblock language-adoc">
+<div class="title">Example 10. Applying CSS Classes</div>
 <div class="content">
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -638,14 +1184,16 @@ export public class Fibonacci {
 This paragraph is assigned the `xx-large` CSS class.
 
 [role=blue]
-Lovely Calming Blue Text on every character of the brief, yet poignant sentence.</code></pre>
+Lovely Calming Blue Text on every character
+of the brief, yet poignant sentence.</code></pre>
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph xx-large">
 <p>This paragraph is assigned the <code>xx-large</code> CSS class.</p>
 </div>
 <div class="paragraph blue">
-<p>Lovely Calming Blue Text on every character of the brief, yet poignant sentence.</p>
+<p>Lovely Calming Blue Text on every character
+of the brief, yet poignant sentence.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -706,8 +1254,8 @@ Downloaded: https://repo.maven.apache....
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_inline_syntax_highlighting_html"><a class="anchor" href="#_inline_syntax_highlighting_html"></a><a class="link" href="#_inline_syntax_highlighting_html">3.1. Inline Syntax Highlighting (HTML)</a></h3>
+<div class="sect2 language-adoc">
+<h3 id="_inline_syntax_highlighting_html"><a class="anchor" href="#_inline_syntax_highlighting_html"></a><a class="link" href="#_inline_syntax_highlighting_html">5.1. Inline Syntax Highlighting (HTML)</a></h3>
 <div class="paragraph">
 <p>When using <a href="http://prismjs.com/">Prism.js</a> (AsciiSpec default), CSS classes can be set inline using <code>[language-name]</code> before the code.<br>
 Note that with blocks, a full stop before the CSS class is necessary, see <a href="#block-css-class">the above example</a>.</p>
@@ -722,7 +1270,7 @@ Note that with blocks, a full stop before the CSS class is necessary, see <a hre
 <p>The following example demonstrates some common cases of switching the language of inline syntax highlighting;</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 4. Change Inline Syntax Highlighting Language</div>
+<div class="title">Example 11. Change Inline Syntax Highlighting Language</div>
 <div class="content">
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -738,8 +1286,8 @@ Note that with blocks, a full stop before the CSS class is necessary, see <a hre
 <td class="tableblock halign-left valign-top"><div><div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">Check the [language-html]`&lt;a href="favicon.ico"/&gt;` favicon in the header. <i class="conum" data-value="1"></i><b>(1)</b>
-Set the following id: `&lt;div id="menubar"&gt;` on the menubar. +			  <i class="conum" data-value="2"></i><b>(2)</b>
-Inline AsciiDoc macros (`macro:[]`) are useful!							  <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+Set the following id: `&lt;div id="menubar"&gt;` on the menubar. + <i class="conum" data-value="2"></i><b>(2)</b>
+Inline AsciiDoc macros (`macro:[]`) are useful! <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div></div></td>
 </tr>
@@ -787,7 +1335,7 @@ There is a lot of AsciiDoc to highlight in this document and so the parent secti
 </div>
 </div>
 <div class="exampleblock">
-<div class="title">Example 5. Set Syntax Highlighter Language per Block</div>
+<div class="title">Example 12. Set Syntax Highlighter Language per Block</div>
 <div class="content">
 <div class="paragraph">
 <p>Instead of writing <code class="language-adoc">[language-html]</code> before every piece of inline code, a CSS class can be set to a paragraph or block.
@@ -818,8 +1366,8 @@ The next thing was the menubar: <code>&lt;div id="menubar"&gt;</code> which cont
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_applying_css_classes_to_sections"><a class="anchor" href="#_applying_css_classes_to_sections"></a><a class="link" href="#_applying_css_classes_to_sections">3.2. Applying CSS Classes to Sections</a></h3>
+<div class="sect2 language-adoc">
+<h3 id="_applying_css_classes_to_sections"><a class="anchor" href="#_applying_css_classes_to_sections"></a><a class="link" href="#_applying_css_classes_to_sections">5.2. Applying CSS Classes to Sections</a></h3>
 <div class="paragraph">
 <p>It&#8217;s also possible to set a class on a section. The highest section level that a CSS class can be applied on is the Level 1 (<code>==</code>) and all contained sections will inherit this class.</p>
 </div>
@@ -850,20 +1398,18 @@ syntax highlighting.
 Always use `font-weight: bold;` to get your point across...</code></pre>
 </div>
 </div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="sect1 language-css">
-<h2 id="_css"><a class="anchor" href="#_css"></a><a class="link" href="#_css">1. CSS</a></h2>
-<div class="sectionbody">
+<td class="tableblock halign-left valign-top"><div><div class="sect2 language-css">
+<h3 id="_css"><a class="anchor" href="#_css"></a><a class="link" href="#_css">1. CSS</a></h3>
 <div class="paragraph">
 <p>Everything enclosed in backticks in this
 section gets styled with correct CSS <code>@media
 print {code {text-shadow: none;}}</code>
 syntax highlighting.</p>
 </div>
-<div class="sect2">
-<h3 id="_the_code_font_weight_bold_code_attribute"><a class="anchor" href="#_the_code_font_weight_bold_code_attribute"></a><a class="link" href="#_the_code_font_weight_bold_code_attribute">1.1. The <code>font-weight: bold;</code> attribute</a></h3>
+<div class="sect3">
+<h4 id="_the_code_font_weight_bold_code_attribute"><a class="anchor" href="#_the_code_font_weight_bold_code_attribute"></a><a class="link" href="#_the_code_font_weight_bold_code_attribute">1.1. The <code>font-weight: bold;</code> attribute</a></h4>
 <div class="paragraph">
 <p>Always use <code>font-weight: bold;</code> to get your point across&#8230;&#8203;</p>
-</div>
 </div>
 </div>
 </div></div></td>
@@ -917,9 +1463,8 @@ In this example, the <code>Overview</code> section does not have the <code>todo<
 </tr>
 </table>
 </div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="sect1 todo">
-<h2 id="_summary"><a class="anchor" href="#_summary"></a><a class="link" href="#_summary">1. Summary</a></h2>
-<div class="sectionbody">
+<td class="tableblock halign-left valign-top"><div><div class="sect2 todo">
+<h3 id="_summary"><a class="anchor" href="#_summary"></a><a class="link" href="#_summary">1. Summary</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -934,20 +1479,17 @@ In this example, the <code>Overview</code> section does not have the <code>todo<
 </li>
 </ol>
 </div>
-<div class="sect2">
-<h3 id="_feature_a"><a class="anchor" href="#_feature_a"></a><a class="link" href="#_feature_a">1.1. Feature A</a></h3>
+<div class="sect3">
+<h4 id="_feature_a"><a class="anchor" href="#_feature_a"></a><a class="link" href="#_feature_a">1.1. Feature A</a></h4>
 <div class="paragraph">
 <p>This feature needs documentation!</p>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_overview"><a class="anchor" href="#_overview"></a><a class="link" href="#_overview">2. Overview</a></h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_overview"><a class="anchor" href="#_overview"></a><a class="link" href="#_overview">2. Overview</a></h3>
 <div class="paragraph">
 <p>Fully Documented, see&#8230;&#8203;</p>
-</div>
 </div>
 </div></div></td>
 </tr>
@@ -955,7 +1497,7 @@ In this example, the <code>Overview</code> section does not have the <code>todo<
 </table>
 </div>
 <div class="sect2">
-<h3 id="_delimited_by_open_blocks"><a class="anchor" href="#_delimited_by_open_blocks"></a><a class="link" href="#_delimited_by_open_blocks">3.3. Delimited by Open Blocks</a></h3>
+<h3 id="_delimited_by_open_blocks"><a class="anchor" href="#_delimited_by_open_blocks"></a><a class="link" href="#_delimited_by_open_blocks">5.3. Delimited by Open Blocks</a></h3>
 <div class="paragraph">
 <p>CSS classes can span multiple blocks or paragraphs when delimited by two hyphens <code>--</code>:</p>
 </div>
@@ -1007,514 +1549,8 @@ The next paragraph will be styled as usual</code></pre>
 </div>
 </div>
 </div>
-<div class="sect1 language-asciidoc">
-<h2 id="_block_macro"><a class="anchor" href="#_block_macro"></a><a class="link" href="#_block_macro">4. Block Macro</a></h2>
-<div class="sectionbody">
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Usage: </dt>
-<dd>
-<p><code>macroname::[parameters]</code></p>
-</dd>
-</dl>
-</div>
-<div class="paragraph">
-<p>Block macros are used to create a block member in a document.<br>
-A block macro must be on a single line by itself with an empty line before and after.</p>
-</div>
-<div class="paragraph">
-<p>The <code>toc::[]</code> macro creates a table of contents block at that position in the document (to enable this feature, see <a href="#Document Attributes">setting document attributes</a> below).</p>
-</div>
-<div class="paragraph">
-<p>Another common block macro is the <code>image::[]</code> macro;</p>
-</div>
-<div class="exampleblock">
-<div class="title">Example 6. Block Macro</div>
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-center valign-top">Source</th>
-<th class="tableblock halign-center valign-top">Output</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">The following image is considered the last line of this pargraph.
-image::images/logo.png[]
-
-Leaving an empty line before and after the image block macro will create a block as expected:
-
-image::images/logo.png[]
-
-beginning of next block...</code></pre>
-</div>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>The following image macro is considered the last line of this pargraph.
-image::images/logo.png[]</p>
-</div>
-<div class="paragraph">
-<p>Leaving an empty line before and after the image block macro
-will create a block as expected:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/logo.png" alt="logo">
-</div>
-</div>
-<div class="paragraph">
-<p><em>beginning of next block&#8230;&#8203;</em></p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1 language-asciidoc">
-<h2 id="_inline_macro"><a class="anchor" href="#_inline_macro"></a><a class="link" href="#_inline_macro">5. Inline Macro</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Inline macros are similar to <a href="#_block_macro">block macros</a> except that the macro is replaced by inline content.<br>
-The syntax is different in that we use a single colon <code>:</code> instead of two <code>::</code></p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-center valign-top">Source,</th>
-<th class="tableblock halign-center valign-top">Output</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">We can insert a logo image:images/logo.png[Logo] directly into our paragraph...</code></pre>
-</div>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>We can insert a logo <span class="image"><img src="images/logo.png" alt="Logo"></span> directly into our paragraph&#8230;&#8203;</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Optional Attributes</dt>
-<dd>
-<p>In the above example, we have included some optional attributes in the square brackets that close the inline macro.
-The first attribute is the 'Alt Text' of the image, followed by the width and height of the image.
-The same method of passing attributes can be applied to the <a href="#_block_macro">block macro</a> above e.g.<br></p>
-</dd>
-</dl>
-</div>
-<div class="paragraph">
-<p><code>image::images/logo.png[Logo,15,18]</code>.</p>
-</div>
-</div>
-</div>
-<div class="sect1 language-asciidoc">
-<h2 id="_document_attributes_variables"><a class="anchor" href="#_document_attributes_variables"></a><a class="link" href="#_document_attributes_variables">6. Document Attributes &amp; Variables</a></h2>
-<div class="sectionbody">
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Usage: </dt>
-</dl>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">:attribute: value
-
-{attribute}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Setting document attributes is done by adding an attribute entry line as <code>:attribute: value</code> above.
-Variables are declared using <code>{}</code> curly brackets and can be used for substitutions.
-Attributes can be inserted anywhere in a document unless they are specific <em>header attributes</em> as described in the next section.</p>
-</div>
-<div class="exampleblock">
-<div class="title">Example 7. Document Attributes</div>
-<div class="content">
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 60%;">
-<col style="width: 40%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-center valign-top">Source</th>
-<th class="tableblock halign-center valign-top">Output</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">:revnumber: 2.0 <i class="conum" data-value="1"></i><b>(1)</b>
-
-Last modified:: {docdatetime}  <i class="conum" data-value="2"></i><b>(2)</b>
-Revision:: {revnumber}.</code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The revision number needs to be set, otherwise the attribute in the last line will be empty.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td><code>{docdatetime}</code> is automatically set to last time the source document is modified</td>
-</tr>
-</table>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="dlist">
-<dl>
-<dt class="hdlist1">Last modified</dt>
-<dd>
-<p>2017-01-27 18:13:00 CET<br></p>
-</dd>
-<dt class="hdlist1">Revision</dt>
-<dd>
-<p>2.0.</p>
-</dd>
-</dl>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Document attributes can be evaluated using the <code>ifdef::[]</code> macro to create some interesting logic.
-The line below checks if the backend is <code>HTML5</code> and if it is, the content in the square brackets will be included:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">ifdef::backend-html5[This content is included in HTML5 output.]</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Output:</strong></p>
-</div>
-<div class="paragraph">
-<p>This content is included in HTML5 output.</p>
-</div>
-</div>
-</div>
-<div class="exampleblock">
-<div class="title">Example 8. Evaluating Statements</div>
-<div class="content">
-<div class="paragraph">
-<p>The previous example shows how to include a single line of content into a document using an inline ifdef.<br>
-The same can also be done using blocks as follows:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-center valign-top">Source</th>
-<th class="tableblock halign-center valign-top">Output</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>ifeval::[2 + 2 != 5]
-
-- [x] Two plus two does not a five make.
-
-- [x] Rules of mathematics still behave as expected.
-
-endif::[]</pre>
-</div>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="ulist checklist">
-<ul class="checklist">
-<li>
-<p><i class="fa fa-check-square-o"></i> Two plus two does not a five make.</p>
-</li>
-<li>
-<p><i class="fa fa-check-square-o"></i> Rules of mathematics still behave as expected.</p>
-</li>
-</ul>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-<div class="sidebarblock">
-<div class="content">
-<a href="https://github.com/NumberFour/asciispec/issues/13" title="AsciiSpec Bugs"><span class="image"><img src="images/icons/github.png" alt=""></span>AS-13</a>
-</div>
-</div>
-</div>
-</div>
-<div class="exampleblock">
-<div class="title">Example 9. Setting Attributes Inline</div>
-<div class="content">
-<div class="paragraph">
-<p>The following two examples set an attribute using inline shorthand:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Source</th>
-<th class="tableblock halign-left valign-top">Output</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">Attributes can be set inline too:
-We should {set:country:France} travel to {country}!</code></pre>
-</div>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Attributes can be set inline too:
-We should  travel to France!</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1 language-asciidoc">
-<h2 id="_header_attributes"><a class="anchor" href="#_header_attributes"></a><a class="link" href="#_header_attributes">7. Header Attributes</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>A header starts with a document title followed by two optional lines defining author and revision information.<br>
-Finally, document-wide settings are defined by means of <em>header attributes</em> :</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">= AsciiSpec Documentation
-Brian Thomas Smith
-First Draft
-:toc: right</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>An example header attribute is <code>:toc:</code> which sets the position of the Table of Contents in the destination document.
-The above example right-aligns the Table of Contents.
-Another option is to enable the use of the <code>toc::[]</code> block macro to insert a Table of Contents block in any section:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">= AsciiSpec Documentation
-Brian Thomas Smith
-First Draft
-:toc: macro
-
-// A Table of Contents is rendered here by default
-
-== Section two
-
-toc::[] // But will be rendered here instead</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A full table of the available built-in document attributes, see the <a href="http://asciidoctor.org/docs/user-manual/#builtin-attributes">Built-in Attributes</a> section in the AsciiDoctor User Manual.</p>
-</div>
-</div>
-</div>
-<div class="sect1 language-asciidoc">
-<h2 id="_tables"><a class="anchor" href="#_tables"></a><a class="link" href="#_tables">8. Tables</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Table blocks are typically delimited by a character (usually a pipe <code>|</code>) and three equals symbols (<code>|===</code>);</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">|===
-| Hello | world
-|===</code></pre>
-</div>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Hello</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">world</p></td>
-</tr>
-</tbody>
-</table>
-<div class="exampleblock">
-<div class="title">Example 10. Tables and CSV</div>
-<div class="content">
-<div class="paragraph">
-<p>A comma can be used exactly as above to separate cells in the following way:</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">,===
-, Hello , World
-,===</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A different character can be used to delimit cells by substituting the pipe with the separator you wish to use.</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div><div class="listingblock">
-<div class="content">
-<pre>[cols=6]
-,===
-include::music-collection.csv[]
-,===</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Using commas in this way can provide an easy solution to including CSV values (<code>include::mydata.csv[]</code>) into a table without having to reformat the data:</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="paragraph">
-<p>Formatting tables:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">[cols="h,d"]
-|===
-| Backend 3+h| Description
-
-| html (or html5) 3+| HTML5, styled with CSS3 (default).
-| pdf 3+| PDF, a portable document format. Requires the asciidoctor-pdf gem.
-|===</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In the above table, formatting attributes <strong>3+</strong> are used. The ^ caret symbol is used to centre-align the text and <strong>3+</strong> indicates that the cell spans three consecutive columns.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Backend</th>
-<th class="tableblock halign-center valign-top" colspan="3">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">html (or html5)</p></td>
-<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">HTML5, styled with CSS3 (default).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">pdf</p></td>
-<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">PDF, a portable document format. Requires the asciidoctor-pdf gem.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>A full overview of the possibilities to create complex tables can be found in the <a href="http://www.asciidoctor.org/docs/user-manual/#tables">tables section</a> of the User Manual.</p>
-</div>
-</div>
-</div>
-<div class="sect1 language-asciidoc">
-<h2 id="_rich_media"><a class="anchor" href="#_rich_media"></a><a class="link" href="#_rich_media">9. Rich Media</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Embed youtube content using the syntax <code>video::3NjQ9b3pgIg[youtube,800,600]</code></p>
-</div>
-<div class="videoblock">
-<div class="content">
-<iframe width="800" height="600" src="https://www.youtube.com/embed/3NjQ9b3pgIg?rel=0" frameborder="0" allowfullscreen></iframe>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">.A tiny screenshot
-image::images/logo.png[]</code></pre>
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/logo.png" alt="logo">
-</div>
-<div class="title">Figure 1. A tiny screenshot</div>
-</div>
-<div class="sect2 language-adoc">
-<h3 id="_includes"><a class="anchor" href="#_includes"></a><a class="link" href="#_includes">9.1. Includes</a></h3>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Source</th>
-<th class="tableblock halign-left valign-top">Output</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock">Include</p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>include::filename.adoc[leveloffset=offset]
-</code></p><p class="tableblock"><code>include::file2.adoc[tags=tagname,tagname2]
-</code></p><p class="tableblock"><code>include::file3.adoc[lines=ranges,indent=depth]</code></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>Includes referenced file(s) dictated by the comma-separated attributes.</p>
-</div></div></td>
-</tr>
-<tr>
-<th class="tableblock halign-left valign-top"><p class="tableblock">Include tags</p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tag::tagname[]<br>
-</code></p><p class="tableblock"><code>end::tagname[]</code></p></td>
-<td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>These tags should be added in commented lines in the <strong>included</strong> document.</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
 <div class="sect1">
-<h2 id="_asciispec_cheat_sheet"><a class="anchor" href="#_asciispec_cheat_sheet"></a><a class="link" href="#_asciispec_cheat_sheet">10. AsciiSpec Cheat Sheet</a></h2>
+<h2 id="_asciispec_cheat_sheet"><a class="anchor" href="#_asciispec_cheat_sheet"></a><a class="link" href="#_asciispec_cheat_sheet">6. AsciiSpec Cheat Sheet</a></h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all spread language-adoc">
 <colgroup>
@@ -1604,16 +1640,16 @@ My Super Requirement<br>
 </table>
 </div>
 </div>
-<div class="sect1 language-asciidoc">
-<h2 id="_tips"><a class="anchor" href="#_tips"></a><a class="link" href="#_tips">11. Tips</a></h2>
+<div class="sect1">
+<h2 id="_tips"><a class="anchor" href="#_tips"></a><a class="link" href="#_tips">7. Tips</a></h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_newlines_line_breaks"><a class="anchor" href="#_newlines_line_breaks"></a><a class="link" href="#_newlines_line_breaks">11.1. Newlines &amp; Line Breaks</a></h3>
+<div class="sect2 language-asciidoc">
+<h3 id="_newlines_line_breaks"><a class="anchor" href="#_newlines_line_breaks"></a><a class="link" href="#_newlines_line_breaks">7.1. Newlines &amp; Line Breaks</a></h3>
 <div class="paragraph">
 <p>New lines are consumed by AsciiDoctor, so in order to preserve line breaks, add a plus symbol at the end of a line or the <code>[%hardbreaks]</code> attribute;</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 11. Line Breaks</div>
+<div class="title">Example 13. Line Breaks</div>
 <div class="content">
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -1655,9 +1691,91 @@ to remake the world</p>
 </table>
 </div>
 </div>
+<div class="exampleblock">
+<div class="title">Example 14. List Continuation</div>
+<div class="content">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 60%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Source</th>
+<th class="tableblock halign-center valign-top">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">* First
+
+Item
+
+* Second
++ 	<i class="conum" data-value="1"></i><b>(1)</b>
+Item
+
+** And a source block:
++
+	<i class="conum" data-value="2"></i><b>(2)</b>
+[source,adoc]
+task:ASC-123[]</code></pre>
 </div>
-<div class="sect2">
-<h3 id="_escaping_characters_macros"><a class="anchor" href="#_escaping_characters_macros"></a><a class="link" href="#_escaping_characters_macros">11.2. Escaping Characters / Macros</a></h3>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Plus symbol continues the list indentation</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Empty lines are allowed.</td>
+</tr>
+</table>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="ulist">
+<ul>
+<li>
+<p>First</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Item</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Second</p>
+<div class="paragraph">
+<p>Item</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>And a source block:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-adoc" data-lang="adoc">task:ASC-123[]</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2 language-asciidoc">
+<h3 id="_escaping_characters_macros"><a class="anchor" href="#_escaping_characters_macros"></a><a class="link" href="#_escaping_characters_macros">7.2. Escaping Characters / Macros</a></h3>
 <div class="paragraph">
 <p>Escaping characters characters used for formatting can be done using plus symbols:</p>
 </div>
@@ -1771,12 +1889,95 @@ pass:[<strong>bold</strong>, <em>unde<strong>rsc</em>ores, double aster</strong>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_icons"><a class="anchor" href="#_icons"></a><a class="link" href="#_icons">11.3. Icons</a></h3>
+<h3 id="_github_flavored_markdown"><a class="anchor" href="#_github_flavored_markdown"></a><a class="link" href="#_github_flavored_markdown">7.3. Github Flavored Markdown</a></h3>
+<div class="paragraph">
+<p>Some common <a href="https://guides.github.com/features/mastering-markdown/">Github Markdown</a> is also supported, such as backticks used for code listings:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">```n4js
+export public class Fibonacci {
+ public seq()  {
+
+      var arr = [];
+// etc...
+```</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>List items and checkboxes are also supported:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div><div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-adoc" data-lang="adoc">- [x] Done!
+- [ ] Not Done!
+
+# This is an &lt;h1&gt; tag
+## This is an &lt;h2&gt; tag
+
+&gt; We're living the future so
+&gt; the present is our past.</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div><div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> Done!</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Not Done!</p>
+</li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="_this_is_an_h1_tag"><a class="anchor" href="#_this_is_an_h1_tag"></a><a class="link" href="#_this_is_an_h1_tag">1. This is an &lt;h1&gt; tag</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_this_is_an_h2_tag"><a class="anchor" href="#_this_is_an_h2_tag"></a><a class="link" href="#_this_is_an_h2_tag">1.1. This is an &lt;h2&gt; tag</a></h3>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>We&#8217;re living the future so
+the present is our past.</p>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_literal_block_shorthand"><a class="anchor" href="#_literal_block_shorthand"></a><a class="link" href="#_literal_block_shorthand">7.4. Literal Block Shorthand</a></h3>
+<div class="paragraph">
+<p>A shorthand method of creating a literal block is to add indentation to a block. Spaces or tabs on the first line will indent a block as a literal:</p>
+</div>
+<div class="paragraph">
+<p><strong>Source:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc"> A Single Space
+	Or a Tab will Suffice!</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_icons"><a class="anchor" href="#_icons"></a><a class="link" href="#_icons">7.5. Icons</a></h3>
 <div class="paragraph">
 <p>When the attribute <code>:icons: font</code> is set, <a href="http://fontawesome.io/cheatsheet/">Font Awesome</a> icons can be used inline using the macro <code>icon:name[]</code>.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 12. Inline Icons Example</div>
+<div class="title">Example 15. Inline Icons Example</div>
 <div class="content">
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -1793,16 +1994,16 @@ pass:[<strong>bold</strong>, <em>unde<strong>rsc</em>ores, double aster</strong>
 <tr>
 <td class="tableblock halign-left valign-top"><div><div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">This is forbidden! icon:fire[]
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">Be Careful! icon:fire[]
 
-The source is on icon:github[]</code></pre>
+The source is on icon:github[] GitHub!</code></pre>
 </div>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div><div class="paragraph">
-<p>This is forbidden! <span class="icon"><i class="fa fa-fire"></i></span></p>
+<p>Be Careful! <span class="icon"><i class="fa fa-fire"></i></span></p>
 </div>
 <div class="paragraph">
-<p>The source is on <span class="icon"><i class="fa fa-github"></i></span></p>
+<p>The source is on <span class="icon"><i class="fa fa-github"></i></span> GitHub!</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1810,8 +2011,8 @@ The source is on icon:github[]</code></pre>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_colons"><a class="anchor" href="#_colons"></a><a class="link" href="#_colons">11.4. Colons</a></h3>
+<div class="sect2 language-adoc">
+<h3 id="_colons"><a class="anchor" href="#_colons"></a><a class="link" href="#_colons">7.6. Colons</a></h3>
 <div class="paragraph">
 <p>When learning AsciiDoc syntax, it can be confusing whether to use one or two colons for certain macros.
 The rule is as follows:</p>
@@ -1851,6 +2052,41 @@ The rule is as follows:</p>
 </tbody>
 </table>
 </div>
+<div class="sect2 language-asciidoc">
+<h3 id="_media"><a class="anchor" href="#_media"></a><a class="link" href="#_media">7.7. Media</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-asciidoc" data-lang="asciidoc">.A Small Logo
+image::userguide-fragments/../images/logo.png[]</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/logo.png" alt="logo">
+</div>
+<div class="title">Figure 1. A Small Logo</div>
+</div>
+<div class="paragraph">
+<p>Embed youtube content using the syntax <code>video::3NjQ9b3pgIg[youtube,800,600]</code>.</p>
+</div>
+<div class="videoblock">
+<div class="content">
+<iframe width="800" height="600" src="https://www.youtube.com/embed/3NjQ9b3pgIg?rel=0" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
+<div class="paragraph">
+<p>Vimeo can be embedded using a similar syntax: <code>video::67480300[vimeo]</code></p>
+</div>
+<div class="sect3">
+<h4 id="_audio"><a class="anchor" href="#_audio"></a><a class="link" href="#_audio">7.7.1. Audio</a></h4>
+<div class="paragraph">
+<p>Audio files can also be added to a HTML document using the <code>audio</code> macro:</p>
+</div>
+<div class="paragraph">
+<p><code>audio::soundfiles/Cherry-MX-Blue.mp3[options="autoplay,loop"]</code></p>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1887,7 +2123,7 @@ The rule is as follows:</p>
 <div id="footer">
 <div id="footer-text">
 Version 2.0<br>
-Last updated 2017-01-27 18:13:00 CET
+Last updated 2017-01-30 14:55:58 CET
 </div>
 </div>
 <div class="social">

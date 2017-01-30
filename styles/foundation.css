@@ -23,7 +23,7 @@ body { margin: 0; }
 
 /* ========================================================================== Links ========================================================================== */
 /** Remove the gray background color from active links in IE 10. */
-a { background: transparent; }
+a { background: transparent; }215
 
 /** Address `outline` inconsistency between Chrome and other browsers. */
 a:focus { outline: thin dotted; }
@@ -212,7 +212,7 @@ strong, b { font-weight: bold; line-height: inherit; }
 
 small { font-size: 60%; line-height: inherit; }
 
-code { font-family: Consolas, "Liberation Mono", Courier, monospace; font-weight: bold; color: #7f0a0c; }
+code { font-family: Consolas, "Liberation Mono", Courier, monospace; font-weight: bold; color: black; border-radius: .3rem; background-color: #f5f2f0; }
 
 /* Lists */
 ul, ol, dl { font-size: 1em; line-height: 1.6; margin-bottom: 1.25em; list-style-position: outside; font-family: inherit; }
@@ -487,7 +487,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 .exampleblock > .content > :first-child { margin-top: 0; }
 .exampleblock > .content > :last-child { margin-bottom: 0; }
 
-.sidebarblock { position: absolute; border-style: solid; width: 90px; border-width: 1px; border-color: #d9d9d9; right: -90px; padding: .1rem; background: #f2f2f2; -webkit-border-radius: 0; border-radius: 0; text-align: left; border-radius: 5px;}
+.sidebarblock { position: absolute; border-style: solid; width: 90px; border-width: 1px; border-color: #d9d9d9; right: -90px; padding: .1rem; background: #f2f2f2; -webkit-border-radius: 0; border-radius: 0; text-align: left; border-radius: 5px;word-break: break-word;font-size: smaller;}
 .sidebarblock > :first-child { margin-top: 0; }
 .sidebarblock > :last-child { margin-bottom: 0; }
 .sidebarblock > .content > .title { color: #6999d6; margin-top: 0; }
