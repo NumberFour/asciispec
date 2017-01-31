@@ -1256,3 +1256,14 @@ div.openblock.definition {
 .hold::before {
   content: "ON HOLD";
 }
+
+
+@media print
+{    	
+	body.toc2 { left:0px; max-width: 100%; font-size: 80%;}
+	body.toc2.toc-left #toc.toc2, #tocbutton, #menubar, div.social {display: none;}
+	table, .definition, .requirement, .exampleblock, .listingblock{
+        page-break-inside: avoid;
+    }
+
+}
