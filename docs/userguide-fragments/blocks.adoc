@@ -280,7 +280,7 @@ Usage: ::
 Block macros are used to create a block member in a document. +
 A block macro must be on a single line by itself with an empty line before and after.
 
-The `toc::[]` macro creates a table of contents block at that position in the document (to enable this feature, see <<Document Attributes,setting document attributes>> below).
+The `toc::[]` macro creates a table of contents block at that position in the document (to enable this feature, see <<_attributes_variables,setting document attributes>> below).
 
 Another common block macro is the `image::[]` macro;
 

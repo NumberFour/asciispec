@@ -27,7 +27,7 @@ To convert this document with AsciiSpec, `cd` to the docs directory and run:
 asciispec userguide.adoc
 
 This will use the default HTML and create a file called `userguide.html`. +
-To convert to HTML using a different CSS stylesheet, <<Document Attributes & Variables,document attributes>> are passed using the `-a` flag:
+To convert to HTML using a different CSS stylesheet, https://numberfour.github.io/asciispec/userguide.html#_attributes_variables[document attributes] are passed using the `-a` flag:
 
 [source,bash]
 asciispec -a stylesheet=mystyle.css userguide.adoc
