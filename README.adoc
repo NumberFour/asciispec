@@ -35,6 +35,8 @@ mvn install:install-file -Dfile=./asciidoctorj-core/build/libs/asciidoctorj-1.6.
 
 Once installed, remember to update the project dependencies within your IDE. In Eclipse you can do this by right clicking on the project -> Maven -> Update Project. That should resolve dependency related errors.
 
+To import Asciispec into Eclipse, install the m2e plugin and use the project import wizard.
+
 == Build
 
 
