@@ -31,6 +31,11 @@ class SourceProcessorTest {
 				this.parameter = parameter;
 				this.result = result;
 			}
+			
+			def LinkedList<String> assertAndReturnResult(String str) {
+				assertEquals(parameter, str);
+				return result;
+			}
 
 			override toString() {
 				var StringBuilder str = new StringBuilder();
@@ -70,9 +75,7 @@ class SourceProcessorTest {
 			assertTrue("Unexpected call with parameter '" + str + "'", currentExpectation.hasNext());
 
 			val Expectation expectation = currentExpectation.next();
-			assertEquals(expectation.parameter, str);
-
-			return expectation.result;
+			return expectation.assertAndReturnResult(str);
 		}
 	}
 
