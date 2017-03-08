@@ -33,6 +33,14 @@ A documentation toolchain based on http://asciidoctor.org/[AsciiDoctor]. It impl
 [source,bash]
 mvn install:install-file -Dfile=./asciidoctorj-core/build/libs/asciidoctorj-1.6.0-SNAPSHOT.jar -DgroupId=org.asciidoctor -DartifactId=asciidoctorj -Dversion=1.6.0-SNAPSHOT -Dpackaging=jar
 
+* https://github.com/kduske-n4/snuggletex[snuggletex-1.2.3]. This is a custom fork of http://www2.ph.ed.ac.uk/snuggletex[SnuggleTex] that supports a few more LaTeX symbols in math expressions. Please follow these steps:
+.. Checkout https://github.com/kduske-n4/snuggletex[snuggletex-1.2.3] and switch to branch `enfore`.
+.. Navigate to the root of the snuggletex project and run `maven package`
+.. Install the dependency to your local maven repository by running
+
+[source,bash]
+mvn install:install-file -Dfile=./snuggletex-core/target/snuggletex-core-1.2.2.jar -DgroupId=uk.ac.ed.ph.snuggletex -DartifactId=snuggletex-core -Dversion=1.2.3-SNAPSHOT -Dpackaging=jar
+
 Once installed, remember to update the project dependencies within your IDE. In Eclipse you can do this by right clicking on the project -> Maven -> Update Project. That should resolve dependency related errors.
 
 To import Asciispec into Eclipse, install the m2e plugin and use the project import wizard.
