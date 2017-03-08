@@ -30,6 +30,10 @@ class SnuggleTest {
 		convertAndAssert(expected, "\\[" + expression + "\\]", session);
 	}
 
+	private def convertAndAssert(CharSequence expected, CharSequence expression) {
+		convertAndAssert(expected, expression, new SnuggleEngine().createSession());
+	}
+
 	private def convertAndAssert(CharSequence expected, CharSequence expression, SnuggleSession session) {
 		try {
 			val SnuggleInput input = new SnuggleInput(expression.toString());
@@ -51,7 +55,7 @@ class SnuggleTest {
 			
 			x = \testcmd
 			'''
-		)
+		);
 	}
 	
 	@Test
@@ -64,7 +68,7 @@ class SnuggleTest {
 			
 			x = \testcmd{y}
 			'''
-		)
+		);
 	}
 	
 	@Test
@@ -87,7 +91,7 @@ class SnuggleTest {
 			x = \testcmd{y}
 			''',
 			snapshot.createSession()
-		)
+		);
 		
 		convertAndAssertBlock(
 			'''
@@ -96,7 +100,7 @@ class SnuggleTest {
 			x = \testcmd{z}
 			''',
 			snapshot.createSession()
-		)
+		);
 	}
 	
 	@Test
@@ -121,6 +125,30 @@ class SnuggleTest {
 			\tee(x)
 			''',
 			snapshot.createSession()
-		)
+		);
+	}
+	
+	@Test
+	def void testNotExists() {
+		convertAndAssert(
+			'''<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>∄</mo></math>''', 
+			'''$\nexists$'''
+		);
+	}
+	
+	@Test
+	def void testNotLess() {
+		convertAndAssert(
+			'''<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>≮</mo></math>''', 
+			'''$\nless'''
+		);
+	}
+	
+	@Test
+	def void testNotGreater() {
+		convertAndAssert(
+			'''<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>≯</mo></math>''', 
+			'''$\ngtr'''
+		);
 	}
 }
