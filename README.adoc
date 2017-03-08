@@ -35,7 +35,7 @@ mvn install:install-file -Dfile=./asciidoctorj-core/build/libs/asciidoctorj-1.6.
 
 * https://github.com/kduske-n4/snuggletex[snuggletex-1.2.3]. This is a custom fork of http://www2.ph.ed.ac.uk/snuggletex[SnuggleTex] that supports a few more LaTeX symbols in math expressions. Please follow these steps:
 .. Checkout https://github.com/kduske-n4/snuggletex[snuggletex-1.2.3] and switch to branch `enfore`.
-.. Navigate to the root of the snuggletex project and run `maven package`
+.. Navigate to the root of the snuggletex project and run `mvn package`
 .. Install the dependency to your local maven repository by running
 
 [source,bash]
