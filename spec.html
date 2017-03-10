@@ -92,48 +92,44 @@
 <li><a href="#_inline_math_code_math_code_macro">7. Inline Math (<code>math</code>) Macro</a>
 <ul class="sectlevel2">
 <li><a href="#_configuration_2">7.1. Configuration</a></li>
+<li><a href="#_example">7.2. Example</a></li>
 </ul>
 </li>
-<li><a href="#_math_block_documentation">8. Math Block Documentation</a>
+<li><a href="#_math_include_documentation">8. Math Include Documentation</a></li>
+<li><a href="#_inline_source_link_code_srclnk_code_macro">9. Inline Source Link (<code>srclnk</code>) Macro</a>
 <ul class="sectlevel2">
-<li><a href="#_example">8.1. Example</a></li>
-</ul>
-</li>
-<li><a href="#_math_include_documentation">9. Math Include Documentation</a></li>
-<li><a href="#_inline_source_link_code_srclnk_code_macro">10. Inline Source Link (<code>srclnk</code>) Macro</a>
-<ul class="sectlevel2">
-<li><a href="#_configuration_3">10.1. Configuration</a>
+<li><a href="#_configuration_3">9.1. Configuration</a>
 <ul class="sectlevel3">
-<li><a href="#_generated_documentation_directory">10.1.1. Generated Documentation Directory</a></li>
-<li><a href="#_repository_location">10.1.2. Repository Location</a></li>
+<li><a href="#_generated_documentation_directory">9.1.1. Generated Documentation Directory</a></li>
+<li><a href="#_repository_location">9.1.2. Repository Location</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_extended_include_macro">11. Extended Include Macro</a>
+<li><a href="#_extended_include_macro">10. Extended Include Macro</a>
 <ul class="sectlevel2">
-<li><a href="#__code_find_code_include_macro">11.1. <code>{find}</code> Include Macro</a></li>
-<li><a href="#__code_api_code_include_macro">11.2. <code>{api}</code> Include Macro</a></li>
-<li><a href="#__code_src_code_include_macro">11.3. <code>{src}</code> Include Macro</a></li>
+<li><a href="#__code_find_code_include_macro">10.1. <code>{find}</code> Include Macro</a></li>
+<li><a href="#__code_api_code_include_macro">10.2. <code>{api}</code> Include Macro</a></li>
+<li><a href="#__code_src_code_include_macro">10.3. <code>{src}</code> Include Macro</a></li>
 </ul>
 </li>
-<li><a href="#_generated_anchors">12. Generated Anchors</a>
+<li><a href="#_generated_anchors">11. Generated Anchors</a>
 <ul class="sectlevel2">
-<li><a href="#_scope">12.1. Scope</a></li>
-<li><a href="#_general_structure">12.2. General Structure</a></li>
-<li><a href="#_special_characters">12.3. Special Characters</a></li>
+<li><a href="#_scope">11.1. Scope</a></li>
+<li><a href="#_general_structure">11.2. General Structure</a></li>
+<li><a href="#_special_characters">11.3. Special Characters</a></li>
 </ul>
 </li>
-<li><a href="#PQN-def">13. Partially Qualified Names (PQNs)</a></li>
-<li><a href="#_special_variables_in_asciispec">14. Special Variables in Asciispec</a>
+<li><a href="#PQN-def">12. Partially Qualified Names (PQNs)</a></li>
+<li><a href="#_special_variables_in_asciispec">13. Special Variables in Asciispec</a>
 <ul class="sectlevel2">
-<li><a href="#_the_code_find_code_variable">14.1. The <code>{find}</code> Variable</a>
+<li><a href="#_the_code_find_code_variable">13.1. The <code>{find}</code> Variable</a>
 <ul class="sectlevel3">
-<li><a href="#_introduction">14.1.1. Introduction</a></li>
-<li><a href="#_usage">14.1.2. Usage</a></li>
-<li><a href="#_semantics">14.1.3. Semantics</a></li>
-<li><a href="#_warnings_and_errors">14.1.4. Warnings and Errors</a></li>
-<li><a href="#_using_code_find_code_on_github">14.1.5. Using <code>{find}</code> on GitHub</a></li>
+<li><a href="#_introduction">13.1.1. Introduction</a></li>
+<li><a href="#_usage">13.1.2. Usage</a></li>
+<li><a href="#_semantics">13.1.3. Semantics</a></li>
+<li><a href="#_warnings_and_errors">13.1.4. Warnings and Errors</a></li>
+<li><a href="#_using_code_find_code_on_github">13.1.5. Using <code>{find}</code> on GitHub</a></li>
 </ul>
 </li>
 </ul>
@@ -857,12 +853,10 @@ and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>C</mi><mo>=</mo><mn>2</
 <div class="paragraph">
 <p>It is possible to use the <a href="#math-include">mathinclude::[]</a> macro to include custom LaTeX commands.</p>
 </div>
+<div class="paragraph">
+<p><mark>[Error: Unable to load LaTeX commands from 'math.tex': File commands could not be parsed.]</mark>
+= Math Block Documentation</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_math_block_documentation"><a class="anchor" href="#_math_block_documentation"></a><a class="link" href="#_math_block_documentation">8. Math Block Documentation</a></h2>
-<div class="sectionbody">
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Description</dt>
@@ -900,8 +894,9 @@ Some formulae.
 ++++</code></pre>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="_example"><a class="anchor" href="#_example"></a><a class="link" href="#_example">8.1. Example</a></h3>
+<h3 id="_example"><a class="anchor" href="#_example"></a><a class="link" href="#_example">7.2. Example</a></h3>
 <div class="paragraph">
 <p>The above source will create the following output:</p>
 </div>
@@ -917,7 +912,7 @@ Some formulae.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_math_include_documentation"><a class="anchor" href="#_math_include_documentation"></a><a class="link" href="#_math_include_documentation">9. Math Include Documentation</a></h2>
+<h2 id="_math_include_documentation"><a class="anchor" href="#_math_include_documentation"></a><a class="link" href="#_math_include_documentation">8. Math Include Documentation</a></h2>
 <div class="sectionbody">
 <div class="dlist">
 <dl>
@@ -948,7 +943,7 @@ Some maths that can use the LaTeX commands from the included file.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_inline_source_link_code_srclnk_code_macro"><a class="anchor" href="#_inline_source_link_code_srclnk_code_macro"></a><a class="link" href="#_inline_source_link_code_srclnk_code_macro">10. Inline Source Link (<code>srclnk</code>) Macro</a></h2>
+<h2 id="_inline_source_link_code_srclnk_code_macro"><a class="anchor" href="#_inline_source_link_code_srclnk_code_macro"></a><a class="link" href="#_inline_source_link_code_srclnk_code_macro">9. Inline Source Link (<code>srclnk</code>) Macro</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>An inline macro for generating hyperlinks from program elements such as types or methods to their source code in the code management system (i.e. GitHub).
@@ -1035,12 +1030,12 @@ The link&#8217;s label is the methods signature.</p>
 </tbody>
 </table>
 <div class="sect2 language-asciidoc">
-<h3 id="_configuration_3"><a class="anchor" href="#_configuration_3"></a><a class="link" href="#_configuration_3">10.1. Configuration</a></h3>
+<h3 id="_configuration_3"><a class="anchor" href="#_configuration_3"></a><a class="link" href="#_configuration_3">9.1. Configuration</a></h3>
 <div class="paragraph">
 <p>The following commands should be added to the <strong><a href="https://github.com/NumberFour/asciispec/blob/master/docs/examples/config.adoc">Configuration File</a></strong>:</p>
 </div>
 <div class="sect3">
-<h4 id="_generated_documentation_directory"><a class="anchor" href="#_generated_documentation_directory"></a><a class="link" href="#_generated_documentation_directory">10.1.1. Generated Documentation Directory</a></h4>
+<h4 id="_generated_documentation_directory"><a class="anchor" href="#_generated_documentation_directory"></a><a class="link" href="#_generated_documentation_directory">9.1.1. Generated Documentation Directory</a></h4>
 <div class="paragraph">
 <p>The <code>gen_adoc</code> variable specifies the directory which contains all generated documentation.
 It has to be set to parse the <code>index.idx</code> file and the generated adoc files, as well.</p>
@@ -1070,7 +1065,7 @@ Usually, its name is <code>gen_adoc</code>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_repository_location"><a class="anchor" href="#_repository_location"></a><a class="link" href="#_repository_location">10.1.2. Repository Location</a></h4>
+<h4 id="_repository_location"><a class="anchor" href="#_repository_location"></a><a class="link" href="#_repository_location">9.1.2. Repository Location</a></h4>
 <div class="paragraph">
 <p>The repository location command specifies one repository, that is, its name, description and url.
 The url is later used to generate complete urls which point to specific source code files of the repository.
@@ -1115,7 +1110,7 @@ It contains the placeholders <code>CMS_PATH</code> and <code>LINE_NO</code> whic
 </div>
 </div>
 <div class="sect1">
-<h2 id="_extended_include_macro"><a class="anchor" href="#_extended_include_macro"></a><a class="link" href="#_extended_include_macro">11. Extended Include Macro</a></h2>
+<h2 id="_extended_include_macro"><a class="anchor" href="#_extended_include_macro"></a><a class="link" href="#_extended_include_macro">10. Extended Include Macro</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Asciidoctor already provides an include macro which can still be used as usual.
@@ -1125,7 +1120,7 @@ Despite having some special handling when using specific variables, the usual be
 The following documentation focuses on the include macro with activated special handling.</p>
 </div>
 <div class="sect2 language-asciidoc">
-<h3 id="__code_find_code_include_macro"><a class="anchor" href="#__code_find_code_include_macro"></a><a class="link" href="#__code_find_code_include_macro">11.1. <code>{find}</code> Include Macro</a></h3>
+<h3 id="__code_find_code_include_macro"><a class="anchor" href="#__code_find_code_include_macro"></a><a class="link" href="#__code_find_code_include_macro">10.1. <code>{find}</code> Include Macro</a></h3>
 <div class="paragraph">
 <p>The general idea of the <code>{find}</code> variable in an include macro is to search the given file and replace the variable with the path to the matched file.
 In short, it behaves the same like the <code>{find}</code> variable (see: <a href="#_special_variables_in_asciispec">Special Variables - Find</a>), but enables two additional attributes which can be given in the squared brackets of the include macro.</p>
@@ -1211,7 +1206,7 @@ The attribute <code>ONCE</code> is the shorthand form for <code>TARGET_ONCE</cod
 </div>
 </div>
 <div class="sect2">
-<h3 id="__code_api_code_include_macro"><a class="anchor" href="#__code_api_code_include_macro"></a><a class="link" href="#__code_api_code_include_macro">11.2. <code>{api}</code> Include Macro</a></h3>
+<h3 id="__code_api_code_include_macro"><a class="anchor" href="#__code_api_code_include_macro"></a><a class="link" href="#__code_api_code_include_macro">10.2. <code>{api}</code> Include Macro</a></h3>
 <div class="paragraph">
 <p>Includes generated adoc (of StdLib API) text which previously was generated by the exporter wizard.
 Uses a PQN to reference the section which is to be included.
@@ -1219,7 +1214,7 @@ Uses a PQN to reference the section which is to be included.
 </div>
 </div>
 <div class="sect2">
-<h3 id="__code_src_code_include_macro"><a class="anchor" href="#__code_src_code_include_macro"></a><a class="link" href="#__code_src_code_include_macro">11.3. <code>{src}</code> Include Macro</a></h3>
+<h3 id="__code_src_code_include_macro"><a class="anchor" href="#__code_src_code_include_macro"></a><a class="link" href="#__code_src_code_include_macro">10.3. <code>{src}</code> Include Macro</a></h3>
 <div class="paragraph">
 <p>Includes source code (of StdLib API) from GitHub.
 Uses a PQN to reference the source element (e.g. a method) which is to be included.
@@ -1229,7 +1224,7 @@ Uses a PQN to reference the source element (e.g. a method) which is to be includ
 </div>
 </div>
 <div class="sect1">
-<h2 id="_generated_anchors"><a class="anchor" href="#_generated_anchors"></a><a class="link" href="#_generated_anchors">12. Generated Anchors</a></h2>
+<h2 id="_generated_anchors"><a class="anchor" href="#_generated_anchors"></a><a class="link" href="#_generated_anchors">11. Generated Anchors</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The N4JS-N4 project <strong>eu.numberfour.n4js.jsdoc2spec</strong> generates adoc files for the documentation.
@@ -1242,7 +1237,7 @@ This stdlib API document merges both generated and manual written documentation.
 Since these references rely on generated anchors used in the generated contents, an understanding of the structure of these anchors would be helpful.</p>
 </div>
 <div class="sect2 language-n4js">
-<h3 id="_scope"><a class="anchor" href="#_scope"></a><a class="link" href="#_scope">12.1. Scope</a></h3>
+<h3 id="_scope"><a class="anchor" href="#_scope"></a><a class="link" href="#_scope">11.1. Scope</a></h3>
 <div class="paragraph">
 <p>Anchors in the generated documentation are created for every property of a Class or Interface.
 For example, for every property such as datafields or methods, a section is generated that can be referenced using a generated anchor.
@@ -1278,7 +1273,7 @@ Other may be null, in that case, false is to be returned.</code></pre>
 </div>
 </div>
 <div class="sect2 language-n4js">
-<h3 id="_general_structure"><a class="anchor" href="#_general_structure"></a><a class="link" href="#_general_structure">12.2. General Structure</a></h3>
+<h3 id="_general_structure"><a class="anchor" href="#_general_structure"></a><a class="link" href="#_general_structure">11.2. General Structure</a></h3>
 <div class="paragraph">
 <p>Generally, the structure of anchors is similar to the structure of PQNs.
 However, the anchor structure is shorter and of defined length:</p>
@@ -1400,7 +1395,7 @@ Since these strings contains characters which are permitted in adoc anchors, the
 </div>
 </div>
 <div class="sect2 language-n4js">
-<h3 id="_special_characters"><a class="anchor" href="#_special_characters"></a><a class="link" href="#_special_characters">12.3. Special Characters</a></h3>
+<h3 id="_special_characters"><a class="anchor" href="#_special_characters"></a><a class="link" href="#_special_characters">11.3. Special Characters</a></h3>
 <div class="paragraph">
 <p>Special characters occur in anchors since property names can contain any characters.
 In addition, the iterator symbol, which is used for iterators, often contains the <code>#</code> symbol.
@@ -1413,7 +1408,7 @@ The resulting complete anchor is: <code>sec:spec_n4.lang.Delegate.Delegate.:23it
 </div>
 </div>
 <div class="sect1">
-<h2 id="PQN-def"><a class="anchor" href="#PQN-def"></a><a class="link" href="#PQN-def">13. Partially Qualified Names (PQNs)</a></h2>
+<h2 id="PQN-def"><a class="anchor" href="#PQN-def"></a><a class="link" href="#PQN-def">12. Partially Qualified Names (PQNs)</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>A partially qualified name is a string that uniquely identifies a source element.
@@ -1488,16 +1483,16 @@ This means that both, DELIMITER and CLASSIFIER_NAME, must be specified when the 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_special_variables_in_asciispec"><a class="anchor" href="#_special_variables_in_asciispec"></a><a class="link" href="#_special_variables_in_asciispec">14. Special Variables in Asciispec</a></h2>
+<h2 id="_special_variables_in_asciispec"><a class="anchor" href="#_special_variables_in_asciispec"></a><a class="link" href="#_special_variables_in_asciispec">13. Special Variables in Asciispec</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Some macros of Asciispec implement special variables which can be used by AsciiDoc authors.
 These special variables are readonly.</p>
 </div>
 <div class="sect2 language-asciidoc">
-<h3 id="_the_code_find_code_variable"><a class="anchor" href="#_the_code_find_code_variable"></a><a class="link" href="#_the_code_find_code_variable">14.1. The <code>{find}</code> Variable</a></h3>
+<h3 id="_the_code_find_code_variable"><a class="anchor" href="#_the_code_find_code_variable"></a><a class="link" href="#_the_code_find_code_variable">13.1. The <code>{find}</code> Variable</a></h3>
 <div class="sect3">
-<h4 id="_introduction"><a class="anchor" href="#_introduction"></a><a class="link" href="#_introduction">14.1.1. Introduction</a></h4>
+<h4 id="_introduction"><a class="anchor" href="#_introduction"></a><a class="link" href="#_introduction">13.1.1. Introduction</a></h4>
 <div class="paragraph">
 <p>There exist several use cases for adoc documents.
 They are used to generate html pdf files, or they are written manually.
@@ -1515,7 +1510,7 @@ This path can not always be found when the doc.adoc file is translated both on i
 </div>
 </div>
 <div class="sect3">
-<h4 id="_usage"><a class="anchor" href="#_usage"></a><a class="link" href="#_usage">14.1.2. Usage</a></h4>
+<h4 id="_usage"><a class="anchor" href="#_usage"></a><a class="link" href="#_usage">13.1.2. Usage</a></h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Syntax: </dt>
@@ -1538,7 +1533,7 @@ This path can not always be found when the doc.adoc file is translated both on i
 </div>
 </div>
 <div class="sect3">
-<h4 id="_semantics"><a class="anchor" href="#_semantics"></a><a class="link" href="#_semantics">14.1.3. Semantics</a></h4>
+<h4 id="_semantics"><a class="anchor" href="#_semantics"></a><a class="link" href="#_semantics">13.1.3. Semantics</a></h4>
 <div class="paragraph">
 <p>During the preprocessing of the document, all find variables are replaced by a concrete path to the targeted file.
 This path is relative to the directory of the base/master file.
@@ -1571,7 +1566,7 @@ The search algorithm never descends into a subfolder (except if the target file 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_warnings_and_errors"><a class="anchor" href="#_warnings_and_errors"></a><a class="link" href="#_warnings_and_errors">14.1.4. Warnings and Errors</a></h4>
+<h4 id="_warnings_and_errors"><a class="anchor" href="#_warnings_and_errors"></a><a class="link" href="#_warnings_and_errors">13.1.4. Warnings and Errors</a></h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1587,7 +1582,7 @@ The first match is chosen to be included.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_using_code_find_code_on_github"><a class="anchor" href="#_using_code_find_code_on_github"></a><a class="link" href="#_using_code_find_code_on_github">14.1.5. Using <code>{find}</code> on GitHub</a></h4>
+<h4 id="_using_code_find_code_on_github"><a class="anchor" href="#_using_code_find_code_on_github"></a><a class="link" href="#_using_code_find_code_on_github">13.1.5. Using <code>{find}</code> on GitHub</a></h4>
 <div class="paragraph">
 <p>In case the an adoc file should also be able to be viewed on GitHub directly, the <code>{find}</code> variables can not be resolved by GitHub.
 Consequently, the adoc file might not be displayed correctly, especially with respect to images included via <code>image::</code>{find}<code>picture.png[]</code>.</p>
@@ -1618,7 +1613,7 @@ Consequently, the adoc file might not be displayed correctly, especially with re
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-03 11:45:27 CET
+Last updated 2017-03-10 14:00:26 CET
 </div>
 </div>
 <div class="social">
