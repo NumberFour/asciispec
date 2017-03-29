@@ -16,6 +16,11 @@ package eu.numberfour.asciispec.sourceindex;
 public class AlreadyInsertedException extends Exception {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param msg
 	 *            message string
 	 */

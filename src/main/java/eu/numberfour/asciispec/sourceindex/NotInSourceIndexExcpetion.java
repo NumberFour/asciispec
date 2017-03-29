@@ -15,6 +15,11 @@ package eu.numberfour.asciispec.sourceindex;
  */
 public class NotInSourceIndexExcpetion extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	NotInSourceIndexExcpetion() {
 	}
 

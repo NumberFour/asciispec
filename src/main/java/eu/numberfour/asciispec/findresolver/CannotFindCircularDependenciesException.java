@@ -20,6 +20,10 @@ import eu.numberfour.asciispec.processors.ResolveIncludeProcessor;
  * message (see {@link #getMessage()}) indicates, which file was included without the find-macro.
  */
 public class CannotFindCircularDependenciesException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final File notInStackFile;
 
 	/**

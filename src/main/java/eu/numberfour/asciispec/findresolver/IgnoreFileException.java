@@ -14,5 +14,10 @@ package eu.numberfour.asciispec.findresolver;
  * Is used when a file should not be included.
  */
 public class IgnoreFileException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//
 }

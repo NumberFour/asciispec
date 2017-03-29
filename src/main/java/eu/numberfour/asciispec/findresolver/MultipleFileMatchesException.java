@@ -19,6 +19,10 @@ import java.util.List;
  * this exception.
  */
 public class MultipleFileMatchesException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/** File name that returns multiple matches */
 	public final String fileName;
 	/** Contains all matched files */

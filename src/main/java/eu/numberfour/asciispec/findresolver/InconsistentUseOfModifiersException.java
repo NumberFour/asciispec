@@ -18,6 +18,10 @@ import eu.numberfour.asciispec.processors.FindResolveIncludeProcessor;
  */
 public class InconsistentUseOfModifiersException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/** In case the file has the {@link FindResolveIncludeProcessor#MODIFIER_FILE_ONCE} modifier */
 	public final IgnoreFileException ignoreFileException;
 	/** The name of the modifier */

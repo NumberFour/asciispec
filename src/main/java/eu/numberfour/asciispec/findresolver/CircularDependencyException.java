@@ -22,6 +22,10 @@ import java.util.Stack;
  * message (see {@link #getMessage()}) indicates the dependency cycle listing all files on stack.
  */
 public class CircularDependencyException extends Exception {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final List<String> locations = new LinkedList<>();
 
 	/**

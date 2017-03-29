@@ -15,6 +15,11 @@ package eu.numberfour.asciispec;
  */
 public class ParseException extends Exception {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Creates a new exception for an error at the given line and column and with the given message.
 	 *
 	 * @param line
