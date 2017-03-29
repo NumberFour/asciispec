@@ -12,9 +12,9 @@ import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
 /**
  * This processor resolves all <code>{find}</code> directives in the document.<br/>
  * <b>Note</b>: <code>{find}</code> directives within include macros are resolved in the
- * {@link FindResolveIncludeProcessor}.
+ * {@link ResolveFindIncludeProcessor}.
  */
-public class FindResolverInlinePreprocessor extends MacroPreprocessor<String> {
+public class ResolveFindInlinePreprocessor extends MacroPreprocessor<String> {
 	static final String FIND_VARIABLE_KEY = "find";
 	static final String FIND_VARIABLE_MATCHER = "\\{(?<VAR>find)\\}[\\s]*(?<FILE>[^\\[\\s]*)";
 

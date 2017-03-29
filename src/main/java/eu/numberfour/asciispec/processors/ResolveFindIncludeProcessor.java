@@ -23,8 +23,6 @@ import eu.numberfour.asciispec.findresolver.FileStackHelper;
 import eu.numberfour.asciispec.findresolver.IgnoreFileException;
 import eu.numberfour.asciispec.findresolver.InconsistentUseOfModifiersException;
 import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
-import eu.numberfour.asciispec.issue.IssueAcceptor;
-import eu.numberfour.asciispec.issue.IssuePrinter;
 
 /**
  * This {@link IncludeProcessor} evaluates all include macros in the document which start with <code>{find}</code>. The
@@ -33,7 +31,7 @@ import eu.numberfour.asciispec.issue.IssuePrinter;
  * TARGET_ONCE - (Alias: ONCE) The file with the specified target is included at the first site where the target was
  * specified.</li> issued.
  */
-public class FindResolveIncludeProcessor extends ResolveIncludeProcessor {
+public class ResolveFindIncludeProcessor extends ResolveIncludeProcessor {
 
 	/** Given file is included only once */
 	private static final String MODIFIER_TARGET_ONCE = "TARGET_ONCE";
@@ -41,14 +39,13 @@ public class FindResolveIncludeProcessor extends ResolveIncludeProcessor {
 
 	private static final String INCLUDE_FIND = "find";
 
-	private final IssueAcceptor issueAcceptor = new IssuePrinter();
 	private final Set<String> allIncludedTargets = new HashSet<>();
 	private final Set<String> targets = new HashSet<>();
 
 	/**
 	 * Constructor
 	 */
-	public FindResolveIncludeProcessor() {
+	public ResolveFindIncludeProcessor() {
 		super(INCLUDE_FIND);
 	}
 
@@ -63,7 +60,7 @@ public class FindResolveIncludeProcessor extends ResolveIncludeProcessor {
 			try {
 				checkTargetOnce(attributes, target);
 			} catch (InconsistentUseOfModifiersException e) {
-				issueAcceptor.warn(document, e.getMessage(), containerFile, getCurrentLine());
+				warn(document, e.getMessage());
 				if (e.hasIgnoreFileException())
 					throw e.ignoreFileException;
 			}
@@ -72,7 +69,7 @@ public class FindResolveIncludeProcessor extends ResolveIncludeProcessor {
 			allIncludedTargets.add(target);
 			return file;
 		} catch (MultipleFileMatchesException e) {
-			issueAcceptor.warn(document, e.getMessage(), containerFile, getCurrentLine());
+			warn(document, e.getMessage());
 			File file = e.matches.get(0);
 			return file;
 		}

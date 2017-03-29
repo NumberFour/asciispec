@@ -41,11 +41,12 @@ import eu.numberfour.asciispec.issue.IssuePrinter;
  * FILE_ONCE - Only the first match of the given file is included. A warning is issued in case there are more than one
  * matches.
  */
-abstract public class ResolveIncludeProcessor extends IncludeProcessor {
+abstract public class ResolveIncludeProcessor extends IncludeProcessor implements ErrorAndWarningsMixin {
 	/** Given file is included only once */
 	public static final String MODIFIER_FILE_ONCE = "FILE_ONCE";
 
-	private final String adocVariableNameInBrackets;
+	private final String adocVarName;
+	private final String adocVarNameInBrackets;
 	private PreprocessorReader reader;
 	private final FileStackHelper fileSearcher = new FileStackHelper();
 	private final Set<File> includedOnceOnlyFiles = new HashSet<>();
@@ -84,17 +85,18 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor {
 	/**
 	 * Constructor
 	 *
-	 * @param adocVariableName
+	 * @param adocVarName
 	 *            name of the adoc variable at the begin of the target
 	 */
-	public ResolveIncludeProcessor(String adocVariableName) {
-		this.adocVariableNameInBrackets = "{" + adocVariableName + "}";
-		FileAwarePreprocessor.enableIncludeVariable(adocVariableName);
+	public ResolveIncludeProcessor(String adocVarName) {
+		this.adocVarName = adocVarName;
+		this.adocVarNameInBrackets = "{" + adocVarName + "}";
+		FileAwarePreprocessor.enableIncludeVariable(adocVarName);
 	}
 
 	@Override
 	public boolean handles(String target) {
-		return target.startsWith(adocVariableNameInBrackets);
+		return target.startsWith(adocVarNameInBrackets);
 	}
 
 	@Override
@@ -109,17 +111,18 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor {
 		} catch (CannotFindCircularDependenciesException e) {
 			File file = e.getFileNotInStack();
 			if (!noCircularExceptionsCausingFiles.contains(file))
-				issueAcceptor.warn(document, e.getMessage(), containerFile, getCurrentLine());
+				warn(document, e.getMessage());
 			noCircularExceptionsCausingFiles.add(file);
 		}
 
-		target = target.substring(adocVariableNameInBrackets.length());
+		target = target.substring(adocVarNameInBrackets.length());
 		searchAndInlineFile(document, attributes, containerFile, target);
 	}
 
 	/**
 	 * Returns the file of the current adoc line
 	 */
+	@Override
 	public File getCurrentFile() {
 		return new File(reader.getFile());
 	}
@@ -127,15 +130,24 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor {
 	/**
 	 * Returns the current line in the document
 	 */
-	protected int getCurrentLine() {
+	@Override
+	public int getCurrentLine() {
 		return reader.getLineNumber() - 1;
+	}
+
+	/**
+	 * Returns the issuAcceptor
+	 */
+	@Override
+	public IssueAcceptor getIssueAcceptor() {
+		return issueAcceptor;
 	}
 
 	private void searchAndInlineFile(Document document, Map<String, Object> attributes,
 			File containerFile, String target) {
 
-		String curLine = "include::{find}" + target + "[" + getAttributeString(attributes) + "]";
-		String newLine = "include..\\{find\\}" + target + "[" + getAttributeString(attributes) + "]";
+		String curLine = "include::" + adocVarNameInBrackets + target + "[" + getAttributeString(attributes) + "]";
+		String newLine = "include++::++{" + adocVarName + "\\}" + target + "[" + getAttributeString(attributes) + "]";
 
 		try {
 			File file = findFile(document, attributes, containerFile, target, curLine);
@@ -144,7 +156,7 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor {
 			try {
 				checkInconsistentUseOfFileOnceModifier(attributes, file);
 			} catch (InconsistentUseOfModifiersException e) {
-				issueAcceptor.warn(document, e.getMessage(), containerFile, getCurrentLine());
+				warn(document, e.getMessage());
 				if (e.hasIgnoreFileException())
 					throw e.ignoreFileException;
 			}
@@ -157,11 +169,10 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor {
 
 			fileSearcher.moveToNewLocation(file);
 		} catch (FileNotFoundException e) {
-			issueAcceptor.error(document, e.getMessage(), containerFile, getCurrentLine());
-			newLine += " Error: " + e.getMessage();
+			newLine += error(document, e.getMessage());
 		} catch (CircularDependencyException e) {
-			issueAcceptor.error(document, e.getMessage(), containerFile, getCurrentLine());
-			newLine += " Error: Circular dependencies detected. More information in console output.";
+			newLine += error(document, e.getMessage(),
+					"Circular dependencies detected. More information in console output.");
 		} catch (IgnoreFileException e) {
 			return;
 		}
@@ -246,5 +257,10 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor {
 				newAttrs.put(entry.getKey(), entry.getValue());
 		}
 		return newAttrs;
+	}
+
+	@Override
+	public String error(Document document, String consoleMsg, String inlineMsg) {
+		return ErrorAndWarningsMixin.super.error(document, consoleMsg, inlineMsg);
 	}
 }

@@ -25,7 +25,8 @@ abstract public class FileAwarePreprocessor extends Preprocessor implements Supp
 	private static final List<String> INCLUDE_VARIABLES = new LinkedList<>();
 
 	/**
-	 * Enables the use of <code>{find}</code> variables within include directives like:<br/>
+	 * Enables the use of e.g. <code>{find}</code> variables within include
+	 * directives like:<br/>
 	 * <br/>
 	 * <code>include::{find}myfile.adoc[]</code>
 	 */
