@@ -1,13 +1,17 @@
 package eu.numberfour.asciispec.processors;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.asciidoctor.ast.Document;
 
 import eu.numberfour.asciispec.ParseException;
+import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
 import eu.numberfour.asciispec.processors.SourceLinkPreprocessor.IndexEntryInfoResult;
 import eu.numberfour.asciispec.sourceindex.AmbiguousPQNExcpetion;
 import eu.numberfour.asciispec.sourceindex.IndexEntryInfo;
@@ -20,11 +24,14 @@ public interface SourceLinkMixin {
 	static class SourceLinkMixinState {
 		private SourceIndexDatabase database;
 		private boolean configuring = true;
+		private File indexFile;
 	}
 
 	SourceLinkMixinState getState();
 
-	File getIndexFile();
+	String getIndexFileName();
+
+	File searchFile(String fileName) throws FileNotFoundException, MultipleFileMatchesException;
 
 	String error(Document document, String consoleMsg, String inlineMsg);
 
@@ -48,12 +55,27 @@ public interface SourceLinkMixin {
 			return;
 
 		getState().database = new SourceIndexDatabase();
-		getState().database = IndexFileParser.parse(getIndexFile().toPath(), StandardCharsets.UTF_8);
+		getState().database = IndexFileParser.parse(getState().indexFile.toPath(), StandardCharsets.UTF_8);
 		getState().configuring = false;
 	}
 
 	default boolean isConfiguring() {
 		return getState().configuring;
+	}
+
+	default void setIndexFile(String genadocdirName) throws FileNotFoundException, MultipleFileMatchesException {
+		if (!isConfiguring()) {
+			throw new IllegalArgumentException(
+					"The configuration must not be specified after first use of the source link macro");
+		}
+
+		Path genadocDir = Paths.get(genadocdirName, getIndexFileName());
+		String indexFileName = genadocDir.toString();
+		getState().indexFile = searchFile(indexFileName);
+	}
+
+	default File getIndexFile() {
+		return getState().indexFile;
 	}
 
 	default IndexEntryInfoResult getIndexEntryInfo(SourceLinkMixinState state, Document document, String macro,

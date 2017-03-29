@@ -2,10 +2,6 @@ package eu.numberfour.asciispec.processors;
 
 import static eu.numberfour.asciispec.AdocUtils.transformVariable;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -13,7 +9,6 @@ import java.util.regex.Pattern;
 
 import org.asciidoctor.ast.Document;
 
-import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
 import eu.numberfour.asciispec.sourceindex.IndexEntryInfo;
 
 /**
@@ -65,10 +60,8 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 			":" + REPOS_CONFIG_VAR + ":\\s*(?<NAME>.*?)\\s*;\\s*(?<DESCR>.*?)\\s*;\\s*(?<HTML>https?:\\/\\/[\\S]+)");
 	private static final Pattern GEN_ADOC_VAR_PATTERN = Pattern.compile(":" + GEN_ADOC_DIR_VAR + ":\\s*(?<GENADOC>.*)");
 
-	// TODO: make this configurable
 	private final Map<String, RepositoryConfig> repoConfigs = new HashMap<>();
 	private final SourceLinkMixinState state = new SourceLinkMixinState();
-	private File indexFile;
 
 	@Override
 	protected boolean init(Document document) {
@@ -85,7 +78,8 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 		switch (key) {
 		case GEN_ADOC_DIR_VAR:
 			try {
-				newline = setIndexFile(fullMatch, matcher);
+				String genadocDirname = matcher.group("GENADOC");
+				setIndexFile(genadocDirname);
 			} catch (Exception e) {
 				String message = e.getMessage() + " Check variable '" + GEN_ADOC_DIR_VAR + "'";
 				newline += message;
@@ -108,21 +102,6 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 		return newline;
 	}
 
-	private String setIndexFile(String line, Matcher cgfGenAdoc)
-			throws FileNotFoundException, MultipleFileMatchesException {
-
-		if (!isConfiguring()) {
-			throw new IllegalArgumentException(
-					"The configuration must not be specified after first use of the source link macro");
-		}
-
-		String genadoc = cgfGenAdoc.group("GENADOC");
-		Path genadocDir = Paths.get(genadoc, INDEX_FILE_NAME);
-		String indexFileName = genadocDir.toString();
-		indexFile = super.searchFile(indexFileName);
-		return line;
-	}
-
 	private String addRepoConfig(String line, Matcher cgfReposVar) {
 		String newLine = line;
 		String name = cgfReposVar.group("NAME");
@@ -134,7 +113,7 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 	}
 
 	private void checkConfig() {
-		if (indexFile == null)
+		if (getIndexFile() == null)
 			throw new IllegalArgumentException("Missing config variable '" + GEN_ADOC_DIR_VAR + "'.");
 
 		if (repoConfigs.isEmpty())
@@ -207,8 +186,8 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 	}
 
 	@Override
-	public File getIndexFile() {
-		return indexFile;
+	public String getIndexFileName() {
+		return INDEX_FILE_NAME;
 	}
 
 }

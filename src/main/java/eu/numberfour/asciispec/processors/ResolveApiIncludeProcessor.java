@@ -71,4 +71,10 @@ public class ResolveApiIncludeProcessor extends ResolveIncludeProcessor implemen
 		return indexFile;
 	}
 
+	@Override
+	public String getIndexFileName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

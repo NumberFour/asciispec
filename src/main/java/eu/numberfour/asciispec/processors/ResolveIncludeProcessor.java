@@ -30,6 +30,7 @@ import eu.numberfour.asciispec.findresolver.CircularDependencyException;
 import eu.numberfour.asciispec.findresolver.FileStackHelper;
 import eu.numberfour.asciispec.findresolver.IgnoreFileException;
 import eu.numberfour.asciispec.findresolver.InconsistentUseOfModifiersException;
+import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
 import eu.numberfour.asciispec.issue.IssueAcceptor;
 import eu.numberfour.asciispec.issue.IssuePrinter;
 
@@ -259,6 +260,17 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 		return newAttrs;
 	}
 
+	/**
+	 * Searches for the given file in the directory of the current file.
+	 */
+	public File searchFile(String fileName) throws FileNotFoundException, MultipleFileMatchesException {
+		return fileSearcher.search(fileName, getBasePath());
+	}
+
+	/*
+	 * The specification of the origin of the error method is necessary, since
+	 * other mixin interfaces reuse this method.
+	 */
 	@Override
 	public String error(Document document, String consoleMsg, String inlineMsg) {
 		return ErrorAndWarningsMixin.super.error(document, consoleMsg, inlineMsg);

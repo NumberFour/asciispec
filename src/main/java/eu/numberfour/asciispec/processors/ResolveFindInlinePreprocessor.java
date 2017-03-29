@@ -42,14 +42,12 @@ public class ResolveFindInlinePreprocessor extends MacroPreprocessor<String> {
 		try {
 			findFile = super.searchFile(fileName);
 		} catch (FileNotFoundException e) {
-			issueAcceptor.error(document, e.getMessage(), super.getCurrentFile(), getCurrentLine());
-			baseRelFileName += " Error: " + e.getMessage();
+			baseRelFileName += error(document, e.getMessage());
 		} catch (MultipleFileMatchesException e) {
-			issueAcceptor.warn(document, e.getMessage(), super.getCurrentFile(), getCurrentLine());
+			warn(document, e.getMessage());
 			findFile = e.matches.get(0);
 		} catch (Exception e) {
-			issueAcceptor.error(document, e.getMessage(), super.getCurrentFile(), getCurrentLine());
-			baseRelFileName += " Error: " + e.getMessage();
+			baseRelFileName += error(document, e.getMessage());
 		}
 
 		if (findFile != null)

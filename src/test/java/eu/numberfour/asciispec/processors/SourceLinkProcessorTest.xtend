@@ -56,7 +56,7 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 
 	@Test
 	public def void testMissingConfiguration() {
-    		convertStringAndAssertErrorContains(
+				convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
 			<p>This is a source link: srclnk:getStartWithQuantityFormat[My SRC link]</p>
@@ -71,7 +71,7 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 
 	@Test
 	public def void testMissingConfigurationA() {
-    		convertStringAndAssertErrorContains(
+				convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
 			<p>This is a source link: srclnk:getStartWithQuantityFormat[My SRC link]</p>
@@ -87,7 +87,7 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 
 	@Test
 	public def void testMissingConfigurationB() {
-    		convertStringAndAssertErrorContains(
+				convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
 			<p>This is a source link: srclnk:getStartWithQuantityFormat[My SRC link]</p>
@@ -103,10 +103,10 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 
 	@Test
 	public def void testMissingRepository() {
-    		convertStringAndAssertErrorContains(
+				convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
-			<p>This is a source link: <a href="" title="stdlib_api:packages:eu.numberfour.stdlib.format.api:src/n4js/n4/format/DurationFormats:TimeSpanPatternFormat@getStartWithQuantityFormat" target="_blank">My SRC link [Error: Missing config for repository 'stdlib_api']</a></p>
+			<p>This is a source link: <a href="" title="stdlib_api:packages:eu.numberfour.stdlib.format.api:src/n4js/n4/format/DurationFormats:TimeSpanPatternFormat@getStartWithQuantityFormat" target="_blank">My SRC link #[Error: Missing config for repository 'stdlib_api']# </a></p>
 			</div>''',
 			'''
 			«configA»
@@ -114,7 +114,7 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 
 			This is a source link: srclnk:getStartWithQuantityFormat[My SRC link]
 			''',
-			"asciispec  : ERROR: Missing srclnk repository configuration found for : 'stdlib_api'."
+			"asciispec  : ERROR: line 7: Missing srclnk repository configuration found for: 'stdlib_api'."
 		);
 	}
 
@@ -352,14 +352,14 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 		convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
-			<p>This is a source link: <a href="" title="DateXY@withStyle" target="_blank">My SRC link [Error: PQN not found]</a></p>
+			<p>This is a source link: <a href="" title="DateXY@withStyle" target="_blank">My SRC link #[Error: PQN not found]# </a></p>
 			</div>''',
 			'''
 			«config»
 
 			This is a source link: srclnk:DateXY@withStyle[My SRC link]
 			''',
-			"asciispec  : ERROR: srclnk PQN not found: 'DateXY@withStyle'.");
+			"asciispec  : ERROR: line 8: PQN not found: 'DateXY@withStyle'.");
 	}
 
 	@Test
@@ -367,14 +367,14 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 		convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
-			<p>This is a source link: <a href="" title="withPattern" target="_blank">My SRC link [Error: Ambiguous PQN]</a></p>
+			<p>This is a source link: <a href="" title="withPattern" target="_blank">My SRC link #[Error: Ambiguous PQN]# </a></p>
 			</div>''',
 			'''
 			«config»
 
 			This is a source link: srclnk:withPattern[My SRC link]
 			''',
-			"asciispec  : ERROR: srclnk PQN is ambiguous: 'withPattern'.");
+			"asciispec  : ERROR: line 8: PQN is ambiguous: 'withPattern'.");
 	}
 
 	@Test
@@ -382,13 +382,13 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 		convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
-			<p>This is a source link: <a href="" title="@withPattern" target="_blank">My SRC link [Error: Ambiguous PQN]</a></p>
+			<p>This is a source link: <a href="" title="@withPattern" target="_blank">My SRC link #[Error: Ambiguous PQN]# </a></p>
 			</div>''',
 			'''
 			«config»
 
 			This is a source link: srclnk:@withPattern[My SRC link]
 			''',
-			"asciispec  : ERROR: srclnk PQN is ambiguous: '@withPattern'.");
+			"asciispec  : ERROR: line 8: PQN is ambiguous: '@withPattern'.");
 	}
 }

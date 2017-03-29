@@ -258,7 +258,7 @@ public class CitationProcessor extends MacroPreprocessor<String> {
 	private void loadDatabase(Document document) {
 		Path bibTexFilePath = getActualPath(document, configuredBibTexFile);
 		if (bibTexFilePath == null) {
-			issueAcceptor.error(document, "Could not find a BibTeX file");
+			error(document, "Could not find a BibTeX file");
 			databaseState = DatabaseState.FAILED;
 		} else {
 			doLoadBibTexDatabase(document, bibTexFilePath);
@@ -295,7 +295,7 @@ public class CitationProcessor extends MacroPreprocessor<String> {
 			Files.walkFileTree(searchPath, finder);
 			return finder.getBestMatch();
 		} catch (IOException e) {
-			issueAcceptor.error(document, "Error while searching for BibTeX file: " + e.getMessage());
+			error(document, "Error while searching for BibTeX file: " + e.getMessage());
 			return null;
 		}
 	}
@@ -358,15 +358,15 @@ public class CitationProcessor extends MacroPreprocessor<String> {
 			database = new BibliographyDatabase(entries);
 			databaseState = DatabaseState.LOADED;
 		} catch (NoSuchFileException e) {
-			issueAcceptor.error(document,
+			error(document,
 					"Failed to load citation database: File '" + absPath + "' not found: " + e.getMessage());
 			databaseState = DatabaseState.FAILED;
 		} catch (IOException e) {
-			issueAcceptor.error(document,
+			error(document,
 					"Failed to load citation database: File '" + absPath + "' could not be opened: " + e.getMessage());
 			databaseState = DatabaseState.FAILED;
 		} catch (ParseException e) {
-			issueAcceptor.error(document,
+			error(document,
 					"Failed to load citation database: File '" + absPath + "' could not be parsed: " + e.getMessage());
 			databaseState = DatabaseState.FAILED;
 		}

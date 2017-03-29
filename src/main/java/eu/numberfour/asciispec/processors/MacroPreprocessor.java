@@ -94,6 +94,10 @@ abstract public class MacroPreprocessor<T> extends FileAwarePreprocessor impleme
 		return issueAcceptor;
 	}
 
+	/*
+	 * The specification of the origin of the error method is necessary, since
+	 * other mixin interfaces reuse this method.
+	 */
 	@Override
 	public String error(Document document, String consoleMsg, String inlineMsg) {
 		return ErrorAndWarningsMixin.super.error(document, consoleMsg, inlineMsg);
