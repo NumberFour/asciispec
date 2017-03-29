@@ -12,7 +12,6 @@ import org.asciidoctor.ast.Document;
 
 import eu.numberfour.asciispec.ParseException;
 import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
-import eu.numberfour.asciispec.processors.SourceLinkPreprocessor.IndexEntryInfoResult;
 import eu.numberfour.asciispec.sourceindex.AmbiguousPQNExcpetion;
 import eu.numberfour.asciispec.sourceindex.IndexEntryInfo;
 import eu.numberfour.asciispec.sourceindex.IndexFileParser;
@@ -24,7 +23,22 @@ public interface SourceLinkMixin {
 	static class SourceLinkMixinState {
 		private SourceIndexDatabase database;
 		private boolean configuring = true;
+		private Path gendirPath;
 		private File indexFile;
+	}
+
+	public static class IndexEntryInfoResult {
+		public final IndexEntryInfo iei;
+		public final String url;
+		public final String completePQN;
+		public final String errorMsg;
+
+		IndexEntryInfoResult(IndexEntryInfo iei, String url, String completePQN, String errorMsg) {
+			this.iei = iei;
+			this.url = url;
+			this.completePQN = completePQN;
+			this.errorMsg = errorMsg;
+		}
 	}
 
 	SourceLinkMixinState getState();
@@ -69,16 +83,20 @@ public interface SourceLinkMixin {
 					"The configuration must not be specified after first use of the source link macro");
 		}
 
-		Path genadocDir = Paths.get(genadocdirName, getIndexFileName());
-		String indexFileName = genadocDir.toString();
+		getState().gendirPath = Paths.get(genadocdirName, getIndexFileName());
+		String indexFileName = getState().gendirPath.toString();
 		getState().indexFile = searchFile(indexFileName);
+	}
+
+	default Path getGendirPath() {
+		return getState().gendirPath;
 	}
 
 	default File getIndexFile() {
 		return getState().indexFile;
 	}
 
-	default IndexEntryInfoResult getIndexEntryInfo(SourceLinkMixinState state, Document document, String macro,
+	default IndexEntryInfoResult getIndexEntryInfo(Document document, String macro,
 			String givenPQN) {
 
 		IndexEntryInfo iei = null;
@@ -89,7 +107,7 @@ public interface SourceLinkMixin {
 		List<String> pqnStack = null;
 		try {
 			pqnStack = PQNParser.parse(givenPQN);
-			iei = state.database.getEntry(pqnStack);
+			iei = getState().database.getEntry(pqnStack);
 
 		} catch (ParseException e) {
 			errorMsg += error(document, "macro could not be parsed: '" + macro + "'.", "PQN malformed");

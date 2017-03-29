@@ -57,9 +57,10 @@ public class IndexEntryInfo implements Comparable<IndexEntryInfo> {
 	final public String[] adocPathElems;
 	/** The {@link #adocPathElems} as one String. */
 	final public String adocPath;
-
-	final int offsetStart;
-	final int offsetEnd;
+	/** The start of the API in the module adoc file */
+	final public int offsetStart;
+	/** The end of the API in the module adoc file */
+	final public int offsetEnd;
 
 	private String toString;
 	/**

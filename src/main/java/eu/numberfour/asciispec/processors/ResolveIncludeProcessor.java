@@ -31,6 +31,7 @@ import eu.numberfour.asciispec.findresolver.FileStackHelper;
 import eu.numberfour.asciispec.findresolver.IgnoreFileException;
 import eu.numberfour.asciispec.findresolver.InconsistentUseOfModifiersException;
 import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
+import eu.numberfour.asciispec.findresolver.ReplaceIncludeMacroException;
 import eu.numberfour.asciispec.issue.IssueAcceptor;
 import eu.numberfour.asciispec.issue.IssuePrinter;
 
@@ -72,7 +73,7 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 	 */
 	abstract protected File findFile(Document document, Map<String, Object> attributes, File containerFile,
 			String target, String line)
-			throws FileNotFoundException, IgnoreFileException;
+			throws FileNotFoundException, IgnoreFileException, ReplaceIncludeMacroException;
 
 	/**
 	 * Removes all resolver specific attributes
@@ -174,6 +175,8 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 		} catch (CircularDependencyException e) {
 			newLine += error(document, e.getMessage(),
 					"Circular dependencies detected. More information in console output.");
+		} catch (ReplaceIncludeMacroException e) {
+			newLine = e.replacementString;
 		} catch (IgnoreFileException e) {
 			return;
 		}

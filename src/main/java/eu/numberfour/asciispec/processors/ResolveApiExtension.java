@@ -10,5 +10,6 @@ public class ResolveApiExtension extends ProcessorExtension {
 	@Override
 	protected void register(JavaExtensionRegistry registry) {
 		registry.includeProcessor(ResolveApiIncludeProcessor.class);
+		registry.preprocessor(ResolveApiInlinePreprocessor.class);
 	}
 }

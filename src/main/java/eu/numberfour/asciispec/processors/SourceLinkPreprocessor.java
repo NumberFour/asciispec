@@ -127,7 +127,7 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 		String markup1 = matcher.group("MARKUP1");
 		String markup2 = matcher.group("MARKUP2");
 
-		IndexEntryInfoResult ieir = getIndexEntryInfo(state, document, srclnk, pqn);
+		IndexEntryInfoResult ieir = getIndexEntryInfo(document, srclnk, pqn);
 
 		String repoName = "";
 		String url = ieir.url;
@@ -158,20 +158,6 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 				+ "\", window=\"_blank\"]";
 
 		return link;
-	}
-
-	static class IndexEntryInfoResult {
-		final IndexEntryInfo iei;
-		final String url;
-		final String completePQN;
-		final String errorMsg;
-
-		IndexEntryInfoResult(IndexEntryInfo iei, String url, String completePQN, String errorMsg) {
-			this.iei = iei;
-			this.url = url;
-			this.completePQN = completePQN;
-			this.errorMsg = errorMsg;
-		}
 	}
 
 	private String getCMSUrl(RepositoryConfig repoConfig, String relUrl, int lineNumber) {

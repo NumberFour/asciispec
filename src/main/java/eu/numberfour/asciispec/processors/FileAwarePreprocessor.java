@@ -29,6 +29,9 @@ abstract public class FileAwarePreprocessor extends Preprocessor implements Supp
 	 * directives like:<br/>
 	 * <br/>
 	 * <code>include::{find}myfile.adoc[]</code>
+	 * <p>
+	 * Otherwise, the line that contains this (unknown) variable is dropped by
+	 * Asciidoctor!
 	 */
 	public static void enableIncludeVariable(String varName) {
 		INCLUDE_VARIABLES.add(varName);
