@@ -106,7 +106,8 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 				convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
-			<p>This is a source link: <a href="" title="stdlib_api:packages:eu.numberfour.stdlib.format.api:src/n4js/n4/format/DurationFormats:TimeSpanPatternFormat@getStartWithQuantityFormat" target="_blank">My SRC link #[Error: Missing config for repository 'stdlib_api']# </a></p>
+			<p>This is a source link: srclnk:getStartWithQuantityFormat[My SRC link]
+			<mark>[Error: Missing config for repository 'stdlib_api']</mark></p>
 			</div>''',
 			'''
 			«configA»
@@ -352,7 +353,8 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 		convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
-			<p>This is a source link: <a href="" title="DateXY@withStyle" target="_blank">My SRC link #[Error: PQN not found]# </a></p>
+			<p>This is a source link: srclnk:DateXY@withStyle[My SRC link]
+			<mark>[Error: PQN not found]</mark></p>
 			</div>''',
 			'''
 			«config»
@@ -367,7 +369,8 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 		convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
-			<p>This is a source link: <a href="" title="withPattern" target="_blank">My SRC link #[Error: Ambiguous PQN]# </a></p>
+			<p>This is a source link: srclnk:withPattern[My SRC link]
+			<mark>[Error: Ambiguous PQN]</mark></p>
 			</div>''',
 			'''
 			«config»
@@ -382,7 +385,8 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 		convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
-			<p>This is a source link: <a href="" title="@withPattern" target="_blank">My SRC link #[Error: Ambiguous PQN]# </a></p>
+			<p>This is a source link: srclnk:@withPattern[My SRC link]
+			<mark>[Error: Ambiguous PQN]</mark></p>
 			</div>''',
 			'''
 			«config»

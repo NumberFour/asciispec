@@ -41,9 +41,11 @@ public interface SourceLinkMixin {
 		}
 	}
 
-	SourceLinkMixinState getState();
+	/** File name of the index file */
+	String INDEX_FILE_NAME = "index.idx";
+	String GEN_DIR_MODULES = "modules";
 
-	String getIndexFileName();
+	SourceLinkMixinState getState();
 
 	File searchFile(String fileName) throws FileNotFoundException, MultipleFileMatchesException;
 
@@ -83,13 +85,17 @@ public interface SourceLinkMixin {
 					"The configuration must not be specified after first use of the source link macro");
 		}
 
-		getState().gendirPath = Paths.get(genadocdirName, getIndexFileName());
-		String indexFileName = getState().gendirPath.toString();
+		getState().gendirPath = Paths.get(genadocdirName);
+		String indexFileName = getState().gendirPath.resolve(INDEX_FILE_NAME).toString();
 		getState().indexFile = searchFile(indexFileName);
 	}
 
 	default Path getGendirPath() {
 		return getState().gendirPath;
+	}
+
+	default Path getGendirModules() {
+		return getGendirPath().resolve(GEN_DIR_MODULES);
 	}
 
 	default File getIndexFile() {
@@ -102,7 +108,7 @@ public interface SourceLinkMixin {
 		IndexEntryInfo iei = null;
 		String completePQN = givenPQN;
 		String url = null;
-		String errorMsg = "";
+		String errorMsg = null;
 
 		List<String> pqnStack = null;
 		try {
@@ -110,11 +116,11 @@ public interface SourceLinkMixin {
 			iei = getState().database.getEntry(pqnStack);
 
 		} catch (ParseException e) {
-			errorMsg += error(document, "macro could not be parsed: '" + macro + "'.", "PQN malformed");
+			errorMsg = error(document, "macro could not be parsed: '" + macro + "'.", "PQN malformed");
 		} catch (AmbiguousPQNExcpetion e) {
-			errorMsg += error(document, "PQN is ambiguous: '" + givenPQN + "'.", "Ambiguous PQN");
+			errorMsg = error(document, "PQN is ambiguous: '" + givenPQN + "'.", "Ambiguous PQN");
 		} catch (NotInSourceIndexExcpetion e) {
-			errorMsg += error(document, "PQN not found: '" + givenPQN + "'.", "PQN not found");
+			errorMsg = error(document, "PQN not found: '" + givenPQN + "'.", "PQN not found");
 		}
 
 		IndexEntryInfoResult result = new IndexEntryInfoResult(iei, url, completePQN, errorMsg);

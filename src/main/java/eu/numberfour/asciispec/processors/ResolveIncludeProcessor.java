@@ -171,10 +171,10 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 
 			fileSearcher.moveToNewLocation(file);
 		} catch (FileNotFoundException e) {
-			newLine += error(document, e.getMessage());
+			newLine += " " + error(document, e.getMessage()) + " ";
 		} catch (CircularDependencyException e) {
-			newLine += error(document, e.getMessage(),
-					"Circular dependencies detected. More information in console output.");
+			newLine += " " + error(document, e.getMessage(),
+					"Circular dependencies detected. More information in console output.") + " ";
 		} catch (ReplaceIncludeMacroException e) {
 			newLine = e.replacementString;
 		} catch (IgnoreFileException e) {

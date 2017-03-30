@@ -44,7 +44,7 @@ public interface ErrorAndWarningsMixin {
 	 */
 	default String error(Document document, String consoleMsg, String inlineMsg) {
 		getIssueAcceptor().error(document, consoleMsg, getCurrentFile(), getCurrentLine());
-		return " #[Error: " + inlineMsg + "]# ";
+		return "#[Error: " + inlineMsg + "]#";
 	}
 
 	/**
@@ -75,6 +75,6 @@ public interface ErrorAndWarningsMixin {
 	 */
 	default String warn(Document document, String consoleMsg, String inlineMsg) {
 		getIssueAcceptor().warn(document, consoleMsg, getCurrentFile(), getCurrentLine());
-		return " #[Warn: " + inlineMsg + "]# ";
+		return "#[Warn: " + inlineMsg + "]#";
 	}
 }

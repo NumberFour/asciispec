@@ -10,6 +10,8 @@
  */
 package eu.numberfour.asciispec.processors;
 
+import static eu.numberfour.asciispec.AttributeParser.getAttributeString;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Map;
@@ -46,7 +48,7 @@ public class ResolveApiIncludeProcessor extends ResolveIncludeProcessor {
 	protected File findFile(Document document, Map<String, Object> attributes, File containerFile, String target,
 			String line) throws FileNotFoundException, IgnoreFileException, ReplaceIncludeMacroException {
 
-		String newInlineApiMacro = "include:{api}" + target + "[]";
+		String newInlineApiMacro = "include:{api}" + target + "[" + getAttributeString(attributes) + "]";
 		throw new ReplaceIncludeMacroException(newInlineApiMacro);
 	}
 

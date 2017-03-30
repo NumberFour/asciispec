@@ -132,7 +132,7 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 		String repoName = "";
 		String url = ieir.url;
 		String completePQN = ieir.completePQN;
-		label += ieir.errorMsg;
+		String errMsg = ieir.errorMsg;
 		if (ieir.iei != null) {
 			try {
 				IndexEntryInfo iei = ieir.iei;
@@ -146,18 +146,22 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 				url = getCMSUrl(repoConfig, iei.getRepoRelativeURL(), iei.sourceLine);
 
 			} catch (IllegalArgumentException e) {
-				label += error(document, "Missing srclnk repository configuration found for: '" + repoName + "'.",
+				errMsg = error(document, "Missing srclnk repository configuration found for: '" + repoName + "'.",
 						"Missing config for repository '" + repoName + "'");
 			}
 		}
 
-		if (url == null)
-			url = "";
 
-		String link = "link:++" + url + "++[" + markup1 + "++" + label + "++" + markup2 + ", title=\"" + completePQN
-				+ "\", window=\"_blank\"]";
+		String result;
+		if (errMsg != null) {
+			result = srclnk + "\n" + errMsg;
+		} else {
+			url = (url == null) ? "" : url;
+			result = "link:++" + url + "++[" + markup1 + "++" + label + "++" + markup2 + ", title=\"" + completePQN
+					+ "\", window=\"_blank\"]";
+		}
 
-		return link;
+		return result;
 	}
 
 	private String getCMSUrl(RepositoryConfig repoConfig, String relUrl, int lineNumber) {
@@ -169,11 +173,6 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 	@Override
 	public SourceLinkMixinState getState() {
 		return state;
-	}
-
-	@Override
-	public String getIndexFileName() {
-		return INDEX_FILE_NAME;
 	}
 
 }
