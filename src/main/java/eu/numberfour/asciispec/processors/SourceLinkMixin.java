@@ -102,9 +102,7 @@ public interface SourceLinkMixin {
 		return getState().indexFile;
 	}
 
-	default IndexEntryInfoResult getIndexEntryInfo(Document document, String macro,
-			String givenPQN) {
-
+	default IndexEntryInfoResult getIndexEntryInfo(Document document, String macro, String givenPQN) {
 		IndexEntryInfo iei = null;
 		String completePQN = givenPQN;
 		String url = null;
@@ -116,7 +114,7 @@ public interface SourceLinkMixin {
 			iei = getState().database.getEntry(pqnStack);
 
 		} catch (ParseException e) {
-			errorMsg = error(document, "macro could not be parsed: '" + macro + "'.", "PQN malformed");
+			errorMsg = error(document, "PQN could not be parsed: '" + macro + "'.", "PQN malformed");
 		} catch (AmbiguousPQNExcpetion e) {
 			errorMsg = error(document, "PQN is ambiguous: '" + givenPQN + "'.", "Ambiguous PQN");
 		} catch (NotInSourceIndexExcpetion e) {

@@ -93,3 +93,13 @@ Example: ::
 ``++:srclnk_repo_def: stdlib_api; Standard lib API; https://github.com/NumberFour/asciispec/api/blob/master/{CMS_PATH}#L{LINE_NO}++``
 
 
+Warnings and Errors: ::
+* *Error: PQN Could Not Be Parsed*
+	Is issued in case the given PQN is invalid.
+
+* *Error: PQN Is Ambiguous*
+	Is issued in case the given PQN is ambiguous.
+
+* *Error: PQN Not Found*
+	Is issued in case no API element could be found in the index for the given PQN.
+
