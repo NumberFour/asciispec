@@ -204,7 +204,7 @@ public class InlineMacroToBlockConverter extends Treeprocessor {
 		 * @return the processed lines
 		 */
 		private List<String> processLines(List<String> lines, ContentNode parent, List<String> newSiblingNodeContent) {
-			return AdocUtils.processLines(lines, (String nodeLineFragment) -> {
+			return AdocUtils.processLines(lines, (String nodeLineFragment, Integer lineNumber) -> {
 				StringBuilder newNodeLineFragment = new StringBuilder();
 				Matcher matcher = macroPattern.matcher(nodeLineFragment);
 

@@ -1,0 +1,19 @@
+
+
+include::configs/config.adoc[ONCE]
+
+= Main Document Title
+
+First we include an API element. No leveloffset.
+
+Mein text
+
+//include::{api}DateTimeFormat#format[]
+
+srclnk:DateTimeFormat#format[]
+
+Mein text
+
+include::sub1/chap1_1.adoc[]
+
+:supervar:

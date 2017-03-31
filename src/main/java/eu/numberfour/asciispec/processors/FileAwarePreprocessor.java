@@ -2,125 +2,79 @@ package eu.numberfour.asciispec.processors;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.function.Supplier;
 
 import org.asciidoctor.ast.Document;
 import org.asciidoctor.extension.Preprocessor;
 import org.asciidoctor.extension.PreprocessorReader;
 
-import eu.numberfour.asciispec.AdocUtils;
-import eu.numberfour.asciispec.findresolver.FileStackHelper;
 import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
 
 /**
- * This preprocessor is aware of the file from which a current line (in {@link #processLine(Document, String)}) was read
- * from.
+ * This preprocessor is aware of the file from which a current line (in
+ * {@link #processLine(Document, String)}) was read from.
+ * <p>
+ * This class inherits from {@link Preprocessor} to keep the registration like
+ * AsciiDoctorJ does. It is not integrated in the AsciiDoctor preprocessor chain
+ * directly. Instead, it is indirectly executed from the
+ * {@link HostPreprocessor} which is the only {@link Preprocessor} that is
+ * integrated in the AsciiDoctor preprocessor chain.
+ * <p>
+ * The reason for the indirect execution is that only the first AsciiDoctor
+ * {@link Preprocessor} has reliable information about line numbers, files and
+ * paths.
  */
-abstract public class FileAwarePreprocessor extends Preprocessor implements Supplier<String> {
+abstract public class FileAwarePreprocessor extends Preprocessor implements ClientPreprocessor {
 
-	//// public static members ////
-	private static final List<String> INCLUDE_VARIABLES = new LinkedList<>();
-
-	/**
-	 * Enables the use of e.g. <code>{find}</code> variables within include
-	 * directives like:<br/>
-	 * <br/>
-	 * <code>include::{find}myfile.adoc[]</code>
-	 * <p>
-	 * Otherwise, the line that contains this (unknown) variable is dropped by
-	 * Asciidoctor!
-	 */
-	public static void enableIncludeVariable(String varName) {
-		INCLUDE_VARIABLES.add(varName);
+	public FileAwarePreprocessor() {
+		HostPreprocessor.getSingleton().register(this);
 	}
 
-	//// non-static members ////
-	private PreprocessorReader reader;
-	private Path basedir;
-
 	/**
-	 * Processes each line of the document. Comment regions are omitted. The passed line gets transformed multiple
-	 * times, once per pattern registered in {@link #init(Document)}.
-	 *
-	 * @return a list of resulting lines
+	 * "Do nothing here!" is the intended use! The computation is done in
+	 * {@link HostPreprocessor}!
 	 */
-	abstract protected List<String> processLine(Document document, String line);
-
-	/**
-	 * Is called before any line is processed. The return value enables/disables the processor.
-	 */
-	abstract protected boolean init(Document document);
-
 	@Override
 	final public void process(Document document, PreprocessorReader preproReader) {
-		reader = preproReader;
-		basedir = AdocUtils.getDocumentBasePath(document);
-
-		boolean enabled = init(document);
-		if (enabled) {
-			enableADocVariablesInIncludeProcessor(document);
-			List<String> lines = processLines(document);
-			reader.restoreLines(lines);
-		}
-	}
-
-	private void enableADocVariablesInIncludeProcessor(Document document) {
-		for (String inclVar : INCLUDE_VARIABLES) {
-			document.setAttr(inclVar, "{" + inclVar + "}", true);
-		}
-	}
-
-	@Override
-	final public String get() {
-		if (!reader.hasMoreLines())
-			return null;
-		return reader.readLine();
-	}
-
-	private List<String> processLines(Document document) {
-		return AdocUtils.processLines(this, (String l) -> {
-			final List<String> replacement = processLine(document, l);
-			return replacement;
-		});
+		// (see JavaDoc above)
 	}
 
 	/**
 	 * Searches for the given file in the directory of the current file.
 	 */
 	public File searchFile(String fileName) throws FileNotFoundException, MultipleFileMatchesException {
-		return FileStackHelper.searchRelativeTo(fileName, getCurrentDir(), basedir);
+		return getHostPreprocessor().searchFile(fileName);
 	}
 
 	/**
 	 * Returns a file that is relative to the base dir.
 	 */
 	public String getBaseRelative(File file) {
-		Path relPath = basedir.relativize(file.toPath());
-		return relPath.toString();
+		return getHostPreprocessor().getBaseRelative(file);
 	}
 
 	/**
 	 * Returns the file of the current adoc line.
 	 */
 	public File getCurrentFile() {
-		return new File(reader.getFile());
+		return getHostPreprocessor().getCurrentFile();
 	}
 
 	/**
 	 * Returns the path of the current adoc line.
 	 */
 	public File getCurrentDir() {
-		return new File(reader.getDir());
+		return getHostPreprocessor().getCurrentDir();
 	}
 
 	/**
 	 * Returns the line number of the current file.
 	 */
 	public int getCurrentLine() {
-		return reader.getLineNumber() - 1;
+		return getHostPreprocessor().getCurrentLine();
+	}
+
+	final protected HostPreprocessor getHostPreprocessor() {
+		return HostPreprocessor.getSingleton();
 	}
 
 }

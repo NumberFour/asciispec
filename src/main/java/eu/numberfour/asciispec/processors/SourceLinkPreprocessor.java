@@ -2,6 +2,7 @@ package eu.numberfour.asciispec.processors;
 
 import static eu.numberfour.asciispec.AdocUtils.transformVariable;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -64,26 +65,27 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 	private final SourceLinkMixinState state = new SourceLinkMixinState();
 
 	@Override
-	protected boolean init(Document document) {
+	public void init(Document document) {
 		super.registerPattern(GEN_ADOC_DIR_VAR, GEN_ADOC_VAR_PATTERN);
 		super.registerPattern(REPOS_CONFIG_VAR, REPO_CONFIG_VAR_PATTERN);
 		super.registerPattern(SRCLNK, SRC_LINK_PATTERN);
-		return true;
 	}
 
 	@Override
 	protected String processMatch(Document document, String key, Matcher matcher) {
 		String fullMatch = matcher.group();
 		String newline = fullMatch;
+
+		File f = getCurrentFile();
+
 		switch (key) {
 		case GEN_ADOC_DIR_VAR:
 			try {
 				String genadocDirname = matcher.group("GENADOC");
 				setIndexFile(genadocDirname);
 			} catch (Exception e) {
-				String message = e.getMessage() + " Check variable '" + GEN_ADOC_DIR_VAR + "'";
-				newline += message;
-				error(document, e.getMessage());
+				String message = e.getMessage() + ". Check variable '" + GEN_ADOC_DIR_VAR + "'";
+				newline += "\n\n" + error(document, message) + "\n\n";
 			}
 			break;
 		case REPOS_CONFIG_VAR:

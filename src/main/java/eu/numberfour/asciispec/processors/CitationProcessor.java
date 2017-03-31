@@ -114,11 +114,10 @@ public class CitationProcessor extends MacroPreprocessor<String> {
 	LinkedHashSet<CitationReference> citations = new LinkedHashSet<>();
 
 	@Override
-	protected boolean init(Document document) {
+	public void init(Document document) {
 		registerPattern(BIB_FILE_KEY, BIB_FILE_PATTERN);
 		registerPattern(CITE_KEY, CITE_PATTERN);
 		registerPattern(BIBLIOGRAPHY_KEY, BIBLIOGRAPHY_PATTERN);
-		return true;
 	}
 
 	@Override

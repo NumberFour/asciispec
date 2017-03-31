@@ -701,4 +701,30 @@ class ResolveFindProcessorsTest extends AsciidoctorTest {
 			'''
 			asciispec  : WARN: noCyclicExceptionsHelper1.adoc: line 8: Cannot detect circular dependencies. Probably 'include' was used without '{find}' macro when including file:''');
 	}
+
+	@Test
+	def void testIncludeSrclnkWithError() throws IOException {
+		'''
+			<div id="preamble">
+			<div class="sectionbody">
+			<div class="paragraph">
+			<p>These are letters.</p>
+			</div>
+			</div>
+			</div>
+			<div class="sect1">
+			<h2 id="_a_small_subsection"><a class="anchor" href="#_a_small_subsection"></a>1. A Small Subsection</h2>
+			<div class="sectionbody">
+			<div class="paragraph">
+			<p>srclnk:getStartWithQuantityFormatX123[DREI getStartWithQuantityFormatX123()]
+			<mark>[Error: PQN not found]</mark></p>
+			</div>
+			</div>
+			</div>'''
+		.convertFileAndAssertErrorContains(
+			"src/test/resources/data/find_resolver/sub2",
+			"includeSrclnkWithError.adoc",
+			'''
+			asciispec  : ERROR: includeSrclnkWithError.adoc: line 9: PQN not found: 'getStartWithQuantityFormatX123'.''');
+	}
 }

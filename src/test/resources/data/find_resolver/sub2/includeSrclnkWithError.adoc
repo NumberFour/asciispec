@@ -1,0 +1,13 @@
+
+= Title
+
+
+include::{find}configs/config.adoc[ONCE]
+
+
+These are letters.
+
+
+include::{find}textWithSrclnk[]
+
+:testVar: q2

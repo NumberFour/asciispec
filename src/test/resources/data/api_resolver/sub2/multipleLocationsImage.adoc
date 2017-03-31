@@ -1,0 +1,10 @@
+
+
+= Chapter 2_1
+
+include::{find}configs/config.adoc[ONCE]
+
+This is from chapter file chap2_1
+
+
+image::{find}images/no4.png[]

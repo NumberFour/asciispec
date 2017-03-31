@@ -21,9 +21,8 @@ public class InlineRequirementLinkProcessor extends MacroPreprocessor<String> {
 	private static final Pattern REQ_PATTERN = Pattern.compile(REQ_KEY + ":([^ ]*?)\\[\\]");
 
 	@Override
-	protected boolean init(Document document) {
+	public void init(Document document) {
 		registerPattern(REQ_KEY, REQ_PATTERN);
-		return true;
 	}
 
 	@Override

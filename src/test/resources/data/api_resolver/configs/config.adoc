@@ -1,0 +1,47 @@
+////
+Default configuration for AsciiSpec Processors.
+////
+
+// ============== General Document Attributes ============== //
+
+// Enabling section numbers and anchors
+:sectnums:
+:sectanchors:
+
+// A Left-aligned table of contents
+
+
+// Docinfo allows for inserting a HTML header
+:docinfo1: true
+:docinfodir: header
+
+// Allows links to have attributes like a title, etc.
+// Required by srclnk macro
+:linkattrs:
+
+
+// ============== AsciiSpec Processor Configuration ============== //
+
+////
+Inline Task Macro Config
+The default configuration resolves URLs to 'N4JS IDE Github Issues' and 'N4JS IDE Jira Tasks'.
+
+See https://github.numberfour.eu/NumberFour/asciispec#inline-task-macro for details.
+////
+
+:task_def_GH-: GitHub;IDE Bugs;https://github.com/NumberFour/N4JS/issues/{TASK_ID};icons/github.png;GH-{TASK_ID}
+:task_def_IDE-: Jira;IDE Backlog;https://jira.numberfour.eu/browse/IDE-{TASK_ID};icons/jira.png;IDE-{TASK_ID}
+
+// Source link config
+:gen_adoc_dir: ../docu/gen_adoc
+:srclnk_repo_def: stdlib_api;Standard lib API;https://github.numberfour.eu/NumberFour/stdlib_api/blob/master/{CMS_PATH}#L{LINE_NO}
+
+
+////
+Inline Cwiki Macro Config
+
+See https://github.numberfour.eu/NumberFour/asciispec#inline-cwiki-macro for  details.
+////
+
+:cwiki_def: https://confluence.numberfour.eu/display/{PATH};https://confluence.numberfour.eu/pages/viewpage.action?pageId={PAGE_ID};icons/jira.png;Confluence entry:{TITLE}
+

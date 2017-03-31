@@ -19,10 +19,9 @@ public class ResolveFindInlinePreprocessor extends MacroPreprocessor<String> {
 	static final String FIND_VARIABLE_MATCHER = "\\{(?<VAR>find)\\}[\\s]*(?<FILE>[^\\[\\s]*)";
 
 	@Override
-	protected boolean init(Document document) {
+	public void init(Document document) {
 		Pattern findvarPattern = Pattern.compile(FIND_VARIABLE_MATCHER);
 		registerPattern(FIND_VARIABLE_KEY, findvarPattern);
-		return true;
 	}
 
 	@Override

@@ -30,9 +30,8 @@ public class MathIncludePreprocessor extends MacroPreprocessor<String> {
 	private static final Pattern MATH_INCLUDE_PATTERN = Pattern.compile("\\s*mathinclude::(.*?)\\[[^\\]]*\\]\\s*");
 
 	@Override
-	protected boolean init(Document document) {
+	public void init(Document document) {
 		registerPattern(MATH_INCLUDE_KEY, MATH_INCLUDE_PATTERN);
-		return true;
 	}
 
 	@Override

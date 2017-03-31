@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -157,8 +157,9 @@ public class SourceProcessor {
 	private static final Pattern INLINE_IGNORE_PATTERN = Pattern
 			.compile("\\+\\+\\+.*?\\+\\+\\+|pass:[^\\[]*\\[[^\\]]*\\]");
 
-	private final Function<String, List<String>> transform;
+	private final BiFunction<String, Integer, List<String>> transform;
 
+	private int currentLineNumber;
 	private BlockType currentBlock;
 
 	/**
@@ -167,7 +168,7 @@ public class SourceProcessor {
 	 * @param transform
 	 *            the function to apply
 	 */
-	public SourceProcessor(Function<String, List<String>> transform) {
+	public SourceProcessor(BiFunction<String, Integer, List<String>> transform) {
 		this.transform = Objects.requireNonNull(transform);
 
 		ignoredBlockNames.add("source");
@@ -209,12 +210,14 @@ public class SourceProcessor {
 		initialize();
 
 		LinkedList<String> result = new LinkedList<>();
-		for (String line = lineSupplier.get(); line != null; line = lineSupplier.get())
+		for (String line = lineSupplier.get(); line != null; line = lineSupplier.get()) {
+			currentLineNumber++;
 			if (shouldProcess(line)) {
 				processLine(line, result);
 			} else {
 				result.add(line);
 			}
+		}
 		return result;
 	}
 
@@ -239,11 +242,12 @@ public class SourceProcessor {
 
 	private void initialize() {
 		currentBlock = new DefaultBlockType();
+		currentLineNumber = 0;
 	}
 
 	private void processLine(String line, LinkedList<String> result) {
 		if (line.isEmpty()) {
-			result.addAll(transform.apply(line));
+			result.addAll(transform.apply(line, currentLineNumber));
 			return;
 		}
 		if (line.startsWith("//")) {
@@ -262,7 +266,7 @@ public class SourceProcessor {
 			final String passPart = line.substring(matcher.start(), matcher.end());
 			final String processPart = line.substring(start, end);
 			if (!processPart.isEmpty())
-				appendLines(newLines, transform.apply(processPart));
+				appendLines(newLines, transform.apply(processPart, currentLineNumber));
 			appendLineFragment(newLines, passPart);
 
 			start = matcher.end();
@@ -270,7 +274,7 @@ public class SourceProcessor {
 
 		if (start < line.length()) {
 			final String processPart = line.substring(start, line.length());
-			appendLines(newLines, transform.apply(processPart));
+			appendLines(newLines, transform.apply(processPart, currentLineNumber));
 		}
 
 		result.addAll(newLines);

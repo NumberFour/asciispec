@@ -1,0 +1,72 @@
+include::{find}config.adoc[]
+:linkattrs:
+:toc:
+
+= Module n4.format.DateTimeFormat
+
+== Enum DateTimeFormatEmphasis
+
+
+== Class DateTimeFormat
+
+
+
+[[gsec:spec_n4.format.DateTimeFormat.DateTimeFormat.format]]
+[role=memberdoc]
+=== ++Method format++
+
+==== Signature
+srclnk:++stdlib_api:packages:eu.numberfour.stdlib.format.api:src/n4js/n4/format/DateTimeFormat:DateTimeFormat#format++[``++public format(value: DateTime): StructuredText++``]
+
+
+==== Semantics
+[todo, label="test ++DateTimeFormat.format++"]
+--
+Add tests specifying semantics for ``++format(value: DateTime): StructuredText++``
+--
+
+
+[[gsec:spec_n4.format.DateTimeFormat.DateTimeFormat.parse]]
+[role=memberdoc]
+=== ++Method parse++
+
+==== Signature
+srclnk:++stdlib_api:packages:eu.numberfour.stdlib.format.api:src/n4js/n4/format/DateTimeFormat:DateTimeFormat#parse++[``++public parse(input: string): ParseResult<DateTime>++``]
+
+
+==== Semantics
+[todo, label="test ++DateTimeFormat.parse++"]
+--
+Add tests specifying semantics for ``++parse(input: string): ParseResult<DateTime>++``
+--
+
+
+[[gsec:spec_n4.format.DateTimeFormat.DateTimeFormat.static.withPattern]]
+[role=memberdoc]
+=== ++Static method withPattern++
+
+==== Signature
+srclnk:++stdlib_api:packages:eu.numberfour.stdlib.format.api:src/n4js/n4/format/DateTimeFormat:DateTimeFormat@withPattern++[``++project withPattern(pattern: string): DateTimeFormat++``]
+
+
+==== Semantics
+[todo, label="test ++DateTimeFormat.withPattern++"]
+--
+Add tests specifying semantics for ``++withPattern(pattern: string): DateTimeFormat++``
+--
+
+
+[[gsec:spec_n4.format.DateTimeFormat.DateTimeFormat.static.withStyle]]
+[role=memberdoc]
+=== ++Static method withStyle++
+
+==== Signature
+srclnk:++stdlib_api:packages:eu.numberfour.stdlib.format.api:src/n4js/n4/format/DateTimeFormat:DateTimeFormat@withStyle++[``++project withStyle(style: any, emphasis: DateTimeFormatEmphasis=…): DateTimeFormat++``]
+
+
+==== Semantics
+[todo, label="test ++DateTimeFormat.withStyle++"]
+--
+Add tests specifying semantics for ``++withStyle(style: any, emphasis: DateTimeFormatEmphasis=…): DateTimeFormat++``
+--
+

@@ -60,7 +60,7 @@ abstract public class MacroPreprocessor<T> extends FileAwarePreprocessor impleme
 	}
 
 	@Override
-	final protected List<String> processLine(Document document, String line) {
+	final public List<String> processLine(Document document, String line) {
 		String workingLine = line;
 		for (Map.Entry<T, Pattern> entry : patterns.entrySet()) {
 			StringBuilder builder = new StringBuilder();

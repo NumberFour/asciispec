@@ -28,8 +28,8 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.asciidoctor.cli.AsciidoctorInvoker"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="/Users/marcus.mews/Programs/stdlib/git/stdlib_api/docs/myDocTest.adoc"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="/Users/marcus.mews/GitHub/asciispec/src/test/resources/data/api_resolver/top.adoc"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="asciispec"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="/Users/marcus.mews/Programs/stdlib/git/stdlib_api/docs/"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="/Users/marcus.mews/GitHub/asciispec/src/test/resources/data/api_resolver/"/>
 </launchConfiguration>
