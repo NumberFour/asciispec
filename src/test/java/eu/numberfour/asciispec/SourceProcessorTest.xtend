@@ -13,7 +13,7 @@ package eu.numberfour.asciispec
 import java.util.Iterator
 import java.util.LinkedList
 import java.util.List
-import java.util.function.BiFunction
+import java.util.function.Function
 import org.junit.Test
 
 import static org.junit.Assert.*
@@ -22,7 +22,7 @@ import static org.junit.Assert.*
  *
  */
 class SourceProcessorTest {
-	private static class MockTransform implements BiFunction<String, Integer, List<String>> {
+	private static class MockTransform implements Function<String, List<String>> {
 		private static class Expectation {
 			private String parameter;
 			private LinkedList<String> result;
@@ -71,7 +71,7 @@ class SourceProcessorTest {
 			}
 		}
 
-		override def LinkedList<String> apply(String str, Integer lineNumber) {
+		override def LinkedList<String> apply(String str) {
 			assertTrue("Unexpected call with parameter '" + str + "'", currentExpectation.hasNext());
 
 			val Expectation expectation = currentExpectation.next();

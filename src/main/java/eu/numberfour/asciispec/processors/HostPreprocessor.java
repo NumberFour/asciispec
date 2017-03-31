@@ -108,7 +108,7 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 		List<ClientPreprocessor> tail = new LinkedList<>(cps);
 		tail.remove(0);
 
-		List<String> processedLines = AdocUtils.processLine(newLine, (String ll, Integer lineNumber) -> {
+		List<String> processedLines = AdocUtils.processLine(newLine, (String ll) -> {
 			final List<String> replacement;
 			if (cp.isEnabled()) {
 				replacement = cp.processLine(document, ll);

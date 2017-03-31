@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.regex.Pattern;
@@ -101,7 +100,7 @@ public final class AdocUtils {
 	 *            the transformation function
 	 * @return the transformed lines
 	 */
-	public static List<String> processLines(List<String> lines, BiFunction<String, Integer, List<String>> transform) {
+	public static List<String> processLines(List<String> lines, Function<String, List<String>> transform) {
 		return new SourceProcessor(transform).process(lines);
 	}
 
@@ -117,7 +116,7 @@ public final class AdocUtils {
 	 * @return the transformed lines
 	 */
 	public static List<String> processLines(Supplier<String> lineSupplier,
-			BiFunction<String, Integer, List<String>> transform) {
+			Function<String, List<String>> transform) {
 
 		return new SourceProcessor(transform).process(lineSupplier);
 	}
@@ -133,7 +132,7 @@ public final class AdocUtils {
 	 *            the transformation function
 	 * @return the transformed lines
 	 */
-	public static List<String> processLine(String line, BiFunction<String, Integer, List<String>> transform) {
+	public static List<String> processLine(String line, Function<String, List<String>> transform) {
 		return new SourceProcessor(transform).process(line);
 	}
 
