@@ -33,7 +33,12 @@ public interface DirectoriesMixin {
 	 * Returns the current file relative to the base dir.
 	 */
 	default File getCurrentFileBaseRelative() {
-		return getBaseRelative(getCurrentFile());
+		File currentFile = getCurrentFile();
+		if ("<DIRECT_INPUT>".equals(currentFile.getName())) {
+			// happens in test scenarios
+			return currentFile;
+		}
+		return getBaseRelative(currentFile);
 	}
 
 	/**

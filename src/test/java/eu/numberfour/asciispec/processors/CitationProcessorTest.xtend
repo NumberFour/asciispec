@@ -23,9 +23,9 @@ class CitationProcessorTest extends AsciidoctorTest {
 	public def void registerExtensions() {
 		new CitationExtension().register(doc);
 	}
-	
+
 	private def String getConfig() ''':bib-file: src/test/resources/data/citation/example.bib'''
-	
+
 	@Test
 	public def void testOneUnknownCitationWithBibliography() {
 		convertStringAndAssertErrorContains(
@@ -53,17 +53,17 @@ class CitationProcessorTest extends AsciidoctorTest {
 			</ul>
 			</div>
 			</div>
-			</div>''', 
+			</div>''',
 			'''
 			«config»
 			This is some text! cite:[ASDF1999] Yup, cited those guys. They'll be happy now!
-			 
+
 			bibliography::[]
-			 
+
 			''',
 			"asciispec  : WARN: Unknown reference: ASDF1999[]");
 	}
-	
+
 	@Test
 	public def void testOneCitationWithBibliography() {
 		convertAndAssert(
@@ -77,16 +77,16 @@ class CitationProcessorTest extends AsciidoctorTest {
 			<p><a id="OMG09a"></a>OMG. (2009). <em>Unified Modeling Language: Superstructure, Version 2.2</em>. Object Management Group. Retrieved from <a href="http://www.omg.org/cgi-bin/doc?formal/2009-02-02" class="bare">http://www.omg.org/cgi-bin/doc?formal/2009-02-02</a></p>
 			</div>
 			</div>
-			</div>''', 
+			</div>''',
 			'''
 			«config»
 			This is some text! cite:[OMG09a(1,2)] Yup, cited those guys. They'll be happy now!
-			 
+
 			bibliography::[]
-			 
+
 			''');
 	}
-	
+
 	@Test
 	public def void testMultipleCitationsWithBibliography() {
 		convertAndAssert(
@@ -106,18 +106,18 @@ class CitationProcessorTest extends AsciidoctorTest {
 			<p><a id="Canning89a"></a>Canning, Peter and Cook, William and Hill, Walter and Olthoff, Walter and Mitchell, John C.. (1989). <em>F-bounded Polymorphism for Object-oriented Programming</em>. Retrieved from <a href="http://doi.acm.org/10.1145/99370.99392" class="bare">http://doi.acm.org/10.1145/99370.99392</a></p>
 			</div>
 			</div>
-			</div>''', 
+			</div>''',
 			'''
 			«config»
 			This is some text! cite:[OMG09a(1,2)] Yup, cited those guys. They'll be happy now!
-			
+
 			Here's another great citation cite:[Canning89a].
-			 
+
 			bibliography::[]
-			 
+
 			''');
 	}
-	
+
 	@Test
 	public def void testOneCitationWithBibliographyAndAvoidDuplicateEntries() {
 		// See https://github.numberfour.eu/NumberFour/asciispec/issues/45
@@ -132,29 +132,29 @@ class CitationProcessorTest extends AsciidoctorTest {
 			<p><a id="OMG09a"></a>OMG. (2009). <em>Unified Modeling Language: Superstructure, Version 2.2</em>. Object Management Group. Retrieved from <a href="http://www.omg.org/cgi-bin/doc?formal/2009-02-02" class="bare">http://www.omg.org/cgi-bin/doc?formal/2009-02-02</a></p>
 			</div>
 			</div>
-			</div>''', 
+			</div>''',
 			'''
 			«config»
 			This is some text! cite:[OMG09a(1,2)] Yup, cited those guys. They'll be happy now! Holy crap, I'm citing them again! cite:[OMG09a] Yup, done it! And there must only be ONE entry in the bibliography!
-			 
+
 			bibliography::[]
-			 
+
 			''');
 	}
-	
+
 	@Test
 	public def void testMissingConfig() {
 		convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
 			<p>This is some text! cite:[OMG09a(1,2)] Yup, cited those guys. They&#8217;ll be happy now!</p>
-			</div>''', 
+			</div>''',
 			'''
 			This is some text! cite:[OMG09a(1,2)] Yup, cited those guys. They'll be happy now!
 			''',
-			"asciispec  : ERROR: Could not find a BibTeX file");
+			"asciispec  : ERROR: line 1: Could not find a BibTeX file");
 	}
-	
+
 	@Test
 	public def void testMissingConfigWhenCitationIsCalledMultipleTimes() {
 		convertStringAndAssertErrorContains(
@@ -167,14 +167,14 @@ class CitationProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="paragraph">
 			<p>cite:[OMG09a(1,2)]</p>
-			</div>''', 
+			</div>''',
 			'''
 			This is some text! cite:[OMG09a(1,2)] Yup, cited those guys. They'll be happy now!
-			
+
 			cite:[OMG09a(1,2)]
-			
+
 			cite:[OMG09a(1,2)]
 			''',
-			"asciispec  : ERROR: Could not find a BibTeX file");
+			"asciispec  : ERROR: line 1: Could not find a BibTeX file");
 	}
 }

@@ -4,6 +4,6 @@
 
 This is from chapter file chap1_1
 
-include::{api}DateTimeFormat[]
+include::{api}DateTimeFormat@withStyle[]
 
 srclnk:DateTimeFormat[]

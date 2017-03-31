@@ -72,7 +72,16 @@ public class Issue {
 	 * @return <code>true</code> if a document file is available fro this issue or <code>false</code> otherwise
 	 */
 	public boolean hasDocumentFile() {
-		return getDocumentFile() != null;
+		File file = getDocumentFile();
+		if (file == null)
+			return false;
+
+		// The '<DIRECT_INPUT>' is set for tests only. See: {@link
+		// AsciidoctorTest#getOptions(File, File)}
+		if (file.getName().contains("DIRECT_INPUT"))
+			return false;
+
+		return true;
 	}
 
 	/**

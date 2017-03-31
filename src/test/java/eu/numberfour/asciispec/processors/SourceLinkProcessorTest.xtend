@@ -60,6 +60,9 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 			'''
 			<div class="paragraph">
 			<p>This is a source link: srclnk:getStartWithQuantityFormat[My SRC link]</p>
+			</div>
+			<div class="paragraph">
+			<p><mark>[Error: Missing config variable 'gen_adoc_dir'.]</mark></p>
 			</div>''',
 			'''
 
@@ -75,6 +78,9 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 			'''
 			<div class="paragraph">
 			<p>This is a source link: srclnk:getStartWithQuantityFormat[My SRC link]</p>
+			</div>
+			<div class="paragraph">
+			<p><mark>[Error: Missing config variable 'srclnk_repo_def'.]</mark></p>
 			</div>''',
 			'''
 			«configA»
@@ -91,6 +97,9 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 			'''
 			<div class="paragraph">
 			<p>This is a source link: srclnk:getStartWithQuantityFormat[My SRC link]</p>
+			</div>
+			<div class="paragraph">
+			<p><mark>[Error: Missing config variable 'gen_adoc_dir'.]</mark></p>
 			</div>''',
 			'''
 			«configB»

@@ -2,6 +2,9 @@ package eu.numberfour.asciispec.processors;
 
 import static eu.numberfour.asciispec.AdocUtils.transformVariable;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -92,7 +95,9 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 	private String setGenDir(Document document, Matcher matcher, String newline) {
 		try {
 			String genadocDirname = matcher.group("GENADOC");
-			setIndexFile(genadocDirname);
+			Path genadocPath = Paths.get(genadocDirname);
+			File genadocFile = getAbsoluteFileFromBase(genadocPath);
+			setIndexFile(genadocFile);
 		} catch (Exception e) {
 			String message = e.getMessage() + ". Check variable '" + GEN_ADOC_DIR_VAR + "'";
 			newline += "\n\n" + error(document, message) + "\n\n";
@@ -121,7 +126,7 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 			ensureDatabase();
 			newline = processSourceLink(document, matcher);
 		} catch (Exception e) {
-			newline += "\n\n" + error(document, e.getClass().toString() + " " + e.getMessage());
+			newline += "\n\n" + error(document, e.getMessage());
 		}
 		return newline;
 	}
