@@ -1,14 +1,14 @@
-
-
 include::configs/config.adoc[ONCE]
 
 = Main Document Title
+
+
 
 First we include an API element. No leveloffset.
 
 Mein text
 
-//include::{api}DateTimeFormat#format[]
+include::{api}DateTimeFormat#format[]
 
 srclnk:DateTimeFormat#format[]
 

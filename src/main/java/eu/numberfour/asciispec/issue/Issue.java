@@ -119,7 +119,7 @@ public class Issue {
 		StringBuilder result = new StringBuilder();
 		result.append(getSeverity());
 		if (hasDocumentFile())
-			result.append(": ").append(getDocumentFile().getName());
+			result.append(": ").append(getDocumentFile().toString());
 		if (hasLineNumber())
 			result.append(": line ").append(getLineNumber());
 		result.append(": ").append(getMessage());

@@ -10,7 +10,6 @@
  */
 package eu.numberfour.asciispec.processors;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -50,27 +49,36 @@ public class ResolveApiInlinePreprocessor extends MacroPreprocessor<String> impl
 	protected String processMatch(Document document, String key, Matcher matcher) {
 		String fullMatch = matcher.group();
 		String newline = fullMatch;
-		File f = getCurrentFile();
 
 		switch (key) {
 		case GEN_ADOC_DIR_VAR:
-			try {
-				String genadocDirname = matcher.group("GENADOC");
-				setIndexFile(genadocDirname);
-			} catch (Exception e) {
-				String message = e.getMessage() + ". Check variable '" + GEN_ADOC_DIR_VAR + "'";
-				newline += "\n\n" + error(document, message) + "\n\n";
-			}
+			newline = setGenDir(document, matcher, newline);
 			break;
 		case API_INCLUDE:
-			try {
-				checkConfig();
-				ensureDatabase();
-				newline = processSourceLink(document, matcher);
-			} catch (Exception e) {
-				error(document, e.getMessage());
-			}
+			newline = processApiIncl(document, matcher, newline);
 			break;
+		}
+		return newline;
+	}
+
+	private String setGenDir(Document document, Matcher matcher, String newline) {
+		try {
+			String genadocDirname = matcher.group("GENADOC");
+			setIndexFile(genadocDirname);
+		} catch (Exception e) {
+			String message = e.getMessage() + ". Check variable '" + GEN_ADOC_DIR_VAR + "'";
+			newline += "\n\n" + error(document, message) + "\n\n";
+		}
+		return newline;
+	}
+
+	private String processApiIncl(Document document, Matcher matcher, String newline) {
+		try {
+			checkConfig();
+			ensureDatabase();
+			newline = processApiInclude(document, matcher);
+		} catch (Exception e) {
+			newline += "\n\n" + error(document, e.getClass().toString() + " " + e.getMessage());
 		}
 		return newline;
 	}
@@ -80,7 +88,7 @@ public class ResolveApiInlinePreprocessor extends MacroPreprocessor<String> impl
 			throw new IllegalArgumentException("Missing config variable '" + GEN_ADOC_DIR_VAR + "'.");
 	}
 
-	private String processSourceLink(Document document, Matcher matcher) {
+	private String processApiInclude(Document document, Matcher matcher) {
 		String apiInclude = matcher.group();
 		String pqn = matcher.group("PQN");
 		String attrs = matcher.group("ATTRS");
@@ -99,6 +107,8 @@ public class ResolveApiInlinePreprocessor extends MacroPreprocessor<String> impl
 				Map<String, Object> attributes = AttributeParser.parse(attrs);
 				int leveloffset = getLeveloffset(attributes);
 				appendLeveloffset(strb, leveloffset, false);
+
+				String s = System.getProperty("user.dir");
 
 				List<String> lines = Files.readAllLines(modulePath);
 				for (int i = startLine; i < endLine; i++) {

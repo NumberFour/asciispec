@@ -126,13 +126,13 @@ public class FileStackHelper {
 	 *
 	 * @return absolute file
 	 */
-	public static File searchRelativeTo(String fileName, File containerFile, Path path)
+	public static File searchRelativeTo(String fileName, File containerFile, Path basedir)
 			throws FileNotFoundException, MultipleFileMatchesException {
 
 		Path curPath = containerFile.toPath();
 		List<File> matches = new LinkedList<>();
 		while (curPath != null) {
-			Path filePath = curPath.resolve(fileName);
+			Path filePath = curPath.resolve(fileName).normalize();
 			if (filePath.toFile().exists())
 				matches.add(filePath.toFile());
 			curPath = curPath.getParent();
@@ -142,7 +142,7 @@ public class FileStackHelper {
 			throw new FileNotFoundException("File '" + fileName + "' could not be found");
 
 		if (matches.size() > 1)
-			throw new MultipleFileMatchesException(fileName, matches, path);
+			throw new MultipleFileMatchesException(fileName, matches, basedir);
 
 		return matches.get(0);
 	}

@@ -79,6 +79,14 @@ public interface SourceLinkMixin {
 		return getState().configuring;
 	}
 
+	/**
+	 * Sets the state variables {@link SourceLinkMixinState#gendirPath} and
+	 * {@link SourceLinkMixinState#indexFile}. The given filename must be
+	 * absolute.
+	 * 
+	 * @param genadocdirName
+	 *            must be absolute
+	 */
 	default void setIndexFile(String genadocdirName) throws FileNotFoundException, MultipleFileMatchesException {
 		if (!isConfiguring()) {
 			throw new IllegalArgumentException(
@@ -86,8 +94,7 @@ public interface SourceLinkMixin {
 		}
 
 		getState().gendirPath = Paths.get(genadocdirName);
-		String indexFileName = getState().gendirPath.resolve(INDEX_FILE_NAME).toString();
-		getState().indexFile = searchFile(indexFileName);
+		getState().indexFile = getState().gendirPath.resolve(INDEX_FILE_NAME).toFile();
 	}
 
 	default Path getGendirPath() {

@@ -22,7 +22,6 @@ import java.util.Set;
 import org.asciidoctor.ast.Document;
 import org.asciidoctor.extension.IncludeProcessor;
 import org.asciidoctor.extension.PreprocessorReader;
-import org.asciidoctor.extension.PreprocessorReaderImpl;
 
 import eu.numberfour.asciispec.AdocUtils;
 import eu.numberfour.asciispec.findresolver.CannotFindCircularDependenciesException;
@@ -44,11 +43,6 @@ import eu.numberfour.asciispec.issue.IssuePrinter;
  * matches.
  */
 abstract public class ResolveIncludeProcessor extends IncludeProcessor implements ErrorAndWarningsMixin {
-	public static final String VAR_FILE_NAME = "fileNameAndLineNumber";
-	private static final String FILE = "FILENAME";
-	private static final String LINE = "LINENUMBER";
-	private static final String VAR_FILE_NAME_PATTERN = "{set:" + VAR_FILE_NAME + ":" + FILE + "#" + LINE + "}";
-
 	/** Given file is included only once */
 	public static final String MODIFIER_FILE_ONCE = "FILE_ONCE";
 
@@ -98,10 +92,7 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 	public ResolveIncludeProcessor(String adocVarName) {
 		this.adocVarName = adocVarName;
 		this.adocVarNameInBrackets = "{" + adocVarName + "}";
-	}
-
-	public String getIncludeEnabledVariable() {
-		return adocVarName;
+		HostPreprocessor.enableIncludeVariable(adocVarName);
 	}
 
 	@Override
@@ -112,9 +103,8 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 	@Override
 	public void process(Document document, PreprocessorReader pReader, String target, Map<String, Object> attributes) {
 		reader = pReader;
-		String containerFileName = AdocUtils.getNodeProperty((PreprocessorReaderImpl) reader, "file");
 		baseFile = AdocUtils.getDocumentBaseFile(document);
-		File containerFile = new File(containerFileName);
+		File containerFile = getCurrentFile();
 
 		try {
 			fileSearcher.returnToLastLocation(baseFile, containerFile);
@@ -130,12 +120,25 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 	}
 
 	/**
-	 * Returns the file of the current adoc line
+	 * Returns the file of the current adoc line.
 	 */
 	@Override
+	public File getCurrentFileBaseRelative() {
+		return getBaseRelative(getCurrentFile());
+	}
+
+	/**
+	 * Returns the file of the current adoc line
+	 */
 	public File getCurrentFile() {
-		String file2 = reader.getFile();
-		return new File(file2);
+		return new File(reader.getFile());
+	}
+
+	/**
+	 * Returns the directory of the current adoc line
+	 */
+	public File getCurrentDir() {
+		return new File(reader.getDir());
 	}
 
 	/**
@@ -157,7 +160,6 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 	private void searchAndInlineFile(Document document, Map<String, Object> attributes,
 			File containerFile, String target) {
 
-		File f = getCurrentFile();
 		String curLine = "include::" + adocVarNameInBrackets + target + "[" + getAttributeString(attributes) + "]";
 		String newLine = "include++::++{" + adocVarName + "\\}" + target + "[" + getAttributeString(attributes) + "]";
 
@@ -178,12 +180,6 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 			Map<String, Object> clearedAttrs = clearAttributes(attributes, MODIFIER_FILE_ONCE);
 			clearedAttrs = getNewAttributes(clearedAttrs);
 			newLine = "include::" + fileName + "[" + getAttributeString(clearedAttrs) + "]";
-
-			String newLineTmp = "\n" + VAR_FILE_NAME_PATTERN.replace(FILE, fileName).replace(LINE, "0");
-			newLineTmp += "\n" + newLine + "\n";
-			String varContainerFile = VAR_FILE_NAME_PATTERN.replace(FILE, containerFile.toString());
-			newLineTmp += varContainerFile.replace(LINE, String.valueOf(getCurrentLine())) + "\n";
-			newLine = newLineTmp;
 
 			fileSearcher.moveToNewLocation(file);
 		} catch (FileNotFoundException e) {

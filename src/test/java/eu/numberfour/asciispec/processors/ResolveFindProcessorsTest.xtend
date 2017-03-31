@@ -725,6 +725,6 @@ class ResolveFindProcessorsTest extends AsciidoctorTest {
 			"src/test/resources/data/find_resolver/sub2",
 			"includeSrclnkWithError.adoc",
 			'''
-			asciispec  : ERROR: includeSrclnkWithError.adoc: line 9: PQN not found: 'getStartWithQuantityFormatX123'.''');
+			asciispec  : ERROR: sub21/textWithSrclnk.adoc: line 8: PQN not found: 'getStartWithQuantityFormatX123'.''');
 	}
 }

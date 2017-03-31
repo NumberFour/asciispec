@@ -102,4 +102,5 @@ abstract public class MacroPreprocessor<T> extends FileAwarePreprocessor impleme
 	public String error(Document document, String consoleMsg, String inlineMsg) {
 		return ErrorAndWarningsMixin.super.error(document, consoleMsg, inlineMsg);
 	}
+
 }

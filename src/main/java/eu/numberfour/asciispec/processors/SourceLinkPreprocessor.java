@@ -2,7 +2,6 @@ package eu.numberfour.asciispec.processors;
 
 import static eu.numberfour.asciispec.AdocUtils.transformVariable;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -76,42 +75,55 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 		String fullMatch = matcher.group();
 		String newline = fullMatch;
 
-		File f = getCurrentFile();
-
 		switch (key) {
 		case GEN_ADOC_DIR_VAR:
-			try {
-				String genadocDirname = matcher.group("GENADOC");
-				setIndexFile(genadocDirname);
-			} catch (Exception e) {
-				String message = e.getMessage() + ". Check variable '" + GEN_ADOC_DIR_VAR + "'";
-				newline += "\n\n" + error(document, message) + "\n\n";
-			}
+			newline = setGenDir(document, matcher, newline);
 			break;
 		case REPOS_CONFIG_VAR:
-			newline = addRepoConfig(fullMatch, matcher);
+			newline = addRepoConfig(document, fullMatch, matcher);
 			break;
 		case SRCLNK:
-			try {
-				checkConfig();
-				ensureDatabase();
-				newline = processSourceLink(document, matcher);
-			} catch (Exception e) {
-				error(document, e.getMessage());
-			}
+			newline = processSrclnk(document, matcher, newline);
 			break;
 		}
 		return newline;
 	}
 
-	private String addRepoConfig(String line, Matcher cgfReposVar) {
+	private String setGenDir(Document document, Matcher matcher, String newline) {
+		try {
+			String genadocDirname = matcher.group("GENADOC");
+			setIndexFile(genadocDirname);
+		} catch (Exception e) {
+			String message = e.getMessage() + ". Check variable '" + GEN_ADOC_DIR_VAR + "'";
+			newline += "\n\n" + error(document, message) + "\n\n";
+		}
+		return newline;
+	}
+
+	private String addRepoConfig(Document document, String line, Matcher cgfReposVar) {
 		String newLine = line;
-		String name = cgfReposVar.group("NAME");
-		String descr = cgfReposVar.group("DESCR");
-		String html = cgfReposVar.group("HTML");
-		RepositoryConfig repoCfg = new RepositoryConfig(name, descr, html);
-		repoConfigs.put(repoCfg.name, repoCfg);
+		try {
+			String name = cgfReposVar.group("NAME");
+			String descr = cgfReposVar.group("DESCR");
+			String html = cgfReposVar.group("HTML");
+			RepositoryConfig repoCfg = new RepositoryConfig(name, descr, html);
+			repoConfigs.put(repoCfg.name, repoCfg);
+		} catch (Exception e) {
+			newLine += "\n\n"
+					+ error(document, "Error when parsing repository config. Check variable: " + REPOS_CONFIG_VAR);
+		}
 		return newLine;
+	}
+
+	private String processSrclnk(Document document, Matcher matcher, String newline) {
+		try {
+			checkConfig();
+			ensureDatabase();
+			newline = processSourceLink(document, matcher);
+		} catch (Exception e) {
+			newline += "\n\n" + error(document, e.getClass().toString() + " " + e.getMessage());
+		}
+		return newline;
 	}
 
 	private void checkConfig() {
@@ -152,7 +164,6 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 						"Missing config for repository '" + repoName + "'");
 			}
 		}
-
 
 		String result;
 		if (errMsg != null) {

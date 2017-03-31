@@ -1,7 +1,6 @@
 package eu.numberfour.asciispec.processors;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -12,14 +11,30 @@ import org.asciidoctor.extension.Preprocessor;
 import org.asciidoctor.extension.PreprocessorReader;
 
 import eu.numberfour.asciispec.AdocUtils;
-import eu.numberfour.asciispec.findresolver.FileStackHelper;
-import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
 
 /**
  * This preprocessor is aware of the file from which a current line (in
  * {@link #processLine(Document, String)}) was read from.
  */
-abstract public class HostPreprocessor extends Preprocessor {
+public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
+
+	//// public static members ////
+	private static final List<String> INCLUDE_VARIABLES = new LinkedList<>();
+
+	/**
+	 * Enables the use of e.g. <code>{find}</code> variables within include
+	 * directives like:<br/>
+	 * <br/>
+	 * <code>include::{find}myfile.adoc[]</code>
+	 * <p>
+	 * Otherwise, the line that contains this (unknown) variable is dropped by
+	 * Asciidoctor!
+	 *
+	 * @return List of variable names
+	 */
+	public static void enableIncludeVariable(String varName) {
+		INCLUDE_VARIABLES.add(varName);
+	}
 
 	private static HostPreprocessor singleton;
 
@@ -32,7 +47,11 @@ abstract public class HostPreprocessor extends Preprocessor {
 	private Path basedir;
 	private List<ClientPreprocessor> clientPreprocessors = new LinkedList<>();
 
-	HostPreprocessor() {
+	public HostPreprocessor() {
+		if (singleton != null) {
+			singleton.clientPreprocessors.clear();
+			reader = null;
+		}
 		singleton = this;
 	}
 
@@ -41,8 +60,7 @@ abstract public class HostPreprocessor extends Preprocessor {
 	}
 
 	private void setIncludedVariables(Document document) {
-		for (ClientPreprocessor cp : clientPreprocessors) {
-			String inclVar = cp.getIncludeEnabledVariable();
+		for (String inclVar : INCLUDE_VARIABLES) {
 			document.setAttr(inclVar, "{" + inclVar + "}", true);
 		}
 	}
@@ -53,7 +71,7 @@ abstract public class HostPreprocessor extends Preprocessor {
 		basedir = AdocUtils.getDocumentBasePath(document);
 		File documentBaseFile = AdocUtils.getDocumentBaseFile(document);
 		if (documentBaseFile != null) {
-			documentBaseFile = new File(getBaseRelative(documentBaseFile));
+			documentBaseFile = getBaseRelative(documentBaseFile);
 		}
 
 		setIncludedVariables(document);
@@ -105,39 +123,14 @@ abstract public class HostPreprocessor extends Preprocessor {
 		}
 	}
 
-	/**
-	 * Searches for the given file in the directory of the current file.
-	 */
-	public File searchFile(String fileName) throws FileNotFoundException, MultipleFileMatchesException {
-		return FileStackHelper.searchRelativeTo(fileName, getCurrentDir(), basedir);
+	@Override
+	public Path getBasedir() {
+		return basedir;
 	}
 
-	/**
-	 * Returns a file that is relative to the base dir.
-	 */
-	public String getBaseRelative(File file) {
-		return basedir.relativize(file.toPath()).toString();
-	}
-
-	/**
-	 * Returns the file of the current adoc line.
-	 */
-	public File getCurrentFile() {
-		return new File(reader.getFile());
-	}
-
-	/**
-	 * Returns the path of the current adoc line.
-	 */
-	public File getCurrentDir() {
-		return new File(reader.getDir());
-	}
-
-	/**
-	 * Returns the line number of the current file.
-	 */
-	public int getCurrentLine() {
-		return reader.getLineNumber() - 1;
+	@Override
+	public PreprocessorReader getReader() {
+		return reader;
 	}
 
 }

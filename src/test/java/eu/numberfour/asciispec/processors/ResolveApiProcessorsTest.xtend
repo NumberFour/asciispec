@@ -22,14 +22,14 @@ class ResolveApiProcessorsTest extends AsciidoctorTest {
 
 	@Before
 	def public void registerExtensions() {
-		//new ResolveFindExtension().register(doc);
-		//new ResolveApiExtension().register(doc);
+		new ResolveFindExtension().register(doc);
+		new ResolveApiExtension().register(doc);
 		new InlineWikiLinkExtension().register(doc);
 		new SourceLinkExtension().register(doc);
 	}
 
 	@Test
-	def void testNoCyclicExceptions() throws IOException {
+	def void test() throws IOException {
 		'''
 			<div class="paragraph">
 			<p>First we include an API element. No leveloffset.</p>

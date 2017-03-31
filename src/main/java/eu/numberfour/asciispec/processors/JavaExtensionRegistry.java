@@ -36,6 +36,8 @@ public class JavaExtensionRegistry {
 
 	private final Map<String, InlineMacroToBlockConverter> converters;
 
+	private boolean isHostPreprocessorRegistered = false;
+
 	/**
 	 * Creates a new instance that delegates all calls to the given extension registry.
 	 *
@@ -154,14 +156,16 @@ public class JavaExtensionRegistry {
 	/**
 	 * @see org.asciidoctor.extension.JavaExtensionRegistry#preprocessor(Class)
 	 */
-	public void preprocessor(Class<? extends Preprocessor> preprocessor) {
+	public <T extends Preprocessor & ClientPreprocessor> void preprocessor(Class<T> preprocessor) {
+		registerHostPreprocessor();
 		delegateRegistry.preprocessor(preprocessor);
 	}
 
 	/**
 	 * @see org.asciidoctor.extension.JavaExtensionRegistry#preprocessor(Preprocessor)
 	 */
-	public void preprocessor(Preprocessor preprocessor) {
+	public <T extends Preprocessor & ClientPreprocessor> void preprocessor(T preprocessor) {
+		registerHostPreprocessor();
 		delegateRegistry.preprocessor(preprocessor);
 	}
 
@@ -169,7 +173,21 @@ public class JavaExtensionRegistry {
 	 * @see org.asciidoctor.extension.JavaExtensionRegistry#preprocessor(String)
 	 */
 	public void preprocessor(String preprocessor) {
+		registerHostPreprocessor();
 		delegateRegistry.preprocessor(preprocessor);
+	}
+
+	/**
+	 * Registers the {@link HostPreprocessor} once only.
+	 * <p>
+	 * <b>Has to be executed before any other {@link ClientPreprocessor} is
+	 * registered.</b>
+	 */
+	private void registerHostPreprocessor() {
+		if (!isHostPreprocessorRegistered) {
+			delegateRegistry.preprocessor(HostPreprocessor.class);
+			isHostPreprocessorRegistered = true;
+		}
 	}
 
 	/**

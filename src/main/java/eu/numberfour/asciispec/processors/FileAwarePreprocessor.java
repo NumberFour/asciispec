@@ -2,6 +2,7 @@ package eu.numberfour.asciispec.processors;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
 
 import org.asciidoctor.ast.Document;
 import org.asciidoctor.extension.Preprocessor;
@@ -23,7 +24,7 @@ import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
  * {@link Preprocessor} has reliable information about line numbers, files and
  * paths.
  */
-abstract public class FileAwarePreprocessor extends Preprocessor implements ClientPreprocessor {
+abstract public class FileAwarePreprocessor extends Preprocessor implements ClientPreprocessor, DirectoriesMixin {
 
 	public FileAwarePreprocessor() {
 		HostPreprocessor.getSingleton().register(this);
@@ -38,39 +39,29 @@ abstract public class FileAwarePreprocessor extends Preprocessor implements Clie
 		// (see JavaDoc above)
 	}
 
-	/**
-	 * Searches for the given file in the directory of the current file.
-	 */
-	public File searchFile(String fileName) throws FileNotFoundException, MultipleFileMatchesException {
-		return getHostPreprocessor().searchFile(fileName);
+	@Override
+	public Path getBasedir() {
+		return getHostPreprocessor().getBasedir();
 	}
 
-	/**
-	 * Returns a file that is relative to the base dir.
-	 */
-	public String getBaseRelative(File file) {
-		return getHostPreprocessor().getBaseRelative(file);
+	@Override
+	public PreprocessorReader getReader() {
+		return getHostPreprocessor().getReader();
 	}
 
-	/**
-	 * Returns the file of the current adoc line.
-	 */
-	public File getCurrentFile() {
-		return getHostPreprocessor().getCurrentFile();
+	@Override
+	public File getCurrentFileBaseRelative() {
+		return DirectoriesMixin.super.getCurrentFileBaseRelative();
 	}
 
-	/**
-	 * Returns the path of the current adoc line.
-	 */
-	public File getCurrentDir() {
-		return getHostPreprocessor().getCurrentDir();
-	}
-
-	/**
-	 * Returns the line number of the current file.
-	 */
+	@Override
 	public int getCurrentLine() {
-		return getHostPreprocessor().getCurrentLine();
+		return DirectoriesMixin.super.getCurrentLine();
+	}
+
+	@Override
+	public File searchFile(String fileName) throws FileNotFoundException, MultipleFileMatchesException {
+		return DirectoriesMixin.super.searchFile(fileName);
 	}
 
 	final protected HostPreprocessor getHostPreprocessor() {

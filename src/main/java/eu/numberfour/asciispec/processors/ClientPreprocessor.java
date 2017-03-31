@@ -13,21 +13,6 @@ public interface ClientPreprocessor {
 	}
 
 	/**
-	 * Enables the use of e.g. <code>{find}</code> variables within include
-	 * directives like:<br/>
-	 * <br/>
-	 * <code>include::{find}myfile.adoc[]</code>
-	 * <p>
-	 * Otherwise, the line that contains this (unknown) variable is dropped by
-	 * Asciidoctor!
-	 *
-	 * @return List of variable names
-	 */
-	default String getIncludeEnabledVariable() {
-		return null;
-	}
-
-	/**
 	 * Returns true iff {@link #processLine(Document, String)} shall be called.
 	 */
 	default boolean isEnabled() {

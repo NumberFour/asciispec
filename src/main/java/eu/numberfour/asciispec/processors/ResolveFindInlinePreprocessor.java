@@ -34,6 +34,11 @@ public class ResolveFindInlinePreprocessor extends MacroPreprocessor<String> {
 		return fullMatch;
 	}
 
+	/**
+	 * Returns the relative path to the given target. A relative path is
+	 * necessary since html might get generated which will also be used in www
+	 * scenarios. Absolute paths would break this scenario.
+	 */
 	private String getBaseRelativeFileName(Document document, Matcher findvarMatcher) {
 		String fileName = findvarMatcher.group("FILE");
 		String baseRelFileName = "{find}" + fileName;
@@ -49,9 +54,11 @@ public class ResolveFindInlinePreprocessor extends MacroPreprocessor<String> {
 			baseRelFileName += " " + error(document, e.getMessage()) + " ";
 		}
 
-		if (findFile != null)
-			baseRelFileName = super.getBaseRelative(findFile);
+		if (findFile != null) {
+			baseRelFileName = super.getBaseRelative(findFile).toString();
+		}
 
 		return baseRelFileName;
 	}
+
 }

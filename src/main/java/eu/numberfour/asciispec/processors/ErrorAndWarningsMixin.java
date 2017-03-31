@@ -8,7 +8,7 @@ import eu.numberfour.asciispec.issue.IssueAcceptor;
 
 public interface ErrorAndWarningsMixin {
 
-	File getCurrentFile();
+	File getCurrentFileBaseRelative();
 
 	int getCurrentLine();
 
@@ -43,7 +43,7 @@ public interface ErrorAndWarningsMixin {
 	 * @return Formatted error message
 	 */
 	default String error(Document document, String consoleMsg, String inlineMsg) {
-		getIssueAcceptor().error(document, consoleMsg, getCurrentFile(), getCurrentLine());
+		getIssueAcceptor().error(document, consoleMsg, getCurrentFileBaseRelative(), getCurrentLine());
 		return "#[Error: " + inlineMsg + "]#";
 	}
 
@@ -74,7 +74,7 @@ public interface ErrorAndWarningsMixin {
 	 * @return Formatted warn message
 	 */
 	default String warn(Document document, String consoleMsg, String inlineMsg) {
-		getIssueAcceptor().warn(document, consoleMsg, getCurrentFile(), getCurrentLine());
+		getIssueAcceptor().warn(document, consoleMsg, getCurrentFileBaseRelative(), getCurrentLine());
 		return "#[Warn: " + inlineMsg + "]#";
 	}
 }

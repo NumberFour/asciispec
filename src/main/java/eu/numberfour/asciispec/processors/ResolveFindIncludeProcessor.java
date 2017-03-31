@@ -19,7 +19,6 @@ import java.util.Set;
 import org.asciidoctor.ast.Document;
 import org.asciidoctor.extension.IncludeProcessor;
 
-import eu.numberfour.asciispec.findresolver.FileStackHelper;
 import eu.numberfour.asciispec.findresolver.IgnoreFileException;
 import eu.numberfour.asciispec.findresolver.InconsistentUseOfModifiersException;
 import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
@@ -65,7 +64,9 @@ public class ResolveFindIncludeProcessor extends ResolveIncludeProcessor {
 					throw e.ignoreFileException;
 			}
 
-			File file = FileStackHelper.searchRelativeTo(target, getCurrentFile(), getBasePath());
+			File file = searchFile(target);
+			// File file = FileStackHelper.searchRelativeTo(target,
+			// getCurrentDir(), getBasePath());
 			allIncludedTargets.add(target);
 			return file;
 		} catch (MultipleFileMatchesException e) {
