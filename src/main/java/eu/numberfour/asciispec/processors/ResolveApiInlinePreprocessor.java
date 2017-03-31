@@ -112,10 +112,8 @@ public class ResolveApiInlinePreprocessor extends MacroPreprocessor<String> impl
 				int leveloffset = getLeveloffset(attributes);
 				appendLeveloffset(strb, leveloffset, false);
 
-				String s = System.getProperty("user.dir");
-
 				List<String> lines = Files.readAllLines(modulePath);
-				for (int i = startLine; i < endLine; i++) {
+				for (int i = startLine; i < endLine && i < lines.size(); i++) {
 					int relLineNumber = i - startLine + 1;
 					if (isInSelectedLineRange(attributes, relLineNumber)) {
 						strb.append(lines.get(i)).append("\n");

@@ -106,7 +106,7 @@ public interface SourceLinkMixin {
 	}
 
 	default Path getGendirModules() {
-		return getGendirPath().resolve(GEN_DIR_MODULES);
+		return getGendirPath().resolve(GEN_DIR_MODULES).normalize();
 	}
 
 	default File getIndexFile() {
