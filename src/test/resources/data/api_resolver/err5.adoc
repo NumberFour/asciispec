@@ -1,0 +1,7 @@
+include::configs/config.adoc[]
+
+= Main Document Title
+
+We include an API element.
+
+include::{api}IterableExt#reduce[lines="1..3]
