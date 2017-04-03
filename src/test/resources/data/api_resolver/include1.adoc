@@ -1,6 +1,6 @@
-include::configs/config.adoc[ONCE]
 
 = Main Document Title
+include::configs/config.adoc[]
 
 We include a subsection:
 
