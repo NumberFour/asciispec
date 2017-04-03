@@ -12,8 +12,18 @@ import org.asciidoctor.extension.PreprocessorReader;
 import eu.numberfour.asciispec.AdocUtils;
 
 /**
- * This preprocessor is aware of the file from which a current line (in
- * {@link #processLine(Document, String)}) was read from.
+ * This preprocessor is hosts all other Preprocessors. In fact, this is the only
+ * {@link Preprocessor} which is truly registered at AsciiDoctorJ.
+ * <p>
+ * To be still able to chose a certain set of registered {@link Preprocessor}s,
+ * all other Preprocessors still have to register like a true
+ * {@link Preprocessor}, i.e. in the Manifest file or for test scenarios in the
+ * test initializing method. For further details, also consult
+ * {@link JavaExtensionRegistry}.
+ * <p>
+ * For implementing a new {@link Preprocessor}, it is recommended to extend
+ * {@link FileAwarePreprocessor}. Alternatively, extend {@link Preprocessor} and
+ * implement {@link ClientPreprocessor}.
  */
 public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 
@@ -54,6 +64,9 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 		singleton = this;
 	}
 
+	/**
+	 * Registers a new {@link ClientPreprocessor}.
+	 */
 	public void register(ClientPreprocessor clientPreprocessor) {
 		clientPreprocessors.add(clientPreprocessor);
 	}
@@ -121,11 +134,6 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 			conc(document, processedLine, tail, result);
 		}
 	}
-
-	// @Override
-	// public Path getBasedir() {
-	// return basedir;
-	// }
 
 	@Override
 	public PreprocessorReader getReader() {

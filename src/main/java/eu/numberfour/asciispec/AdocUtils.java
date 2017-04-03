@@ -600,7 +600,7 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Returns the base file of the document. Can be null in test scenarios.
+	 * Returns the base file of the document.
 	 *
 	 * @param document
 	 *            the document
@@ -610,11 +610,6 @@ public final class AdocUtils {
 	public static File getDocumentBaseFile(ContentNode document) {
 		String baseFileName = getAttributeAsString(Objects.requireNonNull(document), "docfile", null);
 		if (baseFileName == null)
-			return null;
-
-		// The '<DIRECT_INPUT>' is set for tests only.
-		// See: {@link AsciidoctorTest#getOptions(File, File)}
-		if (baseFileName.equals("<DIRECT_INPUT>"))
 			return null;
 
 		return new File(baseFileName);

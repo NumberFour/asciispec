@@ -33,7 +33,7 @@ import eu.numberfour.asciispec.sourceindex.IndexEntryInfo;
  * For more information about the PQN syntax and asciispec variables, please
  * refer to the asciispec reference.
  */
-public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements SourceLinkMixin {
+public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements SourceIndexMixin {
 	@SuppressWarnings("unused")
 	private static class RepositoryConfig {
 		public final String name;
@@ -64,7 +64,7 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 	private static final Pattern GEN_ADOC_VAR_PATTERN = Pattern.compile(":" + GEN_ADOC_DIR_VAR + ":\\s*(?<GENADOC>.*)");
 
 	private final Map<String, RepositoryConfig> repoConfigs = new HashMap<>();
-	private final SourceLinkMixinState state = new SourceLinkMixinState();
+	private final SourceIndexMixinState state = new SourceIndexMixinState();
 
 	@Override
 	public void init(Document document) {
@@ -189,7 +189,7 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 	}
 
 	@Override
-	public SourceLinkMixinState getState() {
+	public SourceIndexMixinState getState() {
 		return state;
 	}
 

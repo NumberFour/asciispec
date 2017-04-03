@@ -21,16 +21,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.asciidoctor.ast.Document;
-import org.asciidoctor.extension.IncludeProcessor;
 
 import eu.numberfour.asciispec.AttributeParser;
 import eu.numberfour.asciispec.ParseException;
 
 /**
- * This {@link IncludeProcessor} evaluates all include macros in the document
- * which start with <code>{api}</code>.
+ * This processor evaluates all inline {api} macros, which were previously
+ * created by the {@link ResolveApiInlinePreprocessor}. The PQN of the include
+ * is parsed and the corresponding API is extracted from the generated API
+ * documentation. The attributes <code>lines</code> and <code>leveloffset</code>
+ * are evaluated.
  */
-public class ResolveApiInlinePreprocessor extends MacroPreprocessor<String> implements SourceLinkMixin {
+public class ResolveApiInlinePreprocessor extends MacroPreprocessor<String> implements SourceIndexMixin {
 	private static final String API_INCLUDE = "apiInclude";
 	private static final String GEN_ADOC_DIR_VAR = "gen_adoc_dir";
 
@@ -39,7 +41,7 @@ public class ResolveApiInlinePreprocessor extends MacroPreprocessor<String> impl
 			.compile("include:\\s*\\{\\s*api\\s*\\}\\s*\\+*(?<PQN>.*?)\\+*\\s*\\[(?<ATTRS>.*)\\]");
 	private static final Pattern GEN_ADOC_VAR_PATTERN = Pattern.compile(":" + GEN_ADOC_DIR_VAR + ":\\s*(?<GENADOC>.*)");
 
-	private final SourceLinkMixinState state = new SourceLinkMixinState();
+	private final SourceIndexMixinState state = new SourceIndexMixinState();
 
 	@Override
 	public void init(Document document) {
@@ -191,7 +193,7 @@ public class ResolveApiInlinePreprocessor extends MacroPreprocessor<String> impl
 	}
 
 	@Override
-	public SourceLinkMixinState getState() {
+	public SourceIndexMixinState getState() {
 		return state;
 	}
 

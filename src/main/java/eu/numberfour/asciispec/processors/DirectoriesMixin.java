@@ -12,6 +12,14 @@ import eu.numberfour.asciispec.AdocUtils;
 import eu.numberfour.asciispec.findresolver.FileStackHelper;
 import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
 
+/**
+ * This interface provides a set of default methods for accessing files and
+ * directories during parsing of included Asciidoctor documents. They are based
+ * on a {@link PreprocessorReader} and a {@link Document} instance.
+ * <p>
+ * Since the methods are already implemented, this Java interface is called
+ * <i>Mixin</i>.
+ */
 public interface DirectoriesMixin {
 
 	/**

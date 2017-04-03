@@ -27,11 +27,12 @@ import eu.numberfour.asciispec.findresolver.ReplaceIncludeMacroException;
  * This {@link IncludeProcessor} evaluates all include macros in the document
  * whose targets start with <code>{api}</code>.
  * <p>
- * The <code>include::{api}PQN[]</code> macro shall look like an include macro.
- * But it cannot be implemented as a real {@link IncludeProcessor} since it
- * needs to access adoc variables which is not possible inside an
- * {@link IncludeProcessor}. This is only possible in other processors.
- * Consequently, we transform the include macro into an inline macro here. In
+ * Although the <code>include::{api}PQN[]</code> macro looks like an include
+ * macro, it cannot be implemented using a real {@link IncludeProcessor} since
+ * the processor needs to access adoc variables to read the generated API files.
+ * However, accessing adoc variables is not possible inside an
+ * {@link IncludeProcessor}, but only in other processors. Consequently, we
+ * transform the include macro into an inline macro here. In
  * {@link ResolveApiInlinePreprocessor} the inline macro is then processed.
  */
 public class ResolveApiIncludeProcessor extends ResolveIncludeProcessor {

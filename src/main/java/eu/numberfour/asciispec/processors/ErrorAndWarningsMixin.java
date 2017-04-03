@@ -6,14 +6,31 @@ import org.asciidoctor.ast.Document;
 
 import eu.numberfour.asciispec.issue.IssueAcceptor;
 
+/**
+ * This interface provides a set of default methods for printing out errors and
+ * warnings during parsing of included Asciidoctor documents. They are based on
+ * an {@link IssueAcceptor}, the current file and line number.
+ * <p>
+ * Since the methods are already implemented, this Java interface is called
+ * <i>Mixin</i>.
+ */
 public interface ErrorAndWarningsMixin {
 
+	/**
+	 * Returns the current file which is relative to the document's base
+	 * directory.
+	 */
 	File getCurrentFileBaseRelative();
 
+	/**
+	 * Returns the current line.
+	 */
 	int getCurrentLine();
 
+	/**
+	 * Returns an {@link IssueAcceptor} for printing out issues.
+	 */
 	IssueAcceptor getIssueAcceptor();
-
 
 	/**
 	 * Works just like {@link #error(Document, String, String)} except that the

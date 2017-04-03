@@ -18,8 +18,19 @@ import eu.numberfour.asciispec.sourceindex.NotInSourceIndexExcpetion;
 import eu.numberfour.asciispec.sourceindex.PQNParser;
 import eu.numberfour.asciispec.sourceindex.SourceIndexDatabase;
 
-public interface SourceLinkMixin {
-	static class SourceLinkMixinState {
+/**
+ * This interface provides a set of default methods for loading and querying a
+ * {@link SourceIndexDatabase} during parsing of included Asciidoctor documents.
+ * These methods are stateful and thus rely on the state instance of type
+ * {@link SourceIndexMixinState} which has to be by the implementing client
+ * class. Besides, this interface is also base on a file search method and an
+ * error printing method.
+ * <p>
+ * Since the methods are already implemented, this Java interface is called
+ * <i>Mixin</i>.
+ */
+public interface SourceIndexMixin {
+	static class SourceIndexMixinState {
 		private SourceIndexDatabase database;
 		private boolean configuring = true;
 		private Path gendirPath;
@@ -44,13 +55,24 @@ public interface SourceLinkMixin {
 	String INDEX_FILE_NAME = "index.idx";
 	String GEN_DIR_MODULES = "modules";
 
-	SourceLinkMixinState getState();
+	/**
+	 * Returns the state instance of this interface.
+	 */
+	SourceIndexMixinState getState();
 
+	/**
+	 * Searches a file during a default method call.
+	 */
 	File searchFile(String fileName) throws FileNotFoundException, MultipleFileMatchesException;
 
+	/**
+	 * Prints an error that occurred during a default method call.
+	 */
 	String error(Document document, String consoleMsg, String inlineMsg);
 
 	/**
+	 * Configures and loads the database.
+	 * <p>
 	 * The expected structure of the root directory is as follows:
 	 * <ul>
 	 * <li>root/
@@ -79,13 +101,16 @@ public interface SourceLinkMixin {
 		}
 	}
 
+	/**
+	 * Returns true iff the state object is not configured yet.
+	 */
 	default boolean isConfiguring() {
 		return getState().configuring;
 	}
 
 	/**
-	 * Sets the state variables {@link SourceLinkMixinState#gendirPath} and
-	 * {@link SourceLinkMixinState#indexFile}. The given filename must be
+	 * Sets the state variables {@link SourceIndexMixinState#gendirPath} and
+	 * {@link SourceIndexMixinState#indexFile}. The given filename must be
 	 * absolute.
 	 *
 	 * @param genadocdir
@@ -101,18 +126,34 @@ public interface SourceLinkMixin {
 		getState().indexFile = getState().gendirPath.resolve(INDEX_FILE_NAME).toFile();
 	}
 
+	/**
+	 * Returns the path to all generated Asciidoc files.
+	 */
 	default Path getGendirPath() {
+
 		return getState().gendirPath;
 	}
 
+	/**
+	 * Returns the path to the generated API module files.
+	 */
 	default Path getGendirModules() {
 		return getGendirPath().resolve(GEN_DIR_MODULES).normalize();
 	}
 
+	/**
+	 * Returns the index file.
+	 */
 	default File getIndexFile() {
 		return getState().indexFile;
 	}
 
+	/**
+	 * Queries the database for a given PQN string.
+	 * <p>
+	 * The parameters document and macro are used for displaying error messages
+	 * only.
+	 */
 	default IndexEntryInfoResult getIndexEntryInfo(Document document, String macro, String givenPQN) {
 		IndexEntryInfo iei = null;
 		String completePQN = givenPQN;
