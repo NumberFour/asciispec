@@ -517,7 +517,7 @@ class ResolveApiProcessorsTest extends AsciidoctorTest {
 			</div>
 			<div class="paragraph">
 			<p>include:{api}IterableExt#reduce[]
-			<mark>[Error: Could not read module file: /Users/marcus.mews/GitHub/asciispec/src/test/resources/data/docu/gen_adoc/modules/stdlib_api#packages/eu.numberfour.n4js.base.api#src.n4js/n4.lang/IterableExt.adoc]</mark></p>
+			<mark>[Error: Could not read module file: src/test/resources/data/docu/gen_adoc/modules/stdlib_api#packages/eu.numberfour.n4js.base.api#src.n4js/n4.lang/IterableExt.adoc]</mark></p>
 			</div>''',
 			'''
 			«config»
@@ -529,7 +529,7 @@ class ResolveApiProcessorsTest extends AsciidoctorTest {
 			include::{api}IterableExt#reduce[]
 			''',
 			'''
-			asciispec  : ERROR: line 10: Could not read module file: /Users/marcus.mews/GitHub/asciispec/src/test/resources/data/docu/gen_adoc/modules/stdlib_api#packages/eu.numberfour.n4js.base.api#src.n4js/n4.lang/IterableExt.adoc''');
+			asciispec  : ERROR: line 10: Could not read module file: src/test/resources/data/docu/gen_adoc/modules/stdlib_api#packages/eu.numberfour.n4js.base.api#src.n4js/n4.lang/IterableExt.adoc''');
 	}
 
 	@Test
