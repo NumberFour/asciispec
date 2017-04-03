@@ -126,7 +126,8 @@ public class ResolveApiInlinePreprocessor extends MacroPreprocessor<String> impl
 			} catch (ParseException e) {
 				errMsg = error(document, "Could not parse given attributes: " + attrs);
 			} catch (IOException e) {
-				errMsg = error(document, "Could not read module file: " + modulePath.toString());
+				File moduleFile = getBaseRelative(modulePath.toFile());
+				errMsg = error(document, "Could not read module file: " + moduleFile.toString());
 			}
 		}
 
