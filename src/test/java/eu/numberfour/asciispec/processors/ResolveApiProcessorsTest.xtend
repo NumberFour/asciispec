@@ -195,13 +195,6 @@ class ResolveApiProcessorsTest extends AsciidoctorTest {
 	def void leveloffset3() throws IOException {
 		convertAndAssert(
 		'''
-			<div id="preamble">
-			<div class="sectionbody">
-			<div class="paragraph">
-			<p>We include an API element with leveloffset -1.</p>
-			</div>
-			</div>
-			</div>
 			<h1 id="_class_datetimeformat" class="sect0">Class DateTimeFormat</h1>
 			<div class="sect1 memberdoc">
 			<h2 id="gsec:spec_n4.format.DateTimeFormat.DateTimeFormat.format">Method format</h2>
@@ -214,18 +207,18 @@ class ResolveApiProcessorsTest extends AsciidoctorTest {
 			</div>
 			<div class="sect2">
 			<h3 id="_semantics">Semantics</h3>
-
+			<div class="paragraph">
+			<p>We included an API element with leveloffset -1.</p>
+			</div>
 			</div>
 			</div>
 			</div>''',
 			'''
 			«config»
 
-			= Main Document Title
-
-			We include an API element with leveloffset -1.
-
 			include::{api}DateTimeFormat#format[leveloffset=-1]
+
+			We included an API element with leveloffset -1.
 			''');
 	}
 
