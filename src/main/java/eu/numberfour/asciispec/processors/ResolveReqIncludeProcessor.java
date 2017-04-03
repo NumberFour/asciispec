@@ -15,14 +15,14 @@ import org.asciidoctor.extension.IncludeProcessor;
 
 /**
  * This {@link IncludeProcessor} evaluates all include macros in the document
- * whose targets start with <code>{api}</code> and transforms them to inline
- * macros, which are later parsed by the {@link ResolveApiInlinePreprocessor}.
+ * whose targets start with <code>{req}</code> and transforms them to inline
+ * macros, which are later parsed by the {@link ResolveReqInlinePreprocessor}.
  */
-public class ResolveApiIncludeProcessor extends IncludeToInlineProcessor {
-	private static final String INCLUDE_API = "api";
+public class ResolveReqIncludeProcessor extends IncludeToInlineProcessor {
+	private static final String INCLUDE_REQ = "req";
 
-	public ResolveApiIncludeProcessor() {
-		super(INCLUDE_API);
+	public ResolveReqIncludeProcessor() {
+		super(INCLUDE_REQ);
 	}
 
 }

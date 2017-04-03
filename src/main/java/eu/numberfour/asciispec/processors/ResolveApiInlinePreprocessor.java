@@ -30,7 +30,7 @@ import eu.numberfour.asciispec.ParseException;
  * created by the {@link ResolveApiInlinePreprocessor}. The PQN of the include
  * is parsed and the corresponding API is extracted from the generated API
  * documentation. The attributes <code>lines</code> and <code>leveloffset</code>
- * are evaluated.
+ * are supported.
  */
 public class ResolveApiInlinePreprocessor extends MacroPreprocessor<String> implements SourceIndexMixin {
 	private static final String API_INCLUDE = "apiInclude";
