@@ -182,6 +182,11 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 			newLine = "include::" + fileName + "[" + getAttributeString(clearedAttrs) + "]";
 
 			fileSearcher.moveToNewLocation(file);
+
+			String newFileName = containerFile.toString();
+			String newPathName = containerFile.getParentFile().toString();
+			reader.push_include(newLine, newFileName, newPathName, 1, attributes);
+			return;
 		} catch (FileNotFoundException e) {
 			newLine += " " + error(document, e.getMessage()) + " ";
 		} catch (CircularDependencyException e) {
@@ -193,9 +198,7 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 			return;
 		}
 
-		String newFileName = containerFile.toString();
-		String newPathName = containerFile.getParentFile().toString();
-		reader.push_include(newLine, newFileName, newPathName, 1, attributes);
+		reader.restoreLine(newLine);
 	}
 
 	private void checkInconsistentUseOfFileOnceModifier(Map<String, Object> attributes, File file)

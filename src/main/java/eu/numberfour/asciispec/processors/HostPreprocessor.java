@@ -88,6 +88,7 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 
 		while (reader.hasMoreLines()) {
 			String line = reader.readLine();
+			int ln = reader.getLineNumber();
 			List<String> cplines = new LinkedList<String>();
 			conc(document, line, clientPreprocessors, cplines);
 			newlines.addAll(cplines);

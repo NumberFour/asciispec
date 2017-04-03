@@ -1,9 +1,0 @@
-
-
-= Title
-
-Once1 Once1 Once1
-
-include::{find}includeTargetOnceHelper.adoc[]
-
-include::{find}toppot.adoc[TARGET_ONCE]

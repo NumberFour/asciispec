@@ -1,0 +1,7 @@
+include::configs/config.adoc[ONCE]
+
+= Main Document Title
+
+We include an API element with one line.
+
+include::{api}DateTimeFormat#format[lines=1]

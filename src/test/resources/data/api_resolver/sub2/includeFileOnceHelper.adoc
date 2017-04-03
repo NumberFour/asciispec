@@ -1,8 +1,0 @@
-
-
-== Title Helper
-
-Helper Helper Helper
-
-
-include::{find}toppot.adoc[FILE_ONCE]

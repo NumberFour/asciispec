@@ -1,9 +1,0 @@
-
-
-= Title
-
-Once1 Once1 Once1
-
-include::{find}includeFileOnceHelper.adoc[]
-
-include::{find}toppot.adoc[FILE_ONCE]

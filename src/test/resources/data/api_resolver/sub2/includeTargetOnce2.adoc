@@ -1,9 +1,0 @@
-
-
-= Title
-
-These are letters.
-
-include::{find}includeTargetOnceHelper.adoc[]
-
-include::{find}toppot.adoc[]

@@ -451,7 +451,7 @@ class ResolveFindProcessorsTest extends AsciidoctorTest {
 			<p>These are letters.</p>
 			</div>
 			<div class="paragraph">
-			<p>include::{find}circularDependencySelf.adoc[] <mark>[Error: Circular dependencies detected. More information in console output.]</mark></p>
+			<p>include::{find}circularDependencySelf.adoc[] <mark>[Error: Circular dependencies detected. More information in console output.]</mark> </p>
 			</div>'''
 		.convertFileAndAssertErrorContains(
 			"src/test/resources/data/find_resolver/sub2",
@@ -478,7 +478,7 @@ class ResolveFindProcessorsTest extends AsciidoctorTest {
 			<p>These are letters.</p>
 			</div>
 			<div class="paragraph">
-			<p>include::{find}circularDependencyPair.adoc[] <mark>[Error: Circular dependencies detected. More information in console output.]</mark></p>
+			<p>include::{find}circularDependencyPair.adoc[] <mark>[Error: Circular dependencies detected. More information in console output.]</mark> </p>
 			</div>
 			</div>
 			</div>'''
@@ -562,7 +562,7 @@ class ResolveFindProcessorsTest extends AsciidoctorTest {
 			<p>These are letters.</p>
 			</div>
 			<div class="paragraph">
-			<p>include::{find}top2.adoc[] <mark>[Error: File 'top2.adoc' could not be found]</mark></p>
+			<p>include::{find}top2.adoc[] <mark>[Error: File 'top2.adoc' could not be found]</mark> </p>
 			</div>'''
 		.convertFileAndAssertErrorContains(
 			"src/test/resources/data/find_resolver/sub2",

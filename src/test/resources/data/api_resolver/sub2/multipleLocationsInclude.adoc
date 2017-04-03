@@ -1,9 +1,0 @@
-
-= Title
-
-include::{find}configs/config.adoc[ONCE]
-
-These are letters.
-
-
-include::{find}top.adoc[]

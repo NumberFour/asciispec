@@ -1,9 +1,0 @@
-== Copy of Main Document
-
-include::{find}configs/config.adoc[ONCE]
-
-
-
-
-
-Top Top Top
