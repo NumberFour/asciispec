@@ -1,7 +1,8 @@
 package eu.numberfour.asciispec.processors;
 
 /**
- * Registration class for the {@link ResolveFindIncludeProcessor} and {@link ResolveFindInlinePreprocessor} processors.
+ * Registration class for the {@link ResolveApiIncludeProcessor} and
+ * {@link ResolveApiInlinePreprocessor} processors.
  *
  * If you rename or move this class, do not forget to update the
  * META-INF/services/org.asciidoctor.extension.spi.ExtensionRegistry file!
