@@ -1,7 +1,0 @@
-include::configs/config.adoc[ONCE]
-
-= Main Document Title
-
-We include an API element with lines and leveloffset.
-
-include::{api}DateTimeFormat#format[lines="1..3", leveloffset=+1]

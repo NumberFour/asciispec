@@ -1,7 +1,0 @@
-include::configs/config.adoc[ONCE]
-
-= Main Document Title
-
-We include an API element with leveloffset -1.
-
-include::{api}DateTimeFormat#format[leveloffset=-1]

@@ -3,17 +3,30 @@ package eu.numberfour.asciispec.processors;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
+import java.util.Objects;
 
+import org.asciidoctor.ast.Document;
 import org.asciidoctor.extension.PreprocessorReader;
 
+import eu.numberfour.asciispec.AdocUtils;
 import eu.numberfour.asciispec.findresolver.FileStackHelper;
 import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
 
 public interface DirectoriesMixin {
 
-	Path getBasedir();
+	/**
+	 * File name in test scenarios.
+	 */
+	String DIRECT_INPUT_FILE_NAME = "<DIRECT_INPUT>";
+
+	/**
+	 * Base file in test scenarios.
+	 */
+	File DIRECT_INPUT_FILE = new File(DIRECT_INPUT_FILE_NAME);
 
 	PreprocessorReader getReader();
+
+	Document getDocument();
 
 	/**
 	 * Searches for the given file in the directory of the current file.
@@ -26,7 +39,12 @@ public interface DirectoriesMixin {
 	 * Returns a file that is relative to the base dir.
 	 */
 	default File getBaseRelative(File file) {
-		return getBasedir().relativize(file.toPath()).toFile();
+		Path basedir = getBasedir();
+		if (basedir == null)
+			return file;
+		if (file == DIRECT_INPUT_FILE)
+			return file;
+		return basedir.relativize(file.toPath()).toFile();
 	}
 
 	/**
@@ -34,7 +52,7 @@ public interface DirectoriesMixin {
 	 */
 	default File getCurrentFileBaseRelative() {
 		File currentFile = getCurrentFile();
-		if ("<DIRECT_INPUT>".equals(currentFile.getName())) {
+		if (currentFile == DIRECT_INPUT_FILE) {
 			// happens in test scenarios
 			return currentFile;
 		}
@@ -46,14 +64,20 @@ public interface DirectoriesMixin {
 	 * is added to the base dir.
 	 */
 	default File getAbsoluteFileFromBase(Path path) {
-		return getBasedir().resolve(path).toFile();
+		Path basedir = getBasedir();
+		if (basedir == null)
+			return path.toFile();
+		return basedir.resolve(path).toFile();
 	}
 
 	/**
 	 * Returns the file of the current adoc line.
 	 */
 	default File getCurrentFile() {
-		return new File(getReader().getFile());
+		String fileName = getReader().getFile();
+		if (fileName.equals(DIRECT_INPUT_FILE_NAME))
+			return DIRECT_INPUT_FILE;
+		return new File(fileName);
 	}
 
 	/**
@@ -69,4 +93,32 @@ public interface DirectoriesMixin {
 	default int getCurrentLine() {
 		return getReader().getLineNumber() - 1;
 	}
+
+	/** Returns the base dir. Can be null in test scenarios. */
+	default Path getBasedir() {
+		return AdocUtils.getDocumentBasePath(getDocument());
+	}
+
+	/**
+	 * Returns the base file of the document.
+	 *
+	 * @param document
+	 *            the document
+	 * @return the path to the folder that contains the given document or
+	 *         <code>null</code> if that path could not be determined
+	 */
+	default File getBaseFile() {
+		Document document = getDocument();
+		String baseFileName = AdocUtils.getAttributeAsString(Objects.requireNonNull(document), "docfile", null);
+		if (baseFileName == null)
+			return null;
+
+		// The '<DIRECT_INPUT>' is set for tests only.
+		// See: {@link AsciidoctorTest#getOptions(File, File)}
+		if (baseFileName.equals(DIRECT_INPUT_FILE_NAME))
+			return DIRECT_INPUT_FILE;
+
+		return new File(baseFileName);
+	}
+
 }

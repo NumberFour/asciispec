@@ -1,7 +1,6 @@
 package eu.numberfour.asciispec.processors;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,8 +42,8 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 	}
 
 	//// non-static members ////
+	private Document document;
 	private PreprocessorReader reader;
-	private Path basedir;
 	private List<ClientPreprocessor> clientPreprocessors = new LinkedList<>();
 
 	public HostPreprocessor() {
@@ -66,10 +65,10 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 	}
 
 	@Override
-	final public void process(Document document, PreprocessorReader preproReader) {
-		reader = preproReader;
-		basedir = AdocUtils.getDocumentBasePath(document);
-		File documentBaseFile = AdocUtils.getDocumentBaseFile(document);
+	final public void process(Document document, PreprocessorReader reader) {
+		this.document = document;
+		this.reader = reader;
+		File documentBaseFile = getBaseFile();
 		if (documentBaseFile != null) {
 			documentBaseFile = getBaseRelative(documentBaseFile);
 		}
@@ -88,7 +87,6 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 
 		while (reader.hasMoreLines()) {
 			String line = reader.readLine();
-			int ln = reader.getLineNumber();
 			List<String> cplines = new LinkedList<String>();
 			conc(document, line, clientPreprocessors, cplines);
 			newlines.addAll(cplines);
@@ -124,14 +122,19 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 		}
 	}
 
-	@Override
-	public Path getBasedir() {
-		return basedir;
-	}
+	// @Override
+	// public Path getBasedir() {
+	// return basedir;
+	// }
 
 	@Override
 	public PreprocessorReader getReader() {
 		return reader;
+	}
+
+	@Override
+	public Document getDocument() {
+		return document;
 	}
 
 }

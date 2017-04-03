@@ -45,10 +45,22 @@ abstract public class FileAwarePreprocessor extends Preprocessor implements Clie
 	}
 
 	@Override
+	public Document getDocument() {
+		return getHostPreprocessor().getDocument();
+	}
+
+	@Override
 	public PreprocessorReader getReader() {
 		return getHostPreprocessor().getReader();
 	}
 
+	final protected HostPreprocessor getHostPreprocessor() {
+		return HostPreprocessor.getSingleton();
+	}
+
+	/*
+	 * Redirect mixin methods.
+	 */
 	@Override
 	public File getCurrentFileBaseRelative() {
 		return DirectoriesMixin.super.getCurrentFileBaseRelative();
@@ -62,10 +74,6 @@ abstract public class FileAwarePreprocessor extends Preprocessor implements Clie
 	@Override
 	public File searchFile(String fileName) throws FileNotFoundException, MultipleFileMatchesException {
 		return DirectoriesMixin.super.searchFile(fileName);
-	}
-
-	final protected HostPreprocessor getHostPreprocessor() {
-		return HostPreprocessor.getSingleton();
 	}
 
 }

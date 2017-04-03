@@ -12,47 +12,50 @@ package eu.numberfour.asciispec.processors;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.asciidoctor.ast.Document;
 import org.asciidoctor.extension.IncludeProcessor;
 import org.asciidoctor.extension.PreprocessorReader;
 
-import eu.numberfour.asciispec.AdocUtils;
 import eu.numberfour.asciispec.findresolver.CannotFindCircularDependenciesException;
 import eu.numberfour.asciispec.findresolver.CircularDependencyException;
 import eu.numberfour.asciispec.findresolver.FileStackHelper;
 import eu.numberfour.asciispec.findresolver.IgnoreFileException;
 import eu.numberfour.asciispec.findresolver.InconsistentUseOfModifiersException;
-import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
 import eu.numberfour.asciispec.findresolver.ReplaceIncludeMacroException;
 import eu.numberfour.asciispec.issue.IssueAcceptor;
 import eu.numberfour.asciispec.issue.IssuePrinter;
 
 /**
- * The {@link IncludeProcessor} evaluates all include macros which start with a adoc variable like
- * <code>include::{find}file[]</code>. In case included files create a dependency cycle, a warning is issued. The
- * include macro support the FILE_ONCE modifier: <br/>
+ * The {@link IncludeProcessor} evaluates all include macros which start with a
+ * adoc variable like <code>include::{find}file[]</code>. In case included files
+ * create a dependency cycle, a warning is issued. The include macro support the
+ * FILE_ONCE modifier: <br/>
  * <br/>
- * FILE_ONCE - Only the first match of the given file is included. A warning is issued in case there are more than one
- * matches.
+ * FILE_ONCE - Only the first match of the given file is included. A warning is
+ * issued in case there are more than one matches.
  */
-abstract public class ResolveIncludeProcessor extends IncludeProcessor implements ErrorAndWarningsMixin {
+abstract public class ResolveIncludeProcessor extends IncludeProcessor
+		implements DirectoriesMixin, ErrorAndWarningsMixin {
+
 	/** Given file is included only once */
 	public static final String MODIFIER_FILE_ONCE = "FILE_ONCE";
 
 	private final String adocVarName;
 	private final String adocVarNameInBrackets;
-	private PreprocessorReader reader;
 	private final FileStackHelper fileSearcher = new FileStackHelper();
 	private final Set<File> includedOnceOnlyFiles = new HashSet<>();
 	private final IssueAcceptor issueAcceptor = new IssuePrinter();
 	private final Set<File> noCircularExceptionsCausingFiles = new HashSet<>();
+	private PreprocessorReader reader;
+	private Document document;
 	private File baseFile;
 
 	/**
@@ -71,15 +74,15 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 	 *             iff the file was not found
 	 */
 	abstract protected File findFile(Document document, Map<String, Object> attributes, File containerFile,
-			String target, String line)
-			throws FileNotFoundException, IgnoreFileException, ReplaceIncludeMacroException;
+			String target, String line) throws FileNotFoundException, IgnoreFileException, ReplaceIncludeMacroException;
 
 	/**
 	 * Removes all resolver specific attributes
 	 *
 	 * @param attributes
 	 *            original attributes
-	 * @return set of attributes which contains only known attributes to this class or asciidoctor
+	 * @return set of attributes which contains only known attributes to this
+	 *         class or asciidoctor
 	 */
 	abstract protected Map<String, Object> getNewAttributes(Map<String, Object> attributes);
 
@@ -102,8 +105,9 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 
 	@Override
 	public void process(Document document, PreprocessorReader pReader, String target, Map<String, Object> attributes) {
+		this.document = document;
 		reader = pReader;
-		baseFile = AdocUtils.getDocumentBaseFile(document);
+		baseFile = getBaseFile();
 		File containerFile = getCurrentFile();
 
 		try {
@@ -120,36 +124,6 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 	}
 
 	/**
-	 * Returns the file of the current adoc line.
-	 */
-	@Override
-	public File getCurrentFileBaseRelative() {
-		return getBaseRelative(getCurrentFile());
-	}
-
-	/**
-	 * Returns the file of the current adoc line
-	 */
-	public File getCurrentFile() {
-		return new File(reader.getFile());
-	}
-
-	/**
-	 * Returns the directory of the current adoc line
-	 */
-	public File getCurrentDir() {
-		return new File(reader.getDir());
-	}
-
-	/**
-	 * Returns the current line in the document
-	 */
-	@Override
-	public int getCurrentLine() {
-		return reader.getLineNumber() - 1;
-	}
-
-	/**
 	 * Returns the issuAcceptor
 	 */
 	@Override
@@ -157,15 +131,15 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 		return issueAcceptor;
 	}
 
-	private void searchAndInlineFile(Document document, Map<String, Object> attributes,
-			File containerFile, String target) {
+	private void searchAndInlineFile(Document document, Map<String, Object> attributes, File containerFile,
+			String target) {
 
 		String curLine = "include::" + adocVarNameInBrackets + target + "[" + getAttributeString(attributes) + "]";
 		String newLine = "include++::++{" + adocVarName + "\\}" + target + "[" + getAttributeString(attributes) + "]";
 
 		try {
 			File file = findFile(document, attributes, containerFile, target, curLine);
-			fileSearcher.checkForCircularDependencies(file, getBasePath());
+			fileSearcher.checkForCircularDependencies(file, getBasedir());
 
 			try {
 				checkInconsistentUseOfFileOnceModifier(attributes, file);
@@ -222,31 +196,18 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 
 		if (!isFileOnce(attributes) && includedOnceOnlyFiles.contains(file)) {
 			// non-strict behavior: include this as normal.
-			// Forget that the file is used as {@value #MODIFIER_FILE_ONCE} elsewhere
+			// Forget that the file is used as {@value #MODIFIER_FILE_ONCE}
+			// elsewhere
 			throw new InconsistentUseOfModifiersException(MODIFIER_FILE_ONCE, getBaseRelative(file).toString());
 		}
 	}
 
 	/**
-	 * Returns true iff the given attributes contain the {@value #MODIFIER_FILE_ONCE} modifier
+	 * Returns true iff the given attributes contain the
+	 * {@value #MODIFIER_FILE_ONCE} modifier
 	 */
 	protected boolean isFileOnce(Map<String, Object> attributes) {
 		return attributes.values().contains(MODIFIER_FILE_ONCE);
-	}
-
-	/**
-	 * Returns the path of the base file
-	 */
-	protected Path getBasePath() {
-		return baseFile.getParentFile().toPath();
-	}
-
-	/**
-	 * Returns the given absolute file as a base file relative file
-	 */
-	protected File getBaseRelative(File file) {
-		Path relPath = getBasePath().relativize(file.toPath());
-		return relPath.toFile();
 	}
 
 	/**
@@ -257,11 +218,9 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 	}
 
 	private String getAttributeString(Map<String, Object> attributes) {
-		String str = attributes.entrySet()
-				.stream()
-				.map(e -> e.getKey() + "=\"" + e.getValue() + "\"")
-				.reduce((a, b) -> a + "," + b)
-				.orElse("");
+		Stream<Entry<String, Object>> attrStream = attributes.entrySet().stream();
+		Stream<String> attrMap = attrStream.map(e -> e.getKey() + "=\"" + e.getValue() + "\"");
+		String str = attrMap.reduce((a, b) -> a + "," + b).orElse("");
 		return str;
 	}
 
@@ -278,19 +237,31 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor implement
 		return newAttrs;
 	}
 
-	/**
-	 * Searches for the given file in the directory of the current file.
-	 */
-	public File searchFile(String fileName) throws FileNotFoundException, MultipleFileMatchesException {
-		return fileSearcher.search(fileName, getBasePath());
+	@Override
+	public PreprocessorReader getReader() {
+		return reader;
+	}
+
+	@Override
+	public Document getDocument() {
+		return document;
 	}
 
 	/*
-	 * The specification of the origin of the error method is necessary, since
-	 * other mixin interfaces reuse this method.
+	 * Redirect mixin methods.
 	 */
 	@Override
 	public String error(Document document, String consoleMsg, String inlineMsg) {
 		return ErrorAndWarningsMixin.super.error(document, consoleMsg, inlineMsg);
+	}
+
+	@Override
+	public File getCurrentFileBaseRelative() {
+		return DirectoriesMixin.super.getCurrentFileBaseRelative();
+	}
+
+	@Override
+	public int getCurrentLine() {
+		return DirectoriesMixin.super.getCurrentLine();
 	}
 }

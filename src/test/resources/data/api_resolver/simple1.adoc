@@ -1,7 +1,0 @@
-include::configs/config.adoc[ONCE]
-
-= Main Document Title
-
-We include an API element. No leveloffset.
-
-include::{api}DateTimeFormat#format[]
