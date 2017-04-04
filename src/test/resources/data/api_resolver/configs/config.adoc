@@ -33,7 +33,7 @@ See https://github.numberfour.eu/NumberFour/asciispec#inline-task-macro for deta
 :task_def_IDE-: Jira;IDE Backlog;https://jira.numberfour.eu/browse/IDE-{TASK_ID};icons/jira.png;IDE-{TASK_ID}
 
 // Source link config
-:gen_adoc_dir: ../docu/gen_adoc
+:gen_adoc_dir: {find}../../docu/gen_adoc
 :srclnk_repo_def: stdlib_api;Standard lib API;https://github.numberfour.eu/NumberFour/stdlib_api/blob/master/{CMS_PATH}#L{LINE_NO}
 
 

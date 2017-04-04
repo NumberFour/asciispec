@@ -39,7 +39,7 @@ public class FileStackHelper {
 	 * @return absolute file
 	 */
 	public File search(String fileName, Path basedir) throws FileNotFoundException, MultipleFileMatchesException {
-		return searchRelativeTo(fileName, getCurrentFile(), basedir);
+		return searchRelativeTo(fileName, getCurrentFile().toPath(), basedir);
 	}
 
 	/**
@@ -126,10 +126,10 @@ public class FileStackHelper {
 	 *
 	 * @return absolute file
 	 */
-	public static File searchRelativeTo(String fileName, File containerFile, Path basedir)
+	public static File searchRelativeTo(String fileName, Path currentdir, Path basedir)
 			throws FileNotFoundException, MultipleFileMatchesException {
 
-		Path curPath = containerFile.toPath();
+		Path curPath = currentdir;
 		List<File> matches = new LinkedList<>();
 		while (curPath != null) {
 			Path filePath = curPath.resolve(fileName).normalize();

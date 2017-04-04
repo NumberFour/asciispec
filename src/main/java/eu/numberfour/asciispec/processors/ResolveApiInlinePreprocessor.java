@@ -74,7 +74,7 @@ public class ResolveApiInlinePreprocessor extends MacroPreprocessor<String> impl
 		try {
 			String genadocDirname = matcher.group("GENADOC");
 			Path genadocPath = Paths.get(genadocDirname);
-			File genadocFile = getAbsoluteFileFromBase(genadocPath);
+			File genadocFile = getAbsoluteFileFromBaseDirectory(genadocPath);
 			setIndexFile(genadocFile);
 		} catch (Exception e) {
 			String message = e.getMessage() + ". Check variable '" + GEN_ADOC_DIR_VAR + "'";

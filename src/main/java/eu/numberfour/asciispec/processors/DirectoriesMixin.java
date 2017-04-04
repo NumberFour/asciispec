@@ -3,6 +3,7 @@ package eu.numberfour.asciispec.processors;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 import org.asciidoctor.ast.Document;
@@ -46,36 +47,55 @@ public interface DirectoriesMixin {
 	/**
 	 * Returns a file that is relative to the base dir.
 	 */
-	default File getBaseRelative(File file) {
-		Path basedir = getBasedir();
-		if (basedir == null)
+	default File getRelative(Path dir, File file) {
+		if (dir == null)
 			return file;
 		if (file == DIRECT_INPUT_FILE)
 			return file;
-		return basedir.relativize(file.toPath()).toFile();
+		return dir.relativize(file.toPath()).toFile();
+	}
+
+	/**
+	 * Returns a file that is relative to the base dir.
+	 */
+	default File getBaseRelative(File file) {
+		return getRelative(getBasedir(), file);
+	}
+
+	/**
+	 * Returns a file that is relative to the current dir.
+	 */
+	default File getCurrentDirRelative(File file) {
+		return getRelative(getCurrentDir(), file);
 	}
 
 	/**
 	 * Returns the current file relative to the base dir.
 	 */
 	default File getCurrentFileBaseRelative() {
-		File currentFile = getCurrentFile();
-		if (currentFile == DIRECT_INPUT_FILE) {
-			// happens in test scenarios
-			return currentFile;
-		}
-		return getBaseRelative(currentFile);
+		return getRelative(getBasedir(), getCurrentFile());
 	}
 
 	/**
 	 * Returns an absolute file given a relative path. The given relative path
 	 * is added to the base dir.
 	 */
-	default File getAbsoluteFileFromBase(Path path) {
+	default File getAbsoluteFileFromBaseDirectory(Path path) {
 		Path basedir = getBasedir();
 		if (basedir == null)
 			return path.toFile();
-		return basedir.resolve(path).toFile();
+		return basedir.resolve(path).normalize().toFile();
+	}
+
+	/**
+	 * Returns an absolute file given a relative path. The given relative path
+	 * is added to the base dir.
+	 */
+	default File getAbsoluteFileFromCurrentDirectory(Path path) {
+		Path curdir = getCurrentDir();
+		if (curdir == null)
+			return path.toFile();
+		return curdir.resolve(path).normalize().toFile();
 	}
 
 	/**
@@ -91,8 +111,8 @@ public interface DirectoriesMixin {
 	/**
 	 * Returns the path of the current adoc line.
 	 */
-	default File getCurrentDir() {
-		return new File(getReader().getDir());
+	default Path getCurrentDir() {
+		return Paths.get(getReader().getDir());
 	}
 
 	/**

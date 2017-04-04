@@ -20,6 +20,10 @@ As an example, the adoc file `doc.adoc` specifies the location of the bibliograp
 This path can not always be found when the doc.adoc file is translated both on its own and included from another files.
 
 The `pass:[{find}]` variable provides the means to specify files relative to the adoc file no matter from where this adoc file was included.
+Follow the following rules of thumb:
+* Always use the `find` on any path when your document is included or uses include directives. This will allow AsciiSpec to find any path you are working with.
+* The given target path should always be the relative path from the current file to the targeted file. This will allow to compile each file on its own, e.g. on Github.
+
 
 === Usage
 Syntax: ::
