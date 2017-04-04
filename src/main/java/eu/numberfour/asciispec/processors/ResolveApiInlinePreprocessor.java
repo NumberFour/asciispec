@@ -44,6 +44,11 @@ public class ResolveApiInlinePreprocessor extends MacroPreprocessor<String> impl
 	private final SourceIndexMixinState state = new SourceIndexMixinState();
 
 	@Override
+	public SourceIndexMixinState getState() {
+		return state;
+	}
+
+	@Override
 	public void init(Document document) {
 		super.registerPattern(GEN_ADOC_DIR_VAR, GEN_ADOC_VAR_PATTERN);
 		super.registerPattern(API_INCLUDE, API_INCLUDE_PATTERN);
@@ -191,11 +196,6 @@ public class ResolveApiInlinePreprocessor extends MacroPreprocessor<String> impl
 		}
 
 		return false;
-	}
-
-	@Override
-	public SourceIndexMixinState getState() {
-		return state;
 	}
 
 }

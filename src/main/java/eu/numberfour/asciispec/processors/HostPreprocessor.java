@@ -45,30 +45,17 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 		INCLUDE_VARIABLES.add(varName);
 	}
 
-	private static HostPreprocessor singleton;
-
-	public static HostPreprocessor getSingleton() {
-		return singleton;
-	}
-
 	//// non-static members ////
 	private Document document;
 	private PreprocessorReader reader;
 	private List<ClientPreprocessor> clientPreprocessors = new LinkedList<>();
-
-	public HostPreprocessor() {
-		if (singleton != null) {
-			singleton.clientPreprocessors.clear();
-			reader = null;
-		}
-		singleton = this;
-	}
 
 	/**
 	 * Registers a new {@link ClientPreprocessor}.
 	 */
 	public void register(ClientPreprocessor clientPreprocessor) {
 		clientPreprocessors.add(clientPreprocessor);
+		clientPreprocessor.setHostProcessor(this);
 	}
 
 	private void setIncludedVariables(Document document) {

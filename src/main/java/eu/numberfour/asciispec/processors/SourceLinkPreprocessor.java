@@ -67,6 +67,11 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 	private final SourceIndexMixinState state = new SourceIndexMixinState();
 
 	@Override
+	public SourceIndexMixinState getState() {
+		return state;
+	}
+
+	@Override
 	public void init(Document document) {
 		super.registerPattern(GEN_ADOC_DIR_VAR, GEN_ADOC_VAR_PATTERN);
 		super.registerPattern(REPOS_CONFIG_VAR, REPO_CONFIG_VAR_PATTERN);
@@ -186,11 +191,6 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 		String transf = transformVariable(repoConfig.urlPattern, CMS_PATH, relUrl);
 		transf = transformVariable(transf, LINE_NO, String.valueOf(lineNumber));
 		return transf;
-	}
-
-	@Override
-	public SourceIndexMixinState getState() {
-		return state;
 	}
 
 }

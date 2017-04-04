@@ -248,7 +248,7 @@ abstract public class ResolveIncludeProcessor extends IncludeProcessor
 	}
 
 	/*
-	 * Redirect mixin methods.
+	 * Redirecting mixin methods here so that subclasses don't have to do that.
 	 */
 	@Override
 	public String error(Document document, String consoleMsg, String inlineMsg) {

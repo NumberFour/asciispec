@@ -2,7 +2,6 @@ package eu.numberfour.asciispec.processors;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
 
 import org.asciidoctor.ast.Document;
 import org.asciidoctor.extension.Preprocessor;
@@ -25,10 +24,7 @@ import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
  * paths.
  */
 abstract public class FileAwarePreprocessor extends Preprocessor implements ClientPreprocessor, DirectoriesMixin {
-
-	public FileAwarePreprocessor() {
-		HostPreprocessor.getSingleton().register(this);
-	}
+	HostPreprocessor hostPreprocessor;
 
 	/**
 	 * "Do nothing here!" is the intended use! The computation is done in
@@ -40,8 +36,14 @@ abstract public class FileAwarePreprocessor extends Preprocessor implements Clie
 	}
 
 	@Override
-	public Path getBasedir() {
-		return getHostPreprocessor().getBasedir();
+	public void setHostProcessor(HostPreprocessor hostPreprocessor) {
+		if (this.hostPreprocessor == null)
+			this.hostPreprocessor = hostPreprocessor;
+	}
+
+	@Override
+	public HostPreprocessor getHostPreprocessor() {
+		return hostPreprocessor;
 	}
 
 	@Override
@@ -54,12 +56,8 @@ abstract public class FileAwarePreprocessor extends Preprocessor implements Clie
 		return getHostPreprocessor().getReader();
 	}
 
-	final protected HostPreprocessor getHostPreprocessor() {
-		return HostPreprocessor.getSingleton();
-	}
-
 	/*
-	 * Redirect mixin methods.
+	 * Redirecting mixin methods here so that subclasses don't have to do that.
 	 */
 	@Override
 	public File getCurrentFileBaseRelative() {
