@@ -65,8 +65,6 @@ public class ResolveFindIncludeProcessor extends ResolveIncludeProcessor {
 			}
 
 			File file = searchFile(target);
-			// File file = FileStackHelper.searchRelativeTo(target,
-			// getCurrentDir(), getBasePath());
 			allIncludedTargets.add(target);
 			return file;
 		} catch (MultipleFileMatchesException e) {
