@@ -95,10 +95,12 @@ With: ::
 
 Requires: ::
 * Asciidoctor variable `gen_adoc_dir`
-* Asciidoctor variable `srclnk_repo_def`
 
 
 Warnings and Errors: ::
+* *Error: Missing Config Variable 'gen_adoc_dir'*
+	Is issued in case the variable `gen_adoc_dir` is not found.
+
 * *Error: PQN Could Not Be Parsed*
 	Is issued in case the given PQN is invalid.
 
@@ -151,6 +153,9 @@ Requires: ::
 
 
 Warnings and Errors: ::
+* *Error: Missing Config Variable 'gen_adoc_dir'*
+	Is issued in case the variable `gen_adoc_dir` is not found.
+
 * *Error: Could Not Resolve Requirement File*
 	Is issued in case the given requirement ID could be resolved against the directory path of the generated adoc files.
 
