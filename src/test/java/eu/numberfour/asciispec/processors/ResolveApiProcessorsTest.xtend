@@ -437,6 +437,58 @@ class ResolveApiProcessorsTest extends AsciidoctorTest {
 	}
 
 	@Test
+	def void linesAndLeveloffset1() throws IOException {
+		convertAndAssert(
+		'''
+			<div id="preamble">
+			<div class="sectionbody">
+			<div class="paragraph">
+			<p>We include an API element with one line.</p>
+			</div>
+			</div>
+			</div>
+			<div class="sect2">
+			<h3 id="_class_datetimeformat">Class DateTimeFormat</h3>
+
+			</div>''',
+			'''
+			«config»
+
+			= Main Document Title
+
+			We include an API element with one line.
+
+			include::{api}DateTimeFormat#format[leveloffset=+1, lines="1..3"]
+				''');
+	}
+
+	@Test
+	def void linesAndLeveloffset2() throws IOException {
+		convertAndAssert(
+		'''
+			<div id="preamble">
+			<div class="sectionbody">
+			<div class="paragraph">
+			<p>We include an API element with one line.</p>
+			</div>
+			</div>
+			</div>
+			<div class="sect2">
+			<h3 id="_class_datetimeformat">Class DateTimeFormat</h3>
+
+			</div>''',
+			'''
+			«config»
+
+			= Main Document Title
+
+			We include an API element with one line.
+
+			include::{api}DateTimeFormat#format[lines="1..3", leveloffset=+1]
+				''');
+	}
+
+	@Test
 	def void err1() throws IOException {
 		convertStringAndAssertErrorContains(
 		'''
@@ -541,7 +593,7 @@ class ResolveApiProcessorsTest extends AsciidoctorTest {
 			</div>
 			<div class="paragraph">
 			<p>include:{api}IterableExt#reduce[lines=""1..3"]
-			<mark>[Error: Could not parse given attributes: lines=""1..3"]</mark></p>
+			<mark>[Error: Could not parse attributes: lines=""1..3"]</mark></p>
 			</div>''',
 			'''
 			«config»
@@ -553,7 +605,7 @@ class ResolveApiProcessorsTest extends AsciidoctorTest {
 			include::{api}IterableExt#reduce[lines="1..3]
 			''',
 			'''
-			asciispec  : ERROR: line 10: Could not parse given attributes: lines=""1..3"''');
+			asciispec  : ERROR: line 10: Could not parse attributes: lines=""1..3"''');
 	}
 
 	private def getConfig() '''

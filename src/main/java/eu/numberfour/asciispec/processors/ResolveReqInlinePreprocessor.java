@@ -10,12 +10,23 @@
  */
 package eu.numberfour.asciispec.processors;
 
+import static eu.numberfour.asciispec.processors.AttributeUtils.appendLeveloffset;
+import static eu.numberfour.asciispec.processors.AttributeUtils.getLeveloffset;
+import static eu.numberfour.asciispec.processors.AttributeUtils.isInSelectedLineRange;
+
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.asciidoctor.ast.Document;
+
+import eu.numberfour.asciispec.AttributeParser;
+import eu.numberfour.asciispec.ParseException;
 
 /**
  * This processor evaluates all inline {req} macros, which were previously
@@ -85,47 +96,53 @@ public class ResolveReqInlinePreprocessor extends MacroPreprocessor<String> {
 	}
 
 	private String processReqInclude(Document document, Matcher matcher) {
-		// String apiInclude = matcher.group();
-		// String reqid = matcher.group("REQID");
-		// String attrs = matcher.group("ATTRS");
-		//
-		// StringBuilder strb = new StringBuilder();
-		// String fileName = reqid + ".adoc";
-		// Path modulePath = genReqsDir.resolve(fileName);
-		// int startLine = ieir.iei.offsetStart;
-		// int endLine = ieir.iei.offsetEnd;
-		//
-		// try {
-		//
-		// Map<String, Object> attributes = AttributeParser.parse(attrs);
-		// int leveloffset = getLeveloffset(attributes);
-		// appendLeveloffset(strb, leveloffset, false);
-		//
-		// List<String> lines = Files.readAllLines(modulePath);
-		// for (int i = startLine; i < endLine && i < lines.size(); i++) {
-		// int relLineNumber = i - startLine + 1;
-		// if (isInSelectedLineRange(attributes, relLineNumber)) {
-		// strb.append(lines.get(i)).append("\n");
-		// }
-		// }
-		//
-		// appendLeveloffset(strb, leveloffset, true);
-		// } catch (ParseException e) {
-		// errMsg = error(document, "Could not parse given attributes: " +
-		// attrs);
-		// } catch (IOException e) {
-		// errMsg = error(document, "Could not read module file: " +
-		// modulePath.toString());
-		// }
-		//
-		// String result;
-		// if (errMsg != null) {
-		// result = apiInclude + "\n" + errMsg;
-		// } else {
-		// result = strb.toString();
-		// }
+		String apiInclude = matcher.group();
+		String reqid = matcher.group("REQID");
+		String attrs = matcher.group("ATTRS");
 
-		return "";
+		StringBuilder strb = new StringBuilder();
+
+		String errMsg = null;
+		Path modulePath = null;
+		String fileName = reqid + ".adoc";
+		try {
+			modulePath = genReqsDir.resolve(fileName);
+		} catch (Exception e) {
+			errMsg = error(document, "Could not resolve requirement file: " + fileName);
+		}
+
+		if (modulePath != null) {
+			try {
+				int startLine = 0;
+
+				Map<String, Object> attributes = AttributeParser.parse(attrs);
+				int leveloffset = getLeveloffset(attributes);
+				appendLeveloffset(strb, leveloffset, false);
+
+				List<String> lines = Files.readAllLines(modulePath);
+				for (int i = startLine; i < lines.size(); i++) {
+					int relLineNumber = i - startLine + 1;
+					if (isInSelectedLineRange(attributes, relLineNumber)) {
+						strb.append(lines.get(i)).append("\n");
+					}
+				}
+
+				appendLeveloffset(strb, leveloffset, true);
+			} catch (ParseException e) {
+				errMsg = error(document, "Could not parse attributes: " + attrs);
+			} catch (IOException e) {
+				errMsg = error(document, "Could not read requirement file: " + modulePath.toString());
+			}
+		}
+
+		String result;
+		if (errMsg != null) {
+			result = apiInclude + "\n" + errMsg;
+		} else {
+			result = strb.toString();
+		}
+
+		return result;
 	}
 
 }

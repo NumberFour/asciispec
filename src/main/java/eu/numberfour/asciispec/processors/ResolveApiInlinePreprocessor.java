@@ -124,7 +124,7 @@ public class ResolveApiInlinePreprocessor extends MacroPreprocessor<String> impl
 
 				appendLeveloffset(strb, leveloffset, true);
 			} catch (ParseException e) {
-				errMsg = error(document, "Could not parse given attributes: " + attrs);
+				errMsg = error(document, "Could not parse attributes: " + attrs);
 			} catch (IOException e) {
 				File moduleFile = getBaseRelative(modulePath.toFile());
 				errMsg = error(document, "Could not read module file: " + moduleFile.toString());
