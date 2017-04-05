@@ -12,6 +12,7 @@ package eu.numberfour.asciispec;
 
 import java.util.AbstractMap;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -154,5 +155,18 @@ public class AttributeParser extends SimpleParser {
 
 	private Entry<String, Object> makeEntry(Object key, Object value) {
 		return new AbstractMap.SimpleEntry<>(key.toString(), value);
+	}
+
+	static public String getAttributeString(Map<String, Object> attributes) {
+		StringBuilder strb = new StringBuilder();
+		Iterator<Map.Entry<String, Object>> entries = attributes.entrySet().iterator();
+		while (entries.hasNext()) {
+			Map.Entry<String, Object> attr = entries.next();
+			strb.append(attr.getKey()).append("=\"").append(String.valueOf(attr.getValue())).append("\"");
+			if (entries.hasNext()) {
+				strb.append(", ");
+			}
+		}
+		return strb.toString();
 	}
 }

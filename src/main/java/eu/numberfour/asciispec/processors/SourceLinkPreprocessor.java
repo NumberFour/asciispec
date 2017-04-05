@@ -3,43 +3,37 @@ package eu.numberfour.asciispec.processors;
 import static eu.numberfour.asciispec.AdocUtils.transformVariable;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.asciidoctor.ast.Document;
 
-import eu.numberfour.asciispec.ParseException;
-import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
-import eu.numberfour.asciispec.sourceindex.AmbiguousPQNExcpetion;
 import eu.numberfour.asciispec.sourceindex.IndexEntryInfo;
-import eu.numberfour.asciispec.sourceindex.IndexFileParser;
-import eu.numberfour.asciispec.sourceindex.NotInSourceIndexExcpetion;
-import eu.numberfour.asciispec.sourceindex.PQNParser;
-import eu.numberfour.asciispec.sourceindex.SourceIndexDatabase;
 
 /**
- * A preprocessor that processes source links to the code management system (e.g. GitHib).<br/>
+ * A preprocessor that processes source links to the code management system
+ * (e.g. GitHib).<br/>
  * <br/>
- * Source links have the syntax <code>srclnk::&ltPQN>[&ltLabel>]</code> where PQN is a partial qualified name. The
- * source link points to a source code line and file in the code management system on e.g. GitHub. The label of the
- * source link is usually the PQN. However, the label can be adjusted using the optional Label parameter.<br/>
+ * Source links have the syntax <code>srclnk::&ltPQN>[&ltLabel>]</code> where
+ * PQN is a partial qualified name. The source link points to a source code line
+ * and file in the code management system on e.g. GitHub. The label of the
+ * source link is usually the PQN. However, the label can be adjusted using the
+ * optional Label parameter.<br/>
  * <br/>
- * To use the preprocessor, two asciispec variables have to be set. First, the directory of the generated documentation
- * has to be set using the variable <code>:gen_adoc:</code>. This directory must point to the generated 'gen_adoc'
- * directory. Second, the code management systems have to be set using the variable
- * <code>:srclin_repo_def_&lt;ID&gt;:</code>.<br/>
+ * To use the preprocessor, two asciispec variables have to be set. First, the
+ * directory of the generated documentation has to be set using the variable
+ * <code>:gen_adoc:</code>. This directory must point to the generated
+ * 'gen_adoc' directory. Second, the code management systems have to be set
+ * using the variable <code>:srclin_repo_def_&lt;ID&gt;:</code>.<br/>
  * <br/>
- * For more information about the PQN syntax and asciispec variables, please refer to the asciispec reference.
+ * For more information about the PQN syntax and asciispec variables, please
+ * refer to the asciispec reference.
  */
-public class SourceLinkPreprocessor extends MacroPreprocessor<String> {
+public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements SourceIndexMixin {
 	@SuppressWarnings("unused")
 	private static class RepositoryConfig {
 		public final String name;
@@ -63,168 +57,140 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> {
 	public static final String INDEX_FILE_NAME = "index.idx";
 
 	/** source link pattern. */
-	public static final Pattern SRC_LINK_PATTERN = Pattern.compile(
-			SRCLNK + ":(?<A>\\+*)(?<PQN>.*?)(\\k<A>)\\[(?<MARKUP1>[`_]*)(?<B>\\+*)(?<LABEL>.*?)(\\k<B>)(?<MARKUP2>[`_]*)\\]");
+	public static final Pattern SRC_LINK_PATTERN = Pattern.compile(SRCLNK
+			+ ":(?<A>\\+*)(?<PQN>.*?)(\\k<A>)\\[(?<MARKUP1>[`_]*)(?<B>\\+*)(?<LABEL>.*?)(\\k<B>)(?<MARKUP2>[`_]*)\\]");
 	private static final Pattern REPO_CONFIG_VAR_PATTERN = Pattern.compile(
 			":" + REPOS_CONFIG_VAR + ":\\s*(?<NAME>.*?)\\s*;\\s*(?<DESCR>.*?)\\s*;\\s*(?<HTML>https?:\\/\\/[\\S]+)");
 	private static final Pattern GEN_ADOC_VAR_PATTERN = Pattern.compile(":" + GEN_ADOC_DIR_VAR + ":\\s*(?<GENADOC>.*)");
 
-	// TODO: make this configurable
 	private final Map<String, RepositoryConfig> repoConfigs = new HashMap<>();
-	private File indexFile;
-	private SourceIndexDatabase database;
-	private boolean configuring = true;
+	private final SourceIndexMixinState state = new SourceIndexMixinState();
 
 	@Override
-	protected boolean init(Document document) {
+	public SourceIndexMixinState getState() {
+		return state;
+	}
+
+	@Override
+	public void init(Document document) {
 		super.registerPattern(GEN_ADOC_DIR_VAR, GEN_ADOC_VAR_PATTERN);
 		super.registerPattern(REPOS_CONFIG_VAR, REPO_CONFIG_VAR_PATTERN);
 		super.registerPattern(SRCLNK, SRC_LINK_PATTERN);
-		return true;
 	}
 
 	@Override
 	protected String processMatch(Document document, String key, Matcher matcher) {
 		String fullMatch = matcher.group();
 		String newline = fullMatch;
+
 		switch (key) {
 		case GEN_ADOC_DIR_VAR:
-			try {
-				newline = setIndexFile(fullMatch, matcher);
-			} catch (Exception e) {
-				String message = e.getMessage() + " Check variable '" + GEN_ADOC_DIR_VAR + "'";
-				newline += message;
-				issueAcceptor.error(document, message, getCurrentFile(), getCurrentLine());
-			}
+			newline = setGenDir(document, matcher, newline);
 			break;
 		case REPOS_CONFIG_VAR:
-			newline = addRepoConfig(fullMatch, matcher);
+			newline = addRepoConfig(document, fullMatch, matcher);
 			break;
 		case SRCLNK:
-			try {
-				checkConfig();
-				ensureDatabase();
-				newline = processSourceLink(document, matcher, fullMatch);
-			} catch (Exception e) {
-				issueAcceptor.error(document, e.getMessage(), getCurrentFile(), getCurrentLine());
-			}
+			newline = processSrclnk(document, matcher, newline);
 			break;
 		}
 		return newline;
 	}
 
-	private String setIndexFile(String line, Matcher cgfGenAdoc)
-			throws FileNotFoundException, MultipleFileMatchesException {
-
-		if (!configuring) {
-			throw new IllegalArgumentException(
-					"The configuration must not be specified after first use of the source link macro");
+	private String setGenDir(Document document, Matcher matcher, String newline) {
+		try {
+			String genadocDirname = matcher.group("GENADOC");
+			Path genadocPath = Paths.get(genadocDirname);
+			File genadocFile = getAbsoluteFileFromBase(genadocPath);
+			setIndexFile(genadocFile);
+		} catch (Exception e) {
+			String message = e.getMessage() + ". Check variable '" + GEN_ADOC_DIR_VAR + "'";
+			newline += "\n\n" + error(document, message) + "\n\n";
 		}
-
-		String genadoc = cgfGenAdoc.group("GENADOC");
-		Path genadocDir = Paths.get(genadoc, INDEX_FILE_NAME);
-		String indexFileName = genadocDir.toString();
-		indexFile = super.searchFile(indexFileName);
-		return line;
+		return newline;
 	}
 
-	private String addRepoConfig(String line, Matcher cgfReposVar) {
+	private String addRepoConfig(Document document, String line, Matcher cgfReposVar) {
 		String newLine = line;
-		String name = cgfReposVar.group("NAME");
-		String descr = cgfReposVar.group("DESCR");
-		String html = cgfReposVar.group("HTML");
-		RepositoryConfig repoCfg = new RepositoryConfig(name, descr, html);
-		repoConfigs.put(repoCfg.name, repoCfg);
+		try {
+			String name = cgfReposVar.group("NAME");
+			String descr = cgfReposVar.group("DESCR");
+			String html = cgfReposVar.group("HTML");
+			RepositoryConfig repoCfg = new RepositoryConfig(name, descr, html);
+			repoConfigs.put(repoCfg.name, repoCfg);
+		} catch (Exception e) {
+			newLine += "\n\n"
+					+ error(document, "Error when parsing repository config. Check variable: " + REPOS_CONFIG_VAR);
+		}
 		return newLine;
 	}
 
+	private String processSrclnk(Document document, Matcher matcher, String newline) {
+		try {
+			checkConfig();
+			ensureDatabase();
+			newline = processSourceLink(document, matcher);
+		} catch (Exception e) {
+			newline += "\n\n" + error(document, e.getMessage());
+		}
+		return newline;
+	}
+
 	private void checkConfig() {
-		if (indexFile == null)
+		if (getIndexFile() == null)
 			throw new IllegalArgumentException("Missing config variable '" + GEN_ADOC_DIR_VAR + "'.");
 
 		if (repoConfigs.isEmpty())
 			throw new IllegalArgumentException("Missing config variable '" + REPOS_CONFIG_VAR + "'.");
 	}
 
-	private String processSourceLink(Document document, Matcher matcher, String srclnk) {
+	private String processSourceLink(Document document, Matcher matcher) {
+		String srclnk = matcher.group();
 		String pqn = matcher.group("PQN");
 		String label = matcher.group("LABEL");
 		String markup1 = matcher.group("MARKUP1");
 		String markup2 = matcher.group("MARKUP2");
-		List<String> pqnStack = null;
 
-		try {
-			pqnStack = PQNParser.parse(pqn);
-		} catch (ParseException e) {
-			issueAcceptor.error(document,
-					"srclnk could not be parsed: '" + srclnk + "'.");
-			label += " [Error: PQN malformed]";
-		}
+		IndexEntryInfoResult ieir = getIndexEntryInfo(document, srclnk, pqn);
 
-		String url = null;
 		String repoName = "";
-		String completePQN = pqn;
-		try {
-			IndexEntryInfo iei = database.getEntry(pqnStack);
-			repoName = iei.repository;
-			completePQN = iei.toPQN();
-			RepositoryConfig repoConfig = repoConfigs.get(repoName);
-			if (repoConfig == null) {
-				throw new IllegalArgumentException(
-						"No repository found for source link. Add config variable '" + REPOS_CONFIG_VAR +
-								"' for repository '" + repoName + "'.");
-			}
-			url = getCMSUrl(repoConfig, iei.getRepoRelativeURL(), iei.sourceLine);
+		String url = ieir.url;
+		String completePQN = ieir.completePQN;
+		String errMsg = ieir.errorMsg;
+		if (ieir.iei != null) {
+			try {
+				IndexEntryInfo iei = ieir.iei;
+				repoName = iei.repository;
+				completePQN = iei.toPQN();
+				RepositoryConfig repoConfig = repoConfigs.get(repoName);
+				if (repoConfig == null) {
+					throw new IllegalArgumentException("No repository found for source link. Add config variable '"
+							+ REPOS_CONFIG_VAR + "' for repository '" + repoName + "'.");
+				}
+				url = getCMSUrl(repoConfig, iei.getRepoRelativeURL(), iei.sourceLine);
 
-		} catch (AmbiguousPQNExcpetion e) {
-			issueAcceptor.error(document, "srclnk PQN is ambiguous: '" + pqn + "'.");
-			label += " [Error: Ambiguous PQN]";
-		} catch (NotInSourceIndexExcpetion e) {
-			issueAcceptor.error(document, "srclnk PQN not found: '" + pqn + "'.");
-			label += " [Error: PQN not found]";
-		} catch (IllegalArgumentException e) {
-			issueAcceptor.error(document,
-					"Missing srclnk repository configuration found for : '" + repoName + "'.");
-			label += " [Error: Missing config for repository '" + repoName + "']";
+			} catch (IllegalArgumentException e) {
+				errMsg = error(document, "Missing srclnk repository configuration found for: '" + repoName + "'.",
+						"Missing config for repository '" + repoName + "'");
+			}
 		}
 
-		if (url == null)
-			url = "";
+		String result;
+		if (errMsg != null) {
+			result = srclnk + "\n" + errMsg;
+		} else {
+			url = (url == null) ? "" : url;
+			result = "link:++" + url + "++[" + markup1 + "++" + label + "++" + markup2 + ", title=\"" + completePQN
+					+ "\", window=\"_blank\"]";
+		}
 
-		String link = "link:++" + url + "++[" + markup1 + "++" + label + "++" + markup2 + ", title=\"" + completePQN
-				+ "\", window=\"_blank\"]";
-
-		return link;
+		return result;
 	}
 
 	private String getCMSUrl(RepositoryConfig repoConfig, String relUrl, int lineNumber) {
 		String transf = transformVariable(repoConfig.urlPattern, CMS_PATH, relUrl);
 		transf = transformVariable(transf, LINE_NO, String.valueOf(lineNumber));
 		return transf;
-	}
-
-	/**
-	 * The expected structure of the root directory is as follows:
-	 * <ul>
-	 * <li>root/
-	 * <ul>
-	 * <li>adoc_gen/
-	 * <ul>
-	 * <li>index.idx
-	 * <li>...
-	 * </ul>
-	 * <li>html/
-	 * <li>...
-	 * </ul>
-	 * </ul>
-	 */
-	private void ensureDatabase() throws IOException, ParseException {
-		if (database != null)
-			return;
-
-		database = new SourceIndexDatabase();
-		database = IndexFileParser.parse(indexFile.toPath(), StandardCharsets.UTF_8);
-		configuring = false;
 	}
 
 }

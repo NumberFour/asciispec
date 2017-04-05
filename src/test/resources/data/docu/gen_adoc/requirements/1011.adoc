@@ -1,0 +1,8 @@
+==== Semantics
+
+++1 receiver is null++:: srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSBaseSelectionExecTest:PathSelectorBaseSelectionExecTest#_1_receiver_is_null++[Test]
+
+
+
+++1 receiver is undefined++:: srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSBaseSelectionExecTest:PathSelectorBaseSelectionExecTest#_1_receiver_is_undefined++[Test]
+

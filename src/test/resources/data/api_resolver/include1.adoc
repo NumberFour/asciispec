@@ -1,0 +1,7 @@
+
+= Main Document Title
+include::configs/config.adoc[]
+
+We include a subsection:
+
+include::sub1/chap1_1.adoc[]

@@ -2,121 +2,76 @@ package eu.numberfour.asciispec.processors;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.function.Supplier;
 
 import org.asciidoctor.ast.Document;
 import org.asciidoctor.extension.Preprocessor;
 import org.asciidoctor.extension.PreprocessorReader;
 
-import eu.numberfour.asciispec.AdocUtils;
-import eu.numberfour.asciispec.findresolver.FileStackHelper;
 import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
 
 /**
- * This preprocessor is aware of the file from which a current line (in {@link #processLine(Document, String)}) was read
- * from.
+ * This preprocessor is aware of the file from which a current line (in
+ * {@link #processLine(Document, String)}) was read from.
+ * <p>
+ * This class inherits from {@link Preprocessor} to keep the registration like
+ * AsciiDoctorJ does. It is not integrated in the AsciiDoctor preprocessor chain
+ * directly. Instead, it is indirectly executed from the
+ * {@link HostPreprocessor} which is the only {@link Preprocessor} that is
+ * integrated in the AsciiDoctor preprocessor chain.
+ * <p>
+ * The reason for the indirect execution is that only the first AsciiDoctor
+ * {@link Preprocessor} has reliable information about line numbers, files and
+ * paths.
  */
-abstract public class FileAwarePreprocessor extends Preprocessor implements Supplier<String> {
-
-	//// public static members ////
-	private static final List<String> INCLUDE_VARIABLES = new LinkedList<>();
+abstract public class FileAwarePreprocessor extends Preprocessor implements ClientPreprocessor, DirectoriesMixin {
+	HostPreprocessor hostPreprocessor;
 
 	/**
-	 * Enables the use of <code>{find}</code> variables within include directives like:<br/>
-	 * <br/>
-	 * <code>include::{find}myfile.adoc[]</code>
+	 * "Do nothing here!" is the intended use! The computation is done in
+	 * {@link HostPreprocessor}!
 	 */
-	public static void enableIncludeVariable(String varName) {
-		INCLUDE_VARIABLES.add(varName);
-	}
-
-	//// non-static members ////
-	private PreprocessorReader reader;
-	private Path basedir;
-
-	/**
-	 * Processes each line of the document. Comment regions are omitted. The passed line gets transformed multiple
-	 * times, once per pattern registered in {@link #init(Document)}.
-	 *
-	 * @return a list of resulting lines
-	 */
-	abstract protected List<String> processLine(Document document, String line);
-
-	/**
-	 * Is called before any line is processed. The return value enables/disables the processor.
-	 */
-	abstract protected boolean init(Document document);
-
 	@Override
 	final public void process(Document document, PreprocessorReader preproReader) {
-		reader = preproReader;
-		basedir = AdocUtils.getDocumentBasePath(document);
-
-		boolean enabled = init(document);
-		if (enabled) {
-			enableADocVariablesInIncludeProcessor(document);
-			List<String> lines = processLines(document);
-			reader.restoreLines(lines);
-		}
-	}
-
-	private void enableADocVariablesInIncludeProcessor(Document document) {
-		for (String inclVar : INCLUDE_VARIABLES) {
-			document.setAttr(inclVar, "{" + inclVar + "}", true);
-		}
+		// (see JavaDoc above)
 	}
 
 	@Override
-	final public String get() {
-		if (!reader.hasMoreLines())
-			return null;
-		return reader.readLine();
+	public void setHostProcessor(HostPreprocessor hostPreprocessor) {
+		if (this.hostPreprocessor == null)
+			this.hostPreprocessor = hostPreprocessor;
 	}
 
-	private List<String> processLines(Document document) {
-		return AdocUtils.processLines(this, (String l) -> {
-			final List<String> replacement = processLine(document, l);
-			return replacement;
-		});
+	@Override
+	public HostPreprocessor getHostPreprocessor() {
+		return hostPreprocessor;
 	}
 
-	/**
-	 * Searches for the given file in the directory of the current file.
+	@Override
+	public Document getDocument() {
+		return getHostPreprocessor().getDocument();
+	}
+
+	@Override
+	public PreprocessorReader getReader() {
+		return getHostPreprocessor().getReader();
+	}
+
+	/*
+	 * Redirecting mixin methods here so that subclasses don't have to do that.
 	 */
-	public File searchFile(String fileName) throws FileNotFoundException, MultipleFileMatchesException {
-		return FileStackHelper.searchRelativeTo(fileName, getCurrentDir(), basedir);
+	@Override
+	public File getCurrentFileBaseRelative() {
+		return DirectoriesMixin.super.getCurrentFileBaseRelative();
 	}
 
-	/**
-	 * Returns a file that is relative to the base dir.
-	 */
-	public String getBaseRelative(File file) {
-		Path relPath = basedir.relativize(file.toPath());
-		return relPath.toString();
-	}
-
-	/**
-	 * Returns the file of the current adoc line.
-	 */
-	public File getCurrentFile() {
-		return new File(reader.getFile());
-	}
-
-	/**
-	 * Returns the path of the current adoc line.
-	 */
-	public File getCurrentDir() {
-		return new File(reader.getDir());
-	}
-
-	/**
-	 * Returns the line number of the current file.
-	 */
+	@Override
 	public int getCurrentLine() {
-		return reader.getLineNumber() - 1;
+		return DirectoriesMixin.super.getCurrentLine();
+	}
+
+	@Override
+	public File searchFile(String fileName) throws FileNotFoundException, MultipleFileMatchesException {
+		return DirectoriesMixin.super.searchFile(fileName);
 	}
 
 }

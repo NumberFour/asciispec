@@ -62,7 +62,8 @@ public class Issue {
 	 * @return a file representing the path to the file being processed
 	 */
 	public File getDocumentFile() {
-		return new File(AdocUtils.getAttributeAsString(node.getDocument(), "docfile", null));
+		File docfile = AdocUtils.getDocumentBaseFile(node.getDocument());
+		return docfile;
 	}
 
 	/**
@@ -71,11 +72,16 @@ public class Issue {
 	 * @return <code>true</code> if a document file is available fro this issue or <code>false</code> otherwise
 	 */
 	public boolean hasDocumentFile() {
-		String docfileName = AdocUtils.getAttributeAsString(node.getDocument(), "docfile", null);
-		// The '<DIRECT_INPUT>' is set for tests only. See: {@link AsciidoctorTest#getOptions(File, File)}
-		if (docfileName.equals("<DIRECT_INPUT>"))
+		File file = getDocumentFile();
+		if (file == null)
 			return false;
-		return getDocumentFile() != null;
+
+		// The '<DIRECT_INPUT>' is set for tests only. See: {@link
+		// AsciidoctorTest#getOptions(File, File)}
+		if (file.getName().contains("DIRECT_INPUT"))
+			return false;
+
+		return true;
 	}
 
 	/**
@@ -122,7 +128,7 @@ public class Issue {
 		StringBuilder result = new StringBuilder();
 		result.append(getSeverity());
 		if (hasDocumentFile())
-			result.append(": ").append(getDocumentFile().getName());
+			result.append(": ").append(getDocumentFile().toString());
 		if (hasLineNumber())
 			result.append(": line ").append(getLineNumber());
 		result.append(": ").append(getMessage());

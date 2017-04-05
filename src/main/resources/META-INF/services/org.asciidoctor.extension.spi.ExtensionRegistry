@@ -4,7 +4,8 @@
 # NOTE: the FindResolverExtension should be listed first, as it resolves paths and includes source text. This
 # newly added text should also be processed by the other macros.
 
-eu.numberfour.asciispec.processors.FindResolverExtension
+eu.numberfour.asciispec.processors.ResolveFindExtension
+eu.numberfour.asciispec.processors.ResolveApiExtension
 eu.numberfour.asciispec.processors.InlineTaskLinkExtension
 eu.numberfour.asciispec.processors.MathIncludeExtension
 eu.numberfour.asciispec.processors.InlineMathExtension

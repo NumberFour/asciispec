@@ -209,12 +209,13 @@ public class SourceProcessor {
 		initialize();
 
 		LinkedList<String> result = new LinkedList<>();
-		for (String line = lineSupplier.get(); line != null; line = lineSupplier.get())
+		for (String line = lineSupplier.get(); line != null; line = lineSupplier.get()) {
 			if (shouldProcess(line)) {
 				processLine(line, result);
 			} else {
 				result.add(line);
 			}
+		}
 		return result;
 	}
 

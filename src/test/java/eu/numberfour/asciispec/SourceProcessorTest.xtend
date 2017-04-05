@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   NumberFour AG - Initial API and implementation
  */
@@ -19,7 +19,7 @@ import org.junit.Test
 import static org.junit.Assert.*
 
 /**
- * 
+ *
  */
 class SourceProcessorTest {
 	private static class MockTransform implements Function<String, List<String>> {
@@ -31,7 +31,7 @@ class SourceProcessorTest {
 				this.parameter = parameter;
 				this.result = result;
 			}
-			
+
 			def LinkedList<String> assertAndReturnResult(String str) {
 				assertEquals(parameter, str);
 				return result;
@@ -290,7 +290,7 @@ class SourceProcessorTest {
 				.expect("And this too, with a trailing ", "fourth", "fifth")
 		);
 	}
-	
+
 	@Test
 	def void testTransformWithSourceBlockUsingBackticks() {
 		processAndAssert(
@@ -298,13 +298,13 @@ class SourceProcessorTest {
 			Transformed first line
 			Transformed second line
 			```
-			    A wild source block appears!
+					A wild source block appears!
 			```
 			Transformed last line''',
 			'''
 			This is the first line
 			```
-			    A wild source block appears!
+					A wild source block appears!
 			```
 			But it's over now!''',
 			new MockTransform()
@@ -312,7 +312,7 @@ class SourceProcessorTest {
 				.expect("But it's over now!", "Transformed last line")
 		);
 	}
-	
+
 	@Test
 	def void testTransformWithParameterizedSourceBlockUsingBackticks() {
 		processAndAssert(
@@ -320,13 +320,13 @@ class SourceProcessorTest {
 			Transformed first line
 			Transformed second line
 			```bash
-			    A wild source block appears!
+					A wild source block appears!
 			```
 			Transformed last line''',
 			'''
 			This is the first line
 			```bash
-			    A wild source block appears!
+					A wild source block appears!
 			```
 			But it's over now!''',
 			new MockTransform()
@@ -334,7 +334,7 @@ class SourceProcessorTest {
 				.expect("But it's over now!", "Transformed last line")
 		);
 	}
-	
+
 	@Test
 	def void testTransformWithSourceBlock() {
 		processAndAssert(
@@ -343,14 +343,14 @@ class SourceProcessorTest {
 			Transformed second line
 			[source]
 			----
-			    A wild source block appears!
+					A wild source block appears!
 			----
 			Transformed last line''',
 			'''
 			This is the first line
 			[source]
 			----
-			    A wild source block appears!
+					A wild source block appears!
 			----
 			But it's over now!''',
 			new MockTransform()
@@ -358,7 +358,7 @@ class SourceProcessorTest {
 				.expect("But it's over now!", "Transformed last line")
 		);
 	}
-	
+
 	@Test
 	def void testTransformWithParameterizedSourceBlock() {
 		processAndAssert(
@@ -367,14 +367,14 @@ class SourceProcessorTest {
 			Transformed second line
 			[source,language=javascript]
 			----
-			    A wild source block appears!
+					A wild source block appears!
 			----
 			Transformed last line''',
 			'''
 			This is the first line
 			[source,language=javascript]
 			----
-			    A wild source block appears!
+					A wild source block appears!
 			----
 			But it's over now!''',
 			new MockTransform()

@@ -22,7 +22,7 @@ import eu.numberfour.asciispec.issue.IssuePrinter;
  * more than one occurrences of a given pattern e.g. a single line can contain multiple math expressions in different
  * syntaxes. The type argument T sets the type of the key for all patterns.
  */
-abstract public class MacroPreprocessor<T> extends FileAwarePreprocessor {
+abstract public class MacroPreprocessor<T> extends FileAwarePreprocessor implements ErrorAndWarningsMixin {
 
 	private final LinkedHashMap<T, Pattern> patterns = new LinkedHashMap<>();
 
@@ -60,7 +60,7 @@ abstract public class MacroPreprocessor<T> extends FileAwarePreprocessor {
 	}
 
 	@Override
-	final protected List<String> processLine(Document document, String line) {
+	final public List<String> processLine(Document document, String line) {
 		String workingLine = line;
 		for (Map.Entry<T, Pattern> entry : patterns.entrySet()) {
 			StringBuilder builder = new StringBuilder();
@@ -89,65 +89,18 @@ abstract public class MacroPreprocessor<T> extends FileAwarePreprocessor {
 		return new LinkedList<>(Arrays.asList(workingLine.split(LINE_DELIMITER)));
 	}
 
-	/**
-	 * Works just like {@link #error(Document, String, String)} except that the console error message and returned
-	 * inline error message have the same content.
-	 *
-	 * @param document
-	 *            The document which is currently being processed.
-	 * @param msg
-	 *            The error message
-	 * @return Formatted error message
-	 */
-	protected String error(Document document, String msg) {
-		return error(document, msg, msg);
+	@Override
+	public IssueAcceptor getIssueAcceptor() {
+		return issueAcceptor;
 	}
 
-	/**
-	 * Prints the passed error message in the console with some additional information. Formats and returns the inline
-	 * error message.
-	 *
-	 * @param document
-	 *            The document which is currently being processed.
-	 * @param consoleMsg
-	 *            The error message that should be printed in the console
-	 * @param inlineMsg
-	 *            The error message that should be shown to the user
-	 * @return Formatted error message
+	/*
+	 * The specification of the origin of the error method is necessary, since
+	 * other mixin interfaces reuse this method.
 	 */
-	protected String error(Document document, String consoleMsg, String inlineMsg) {
-		issueAcceptor.error(document, consoleMsg, getCurrentFile(), getCurrentLine());
-		return "#[Error: " + inlineMsg + "]#";
+	@Override
+	public String error(Document document, String consoleMsg, String inlineMsg) {
+		return ErrorAndWarningsMixin.super.error(document, consoleMsg, inlineMsg);
 	}
 
-	/**
-	 * Works just like {@link #warn(Document, String, String)} except that the console warn message and returned warn
-	 * message have the same content.
-	 *
-	 * @param document
-	 *            The document which is currently being processed.
-	 * @param msg
-	 *            The warn message
-	 * @return Formatted warn message
-	 */
-	protected String warn(Document document, String msg) {
-		return warn(document, msg, msg);
-	}
-
-	/**
-	 * Prints the passed error message in the console with some additional information. Formats and returns the inline
-	 * error message.
-	 *
-	 * @param document
-	 *            The document which is currently being processed.
-	 * @param consoleMsg
-	 *            The warn message that should be printed in the console
-	 * @param inlineMsg
-	 *            The warn message that should be shown to the user
-	 * @return Formatted warn message
-	 */
-	protected String warn(Document document, String consoleMsg, String inlineMsg) {
-		issueAcceptor.warn(document, consoleMsg, getCurrentFile(), getCurrentLine());
-		return "#[Warn: " + inlineMsg + "]#";
-	}
 }

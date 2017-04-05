@@ -115,7 +115,9 @@ public final class AdocUtils {
 	 *            the transformation function
 	 * @return the transformed lines
 	 */
-	public static List<String> processLines(Supplier<String> lineSupplier, Function<String, List<String>> transform) {
+	public static List<String> processLines(Supplier<String> lineSupplier,
+			Function<String, List<String>> transform) {
+
 		return new SourceProcessor(transform).process(lineSupplier);
 	}
 
@@ -602,13 +604,14 @@ public final class AdocUtils {
 	 *
 	 * @param document
 	 *            the document
-	 * @return the path to the folder that contains the given document or <code>null</code> if that path could not be
-	 *         determined
+	 * @return the path to the folder that contains the given document or
+	 *         <code>null</code> if that path could not be determined
 	 */
 	public static File getDocumentBaseFile(ContentNode document) {
 		String baseFileName = getAttributeAsString(Objects.requireNonNull(document), "docfile", null);
 		if (baseFileName == null)
 			return null;
+
 		return new File(baseFileName);
 	}
 

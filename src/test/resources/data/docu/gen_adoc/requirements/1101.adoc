@@ -1,0 +1,26 @@
+==== Semantics
+
+++1 single values++:: srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.common.api-tests:test/idl-gen/n4/jtl/spec/structureGeneration/ArrayTest:ArrayTest#test_1_single_values___1_same_type++[++1 same type++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.common.api-tests:test/idl-gen/n4/jtl/spec/structureGeneration/ArrayTest:ArrayTest#test_1_single_values___2_different_types++[++2 different types++]
+
+The Array operation returns an array containing all the operations parameters.
+
+
+++2 stripped values++:: srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.common.api-tests:test/idl-gen/n4/jtl/spec/structureGeneration/ArrayTest:ArrayTest#test_2_stripped_values___1_NoValue++[++1 NoValue++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.common.api-tests:test/idl-gen/n4/jtl/spec/structureGeneration/ArrayTest:ArrayTest#test_2_stripped_values___2_null++[++2 null++]
+
+NoValue
+and null are stripped.
+
+
+++3 MultiValue++:: srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.common.api-tests:test/idl-gen/n4/jtl/spec/structureGeneration/ArrayTest:ArrayTest#test_3_MultiValue++[Test]
+
+MultiValues are flattened.
+
+
+++4 nested arrays++:: srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.common.api-tests:test/idl-gen/n4/jtl/spec/structureGeneration/ArrayTest:ArrayTest#test_4_nested_arrays++[Test]
+
+Nested arrays are not flattened.
+
+
+++5 empty array++:: srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.common.api-tests:test/idl-gen/n4/jtl/spec/structureGeneration/ArrayTest:ArrayTest#test_5_empty_array++[Test]
+
+If no parameters are given, an empty array is returned.

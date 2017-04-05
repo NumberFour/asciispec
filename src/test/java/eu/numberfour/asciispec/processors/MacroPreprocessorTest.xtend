@@ -30,11 +30,11 @@ public class MacroPreprocessorTest extends AsciidoctorTest {
 	public override void convertAndAssert(CharSequence expectedOutput, String input){
 		super.convertAndAssert("<div class=\"paragraph\">\n<p>"+expectedOutput+"</p>\n</div>",input);
 	}
-	
+
 	public override void convertStringAndAssertErrorContains(CharSequence expectedOutput, String input,String consoleError){
 		super.convertStringAndAssertErrorContains("<div class=\"paragraph\">\n<p>"+expectedOutput+"</p>\n</div>",input, consoleError);
 	}
-	
+
 	static class TestPreprocessorImpl extends MacroPreprocessor<String> {
 
 		private final String KEY1 = "k1";
@@ -49,13 +49,12 @@ public class MacroPreprocessorTest extends AsciidoctorTest {
 		private final Pattern PATTERN4 = Pattern.compile(KEY4 + "\\[\\]");
 		private final Pattern PATTERN5 = Pattern.compile(KEY5 + "\\[\\]");
 
-		protected override boolean init(Document document) {
+		override public void init(Document document) {
 			registerPattern(KEY1, PATTERN1);
 			registerPattern(KEY2, PATTERN2);
 			registerPattern(KEY3, PATTERN3);
 			registerPattern(KEY4, PATTERN4);
 			registerPattern(KEY5, PATTERN5);
-			return true;
 		}
 
 		protected override String processMatch(Document document, String key, Matcher matcher) {
@@ -75,48 +74,48 @@ public class MacroPreprocessorTest extends AsciidoctorTest {
 			return result;
 		}
 	}
-	
+
 	static class GenericExtension extends ProcessorExtension {
 		protected override void register(JavaExtensionRegistry registry) {
 			registry.preprocessor(TestPreprocessorImpl);
 		}
 	}
-	
+
 	@Test
 	public def void testBasicDetectionAndConversion() {
 		convertAndAssert("A", "k1[]");
 		convertAndAssert("BBBBBB", "k2[]");
 		convertAndAssert("macro:test[]", "k3[]");
 	}
-	
+
 	@Test
 	public def void testMultiplePatternsOfSameKind() {
 		convertAndAssert("A A A", "k1[] k1[] k1[]");
 	}
-	
+
 	@Test
 	public def void testMultiplePatternsOfDifferentKindWithSteadyOrder() {
 		convertAndAssert("A BBBBBB macro:test[]", "k1[] k2[] k3[]");
 	}
-	
+
 	@Test
 	public def void testMultiplePatternsOfDifferentKindWithRandomOrder() {
 		convertAndAssert("A BBBBBB macro:test[] A macro:test[] BBBBBB", "k1[] k2[] k3[] k1[] k3[] k2[]");
 	}
-	
+
 	@Test
 	public def void testMultiplePatternsOfDifferentKindWithRandomOrderAndTextInbetween() {
 		convertAndAssert("A text BBBBBB text text macro:test[] A texttext macro:test[] BBBBBB text", "k1[] text k2[] text text k3[] k1[] texttext k3[] k2[] text");
 	}
-	
+
 	@Test
 	public def void testErrorOutput() {
 		convertStringAndAssertErrorContains(
-		"<mark>[Error: bad bad error.]</mark>", 
+		"<mark>[Error: bad bad error.]</mark>",
 		"error[]",
 		"asciispec  : ERROR: line 1: bad bad error.");
 	}
-	
+
 	@Test
 	public def void testWarnOutput() {
 		convertStringAndAssertErrorContains(
@@ -124,11 +123,11 @@ public class MacroPreprocessorTest extends AsciidoctorTest {
 		"warn[]",
 		"asciispec  : WARN: line 1: just a warning, for now.");
 	}
-	
+
 	@Test
 	public def void testErrorOutputLineNumber() {
 		convertStringAndAssertErrorContains(
-		"<mark>[Error: bad bad error.]</mark>", 
+		"<mark>[Error: bad bad error.]</mark>",
 		"\n\n\nerror[]",
 		"asciispec  : ERROR: line 4: bad bad error.");
 	}

@@ -27,10 +27,9 @@ public class InlineMathPreprocessor extends MacroPreprocessor<String> {
 	private static final Pattern MATH_UNESCAPE_PATTERN = Pattern.compile("(\\\\\\$)");
 
 	@Override
-	protected boolean init(Document document) {
+	public void init(Document document) {
 		registerPattern(MATH_KEY, MATH_PATTERN);
 		registerPattern(MATH_UNESCAPE_KEY, MATH_UNESCAPE_PATTERN);
-		return true;
 	}
 
 	@Override

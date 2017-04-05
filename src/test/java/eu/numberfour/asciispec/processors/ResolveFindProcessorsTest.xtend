@@ -18,11 +18,11 @@ import org.junit.Test
 /**
  *
  */
-class FindResolveProcessorsTest extends AsciidoctorTest {
+class ResolveFindProcessorsTest extends AsciidoctorTest {
 
 	@Before
 	def public void registerExtensions() {
-		new FindResolverExtension().register(doc);
+		new ResolveFindExtension().register(doc);
 		new InlineWikiLinkExtension().register(doc);
 		new SourceLinkExtension().register(doc);
 	}
@@ -159,7 +159,7 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			</div>'''
 		.convertFileAndAssert("src/test/resources/data/find_resolver/sub1", "chap1_2.adoc");
 	}
-	
+
 	@Test
 	def void testChap1_2_1File() throws IOException {
 		'''
@@ -187,7 +187,7 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			</div>'''
 		.convertFileAndAssert("src/test/resources/data/find_resolver/sub1/sub1sub1", "chap1_2_1.adoc");
 	}
-	
+
 	@Test
 	def void testNoFindInclude() throws IOException {
 		'''
@@ -207,12 +207,12 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			</div>
 			</div>'''
 		.convertFileAndAssertErrorContains(
-			"src/test/resources/data/find_resolver/sub2", 
-			"noFindInclude.adoc", 
+			"src/test/resources/data/find_resolver/sub2",
+			"noFindInclude.adoc",
 			'''
 			asciispec  : WARN: top.adoc: line 3: Cannot detect circular dependencies. Probably 'include' was used without '{find}' macro when including file:''');
 	}
-	
+
 	@Test
 	def void testMissingAdocExtension() throws IOException {
 		'''
@@ -232,10 +232,10 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			</div>
 			</div>'''
 		.convertFileAndAssert(
-			"src/test/resources/data/find_resolver/sub2", 
+			"src/test/resources/data/find_resolver/sub2",
 			"missingAdocExtension.adoc");
 	}
-	
+
 	@Test
 	def void testFileOnce1() throws IOException {
 		'''
@@ -264,7 +264,7 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			</div>'''
 		.convertFileAndAssert("src/test/resources/data/find_resolver/sub2", "includeFileOnce1.adoc");
 	}
-	
+
 	@Test
 	def void testFileOnceException1() throws IOException {
 		'''
@@ -300,12 +300,12 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			</div>
 			</div>'''
 		.convertFileAndAssertErrorContains(
-			"src/test/resources/data/find_resolver/sub2", 
-			"includeFileOnce2.adoc", 
+			"src/test/resources/data/find_resolver/sub2",
+			"includeFileOnce2.adoc",
 			'''
 			asciispec  : WARN: includeFileOnce2.adoc: line 9: Inconsistent use of modifier FILE_ONCE at file 'toppot.adoc''');
 	}
-	
+
 	@Test
 	def void testFileOnceException2() throws IOException {
 		'''
@@ -333,13 +333,13 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			</div>
 			</div>'''
 		.convertFileAndAssertErrorContains(
-			"src/test/resources/data/find_resolver/sub2", 
-			"includeFileOnce3.adoc", 
+			"src/test/resources/data/find_resolver/sub2",
+			"includeFileOnce3.adoc",
 			'''
 			asciispec  : WARN: includeFileOnceHelper.adoc: line 8: Inconsistent use of modifier FILE_ONCE at file 'toppot.adoc''');
 	}
-	
-	
+
+
 	@Test
 	def void testTargetOnce1() throws IOException {
 		'''
@@ -368,7 +368,7 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			</div>'''
 		.convertFileAndAssert("src/test/resources/data/find_resolver/sub2", "includeTargetOnce1.adoc");
 	}
-	
+
 	@Test
 	def void testTargetOnceException1() throws IOException {
 		'''
@@ -404,12 +404,12 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			</div>
 			</div>'''
 		.convertFileAndAssertErrorContains(
-			"src/test/resources/data/find_resolver/sub2", 
-			"includeTargetOnce2.adoc", 
+			"src/test/resources/data/find_resolver/sub2",
+			"includeTargetOnce2.adoc",
 			'''
 			asciispec  : WARN: includeTargetOnce2.adoc: line 9: Inconsistent use of modifier TARGET_ONCE at file 'toppot.adoc''');
 	}
-	
+
 	@Test
 	def void testTargetOnceException2() throws IOException {
 		'''
@@ -437,13 +437,13 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			</div>
 			</div>'''
 		.convertFileAndAssertErrorContains(
-			"src/test/resources/data/find_resolver/sub2", 
-			"includeTargetOnce3.adoc", 
+			"src/test/resources/data/find_resolver/sub2",
+			"includeTargetOnce3.adoc",
 			'''
 			asciispec  : WARN: includeTargetOnceHelper.adoc: line 8: Inconsistent use of modifier TARGET_ONCE at file 'toppot.adoc''');
 	}
-	
-	
+
+
 	@Test
 	def void testCircularDependencyExceptionSelf() throws IOException {
 		'''
@@ -451,16 +451,16 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			<p>These are letters.</p>
 			</div>
 			<div class="paragraph">
-			<p>include..{find}circularDependencySelf.adoc[] Error: Circular dependencies detected. More information in console output.</p>
+			<p>include::{find}circularDependencySelf.adoc[] <mark>[Error: Circular dependencies detected. More information in console output.]</mark> </p>
 			</div>'''
 		.convertFileAndAssertErrorContains(
-			"src/test/resources/data/find_resolver/sub2", 
-			"circularDependencySelf.adoc", 
+			"src/test/resources/data/find_resolver/sub2",
+			"circularDependencySelf.adoc",
 			'''
 			asciispec  : ERROR: circularDependencySelf.adoc: line 9: A dependency cycle was detected. The file stack is:''');
 	}
-	
-	
+
+
 	@Test
 	def void testCircularDependencyExceptionPair() throws IOException {
 		'''
@@ -478,19 +478,19 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			<p>These are letters.</p>
 			</div>
 			<div class="paragraph">
-			<p>include..{find}circularDependencyPair.adoc[] Error: Circular dependencies detected. More information in console output.</p>
+			<p>include::{find}circularDependencyPair.adoc[] <mark>[Error: Circular dependencies detected. More information in console output.]</mark> </p>
 			</div>
 			</div>
 			</div>'''
 		.convertFileAndAssertErrorContains(
-			"src/test/resources/data/find_resolver/sub2", 
-			"circularDependencyPair.adoc", 
+			"src/test/resources/data/find_resolver/sub2",
+			"circularDependencyPair.adoc",
 			'''
 			asciispec  : ERROR: circularDependencyPairHelper.adoc: line 9: A dependency cycle was detected. The file stack is:
 				circularDependencyPair.adoc
 				circularDependencyPairHelper.adoc''');
 	}
-	
+
 	@Test
 	def void testMultipleMatchesExceptionAtImage() throws IOException {
 		'''
@@ -503,14 +503,14 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			</div>
 			</div>'''
 		.convertFileAndAssertErrorContains(
-			"src/test/resources/data/find_resolver/sub2", 
-			"multipleLocationsImage.adoc", 
+			"src/test/resources/data/find_resolver/sub2",
+			"multipleLocationsImage.adoc",
 			'''
 			asciispec  : WARN: multipleLocationsImage.adoc: line 10: File 'images/no4.png' was found at multiple locations:
 				- images/no4.png
 				- ../images/no4.png''');
 	}
-	
+
 	@Test
 	def void testMultipleMatchesExceptionAtInclude() throws IOException {
 		'''
@@ -530,15 +530,15 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			</div>
 			</div>'''
 		.convertFileAndAssertErrorContains(
-			"src/test/resources/data/find_resolver/sub2", 
-			"multipleLocationsInclude.adoc", 
+			"src/test/resources/data/find_resolver/sub2",
+			"multipleLocationsInclude.adoc",
 			'''
 			asciispec  : WARN: multipleLocationsInclude.adoc: line 9: File 'top.adoc' was found at multiple locations:
 				- top.adoc
 				- ../top.adoc''');
 	}
-	
-	
+
+
 	@Test
 	def void testFileNotFoundExceptionImage() throws IOException {
 		'''
@@ -546,15 +546,15 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			<p>These are letters.</p>
 			</div>
 			<div class="paragraph">
-			<p>image::{find}no4.png Error: File 'no4.png' could not be found[]</p>
+			<p>image::{find}no4.png <mark>[Error: File 'no4.png' could not be found]</mark> []</p>
 			</div>'''
 		.convertFileAndAssertErrorContains(
-			"src/test/resources/data/find_resolver/sub2", 
-			"fileNotFoundImage.adoc", 
+			"src/test/resources/data/find_resolver/sub2",
+			"fileNotFoundImage.adoc",
 			'''
 			asciispec  : ERROR: fileNotFoundImage.adoc: line 9: File 'no4.png' could not be found''');
 	}
-	
+
 	@Test
 	def void testFileNotFoundExceptionInclude() throws IOException {
 		'''
@@ -562,15 +562,15 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			<p>These are letters.</p>
 			</div>
 			<div class="paragraph">
-			<p>include..{find}top2.adoc[] Error: File 'top2.adoc' could not be found</p>
+			<p>include::{find}top2.adoc[] <mark>[Error: File 'top2.adoc' could not be found]</mark> </p>
 			</div>'''
 		.convertFileAndAssertErrorContains(
-			"src/test/resources/data/find_resolver/sub2", 
-			"fileNotFoundInclude.adoc", 
+			"src/test/resources/data/find_resolver/sub2",
+			"fileNotFoundInclude.adoc",
 			'''
 			asciispec  : ERROR: fileNotFoundInclude.adoc: line 9: File 'top2.adoc' could not be found''');
 	}
-	
+
 	@Test
 	def void testFileNotFoundExceptionIncludeNoFind() throws IOException {
 		'''
@@ -581,10 +581,10 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			<p>Unresolved directive in fileNotFoundIncludeNoFind.adoc - include::top2.adoc[]</p>
 			</div>'''
 		.convertFileAndAssert(
-			"src/test/resources/data/find_resolver/sub2", 
+			"src/test/resources/data/find_resolver/sub2",
 			"fileNotFoundIncludeNoFind.adoc");
 	}
-	
+
 		@Test
 	def void testTargetOnceMainFile() throws IOException {
 		'''
@@ -696,9 +696,35 @@ class FindResolveProcessorsTest extends AsciidoctorTest {
 			</div>
 			</div>'''
 		.convertFileAndAssertErrorContains(
-			"src/test/resources/data/find_resolver/sub2", 
-			"noCyclicExceptions.adoc", 
+			"src/test/resources/data/find_resolver/sub2",
+			"noCyclicExceptions.adoc",
 			'''
 			asciispec  : WARN: noCyclicExceptionsHelper1.adoc: line 8: Cannot detect circular dependencies. Probably 'include' was used without '{find}' macro when including file:''');
+	}
+
+	@Test
+	def void testIncludeSrclnkWithError() throws IOException {
+		'''
+			<div id="preamble">
+			<div class="sectionbody">
+			<div class="paragraph">
+			<p>These are letters.</p>
+			</div>
+			</div>
+			</div>
+			<div class="sect1">
+			<h2 id="_a_small_subsection"><a class="anchor" href="#_a_small_subsection"></a>1. A Small Subsection</h2>
+			<div class="sectionbody">
+			<div class="paragraph">
+			<p>srclnk:getStartWithQuantityFormatX123[DREI getStartWithQuantityFormatX123()]
+			<mark>[Error: PQN not found]</mark></p>
+			</div>
+			</div>
+			</div>'''
+		.convertFileAndAssertErrorContains(
+			"src/test/resources/data/find_resolver/sub2",
+			"includeSrclnkWithError.adoc",
+			'''
+			asciispec  : ERROR: sub21/textWithSrclnk.adoc: line 8: PQN not found: 'getStartWithQuantityFormatX123'.''');
 	}
 }

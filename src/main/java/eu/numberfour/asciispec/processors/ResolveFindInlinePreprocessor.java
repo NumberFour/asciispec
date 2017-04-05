@@ -12,17 +12,16 @@ import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
 /**
  * This processor resolves all <code>{find}</code> directives in the document.<br/>
  * <b>Note</b>: <code>{find}</code> directives within include macros are resolved in the
- * {@link FindResolveIncludeProcessor}.
+ * {@link ResolveFindIncludeProcessor}.
  */
-public class FindResolverInlinePreprocessor extends MacroPreprocessor<String> {
+public class ResolveFindInlinePreprocessor extends MacroPreprocessor<String> {
 	static final String FIND_VARIABLE_KEY = "find";
 	static final String FIND_VARIABLE_MATCHER = "\\{(?<VAR>find)\\}[\\s]*(?<FILE>[^\\[\\s]*)";
 
 	@Override
-	protected boolean init(Document document) {
+	public void init(Document document) {
 		Pattern findvarPattern = Pattern.compile(FIND_VARIABLE_MATCHER);
 		registerPattern(FIND_VARIABLE_KEY, findvarPattern);
-		return true;
 	}
 
 	@Override
@@ -35,6 +34,11 @@ public class FindResolverInlinePreprocessor extends MacroPreprocessor<String> {
 		return fullMatch;
 	}
 
+	/**
+	 * Returns the relative path to the given target. A relative path is
+	 * necessary since html might get generated which will also be used in www
+	 * scenarios. Absolute paths would break this scenario.
+	 */
 	private String getBaseRelativeFileName(Document document, Matcher findvarMatcher) {
 		String fileName = findvarMatcher.group("FILE");
 		String baseRelFileName = "{find}" + fileName;
@@ -42,19 +46,19 @@ public class FindResolverInlinePreprocessor extends MacroPreprocessor<String> {
 		try {
 			findFile = super.searchFile(fileName);
 		} catch (FileNotFoundException e) {
-			issueAcceptor.error(document, e.getMessage(), super.getCurrentFile(), getCurrentLine());
-			baseRelFileName += " Error: " + e.getMessage();
+			baseRelFileName += " " + error(document, e.getMessage()) + " ";
 		} catch (MultipleFileMatchesException e) {
-			issueAcceptor.warn(document, e.getMessage(), super.getCurrentFile(), getCurrentLine());
+			warn(document, e.getMessage());
 			findFile = e.matches.get(0);
 		} catch (Exception e) {
-			issueAcceptor.error(document, e.getMessage(), super.getCurrentFile(), getCurrentLine());
-			baseRelFileName += " Error: " + e.getMessage();
+			baseRelFileName += " " + error(document, e.getMessage()) + " ";
 		}
 
-		if (findFile != null)
-			baseRelFileName = super.getBaseRelative(findFile);
+		if (findFile != null) {
+			baseRelFileName = super.getBaseRelative(findFile).toString();
+		}
 
 		return baseRelFileName;
 	}
+
 }

@@ -23,6 +23,24 @@ Attributes: ::
 
 In case the PQN or the label contain special characters, the AsciiDoc pass macro (`++`) can be used to escape PQN and/or label.
 
+Requires: ::
+* Asciidoctor variable `gen_adoc_dir`
+* Asciidoctor variable `srclnk_repo_def`
+
+
+
+Warnings and Errors: ::
+* *Error: PQN Could Not Be Parsed*
+	Is issued in case the given PQN is invalid.
+
+* *Error: PQN Is Ambiguous*
+	Is issued in case the given PQN is ambiguous.
+
+* *Error: PQN Not Found*
+	Is issued in case no API element could be found in the index for the given PQN.
+
+
+
 #Attention:# ::
 The srclnk macro must be specified in a single line.
 Line breaks within this macro are not supported.
@@ -51,10 +69,13 @@ link:https://github.myorg.com/api/blob/master/packages/eu.myorg.stdlib.model.bas
 
 |===
 
+
+
 [.language-asciidoc]
 == Configuration
 
 The following commands should be added to the *https://github.com/NumberFour/asciispec/blob/master/docs/examples/config.adoc[Configuration File]*:
+
 
 === Generated Documentation Directory
 The `gen_adoc` variable specifies the directory which contains all generated documentation.
@@ -70,6 +91,7 @@ Usually, its name is `gen_adoc`.
 
 Example: ::
 `:gen_adoc: data/doc/gen_adoc`
+
 
 === Repository Location
 The repository location command specifies one repository, that is, its name, description and url.

@@ -20,7 +20,6 @@ import org.asciidoctor.extension.DocinfoProcessor;
 import org.asciidoctor.extension.IncludeProcessor;
 import org.asciidoctor.extension.InlineMacroProcessor;
 import org.asciidoctor.extension.Postprocessor;
-import org.asciidoctor.extension.Preprocessor;
 import org.asciidoctor.extension.Treeprocessor;
 
 /**
@@ -35,6 +34,8 @@ public class JavaExtensionRegistry {
 	private final org.asciidoctor.extension.JavaExtensionRegistry delegateRegistry;
 
 	private final Map<String, InlineMacroToBlockConverter> converters;
+
+	private HostPreprocessor hostPreprocessor;
 
 	/**
 	 * Creates a new instance that delegates all calls to the given extension registry.
@@ -152,24 +153,26 @@ public class JavaExtensionRegistry {
 	}
 
 	/**
-	 * @see org.asciidoctor.extension.JavaExtensionRegistry#preprocessor(Class)
+	 * Registers {@link ClientPreprocessor}s.
 	 */
-	public void preprocessor(Class<? extends Preprocessor> preprocessor) {
-		delegateRegistry.preprocessor(preprocessor);
+	public <T extends ClientPreprocessor> void preprocessor(Class<T> clazz) {
+		try {
+			preprocessor(clazz.newInstance());
+		} catch (InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
 	}
 
-	/**
-	 * @see org.asciidoctor.extension.JavaExtensionRegistry#preprocessor(Preprocessor)
-	 */
-	public void preprocessor(Preprocessor preprocessor) {
-		delegateRegistry.preprocessor(preprocessor);
+	public void preprocessor(ClientPreprocessor preprocessor) {
+		getHostPreprocessor().register(preprocessor);
 	}
 
-	/**
-	 * @see org.asciidoctor.extension.JavaExtensionRegistry#preprocessor(String)
-	 */
-	public void preprocessor(String preprocessor) {
-		delegateRegistry.preprocessor(preprocessor);
+	private HostPreprocessor getHostPreprocessor() {
+		if (hostPreprocessor == null) {
+			hostPreprocessor = new HostPreprocessor();
+			delegateRegistry.preprocessor(hostPreprocessor);
+		}
+		return hostPreprocessor;
 	}
 
 	/**

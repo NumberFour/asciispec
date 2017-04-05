@@ -10,7 +10,7 @@
  */
 package eu.numberfour.asciispec.findresolver;
 
-import eu.numberfour.asciispec.processors.FindResolveIncludeProcessor;
+import eu.numberfour.asciispec.processors.ResolveFindIncludeProcessor;
 
 /**
  * The use of some include modifiers can lead to inconsistencies. When such an inconsistency is found the user is
@@ -22,7 +22,7 @@ public class InconsistentUseOfModifiersException extends Exception {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/** In case the file has the {@link FindResolveIncludeProcessor#MODIFIER_FILE_ONCE} modifier */
+	/** In case the file has the {@link ResolveFindIncludeProcessor#MODIFIER_FILE_ONCE} modifier */
 	public final IgnoreFileException ignoreFileException;
 	/** The name of the modifier */
 	public final String modifierName;

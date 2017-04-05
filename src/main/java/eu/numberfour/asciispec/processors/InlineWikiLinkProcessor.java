@@ -34,11 +34,10 @@ public class InlineWikiLinkProcessor extends MacroPreprocessor<String> {
 	private boolean isConfigured = false;
 
 	@Override
-	protected boolean init(Document document) {
+	public void init(Document document) {
 		registerPattern(CONFIG_KEY, CONFIG_PATTERN);
 		registerPattern(VERIFY_CONFIG_KEY, RELAXED_CONFIG_PATTERN);
 		registerPattern(CWIKI_KEY, CWIKI_PATTERN);
-		return true;
 	}
 
 	@Override

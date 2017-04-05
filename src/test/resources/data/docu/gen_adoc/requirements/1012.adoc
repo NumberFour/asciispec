@@ -1,0 +1,31 @@
+==== Semantics
+
+++1 supportedSelections++:: srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_1_supportedSelections___1_attributeSelection++[++1 attributeSelection++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_1_supportedSelections___2_databagSelection++[++2 databagSelection++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_1_supportedSelections___3_refobjectSelection++[++3 refobjectSelection++]
+
+Write-binding is supported by attribute,
+databag,
+and refobject selection.
+
+
+++2 readonlySelections++:: srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_2_readonlySelections___1_displayinfoSelection++[++1 displayinfoSelection++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_2_readonlySelections___2_baseDisplayInfoSelection++[++2 baseDisplayInfoSelection++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_2_readonlySelections___3_wildcardSelection++[++3 wildcardSelection++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_2_readonlySelections___4_indexSelection++[++4 indexSelection++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_2_readonlySelections___5_keySelection++[++5 keySelection++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_2_readonlySelections___6_identifierSelection++[++6 identifierSelection++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_2_readonlySelections___7_defaultvalueSelection++[++7 defaultvalueSelection++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_2_readonlySelections___8_filterSelection++[++8 filterSelection++]
+
+Write-binding is not supported by displayinfo,
+baseDisplayInfo,
+wildcard,
+index,
+key,
+identifier,
+defaultValue,
+and filter selection. In these cases, an exception is thrown independent from the receiver, attribute, or value.
+
+
+++4 undefinedReceiver++:: srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_4_undefinedReceiver___1_attributeSelection++[++1 attributeSelection++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_4_undefinedReceiver___2_databagSelection++[++2 databagSelection++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_4_undefinedReceiver___3_objectRefSelection++[++3 objectRefSelection++]
+
+If a preceding receiver is undefined or null, then ``++write++`` will return false.
+
+
+++5 exceptionHandling++:: srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_5_exceptionHandling___1_attributeSelection++[++1 attributeSelection++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_5_exceptionHandling___2_databagSelection++[++2 databagSelection++] srclnk:++stdlib_api:packages:eu.numberfour.stdlib.model.base.api-tests:test/n4js/n4/util/PSWriteBindingTest:PSWriteBinding#_5_exceptionHandling___3_refobjectSelection++[++3 refobjectSelection++]
+
+If setting the attribute to the new value leads to an exception (thrown by the direct receiver of the attribute),
+this exception is re-thrown by the ``++write++`` method. Note that type incompatibility is usually not
+checked at runtime, so clients using ``++write++`` have to take precautions themselves.
