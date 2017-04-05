@@ -52,7 +52,10 @@ public interface DirectoriesMixin {
 			return file;
 		if (file == DIRECT_INPUT_FILE)
 			return file;
-		return dir.relativize(file.toPath()).toFile();
+		File relFile = dir.relativize(file.toPath()).toFile();
+		if (relFile.getName().length() == 0)
+			return new File(".");
+		return relFile;
 	}
 
 	/**
