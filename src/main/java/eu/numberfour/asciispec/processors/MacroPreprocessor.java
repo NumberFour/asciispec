@@ -75,8 +75,9 @@ abstract public class MacroPreprocessor<T> extends FileAwarePreprocessor impleme
 					replacement = processMatch(document, entry.getKey(), matcher);
 				} catch (Exception e) {
 					String msg = e.getMessage();
-					if (msg == null)
-						msg = e.getClass().getSimpleName();
+					if (msg != null)
+						msg = ": " + msg;
+					msg = e.getClass().getSimpleName() + msg;
 					replacement = error(document, msg);
 				}
 
