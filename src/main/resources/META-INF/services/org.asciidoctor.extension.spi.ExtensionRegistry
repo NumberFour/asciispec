@@ -6,6 +6,7 @@
 
 eu.numberfour.asciispec.processors.ResolveFindExtension
 eu.numberfour.asciispec.processors.ResolveApiExtension
+eu.numberfour.asciispec.processors.ResolveReqExtension
 eu.numberfour.asciispec.processors.InlineTaskLinkExtension
 eu.numberfour.asciispec.processors.MathIncludeExtension
 eu.numberfour.asciispec.processors.InlineMathExtension
