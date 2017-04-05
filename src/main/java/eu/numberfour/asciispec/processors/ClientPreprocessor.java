@@ -29,7 +29,7 @@ public interface ClientPreprocessor {
 	List<String> processLine(Document document, String line);
 
 	/**
-	 * Sets the {@link HostPreprocessor} during the registering process.
+	 * Sets the {@link HostPreprocessor} during registration process.
 	 */
 	void setHostProcessor(HostPreprocessor hostPreprocessor);
 

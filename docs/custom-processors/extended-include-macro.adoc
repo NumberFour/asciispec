@@ -46,7 +46,7 @@ Warnings and Errors: ::
 	The last file which would create a circular dependency cycle is omitted.
 	This error is only issued if all include macros of the cycle use the `+++{find}+++` macro.
 
-* *Warning: Can't Find Circular Dependencies*
+* *Warning: Cannot Detect Circular Dependencies*
 	Is issued in case one or more includes do not use the `+++{find}+++` macro.
 	Despite this issue, circular dependencies can still be found if all of the causing files are included using the `+++{find}+++` macro.
 
