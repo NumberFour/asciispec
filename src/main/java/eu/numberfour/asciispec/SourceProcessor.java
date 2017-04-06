@@ -162,13 +162,24 @@ public class SourceProcessor {
 	private BlockType currentBlock;
 
 	/**
-	 * Creates a new processor that applies the given function to every non-ignored portion of each non-ignored line.
+	 * Creates a new processor.
+	 * <p>
+	 * When calling processing methods later, make sure you pass a transform
+	 * function.
+	 */
+	public SourceProcessor() {
+		this(null);
+	}
+
+	/**
+	 * Creates a new processor that applies the given function to every
+	 * non-ignored portion of each non-ignored line.
 	 *
 	 * @param transform
 	 *            the function to apply
 	 */
 	public SourceProcessor(Function<String, List<String>> transform) {
-		this.transform = Objects.requireNonNull(transform);
+		this.transform = transform;
 
 		ignoredBlockNames.add("source");
 		ignoredBlockTypes.add("```");
@@ -211,7 +222,7 @@ public class SourceProcessor {
 		LinkedList<String> result = new LinkedList<>();
 		for (String line = lineSupplier.get(); line != null; line = lineSupplier.get()) {
 			if (shouldProcess(line)) {
-				processLine(line, result);
+				processLine(line, transform, result);
 			} else {
 				result.add(line);
 			}
@@ -227,11 +238,22 @@ public class SourceProcessor {
 	 * @return the processed lines
 	 */
 	public List<String> process(String line) {
+		return process(line, transform);
+	}
+
+	/**
+	 * Processes the given line and returns the processed result.
+	 *
+	 * @param line
+	 *            a line to process
+	 * @return the processed lines
+	 */
+	public List<String> process(String line, Function<String, List<String>> transform) {
 		initialize();
 
 		LinkedList<String> result = new LinkedList<>();
 		if (shouldProcess(line)) {
-			processLine(line, result);
+			processLine(line, transform, result);
 		} else {
 			result.add(line);
 		}
@@ -242,7 +264,9 @@ public class SourceProcessor {
 		currentBlock = new DefaultBlockType();
 	}
 
-	private void processLine(String line, LinkedList<String> result) {
+	static private void processLine(String line, Function<String, List<String>> transform, LinkedList<String> result) {
+		Objects.requireNonNull(transform);
+
 		if (line.isEmpty()) {
 			result.addAll(transform.apply(line));
 			return;
@@ -277,7 +301,7 @@ public class SourceProcessor {
 		result.addAll(newLines);
 	}
 
-	private void appendLines(LinkedList<String> newLines, List<String> toAppend) {
+	static private void appendLines(LinkedList<String> newLines, List<String> toAppend) {
 		if (toAppend.isEmpty())
 			return;
 
@@ -289,7 +313,7 @@ public class SourceProcessor {
 		}
 	}
 
-	private void appendLineFragment(LinkedList<String> lines, String fragment) {
+	static private void appendLineFragment(LinkedList<String> lines, String fragment) {
 		if (lines.isEmpty()) {
 			lines.add(fragment);
 		} else {
