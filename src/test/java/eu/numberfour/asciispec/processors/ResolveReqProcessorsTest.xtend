@@ -27,6 +27,40 @@ class ResolveReqProcessorsTest extends AsciidoctorTest {
 	}
 
 	@Test
+	def void respectCommentRegions1() throws IOException {
+		convertAndAssert(
+		'''
+			<div class="paragraph">
+			<p>nothing else</p>
+			</div>''',
+			'''
+			= Main Document Title
+
+			////
+			We include an Req element.
+			include::{req}1011[]
+			////
+			nothing else
+			''');
+	}
+
+	@Test
+	def void respectCommentRegions2() throws IOException {
+		convertAndAssert(
+		'''
+			<div class="paragraph">
+			<p>nothing else</p>
+			</div>''',
+			'''
+			= Main Document Title
+
+			//We include an Req element.
+			//include::{req}1011[]
+			nothing else
+			''');
+	}
+
+	@Test
 	def void simple1() throws IOException {
 		convertAndAssert(
 		'''

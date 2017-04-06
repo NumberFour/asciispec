@@ -9,7 +9,7 @@ import org.asciidoctor.ast.Document;
 import org.asciidoctor.extension.Preprocessor;
 import org.asciidoctor.extension.PreprocessorReader;
 
-import eu.numberfour.asciispec.AdocUtils;
+import eu.numberfour.asciispec.SourceProcessor;
 
 /**
  * This preprocessor is hosts all other Preprocessors. In fact, this is the only
@@ -84,18 +84,21 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 
 	private void processLines(Document document) {
 		LinkedList<String> newlines = new LinkedList<>();
+		SourceProcessor sp = new SourceProcessor();
 
 		while (reader.hasMoreLines()) {
 			String line = reader.readLine();
 			List<String> cplines = new LinkedList<String>();
-			conc(document, line, clientPreprocessors, cplines);
+			expand(document, sp, line, clientPreprocessors, cplines);
 			newlines.addAll(cplines);
 		}
 
 		reader.restoreLines(newlines);
 	}
 
-	private void conc(Document document, String newLine, List<ClientPreprocessor> cps, List<String> result) {
+	private void expand(Document document, SourceProcessor sp, String newLine, List<ClientPreprocessor> cps,
+			List<String> result) {
+
 		if (newLine == null)
 			return;
 		if (cps.isEmpty()) {
@@ -107,7 +110,7 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 		List<ClientPreprocessor> tail = new LinkedList<>(cps);
 		tail.remove(0);
 
-		List<String> processedLines = AdocUtils.processLine(newLine, (String ll) -> {
+		List<String> processedLines = sp.process(newLine, (String ll) -> {
 			final List<String> replacement;
 			if (cp.isEnabled()) {
 				replacement = cp.processLine(document, ll);
@@ -118,7 +121,7 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 		});
 
 		for (String processedLine : processedLines) {
-			conc(document, processedLine, tail, result);
+			expand(document, sp, processedLine, tail, result);
 		}
 	}
 
