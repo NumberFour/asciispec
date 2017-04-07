@@ -111,6 +111,27 @@ class SourceLinkProcessorTest extends AsciidoctorTest {
 	}
 
 	@Test
+	public def void testConfigurationTwice() {
+				convertAndAssert(
+			'''
+			<div class="paragraph">
+			<p>This is a source link: <a href="https://github.numberfour.eu/NumberFour/stdlib_api/blob/master/packages/eu.numberfour.stdlib.format.api/src/n4js/n4/format/DurationFormats.n4jsd#L92" title="stdlib_api:packages:eu.numberfour.stdlib.format.api:src/n4js/n4/format/DurationFormats:TimeSpanPatternFormat@getStartWithQuantityFormat" target="_blank">My SRC link</a></p>
+			</div>
+			<div class="paragraph">
+			<p>This is a source link: <a href="https://github.numberfour.eu/NumberFour/stdlib_api/blob/master/packages/eu.numberfour.stdlib.format.api/src/n4js/n4/format/DurationFormats.n4jsd#L92" title="stdlib_api:packages:eu.numberfour.stdlib.format.api:src/n4js/n4/format/DurationFormats:TimeSpanPatternFormat@getStartWithQuantityFormat" target="_blank">My SRC link</a></p>
+			</div>''',
+			'''
+			«config»
+
+			This is a source link: srclnk:getStartWithQuantityFormat[My SRC link]
+
+			«config»
+
+			This is a source link: srclnk:getStartWithQuantityFormat[My SRC link]
+			''');
+	}
+
+	@Test
 	public def void testMissingRepository() {
 				convertStringAndAssertErrorContains(
 			'''

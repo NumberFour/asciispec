@@ -13,6 +13,12 @@ public interface ClientPreprocessor {
 	}
 
 	/**
+	 * Is called after every line is processed.
+	 */
+	default void finish(Document document) {
+	}
+
+	/**
 	 * Returns true iff {@link #processLine(Document, String)} shall be called.
 	 */
 	default boolean isEnabled() {

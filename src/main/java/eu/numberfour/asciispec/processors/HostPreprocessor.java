@@ -80,6 +80,10 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 		}
 
 		processLines(document);
+
+		for (ClientPreprocessor cp : clientPreprocessors) {
+			cp.finish(document);
+		}
 	}
 
 	private void processLines(Document document) {
