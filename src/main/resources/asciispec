@@ -47,7 +47,7 @@ CLASSPATH="$APP_HOME/lib/asciispec-0.0.1-SNAPSHOT.jar"
 # echo "AsciiSpec: converting $@"
 
 # The parameters to pass to AsciidoctorJ
-PARAMETERS="-a stylesheet=$APP_HOME/res/styles/foundation.css -a icons=font -a docinfo1 -a docinfodir=$APP_HOME/res/html-templates $@"
+PARAMETERS="-a icons=font $@"
 
 # Run AsciidoctorJ and pass on all commandline parameters.
 java -Dfile.encoding=UTF-8 -cp $CLASSPATH org.asciidoctor.cli.AsciidoctorInvoker $PARAMETERS
