@@ -352,6 +352,8 @@ public class InlineMacroToBlockConverter extends Treeprocessor {
 	 *            the processor
 	 */
 	public void registerInlineMacroProcessor(String macroName, InlineMacroProcessor processor) {
+		if (processors.containsKey(macroName))
+			throw new IllegalArgumentException("Processor already registered.");
 		processors.put(Objects.requireNonNull(macroName), Objects.requireNonNull(processor));
 		String macroNamesPattern = processors.keySet().stream().collect(Collectors.joining("|"));
 		macroPattern = Pattern
@@ -363,6 +365,18 @@ public class InlineMacroToBlockConverter extends Treeprocessor {
 		OuterDocumentTransformer nodeTransformer = new OuterDocumentTransformer(macroPattern, processors, this,
 				issueAcceptor, siblingNodeContext);
 		new ChildrenTransformer<>(document, nodeTransformer).transform();
+
+		resetConfigFinalized();
 		return document;
+	}
+
+	/**
+	 * @see HackProcessors#resetConfigFinalized(Processor)
+	 */
+	private void resetConfigFinalized() {
+		HackProcessors.resetConfigFinalized(this);
+		for (InlineMacroProcessor imp : processors.values()) {
+			HackProcessors.resetConfigFinalized(imp);
+		}
 	}
 }
