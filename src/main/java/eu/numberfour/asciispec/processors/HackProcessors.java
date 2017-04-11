@@ -29,7 +29,7 @@ public class HackProcessors {
 			configFinalized.setAccessible(true);
 			configFinalized.set(processor, false);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException("Could not reset the AsciiDoctorJ Processor", e);
 		}
 	}
 
