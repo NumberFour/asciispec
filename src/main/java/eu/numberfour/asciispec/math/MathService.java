@@ -33,6 +33,7 @@ import uk.ac.ed.ph.snuggletex.SnugglePackage;
 import uk.ac.ed.ph.snuggletex.SnuggleSession;
 import uk.ac.ed.ph.snuggletex.SnuggleSnapshot;
 import uk.ac.ed.ph.snuggletex.definitions.CorePackageDefinitions;
+import uk.ac.ed.ph.snuggletex.internal.FrozenSlice;
 
 /**
  * Utility functions to convert LaTeX math expressions to MathML.
@@ -192,7 +193,13 @@ public class MathService {
 		ResourceBundle errorMessageBundle = defaultPackage.getErrorMessageBundle();
 
 		StringBuilder builder = new StringBuilder();
-		builder.append("At '").append(error.getSlice().extract()).append("'");
+		FrozenSlice slice = error.getSlice();
+		if (slice == null) {
+			builder.append("Error Code");
+		} else {
+			CharSequence extract = slice.extract();
+			builder.append("At '").append(extract).append("'");
+		}
 		builder.append(": ").append(error.getErrorCode());
 		builder.append(" - ").append(errorMessageBundle.getString(error.getErrorCode().getName()));
 
