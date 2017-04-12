@@ -109,6 +109,16 @@ public interface SourceIndexMixin {
 	}
 
 	/**
+	 * Resets this Mixin.
+	 */
+	default void reset() {
+		getState().configuring = true;
+		getState().database = null;
+		getState().gendirPath = null;
+		getState().indexFile = null;
+	}
+
+	/**
 	 * Sets the state variables {@link SourceIndexMixinState#gendirPath} and
 	 * {@link SourceIndexMixinState#indexFile}. The given filename must be
 	 * absolute.
@@ -118,8 +128,12 @@ public interface SourceIndexMixin {
 	 */
 	default void setIndexFile(File genadocdir) throws FileNotFoundException, MultipleFileMatchesException {
 		if (!isConfiguring()) {
-			throw new IllegalArgumentException(
-					"The configuration must not be specified after first use of the source link macro");
+			if (getState().gendirPath != null && getState().gendirPath.equals(genadocdir.toPath())) {
+				return; // ignore same path config
+			} else {
+				throw new IllegalArgumentException(
+						"The configuration must not be specified after first use of the source link macro");
+			}
 		}
 
 		getState().gendirPath = genadocdir.toPath();
@@ -130,7 +144,6 @@ public interface SourceIndexMixin {
 	 * Returns the path to all generated Asciidoc files.
 	 */
 	default Path getGendirPath() {
-
 		return getState().gendirPath;
 	}
 
