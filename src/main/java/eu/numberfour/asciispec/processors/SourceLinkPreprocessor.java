@@ -79,11 +79,6 @@ public class SourceLinkPreprocessor extends MacroPreprocessor<String> implements
 	}
 
 	@Override
-	public void finish(Document document) {
-
-	}
-
-	@Override
 	protected String processMatch(Document document, String key, Matcher matcher) {
 		String fullMatch = matcher.group();
 		String newline = fullMatch;
