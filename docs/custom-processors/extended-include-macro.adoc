@@ -16,6 +16,8 @@ The following documentation focuses on the include macro with activated special 
 == `+++{find}+++` Include Macro
 
 The general idea of the `+++{find}+++` variable in an include macro is to search the given file and replace the variable with the path to the matched file.
+The search looks for the given file in the current directory and every parent directory.
+To stop the search at a specific parent root directory, the command line attribute `findroot` can be used: `-a findroot=docrootdir`.
 In short, it behaves the same like the `+++{find}+++` variable (see: <<special-variables,Special Variables>>), but enables two additional attributes which can be given in the squared brackets of the include macro.
 
 
