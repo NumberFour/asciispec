@@ -45,6 +45,15 @@ public interface DirectoriesMixin {
 	}
 
 	/**
+	 * Searches for the given file in the directory of the current file. Stops
+	 * at the given file {@code root}.
+	 */
+	default File searchFile(String fileName, String rootName)
+			throws FileNotFoundException, MultipleFileMatchesException {
+		return FileStackHelper.searchRelativeTo(fileName, getCurrentDir(), getBasedir(), rootName);
+	}
+
+	/**
 	 * Returns a file that is relative to the base dir.
 	 */
 	default File getRelative(Path dir, File file) {
