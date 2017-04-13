@@ -19,7 +19,6 @@ import java.util.Set;
 import org.asciidoctor.ast.Document;
 import org.asciidoctor.extension.IncludeProcessor;
 
-import eu.numberfour.asciispec.AdocUtils;
 import eu.numberfour.asciispec.findresolver.IgnoreFileException;
 import eu.numberfour.asciispec.findresolver.InconsistentUseOfModifiersException;
 import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
@@ -38,7 +37,6 @@ public class ResolveFindIncludeProcessor extends ResolveIncludeProcessor {
 	private static final String MODIFIER_TARGET_ONCE_ALIAS = "ONCE";
 
 	private static final String INCLUDE_FIND = "find";
-	private static final String FINDROOT = "findroot";
 
 	private final Set<String> allIncludedTargets = new HashSet<>();
 	private final Set<String> targets = new HashSet<>();
@@ -66,8 +64,7 @@ public class ResolveFindIncludeProcessor extends ResolveIncludeProcessor {
 					throw e.ignoreFileException;
 			}
 
-			String findroot = AdocUtils.getAttributeAsString(document, FINDROOT, null);
-			File file = searchFile(target, findroot);
+			File file = searchFile(target);
 			allIncludedTargets.add(target);
 			return file;
 		} catch (MultipleFileMatchesException e) {

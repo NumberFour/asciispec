@@ -13,6 +13,7 @@ package eu.numberfour.asciispec.processors
 import eu.numberfour.asciispec.AsciidoctorTest
 import org.junit.Before
 import org.junit.Test
+import org.junit.Ignore
 
 /**
  * Test cases for {@link InlineMathPreprocessor}.
@@ -29,6 +30,34 @@ class InlineMathPreProcessorTest extends AsciidoctorTest {
 			'''<simpara>some basic  math</simpara>''',
 			'''
 			some basic math:[] math
+			''',
+			Backend.DOCBOOK
+		);
+	}
+
+	@Test
+	public def void testMathInCommentBlock() {
+		convertAndAssert(
+			'''''',
+			'''
+			////
+			$e=mc^2$
+			////
+			''',
+			Backend.DOCBOOK
+		);
+	}
+
+	// TODO: AS-51 see https://github.com/NumberFour/asciispec/issues/51
+	@Ignore
+	@Test
+	public def void testMathInCodeBlock() {
+		convertAndAssert(
+			'''''',
+			'''
+			----
+			$e=mc^2$
+			----
 			''',
 			Backend.DOCBOOK
 		);
@@ -91,13 +120,13 @@ class InlineMathPreProcessorTest extends AsciidoctorTest {
 			<simpara>But here&#8217;s even more: <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>+</mo><mi>y</mi><mo>=</mo><mi>z</mi></math>.</simpara>''',
 			'''
 			Some more $x$ math $y$, how great.
-			
+
 			But here's even more: $x+y=z$.
 			''',
 			Backend.DOCBOOK
 		);
 	}
-	
+
 	@Test
 	public def void testShorthandExpressionAtBeginningOfLine() {
 		convertAndAssert(
@@ -118,12 +147,12 @@ class InlineMathPreProcessorTest extends AsciidoctorTest {
 			<simpara>What about a single $ in a line? Should not be a problem.</simpara>''',
 			'''
 			We really do not want +++$+++this to be math +++$+++, so we escape it with inline passing!
-			
+
 			What about a single $ in a line? Should not be a problem.''',
 			Backend.DOCBOOK
 		);
 	}
-	
+
 	@Test
 	public def void testShorthandExpressionEscapeWithBackslash() {
 		convertAndAssert(
@@ -132,12 +161,12 @@ class InlineMathPreProcessorTest extends AsciidoctorTest {
 			<simpara>What about a single $ in a line? Should not be a problem.</simpara>''',
 			'''
 			We really do not want \$this to be math \$, so we escape it with backslashes!
-			
+
 			What about a single $ in a line? Should not be a problem.''',
 			Backend.DOCBOOK
 		);
 	}
-	
+
 	@Test
 	public def void testConfigValueWithEscapedDollars() {
 		convertAndAssert(
@@ -145,15 +174,15 @@ class InlineMathPreProcessorTest extends AsciidoctorTest {
 			<simpara>Here is the value: GitHub;N4JS-N4 Issues;some_text/${TASK_ID};images/github.png;GH-${TASK_ID} !!!</simpara>''',
 			'''
 			:A_VALUE: GitHub;N4JS-N4 Issues;some_text/\${TASK_ID};images/github.png;GH-\${TASK_ID}
-			
+
 			Here is the value: {A_VALUE} !!!''',
 			Backend.DOCBOOK
 		);
 	}
-	
+
 	@Test
 	public def void testShorthandExpressionWithEscapedBackslash() {
-		// It's debatable that this should work, since the backslash is itself escaped. But this would add extra 
+		// It's debatable that this should work, since the backslash is itself escaped. But this would add extra
 		// complexity to the macro processor, and the same effect can be achieved by using inline pass syntax, so it's
 		// not strictly necessary.
 		convertAndAssert(
@@ -212,7 +241,7 @@ class InlineMathPreProcessorTest extends AsciidoctorTest {
 			Backend.DOCBOOK
 		);
 	}
-	
+
 	@Test
 	public def void testMixedExpressions3() {
 		convertAndAssert(
@@ -224,7 +253,7 @@ class InlineMathPreProcessorTest extends AsciidoctorTest {
 			Backend.DOCBOOK
 		);
 	}
-	
+
 	@Test
 	public def void testMixedExpressions4() {
 		convertAndAssert(
@@ -236,7 +265,7 @@ class InlineMathPreProcessorTest extends AsciidoctorTest {
 			Backend.DOCBOOK
 		);
 	}
-	
+
 
 	@Test
 	public def void testSimilarExpressionsInOneLine1() {
@@ -249,7 +278,7 @@ class InlineMathPreProcessorTest extends AsciidoctorTest {
 			Backend.DOCBOOK
 		);
 	}
-	
+
 	@Test
 	public def void testSimilarExpressionsInOneLine2() {
 		convertAndAssert(

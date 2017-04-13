@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import org.asciidoctor.ast.Document;
 
-import eu.numberfour.asciispec.AdocUtils;
 import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
 
 /**
@@ -47,12 +46,11 @@ public class ResolveFindInlinePreprocessor extends MacroPreprocessor<String> {
 	 * scenarios. Absolute paths would break this scenario.
 	 */
 	private String getBaseRelativeFileName(Document document, Matcher findvarMatcher) {
-		String findroot = AdocUtils.getAttributeAsString(document, FINDROOT_VARIABLE_KEY, null);
 		String fileName = findvarMatcher.group("FILE");
 		String baseRelFileName = "{find}" + fileName;
 		File findFile = null;
 		try {
-			findFile = super.searchFile(fileName, findroot);
+			findFile = super.searchFile(fileName);
 		} catch (FileNotFoundException e) {
 			baseRelFileName += " " + error(document, e.getMessage()) + " ";
 		} catch (MultipleFileMatchesException e) {
