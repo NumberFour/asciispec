@@ -17,9 +17,12 @@ In the latter case, also the included documents can be translated separately to 
 Several macros such as include, image, cross reference, or other custom macros rely on paths to work appropriately.
 Since we have different use cases mentioned above, we need to specify paths relative to the including document.
 As an example, the adoc file `doc.adoc` specifies the location of the bibliography using the directive [.language-asciidoc]`:bib-file: ../biblio.bib`.
-This path can not always be found when the doc.adoc file is translated both on its own and included from another files.
+This path can not always be found when the doc.adoc file is translated both on its own and included from another file.
 
 The `pass:[{find}]` variable provides the means to specify files relative to the adoc file no matter from where this adoc file was included.
+To do so, it searches for it in the current directory and all parent directories.
+To stop this search at a specific parent root directory, the command line attribute `findroot` can be used: `-a findroot=docrootdir`.
+
 Follow the following rules of thumb:
 * Always use the `find` on any path when your document is included or uses include directives. This will allow AsciiSpec to find any path you are working with.
 * The given target path should always be the relative path from the current file to the targeted file. This will allow to compile each file on its own, e.g. on Github.

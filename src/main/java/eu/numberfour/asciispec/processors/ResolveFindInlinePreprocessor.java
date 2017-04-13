@@ -17,11 +17,15 @@ import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
 public class ResolveFindInlinePreprocessor extends MacroPreprocessor<String> {
 	static final String FIND_VARIABLE_KEY = "find";
 	static final String FIND_VARIABLE_MATCHER = "\\{(?<VAR>find)\\}[\\s]*(?<FILE>[^\\[\\s]*)";
+	static final String FINDROOT_VARIABLE_KEY = "findroot";
+	static final String FINDROOT_VARIABLE_MATCHER = ":findroot:";
 
 	@Override
 	public void init(Document document) {
 		Pattern findvarPattern = Pattern.compile(FIND_VARIABLE_MATCHER);
 		registerPattern(FIND_VARIABLE_KEY, findvarPattern);
+		Pattern findrootPattern = Pattern.compile(FINDROOT_VARIABLE_MATCHER);
+		registerPattern(FINDROOT_VARIABLE_KEY, findrootPattern);
 	}
 
 	@Override
@@ -30,6 +34,8 @@ public class ResolveFindInlinePreprocessor extends MacroPreprocessor<String> {
 		switch (key) {
 		case FIND_VARIABLE_KEY:
 			return getBaseRelativeFileName(document, matcher);
+		case FINDROOT_VARIABLE_KEY:
+			return error(document, "Variable 'findroot' is only allowed as a command line argument.");
 		}
 		return fullMatch;
 	}

@@ -57,7 +57,7 @@ class AsciidoctorTest {
 		 * That is why at this point we need to unregister all extensions which were registered automatically.
 		 * The required extensions will later be registered manually by each individual test.
 		 */
-		 ProcessorExtension.unregisterAllExtensions(doc);
+		ProcessorExtension.unregisterAllExtensions(doc);
 	}
 
 	@After
@@ -74,7 +74,7 @@ class AsciidoctorTest {
 		CharSequence expectedConsoleOut) {
 
 		internalConvertAndAssertError(expectedConsoleOut, true, [
-			val String convertedInput = convertFile(baseDirStr, fileName);
+			val String convertedInput = convertFile(baseDirStr, fileName, null);
 			assertEquals(expectedOutput.toString, convertedInput);
 		]);
 	}
@@ -86,8 +86,18 @@ class AsciidoctorTest {
 	protected def void convertFileAndAssertErrorContains(CharSequence expectedOutput, String baseDirStr, String fileName,
 		CharSequence expectedConsoleOut) {
 
+		convertFileAndAssertErrorContains(expectedOutput, baseDirStr, fileName, null, expectedConsoleOut);
+	}
+
+	/**
+	 * In addition to {@link #convertFileAndAssertErrorContains(CharSequence, String, String,
+		HashMap<String, Object>, CharSequence)}, this method accepts also arguments.
+	 */
+	protected def void convertFileAndAssertErrorContains(CharSequence expectedOutput, String baseDirStr, String fileName,
+		HashMap<String, Object> options, CharSequence expectedConsoleOut) {
+
 		internalConvertAndAssertError(expectedConsoleOut, false, [
-			val String convertedInput = convertFile(baseDirStr, fileName);
+			val String convertedInput = convertFile(baseDirStr, fileName, options);
 			assertEquals(expectedOutput.toString, convertedInput);
 		]);
 	}
@@ -98,7 +108,7 @@ class AsciidoctorTest {
 	 */
 	protected def void convertStringAndAssertErrorContains(CharSequence expectedOutput, String input,
 		String expectedConsoleOutSubstring) {
-		convertStringAndAssertErrorContains(expectedOutput,input,expectedConsoleOutSubstring,Backend.HTML5)
+		convertStringAndAssertErrorContains(expectedOutput,input,expectedConsoleOutSubstring, Backend.HTML5)
 	}
 
 	/**
@@ -106,7 +116,7 @@ class AsciidoctorTest {
 	 * the expected string is printed. This action consumes the console message.
 	 */
 	protected def void convertStringAndAssertErrorContains(CharSequence expectedOutput, String input,
-		String expectedConsoleOutSubstring,Backend backend) {
+		String expectedConsoleOutSubstring, Backend backend) {
 
 		internalConvertAndAssertError(expectedConsoleOutSubstring, false, [
 			val String convertedInput = convert(input,backend);
@@ -162,7 +172,11 @@ class AsciidoctorTest {
 	}
 
 	protected def void convertFileAndAssert(CharSequence expectedOutput, String baseDirStr, String filename) throws IOException {
-		val String actualOutput = convertFile(baseDirStr, filename);
+		convertFileAndAssert(expectedOutput, baseDirStr, filename, null);
+	}
+
+	protected def void convertFileAndAssert(CharSequence expectedOutput, String baseDirStr, String filename, HashMap<String, Object> options) throws IOException {
+		val String actualOutput = convertFile(baseDirStr, filename, options);
 		assertEquals(expectedOutput.toString, actualOutput);
 	}
 
@@ -171,28 +185,32 @@ class AsciidoctorTest {
 	}
 
 	protected def String convert(String input, Backend backend) {
-		val options = getOptions(new File("."), null, backend);
+		val options = getOptions(null, new File("."), null, backend);
 		return doc.convert(input, options);
 	}
 
-	protected def String convertFile(String baseDirStr, String filename) {
+	protected def String convertFile(String baseDirStr, String filename, HashMap<String, Object> options) {
 		try {
 			val File baseDir = new File(baseDirStr);
 			val File inputFile = new File(baseDir, filename);
 			val Reader inputReader = new BufferedReader(new FileReader(inputFile))
 			val StringWriter outputWriter = new StringWriter();
 
-			val options = getOptions(baseDir, inputFile,Backend.HTML5);
+			val optionsExt = getOptions(options, baseDir, inputFile, Backend.HTML5);
 
-			doc.convert(inputReader, outputWriter, options);
+			doc.convert(inputReader, outputWriter, optionsExt);
 			return outputWriter.buffer.toString();
 		} catch (IOException e) {
 			throw new RuntimeException("IOException while converting asciidoc to output", e);
 		}
 	}
 
-	protected def OptionsBuilder getOptions(File baseDir, File inputFile, Backend backend) {
-		val attributes = new HashMap<String, Object>();
+	protected def OptionsBuilder getOptions(HashMap<String, Object> options, File baseDir, File inputFile, Backend backend) {
+		val attributes = if (options == null)
+							new HashMap<String, Object>()
+						else
+							options;
+
 		var inputFileName = "<DIRECT_INPUT>";
 		if (inputFile !== null)
 			inputFileName = inputFile.getAbsolutePath().toString();

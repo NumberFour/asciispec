@@ -1,0 +1,6 @@
+
+== Chapter 1_4
+
+:someVar: {find}find_resolver/sub1/chap1_4.adoc
+
+This is from chapter file chap1_4

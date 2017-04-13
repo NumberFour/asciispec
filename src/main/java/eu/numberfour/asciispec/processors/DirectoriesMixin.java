@@ -24,6 +24,11 @@ import eu.numberfour.asciispec.findresolver.MultipleFileMatchesException;
 public interface DirectoriesMixin {
 
 	/**
+	 * Name of the command line argument
+	 */
+	String FINDROOT = "findroot";
+
+	/**
 	 * File name in test scenarios.
 	 */
 	String DIRECT_INPUT_FILE_NAME = "<DIRECT_INPUT>";
@@ -38,10 +43,12 @@ public interface DirectoriesMixin {
 	Document getDocument();
 
 	/**
-	 * Searches for the given file in the directory of the current file.
+	 * Searches for the given file in the directory of the current file. Stops
+	 * at the given file {@code root}.
 	 */
 	default File searchFile(String fileName) throws FileNotFoundException, MultipleFileMatchesException {
-		return FileStackHelper.searchRelativeTo(fileName, getCurrentDir(), getBasedir());
+		String findrootdir = AdocUtils.getAttributeAsString(getDocument(), FINDROOT, null);
+		return FileStackHelper.searchRelativeTo(fileName, getCurrentDir(), getBasedir(), findrootdir);
 	}
 
 	/**
