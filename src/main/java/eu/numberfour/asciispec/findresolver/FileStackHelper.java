@@ -13,6 +13,7 @@ package eu.numberfour.asciispec.findresolver;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -128,6 +129,19 @@ public class FileStackHelper {
 	 */
 	public static File searchRelativeTo(String fileName, Path currentdir, Path basedir)
 			throws FileNotFoundException, MultipleFileMatchesException {
+		return searchRelativeTo(fileName, currentdir, basedir, null);
+	}
+
+	/**
+	 * Searches for a file with the given file name. The search looks for the
+	 * file in the current location and in every parent directory, but stops the
+	 * search in the given file {@code root}. The file name can include
+	 * directories. The returned file is absolute.
+	 *
+	 * @return absolute file
+	 */
+	public static File searchRelativeTo(String fileName, Path currentdir, Path basedir, String rootName)
+			throws FileNotFoundException, MultipleFileMatchesException {
 
 		Path curPath = currentdir;
 		List<File> matches = new LinkedList<>();
@@ -135,6 +149,10 @@ public class FileStackHelper {
 			Path filePath = curPath.resolve(fileName).normalize();
 			if (filePath.toFile().exists())
 				matches.add(filePath.toFile());
+
+			if (rootName != null && rootName.length() > 0 && curPath != null && curPath.endsWith(Paths.get(rootName)))
+				break;
+
 			curPath = curPath.getParent();
 		}
 
