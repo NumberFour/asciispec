@@ -29,7 +29,7 @@ class ResolveFindrootTest extends AsciidoctorTest {
 	}
 
 	@Test
-	def void testChap1_1FileOk1() throws IOException {
+	def void testChap1_1FileOkFolder1() throws IOException {
 		val arguments = new HashMap<String, Object>();
 		arguments.put("findroot", "data");
 
@@ -49,7 +49,7 @@ class ResolveFindrootTest extends AsciidoctorTest {
 	}
 
 	@Test
-	def void testChap1_1FileOk2() throws IOException {
+	def void testChap1_1FileOkFolder2() throws IOException {
 		val arguments = new HashMap<String, Object>();
 		arguments.put("findroot", "find_resolver");
 
@@ -69,7 +69,7 @@ class ResolveFindrootTest extends AsciidoctorTest {
 	}
 
 	@Test
-	def void testChap1_1FileOk3() throws IOException {
+	def void testChap1_1FileOkPath() throws IOException {
 		val arguments = new HashMap<String, Object>();
 		arguments.put("findroot", "data/find_resolver");
 
@@ -89,13 +89,13 @@ class ResolveFindrootTest extends AsciidoctorTest {
 	}
 
 	@Test
-	def void testChap1_1FileOk4() throws IOException {
+	def void testChap1_4FileOkRootIsReferenced() throws IOException {
 		val arguments = new HashMap<String, Object>();
 		arguments.put("findroot", "find_resolver");
 
 		'''
 			<div class="sect1">
-			<h2 id="_chapter_1_1">Chapter 1_1</h2>
+			<h2 id="_chapter_1_4">Chapter 1_4</h2>
 			<div class="sectionbody">
 			<div class="paragraph">
 			<p>This is from chapter file chap1_4</p>
@@ -109,7 +109,7 @@ class ResolveFindrootTest extends AsciidoctorTest {
 	}
 
 	@Test
-	def void testChap1_1FileErr1() throws IOException {
+	def void testChap1_1FileErrNotFoundFolder() throws IOException {
 		val arguments = new HashMap<String, Object>();
 		arguments.put("findroot", "sub1");
 
@@ -135,7 +135,7 @@ class ResolveFindrootTest extends AsciidoctorTest {
 	}
 
 	@Test
-	def void testChap1_1FileErr2() throws IOException {
+	def void testChap1_1FileErrNotFoundPath() throws IOException {
 		val arguments = new HashMap<String, Object>();
 		arguments.put("findroot", "find_resolver/sub1");
 
@@ -161,18 +161,18 @@ class ResolveFindrootTest extends AsciidoctorTest {
 	}
 
 	@Test
-	def void testChap1_1FileErr3() throws IOException {
+	def void testChap1_3FileErrWrongUse() throws IOException {
 		val arguments = new HashMap<String, Object>();
 
 		'''
 			<div class="sect1">
-			<h2 id="_chapter_1_1">Chapter 1_1</h2>
+			<h2 id="_chapter_1_3">Chapter 1_3</h2>
 			<div class="sectionbody">
 			<div class="paragraph">
 			<p><mark>[Error: Variable 'findroot' is only allowed as a command line argument.]</mark> sub1</p>
 			</div>
 			<div class="paragraph">
-			<p>This is from chapter file chap1_1</p>
+			<p>This is from chapter file chap1_3</p>
 			</div>
 			</div>
 			</div>'''
@@ -186,13 +186,13 @@ class ResolveFindrootTest extends AsciidoctorTest {
 	}
 
 	@Test
-	def void testChap1_1FileErr4() throws IOException {
+	def void testChap1_4FileErrNotFoundLongPath() throws IOException {
 		val arguments = new HashMap<String, Object>();
 		arguments.put("findroot", "sub1");
 
 		'''
 			<div class="sect1">
-			<h2 id="_chapter_1_1">Chapter 1_1</h2>
+			<h2 id="_chapter_1_4">Chapter 1_4</h2>
 			<div class="sectionbody">
 			<div class="paragraph">
 			<p>This is from chapter file chap1_4</p>
