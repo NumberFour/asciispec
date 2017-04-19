@@ -53,7 +53,7 @@ To build the project, clone this repository, navigate to the project folder and 
 [source,bash]
 mvn clean package
 
-After maven has successfully finished building the project, a zip file containing the asciispec tool will be available under `asciispec/target/asciispec-bin.zip`
+After maven has successfully finished building the project, a zip file containing the asciispec tool will be available under `asciispec/target/asciispec-bin.zip`.
 
 [.language-bash]
 == Installation
