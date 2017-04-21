@@ -13,7 +13,6 @@ package eu.numberfour.asciispec.processors
 import eu.numberfour.asciispec.AsciidoctorTest
 import org.junit.Before
 import org.junit.Test
-import org.junit.Ignore
 
 /**
  * Test cases for {@link InlineMathPreprocessor}.
@@ -48,12 +47,10 @@ class InlineMathPreProcessorTest extends AsciidoctorTest {
 		);
 	}
 
-	// TODO: AS-51 see https://github.com/NumberFour/asciispec/issues/51
-	@Ignore
 	@Test
 	public def void testMathInCodeBlock() {
 		convertAndAssert(
-			'''''',
+			'''<screen>$e=mc^2$</screen>''',
 			'''
 			----
 			$e=mc^2$

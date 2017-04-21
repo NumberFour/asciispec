@@ -169,6 +169,7 @@ public class SourceProcessor {
 	 */
 	public SourceProcessor() {
 		this(null);
+		initialize();
 	}
 
 	/**
@@ -249,8 +250,6 @@ public class SourceProcessor {
 	 * @return the processed lines
 	 */
 	public List<String> process(String line, Function<String, List<String>> transform) {
-		initialize();
-
 		LinkedList<String> result = new LinkedList<>();
 		if (shouldProcess(line)) {
 			processLine(line, transform, result);

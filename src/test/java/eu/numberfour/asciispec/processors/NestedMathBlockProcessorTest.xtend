@@ -126,4 +126,136 @@ class NestedMathBlockProcessorTest extends AsciidoctorTest {
 			Backend.HTML5
 		);
 	}
+
+	@Test
+	public def void testMathIgnoringTodoBlock() {
+		convertAndAssert(
+			'''
+			<div class="paragraph">
+			<p>11:15, restate my assumptions:</p>
+			</div>
+			<div class="listingblock todo">
+			<div class="title">1: Mathematics is the language of nature</div>
+			<div class="content">
+			<pre>2: Everything around us can be represented and understood through numbers.
+
+			$x+y=z$
+
+			3: If you graph these numbers, patterns emerge.</pre>
+			</div>
+			</div>
+			<div class="paragraph">
+			<p>Therefore: There are patterns everywhere in nature.</p>
+			</div>''',
+			'''
+			11:15, restate my assumptions:
+
+
+			.1: Mathematics is the language of nature
+			[.todo]
+			----
+			2: Everything around us can be represented and understood through numbers.
+
+			$x+y=z$
+
+			3: If you graph these numbers, patterns emerge.
+			----
+
+			Therefore: There are patterns everywhere in nature.
+			''',
+			Backend.HTML5
+		);
+	}
+
+	@Test
+	public def void testMathWithinTodoBlock() {
+		convertAndAssert(
+			'''
+			<div class="paragraph">
+			<p>11:15, restate my assumptions:</p>
+			</div>
+			<div class="listingblock todo">
+			<div class="title">1: Mathematics is the language of nature</div>
+			<div class="content">
+			<pre>2: Everything around us can be represented and understood through numbers.
+
+			[math]
+			++++
+			x+y=z
+			++++
+
+			3: If you graph these numbers, patterns emerge.</pre>
+			</div>
+			</div>
+			<div class="paragraph">
+			<p>Therefore: There are patterns everywhere in nature.</p>
+			</div>''',
+			'''
+			11:15, restate my assumptions:
+
+
+			.1: Mathematics is the language of nature
+			[.todo]
+			----
+			2: Everything around us can be represented and understood through numbers.
+
+			[math]
+			++++
+			x+y=z
+			++++
+
+			3: If you graph these numbers, patterns emerge.
+			----
+
+			Therefore: There are patterns everywhere in nature.
+			''',
+			Backend.HTML5
+		);
+	}
+
+	@Test
+	public def void testMathWithinSourceBlock() {
+		convertAndAssert(
+			'''
+			<div class="paragraph">
+			<p>11:15, restate my assumptions:</p>
+			</div>
+			<div class="listingblock">
+			<div class="title">1: Mathematics is the language of nature</div>
+			<div class="content">
+			<pre class="highlight"><code class="language-n4js" data-lang="n4js">2: Everything around us can be represented and understood through numbers.
+
+			[math]
+			++++
+			x+y=z
+			++++
+
+			3: If you graph these numbers, patterns emerge.</code></pre>
+			</div>
+			</div>
+			<div class="paragraph">
+			<p>Therefore: There are patterns everywhere in nature.</p>
+			</div>''',
+			'''
+			11:15, restate my assumptions:
+
+
+			.1: Mathematics is the language of nature
+			[source,n4js]
+			----
+			2: Everything around us can be represented and understood through numbers.
+
+			[math]
+			++++
+			x+y=z
+			++++
+
+			3: If you graph these numbers, patterns emerge.
+			----
+
+			Therefore: There are patterns everywhere in nature.
+			''',
+			Backend.HTML5
+		);
+	}
 }
