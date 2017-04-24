@@ -28,6 +28,7 @@
 	<dependencySets>
 		<dependencySet>
 			<outputDirectory>/lib</outputDirectory>
+			<outputFileNameMapping>${artifact.artifactId}-${artifact.baseVersion}${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
 			<useProjectArtifact>true</useProjectArtifact>
 			<unpack>false</unpack>
 			<scope>runtime</scope>
