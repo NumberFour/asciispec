@@ -33,7 +33,7 @@ class CustomAdmonitionBlockDocinfo < Extensions::DocinfoProcessor
 
   def process doc
     '<style>
-.admonitionblock td.icon .icon-sticky-note:before {content:"\f128";color:#871452;}
-</style>'
+      .admonitionblock td.icon .icon-todo:before{content:"\f249";color:#f4ee42}
+    </style>'
   end
 end
