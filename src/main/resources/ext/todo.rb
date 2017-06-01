@@ -3,6 +3,6 @@ RUBY_ENGINE == 'opal' ?
   (require_relative 'todo/extension')
 
 Extensions.register do
-  block CustomAdmonitionBlock
-  docinfo_processor CustomAdmonitionBlockDocinfo
+  block TodoBlock
+  docinfo_processor TodoBlockDocinfo
 end
