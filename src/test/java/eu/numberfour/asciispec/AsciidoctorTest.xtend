@@ -201,9 +201,7 @@ class AsciidoctorTest {
 	}
 
 	protected def String convert(String input, Backend backend) {
-		val optionMap = new HashMap<String, Object>();
-		optionMap.put("-r", "/Users/marcus.mews/GitHub/asciispec/src/main/resources/ext/todo.rb");
-		val options = getOptions(optionMap, new File("."), null, backend);
+		val options = getOptions(null, new File("."), null, backend);
 		return doc.convert(input, options);
 	}
 
