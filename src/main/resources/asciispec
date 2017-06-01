@@ -46,10 +46,10 @@ CLASSPATH="$APP_HOME/lib/asciispec-0.0.1-SNAPSHOT.jar"
 # Inform user of what's being passed to AsciidoctorJ
 # echo "AsciiSpec: converting $@"
 
-# The parameters to pass to AsciidoctorJ
+# Force use of Font Awesome icons & pass filename
 PARAMETERS="-a icons=font $@"
 
-# The parameters to pass to AsciidoctorJ
+# Load Ruby extensions
 EXTENSIONS="-r $APP_HOME/res/extensions/todo.rb"
 
 # Run AsciidoctorJ and pass on all commandline parameters.
