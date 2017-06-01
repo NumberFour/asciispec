@@ -64,10 +64,16 @@ class AsciidoctorTest {
 		ProcessorExtension.unregisterAllExtensions(doc);
 	}
 
-	def void registerRubyExtensionBlock(String macroName, String fileName, String extensionClassName) {
+	def void registerRubyExtensionBlock(String fileName, String extensionClassName, String macroName) {
 		val resStream = Class.getResourceAsStream(fileName)
 		rubyRegistry.loadClass(resStream);
 		rubyRegistry.block(macroName, extensionClassName);
+	}
+
+	def void registerRubyExtensionDocinfoProcessor(String fileName, String extensionClassName) {
+		val resStream = Class.getResourceAsStream(fileName)
+		rubyRegistry.loadClass(resStream);
+		rubyRegistry.docinfoProcessor(extensionClassName);
 	}
 
 	@After

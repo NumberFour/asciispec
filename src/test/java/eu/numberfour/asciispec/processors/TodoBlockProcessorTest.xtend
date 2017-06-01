@@ -21,7 +21,8 @@ class TodoBlockProcessorTest extends AsciidoctorTest {
 
 	@Before
 	public def void registerExtensions() {
-		registerRubyExtensionBlock("TODO","/ext/todo/extension.rb","TodoBlock");
+		registerRubyExtensionBlock("/ext/todo/extension.rb", "TodoBlock", "TODO");
+		registerRubyExtensionDocinfoProcessor("/ext/todo/extension.rb", "TodoBlockDocinfo");
 	}
 
 	@Test
