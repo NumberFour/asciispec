@@ -1,25 +1,35 @@
 require 'asciidoctor/extensions'
-
 include Asciidoctor
 
-# An extension that introduces a custom admonition type.
+# An extension that introduces a TODO admonition Block.
 #
-# Usage
+# Usage:
 #
+#   [TODO]
+#   Add autocomplete across all tabs
+#
+#
+# or:
+#
+#   .Title (optional)
 #   [TODO]
 #   ====
 #   Rewrite everything in Ruby
 #   ====
 #
-# or
+# The following delimiters can also be used:
 #
-#   [TODO]
-#   Add autocomplete across all tabs
+#   ====
+#   --
+#   ++++
+#   ****
+#   ----
 #
+
 class TodoBlock < Extensions::BlockProcessor
   use_dsl
   named :TODO
-  on_contexts :example, :paragraph
+  on_contexts :open, :paragraph, :example, :listing, :sidebar, :pass
 
   def process parent, reader, attrs
     attrs['name'] = 'todo'
