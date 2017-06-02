@@ -50,7 +50,7 @@ CLASSPATH="$APP_HOME/lib/asciispec-0.0.1-SNAPSHOT.jar"
 PARAMETERS="-a icons=font $@"
 
 # Load Ruby extensions
-EXTENSIONS="-r $APP_HOME/res/extensions/todo.rb"
+EXTENSIONS="-r $APP_HOME/res/ext/todo.rb"
 
 # Run AsciidoctorJ and pass on all commandline parameters.
 java -Dfile.encoding=UTF-8 -cp $CLASSPATH org.asciidoctor.cli.AsciidoctorInvoker $PARAMETERS $EXTENSIONS
