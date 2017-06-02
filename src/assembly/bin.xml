@@ -22,7 +22,7 @@
 				<include>images/**</include>
 				<include>html-templates/**</include>
 				<include>scripts/**</include>
-				<include>extensions/**</include>
+				<include>ext/**</include>
 			</includes>
 		</fileSet>
 	</fileSets>
