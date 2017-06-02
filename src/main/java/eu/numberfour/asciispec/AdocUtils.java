@@ -198,16 +198,18 @@ public final class AdocUtils {
 	 *            the link text
 	 * @param linkTitle
 	 *            the link title
+	 * @param linkClass
+	 *            the role of the link
 	 * @param iconName
 	 *            the icon name
-	 * @param iconRole
-	 *            the role of the icon
 	 * @return the phrase node
 	 */
 	public static PhraseNode createLinkWithIcon(Processor processor, ContentNode parent, String linkUrl,
-			String linkText, String linkTitle, String iconName, String iconRole) {
-		String iconText = createIcon(processor, parent, iconName, iconRole).convert();
-		return createLink(processor, parent, linkUrl, iconText + linkText, linkTitle);
+			String linkText, String linkTitle, String linkClass, String iconName) {
+		String iconText = createIcon(processor, parent, iconName).convert();
+		Map<String, Object> attrs = new HashMap<>();
+		attrs.put("role", linkClass);
+		return createLink(processor, parent, linkUrl, iconText + linkText, linkTitle, attrs);
 	}
 
 	/**
@@ -300,30 +302,6 @@ public final class AdocUtils {
 		options.put("target", iconName);
 
 		return processor.createPhraseNode(parent, "image", null, Collections.emptyMap(), options);
-	}
-
-	/**
-	 * Creates a phrase node that will convert to an icon with the given icon name and role.
-	 *
-	 * @param processor
-	 *            the processor instance to use as the node factory
-	 * @param parent
-	 *            the parent node in the document AST
-	 * @param iconName
-	 *            the name of the icon
-	 * @param iconRole
-	 *            the role of the icon
-	 * @return the phrase node
-	 */
-	public static PhraseNode createIcon(Processor processor, ContentNode parent, String iconName, String iconRole) {
-		Map<String, Object> options = new HashMap<>();
-		options.put("type", "image");
-		options.put("target", iconName);
-
-		Map<String, Object> attributes = new HashMap<>();
-		attributes.put("role", iconRole);
-
-		return processor.createPhraseNode(parent, "image", null, attributes, options);
 	}
 
 	/**

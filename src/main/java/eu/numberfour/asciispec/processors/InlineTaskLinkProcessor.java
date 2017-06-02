@@ -202,9 +202,9 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 		String iconName = repositoryConfig.icon;
 		
 		TaskStatus status = repositoryConfig.getTaskStatus(taskId);
-		String iconRole = status.getIconRole();
+		String role = "status-" + status.toString();
 
-		return createLinkWithIcon(this, parent, taskUrl, taskText, taskTitle, iconName, iconRole).convert();
+		return createLinkWithIcon(this, parent, taskUrl, taskText, taskTitle, role, iconName).convert();
 	}
 
 	private String getTaskId(String target, RepositoryConfig repositoryConfig) {
