@@ -61,15 +61,15 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Returns a string representation of an inline macro with the given parameters. The representation is built as
-	 * follows:
+	 * Returns a string representation of an inline macro with the given
+	 * parameters. The representation is built as follows:
 	 *
 	 * <pre>
 	 * <name>:<target>[<name1>="<value1>", <name2>="<value2>", ...]
 	 * </pre>
 	 *
-	 * The name / value pairs are taken from the given attributes map. The values are always enclosed in double
-	 * quotation marks.
+	 * The name / value pairs are taken from the given attributes map. The
+	 * values are always enclosed in double quotation marks.
 	 *
 	 * @param name
 	 *            the macro name
@@ -90,7 +90,8 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Applies the given transformation function line-wise to the given list of lines, taking into account comments.
+	 * Applies the given transformation function line-wise to the given list of
+	 * lines, taking into account comments.
 	 *
 	 * @see SourceProcessor
 	 *
@@ -105,7 +106,8 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Applies the given transformation function line-wise to the given list of lines, taking into account comments.
+	 * Applies the given transformation function line-wise to the given list of
+	 * lines, taking into account comments.
 	 *
 	 * @see SourceProcessor
 	 *
@@ -115,14 +117,14 @@ public final class AdocUtils {
 	 *            the transformation function
 	 * @return the transformed lines
 	 */
-	public static List<String> processLines(Supplier<String> lineSupplier,
-			Function<String, List<String>> transform) {
+	public static List<String> processLines(Supplier<String> lineSupplier, Function<String, List<String>> transform) {
 
 		return new SourceProcessor(transform).process(lineSupplier);
 	}
 
 	/**
-	 * Applies the given transformation function to the given line, taking into account comments.
+	 * Applies the given transformation function to the given line, taking into
+	 * account comments.
 	 *
 	 * @see SourceProcessor
 	 *
@@ -137,16 +139,18 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Searches the given lines using the given matcher and returns the matcher's non-<code>null</code> result. The
-	 * given matcher function is not applied to any commented parts of the given lines. The result of this function is
-	 * the first non-<code>null</code> result of the given matcher function, which is repeatedly invoked for each line.
+	 * Searches the given lines using the given matcher and returns the
+	 * matcher's non-<code>null</code> result. The given matcher function is not
+	 * applied to any commented parts of the given lines. The result of this
+	 * function is the first non-<code>null</code> result of the given matcher
+	 * function, which is repeatedly invoked for each line.
 	 *
 	 * @param lines
 	 *            the lines to search
 	 * @param matcher
 	 *            the matcher to use
-	 * @return the first non-<code>null</code> result of the given matcher or <code>null</code> if the matcher did not
-	 *         match any line
+	 * @return the first non-<code>null</code> result of the given matcher or
+	 *         <code>null</code> if the matcher did not match any line
 	 */
 	public static <R> R searchLines(final List<String> lines, Function<String, R> matcher) {
 		boolean multilineComment = false;
@@ -160,7 +164,8 @@ public final class AdocUtils {
 				continue;
 
 			String nonCommentedPortion = line;
-			if (line.startsWith("//")) { // comments have to start at the beginning of a line
+			if (line.startsWith("//")) { // comments have to start at the
+											// beginning of a line
 				nonCommentedPortion = "";
 			}
 
@@ -173,8 +178,9 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Sanitizes the given string so that it can be used as an anchor. This involves replacing any non-word character
-	 * with an underscore. A character is a non-word character if it is not in the character class
+	 * Sanitizes the given string so that it can be used as an anchor. This
+	 * involves replacing any non-word character with an underscore. A character
+	 * is a non-word character if it is not in the character class
 	 * <code>[a-zA-Z_0-9]</code>.
 	 *
 	 * @param str
@@ -200,17 +206,42 @@ public final class AdocUtils {
 	 *            the link title
 	 * @param iconName
 	 *            the icon name
+	 * @param iconRole
+	 *            the role of the icon
 	 * @return the phrase node
 	 */
 	public static PhraseNode createLinkWithIcon(Processor processor, ContentNode parent, String linkUrl,
-			String linkText,
-			String linkTitle, String iconName) {
+			String linkText, String linkTitle, String iconName, String iconRole) {
+		String iconText = createIcon(processor, parent, iconName, iconRole).convert();
+		return createLink(processor, parent, linkUrl, iconText + linkText, linkTitle);
+	}
+
+	/**
+	 * Creates a phrase node that will convert to a link with an icon.
+	 *
+	 * @param processor
+	 *            the processor to use as a node factory
+	 * @param parent
+	 *            the parent node in the document AST
+	 * @param linkUrl
+	 *            the link target URL
+	 * @param linkText
+	 *            the link text
+	 * @param linkTitle
+	 *            the link title
+	 * @param iconName
+	 *            the icon name
+	 * @return the phrase node
+	 */
+	public static PhraseNode createLinkWithIcon(Processor processor, ContentNode parent, String linkUrl,
+			String linkText, String linkTitle, String iconName) {
 		String iconText = createIcon(processor, parent, iconName).convert();
 		return createLink(processor, parent, linkUrl, iconText + linkText, linkTitle);
 	}
 
 	/**
-	 * Creates a phrase node that will convert to a link with the given parameters.
+	 * Creates a phrase node that will convert to a link with the given
+	 * parameters.
 	 *
 	 * @param processor
 	 *            the processor to use as a node factory
@@ -230,7 +261,8 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Creates a phrase node that will convert to a link with the given parameters.
+	 * Creates a phrase node that will convert to a link with the given
+	 * parameters.
 	 *
 	 * @param processor
 	 *            the processor to use as a node factory
@@ -246,8 +278,8 @@ public final class AdocUtils {
 	 *            more attributes of the link
 	 * @return the phrase node
 	 */
-	public static PhraseNode createLink(Processor processor, ContentNode parent, String url, String text,
-			String title, Map<String, Object> moreAttrs) {
+	public static PhraseNode createLink(Processor processor, ContentNode parent, String url, String text, String title,
+			Map<String, Object> moreAttrs) {
 		Map<String, Object> attributes = new HashMap<>();
 		attributes.put("title", title);
 		attributes.putAll(moreAttrs);
@@ -260,7 +292,8 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Creates a phrase node that will convert to an icon with the given icon name.
+	 * Creates a phrase node that will convert to an icon with the given icon
+	 * name.
 	 *
 	 * @param processor
 	 *            the processor instance to use as the node factory
@@ -279,13 +312,39 @@ public final class AdocUtils {
 	}
 
 	/**
+	 * Creates a phrase node that will convert to an icon with the given icon
+	 * name and role.
+	 *
+	 * @param processor
+	 *            the processor instance to use as the node factory
+	 * @param parent
+	 *            the parent node in the document AST
+	 * @param iconName
+	 *            the name of the icon
+	 * @param iconRole
+	 *            the role of the icon
+	 * @return the phrase node
+	 */
+	public static PhraseNode createIcon(Processor processor, ContentNode parent, String iconName, String iconRole) {
+		Map<String, Object> options = new HashMap<>();
+		options.put("type", "image");
+		options.put("target", iconName);
+
+		Map<String, Object> attributes = new HashMap<>();
+		attributes.put("role", iconRole);
+		
+		return processor.createPhraseNode(parent, "image", null, attributes, options);
+	}
+
+	/**
 	 * Create a link using Asciidoc syntax. The result is formatted as follows:
 	 *
 	 * <code>
 	 * <<target,text>>
 	 * </code>
 	 *
-	 * whereby <code>target</code> and <code>text</code> are substituted with the values of the respective parameters.
+	 * whereby <code>target</code> and <code>text</code> are substituted with
+	 * the values of the respective parameters.
 	 *
 	 * @param target
 	 *            the link target
@@ -316,7 +375,8 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Create a link with title using Asciidoc syntax. The result is formatted as follows:
+	 * Create a link with title using Asciidoc syntax. The result is formatted
+	 * as follows:
 	 *
 	 * <code>
 	 * link:target[text,title="value"]
@@ -334,14 +394,13 @@ public final class AdocUtils {
 		if (text.matches("[^\\\\][\\[\\]]|^\\[|^\\]"))
 			throw new IllegalArgumentException("Title must not contain square brackets");
 
-		return new StringBuilder("link:").append(target)
-				.append("[").append("\"").append(text).append("\"")
-				.append(",").append("title=").append("\"").append(title).append("\"")
-				.append("]").toString();
+		return new StringBuilder("link:").append(target).append("[").append("\"").append(text).append("\"").append(",")
+				.append("title=").append("\"").append(title).append("\"").append("]").toString();
 	}
 
 	/**
-	 * Create an image link with title using Asciidoc syntax. The result is formatted as follows:
+	 * Create an image link with title using Asciidoc syntax. The result is
+	 * formatted as follows:
 	 *
 	 * <code>
 	 * image:target[alt-text,title="value",link="value"]
@@ -359,11 +418,9 @@ public final class AdocUtils {
 		if (title.matches("[^\\\\][\\[\\]]|^\\[|^\\]"))
 			throw new IllegalArgumentException("Title must not contain square brackets");
 
-		return new StringBuilder("image:").append(target)
-				.append("[").append("\"").append(title).append("\"")
-				.append(",").append("title=").append("\"").append(title).append("\"")
-				.append(",").append("link=").append("\"").append(linkUrl).append("\"")
-				.append("]").toString();
+		return new StringBuilder("image:").append(target).append("[").append("\"").append(title).append("\"")
+				.append(",").append("title=").append("\"").append(title).append("\"").append(",").append("link=")
+				.append("\"").append(linkUrl).append("\"").append("]").toString();
 	}
 
 	/**
@@ -382,7 +439,8 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Appends an anchor with the given name in Asciidoc syntax to the given string builder.
+	 * Appends an anchor with the given name in Asciidoc syntax to the given
+	 * string builder.
 	 *
 	 * @param result
 	 *            the string builder to append to
@@ -432,8 +490,8 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Appends a preformatted header string to the given string builder using the sanitized version of the given title
-	 * as the id.
+	 * Appends a preformatted header string to the given string builder using
+	 * the sanitized version of the given title as the id.
 	 *
 	 * @param result
 	 *            the string builder to append to
@@ -449,7 +507,8 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Appends a preformatted header string to the given string builder. The format is, in Asciidoc syntax:
+	 * Appends a preformatted header string to the given string builder. The
+	 * format is, in Asciidoc syntax:
 	 *
 	 * <pre>
 	 * [[id]]*type:* <<id,title>>
@@ -471,7 +530,8 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Creates a new list item with the given text and adds it to the given list.
+	 * Creates a new list item with the given text and adds it to the given
+	 * list.
 	 *
 	 * @param list
 	 *            the list that should contain the newly created list item
@@ -482,17 +542,16 @@ public final class AdocUtils {
 	public static ListItem createListItem(org.asciidoctor.ast.List list, String text) {
 		Ruby rubyRuntime = JRubyRuntimeContext.get(list);
 
-		IRubyObject[] parameters = {
-				((ListImpl) list).getRubyObject(),
-				text != null ? rubyRuntime.newString(text) : rubyRuntime.getNil()
-		};
+		IRubyObject[] parameters = { ((ListImpl) list).getRubyObject(),
+				text != null ? rubyRuntime.newString(text) : rubyRuntime.getNil() };
 
 		return (ListItem) NodeConverter.createASTNode(rubyRuntime, NodeType.LIST_ITEM_CLASS, parameters);
 	}
 
 	/**
-	 * Gets a property value of a Ruby object represented by the given content node. Note that this method circumvents
-	 * any attribute readers defined in the Ruby class and returns the raw value of the property.
+	 * Gets a property value of a Ruby object represented by the given content
+	 * node. Note that this method circumvents any attribute readers defined in
+	 * the Ruby class and returns the raw value of the property.
 	 *
 	 * @param node
 	 *            the node
@@ -558,8 +617,9 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Sets the parent of all nodes in the given collection to the given new parent. Note that this method does not
-	 * remove the nodes in the collection from their old parent(s).
+	 * Sets the parent of all nodes in the given collection to the given new
+	 * parent. Note that this method does not remove the nodes in the collection
+	 * from their old parent(s).
 	 *
 	 * @param nodes
 	 *            the nodes whose parent should be set
@@ -572,8 +632,8 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Sets the parent of the given node to the given new parent. Note that this method does not remove the given node
-	 * from its old parent.
+	 * Sets the parent of the given node to the given new parent. Note that this
+	 * method does not remove the given node from its old parent.
 	 *
 	 * @param node
 	 *            the node whose parent should be set
@@ -589,8 +649,8 @@ public final class AdocUtils {
 	 *
 	 * @param document
 	 *            the document
-	 * @return the path to the folder that contains the given document or <code>null</code> if that path could not be
-	 *         determined
+	 * @return the path to the folder that contains the given document or
+	 *         <code>null</code> if that path could not be determined
 	 */
 	public static Path getDocumentBasePath(ContentNode document) {
 		String basePathStr = getAttributeAsString(Objects.requireNonNull(document), "docdir", null);
@@ -616,38 +676,47 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Implements a standard way of dealing with relative paths in our custom asciidoc macros.
+	 * Implements a standard way of dealing with relative paths in our custom
+	 * asciidoc macros.
 	 * <p>
-	 * If the given path is relative, this method will try to {@link Path#resolve(Path) resolve} it against the
-	 * {@link #getDocumentBasePath(ContentNode) document base path} and all its parent folders up to the file system's
-	 * root folder until an existing file/folder is found and will return the absolute path to the first file/folder
-	 * found or <code>null</code> if none was found.
+	 * If the given path is relative, this method will try to
+	 * {@link Path#resolve(Path) resolve} it against the
+	 * {@link #getDocumentBasePath(ContentNode) document base path} and all its
+	 * parent folders up to the file system's root folder until an existing
+	 * file/folder is found and will return the absolute path to the first
+	 * file/folder found or <code>null</code> if none was found.
 	 * <p>
-	 * If, on the other hand, the given path is absolute, this method will simply check if a file/folder exists at that
-	 * path and, if so, return that path or <code>null</code> otherwise.
+	 * If, on the other hand, the given path is absolute, this method will
+	 * simply check if a file/folder exists at that path and, if so, return that
+	 * path or <code>null</code> otherwise.
 	 * <p>
-	 * Note that this operation is not merely an abstract path operation, the file system will be accessed by this
-	 * method (to change paths to absolute paths, check if a file/folder exists, etc.).
+	 * Note that this operation is not merely an abstract path operation, the
+	 * file system will be accessed by this method (to change paths to absolute
+	 * paths, check if a file/folder exists, etc.).
 	 *
 	 * @param document
 	 *            the document.
 	 * @param pathStr
-	 *            the path to resolve, as a string. May be absolute or relative and may point to a file or folder. A
-	 *            single file/folder name without any path information is allowed and treated as a special case of a
-	 *            relative path.
-	 * @return an <em>absolute</em> path to an <em>existing</em> file/folder or <code>null</code> if no existing
-	 *         file/folder was found for the given path string.
+	 *            the path to resolve, as a string. May be absolute or relative
+	 *            and may point to a file or folder. A single file/folder name
+	 *            without any path information is allowed and treated as a
+	 *            special case of a relative path.
+	 * @return an <em>absolute</em> path to an <em>existing</em> file/folder or
+	 *         <code>null</code> if no existing file/folder was found for the
+	 *         given path string.
 	 */
 	public static Path resolveFilePath(Document document, String pathStr) {
 		return Iterables.getFirst(resolveFilePath(document, pathStr, false), null);
 	}
 
 	/**
-	 * Same as {@link #resolveFilePath(Document, String)}, but can return all matches (iff given <code>true</code> as
-	 * last argument) instead of only the first one.
+	 * Same as {@link #resolveFilePath(Document, String)}, but can return all
+	 * matches (iff given <code>true</code> as last argument) instead of only
+	 * the first one.
 	 *
-	 * @return a list of <em>absolute</em> paths to <em>existing</em> files/folders. May be empty in case no matches
-	 *         were found. Never returns <code>null</code>.
+	 * @return a list of <em>absolute</em> paths to <em>existing</em>
+	 *         files/folders. May be empty in case no matches were found. Never
+	 *         returns <code>null</code>.
 	 */
 	public static List<Path> resolveFilePath(Document document, String pathStr, boolean returnAllMatches) {
 		Objects.requireNonNull(document);
@@ -658,7 +727,9 @@ public final class AdocUtils {
 		}
 		final List<Path> matches = new LinkedList<>();
 		final Path docdir = getDocumentBasePath(document);
-		Path dir = docdir.toAbsolutePath(); // need absolute, so that Path#getParent() will find all parents up to root
+		Path dir = docdir.toAbsolutePath(); // need absolute, so that
+											// Path#getParent() will find all
+											// parents up to root
 		while (dir != null && (returnAllMatches || matches.isEmpty())) {
 			final Path candidate = dir.resolve(path);
 			if (candidate.toFile().exists()) {
@@ -667,12 +738,14 @@ public final class AdocUtils {
 			dir = dir.getParent();
 		}
 		// at this point, we know:
-		// matches.isEmpty() || for all p in matches: p.isAbsolute() && p.toFile().exists()
+		// matches.isEmpty() || for all p in matches: p.isAbsolute() &&
+		// p.toFile().exists()
 		return matches;
 	}
 
 	/**
-	 * Returns the values of a multi-valued attribute with the given name prefix.
+	 * Returns the values of a multi-valued attribute with the given name
+	 * prefix.
 	 *
 	 * @see #getMultiValuedAttribute(Map, String)
 	 *
@@ -680,31 +753,36 @@ public final class AdocUtils {
 	 *            the node whose attributes should be searched
 	 * @param namePrefix
 	 *            the name prefix of the multi-valued attribute
-	 * @return a map containing the attribute values as specified in {@link #getMultiValuedAttribute(Map, String)}
+	 * @return a map containing the attribute values as specified in
+	 *         {@link #getMultiValuedAttribute(Map, String)}
 	 */
 	public static Map<String, String> getMultiValuedAttribute(ContentNode node, String namePrefix) {
 		return getMultiValuedAttribute(node.getAttributes(), namePrefix);
 	}
 
 	/**
-	 * Returns the values of a multi-valued attribute with the given name prefix. A multi-valued attribute consists of
-	 * multiple attributes that share the same prefix. The return value maps the suffix of each of these attributes to
-	 * its value. Consider the following example.
+	 * Returns the values of a multi-valued attribute with the given name
+	 * prefix. A multi-valued attribute consists of multiple attributes that
+	 * share the same prefix. The return value maps the suffix of each of these
+	 * attributes to its value. Consider the following example.
 	 *
-	 * Suppose that the following attributes were defined in the Asciidoc file: <code>
+	 * Suppose that the following attributes were defined in the Asciidoc file:
+	 * <code>
 	 * :task_def_GH: this is the first value
 	 * :task_def_IDE: this is another value
 	 * :tasky_mc_taskface: what person would write this?
 	 * </code>
 	 *
-	 * Calling this function with the string <code>"task_def_"</code> as the name prefix will return the following map.
+	 * Calling this function with the string <code>"task_def_"</code> as the
+	 * name prefix will return the following map.
 	 *
 	 * <code>
 	 * "GH"  => "this is the first value",
 	 * "IDE" => "this is another value"
 	 * </code>
 	 *
-	 * Calling this function with the string <code>"task"</code> as the name prefix will return the following map.
+	 * Calling this function with the string <code>"task"</code> as the name
+	 * prefix will return the following map.
 	 *
 	 * <code>
 	 * "_def_GH"       => "this is the first value",
@@ -732,7 +810,8 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Returns the string value of an attribute with the given name in the given content node.
+	 * Returns the string value of an attribute with the given name in the given
+	 * content node.
 	 *
 	 * @see #getAttributeAsString(Map, String, String) for further details
 	 *
@@ -741,7 +820,8 @@ public final class AdocUtils {
 	 * @param name
 	 *            the attribute name
 	 * @param defaultValue
-	 *            the default value to return if the given node does not contain an attribute with the given name
+	 *            the default value to return if the given node does not contain
+	 *            an attribute with the given name
 	 * @return the string value of the attribute
 	 */
 	public static String getAttributeAsString(ContentNode node, String name, String defaultValue) {
@@ -749,16 +829,18 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Returns the string value of an attribute with the given name in the given attribute map. If the map does not
-	 * contain a value for the given name, the <code>defaultValue</code> is returned. Otherwise, the value is converted
-	 * to string by means of its {@link Object#toString()} method.
+	 * Returns the string value of an attribute with the given name in the given
+	 * attribute map. If the map does not contain a value for the given name,
+	 * the <code>defaultValue</code> is returned. Otherwise, the value is
+	 * converted to string by means of its {@link Object#toString()} method.
 	 *
 	 * @param attributes
 	 *            the attributes map
 	 * @param name
 	 *            the attribute name
 	 * @param defaultValue
-	 *            the default value to return if the given node does not contain an attribute with the given name
+	 *            the default value to return if the given node does not contain
+	 *            an attribute with the given name
 	 * @return the string value of the attribute
 	 */
 	public static String getAttributeAsString(Map<String, Object> attributes, String name, String defaultValue) {
@@ -780,11 +862,13 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Returns the string value of an anonymous attribute in the given attribute map. If the map does not contain a
-	 * value for the given position, the <code>defaultValue</code> is returned. Otherwise, the value is converted to
-	 * string by means of its {@link Object#toString()} method.<br/>
+	 * Returns the string value of an anonymous attribute in the given attribute
+	 * map. If the map does not contain a value for the given position, the
+	 * <code>defaultValue</code> is returned. Otherwise, the value is converted
+	 * to string by means of its {@link Object#toString()} method.<br/>
 	 * <br/>
-	 * This function assumes that the attribute list is from a <code>@ContentModel(ContentModel.RAW)</code> annotated
+	 * This function assumes that the attribute list is from a
+	 * <code>@ContentModel(ContentModel.RAW)</code> annotated
 	 * {@link InlineMacroProcessor}.
 	 *
 	 * @param attributes
@@ -792,7 +876,8 @@ public final class AdocUtils {
 	 * @param pos
 	 *            the attribute position
 	 * @param defaultValue
-	 *            the default value to return if the given node does not contain an attribute with the given name
+	 *            the default value to return if the given node does not contain
+	 *            an attribute with the given name
 	 * @return the string value of the attribute
 	 * @throws ParseException
 	 *             when the raw text could not be parsed.
@@ -803,11 +888,14 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Returns the string value of an attribute with the given name in the given attribute map. If the map does not
-	 * contain a value for the given name, the <code>defaultValue</code> is returned. Otherwise, the value is converted
-	 * to string by means of its {@link Object#toString()} method.<br/>
+	 * Returns the string value of an attribute with the given name in the given
+	 * attribute map. If the map does not contain a value for the given name,
+	 * the <code>defaultValue</code> is returned. Otherwise, the value is
+	 * converted to string by means of its {@link Object#toString()}
+	 * method.<br/>
 	 * <br/>
-	 * This function assumes that the attribute list is from a <code>@ContentModel(ContentModel.RAW)</code> annotated
+	 * This function assumes that the attribute list is from a
+	 * <code>@ContentModel(ContentModel.RAW)</code> annotated
 	 * {@link InlineMacroProcessor}.
 	 *
 	 * @param attributes
@@ -815,7 +903,8 @@ public final class AdocUtils {
 	 * @param name
 	 *            the attribute name
 	 * @param defaultValue
-	 *            the default value to return if the given node does not contain an attribute with the given name
+	 *            the default value to return if the given node does not contain
+	 *            an attribute with the given name
 	 * @return the string value of the attribute
 	 * @throws ParseException
 	 *             when the raw text could not be parsed.
@@ -828,11 +917,14 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Returns the string value of an attribute with the given name or position in the given attribute map. If the map
-	 * does not contain a value for the given name or position, the <code>defaultValue</code> is returned. Otherwise,
-	 * the value is converted to string by means of its {@link Object#toString()} method.<br/>
+	 * Returns the string value of an attribute with the given name or position
+	 * in the given attribute map. If the map does not contain a value for the
+	 * given name or position, the <code>defaultValue</code> is returned.
+	 * Otherwise, the value is converted to string by means of its
+	 * {@link Object#toString()} method.<br/>
 	 * <br/>
-	 * This function assumes that the attribute list is from a <code>@ContentModel(ContentModel.RAW)</code> annotated
+	 * This function assumes that the attribute list is from a
+	 * <code>@ContentModel(ContentModel.RAW)</code> annotated
 	 * {@link InlineMacroProcessor}.
 	 *
 	 * @param attributes
@@ -842,21 +934,22 @@ public final class AdocUtils {
 	 * @param pos
 	 *            the attribute position
 	 * @param defaultValue
-	 *            the default value to return if the given node does not contain an attribute with the given name
+	 *            the default value to return if the given node does not contain
+	 *            an attribute with the given name
 	 * @return the string value of the attribute
 	 * @throws ParseException
 	 *             when the raw text could not be parsed.
 	 */
 	public static String getRawAttributeAsString(Map<String, Object> attributes, String name, int pos,
-			String defaultValue)
-			throws ParseException {
+			String defaultValue) throws ParseException {
 		String text = String.valueOf(attributes.get("text"));
 		Map<String, Object> textAttrs = AttributeParser.parse(text);
 		return getAttributeAsString(defaultValue, textAttrs, name, String.valueOf(pos));
 	}
 
 	/**
-	 * Returns the string value of an attribute with the given name in the given content node.
+	 * Returns the string value of an attribute with the given name in the given
+	 * content node.
 	 *
 	 * @see #getAttributeAsString(Map, String, String) for further details
 	 *
@@ -865,7 +958,8 @@ public final class AdocUtils {
 	 * @param name
 	 *            the attribute name
 	 * @param defaultValue
-	 *            the default value to return if the given node does not contain an attribute with the given name
+	 *            the default value to return if the given node does not contain
+	 *            an attribute with the given name
 	 * @return the string value of the attribute
 	 */
 	public static Integer getAttributeAsInteger(ContentNode node, String name, Integer defaultValue) {
@@ -873,16 +967,18 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Returns the string value of an attribute with the given name in the given attribute map. If the map does not
-	 * contain a value for the given name, the empty string is returned. Otherwise, the value is converted to string by
-	 * means of its {@link Object#toString()} method.
+	 * Returns the string value of an attribute with the given name in the given
+	 * attribute map. If the map does not contain a value for the given name,
+	 * the empty string is returned. Otherwise, the value is converted to string
+	 * by means of its {@link Object#toString()} method.
 	 *
 	 * @param attributes
 	 *            the attributes map
 	 * @param name
 	 *            the attribute name
 	 * @param defaultValue
-	 *            the default value to return if the given node does not contain an attribute with the given name
+	 *            the default value to return if the given node does not contain
+	 *            an attribute with the given name
 	 * @return the string value of the attribute
 	 */
 	public static Integer getAttributeAsInteger(Map<String, Object> attributes, String name, Integer defaultValue) {
@@ -900,8 +996,8 @@ public final class AdocUtils {
 	 *
 	 * @param str
 	 *            the string to parse
-	 * @return the integer representing the given string value, or <code>null</code> if the given string could not be
-	 *         parsed
+	 * @return the integer representing the given string value, or
+	 *         <code>null</code> if the given string could not be parsed
 	 */
 	public static Integer parseInt(String str) {
 		try {
@@ -912,10 +1008,12 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Substitutes every occurrence of the given variables with their values. To be more precise, for each entry of the
-	 * given map, the given subject will be searched for <code>'${entry.getKey()}'</code>, whereby
-	 * <code>entry.getKey()</code> is the actual key of the entry. For each occurrence of this search pattern in the
-	 * given subject, the occurrence will be substituted with the entry's value.
+	 * Substitutes every occurrence of the given variables with their values. To
+	 * be more precise, for each entry of the given map, the given subject will
+	 * be searched for <code>'${entry.getKey()}'</code>, whereby
+	 * <code>entry.getKey()</code> is the actual key of the entry. For each
+	 * occurrence of this search pattern in the given subject, the occurrence
+	 * will be substituted with the entry's value.
 	 *
 	 * @param subject
 	 *            the string to process
@@ -937,8 +1035,9 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Substitutes every occurrence of the given variable name with the given value. Specifically, the string
-	 * <code>'${variable_name}'</code>, where <code>'variable_name'</code> is the value of the given name, will be
+	 * Substitutes every occurrence of the given variable name with the given
+	 * value. Specifically, the string <code>'${variable_name}'</code>, where
+	 * <code>'variable_name'</code> is the value of the given name, will be
 	 * substituted with the given value.
 	 *
 	 * @param subject

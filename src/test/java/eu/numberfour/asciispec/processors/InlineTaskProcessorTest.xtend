@@ -11,6 +11,8 @@
 package eu.numberfour.asciispec.processors
 
 import eu.numberfour.asciispec.AsciidoctorTest
+import java.nio.file.Path
+import java.nio.file.Paths
 import org.junit.Before
 import org.junit.Test
 
@@ -29,6 +31,16 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 		:task_def_IDE-: Jira;IDE Backlog;https://jira.numberfour.eu/browse/IDE-{TASK_ID};tasks;IDE-{TASK_ID}
 
 		'''
+
+	private def getConfigWithTaskStatusFile(String taskStatusFile) {
+		val Path relPath = Paths.get("src/test/resources/data/inline_task_status_file", taskStatusFile);
+		val Path absPath = relPath.toAbsolutePath();
+		
+		return '''
+		:task_def_GH-: GitHub;IDE Bugs;https://github.com/NumberFour/N4JS/issues/{TASK_ID};github;GH-{TASK_ID};«absPath.toUri().toURL()»
+
+		'''
+		}
 
 	@Test
 	public def void testMissingConfiguration() {
@@ -92,7 +104,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/40" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-40</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/40" title="IDE Bugs"><span class="image gray"><img src="github" alt=""></span>GH-40</a>
 			</div>
 			</div>''',
 			'''
@@ -110,7 +122,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://jira.numberfour.eu/browse/IDE-2288" title="IDE Backlog"><span class="image"><img src="tasks" alt=""></span>IDE-2288</a>
+			<a href="https://jira.numberfour.eu/browse/IDE-2288" title="IDE Backlog"><span class="image gray"><img src="tasks" alt=""></span>IDE-2288</a>
 			</div>
 			</div>''',			'''
 			«config»
@@ -127,8 +139,8 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/40" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-40</a>
-			<a href="https://jira.numberfour.eu/browse/IDE-2288" title="IDE Backlog"><span class="image"><img src="tasks" alt=""></span>IDE-2288</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/40" title="IDE Bugs"><span class="image gray"><img src="github" alt=""></span>GH-40</a>
+			<a href="https://jira.numberfour.eu/browse/IDE-2288" title="IDE Backlog"><span class="image gray"><img src="tasks" alt=""></span>IDE-2288</a>
 			</div>
 			</div>''',
 			'''
@@ -159,7 +171,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/456" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-456</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/456" title="IDE Bugs"><span class="image gray"><img src="github" alt=""></span>GH-456</a>
 			</div>
 			</div>
 			<div class="paragraph">
@@ -200,7 +212,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/456" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-456</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/456" title="IDE Bugs"><span class="image gray"><img src="github" alt=""></span>GH-456</a>
 			</div>
 			</div>
 			</li>
@@ -221,7 +233,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/567" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-567</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/567" title="IDE Bugs"><span class="image gray"><img src="github" alt=""></span>GH-567</a>
 			</div>
 			</div>
 			<div class="paragraph">
@@ -263,7 +275,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</table>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/456" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-456</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/456" title="IDE Bugs"><span class="image gray"><img src="github" alt=""></span>GH-456</a>
 			</div>
 			</div>
 			<div class="paragraph">
@@ -315,10 +327,10 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</table>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/456" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-456</a>
-			<a href="https://github.com/NumberFour/N4JS/issues/123" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-123</a>
-			<a href="https://github.com/NumberFour/N4JS/issues/234" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-234</a>
-			<a href="https://github.com/NumberFour/N4JS/issues/345" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-345</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/456" title="IDE Bugs"><span class="image gray"><img src="github" alt=""></span>GH-456</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/123" title="IDE Bugs"><span class="image gray"><img src="github" alt=""></span>GH-123</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/234" title="IDE Bugs"><span class="image gray"><img src="github" alt=""></span>GH-234</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/345" title="IDE Bugs"><span class="image gray"><img src="github" alt=""></span>GH-345</a>
 			</div>
 			</div>
 			<div class="paragraph">
@@ -416,5 +428,104 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 		end::example[]
 		endif::[]
 		''');
+	}
+	
+	@Test
+	public def void testTaskWithValidStatusFile() {
+		convertAndAssert(
+			'''
+			<div class="ulist">
+			<ul>
+			<li>
+			<p>More: </p>
+			</li>
+			<li>
+			<p>One more: </p>
+			</li>
+			<li>
+			<p>Even more: </p>
+			</li>
+			</ul>
+			</div>
+			<div class="sidebarblock">
+			<div class="content">
+			<a href="https://github.com/NumberFour/N4JS/issues/123" title="IDE Bugs"><span class="image red"><img src="github" alt=""></span>GH-123</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/234" title="IDE Bugs"><span class="image green"><img src="github" alt=""></span>GH-234</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/345" title="IDE Bugs"><span class="image red"><img src="github" alt=""></span>GH-345</a>
+			</div>
+			</div>''',
+			'''
+			«getConfigWithTaskStatusFile("status_valid.txt")»
+			* More: task:GH-123[]
+			* One more: task:GH-234[]
+			* Even more: task:GH-345[]
+			'''
+		)
+	}
+	
+	@Test
+	public def void testTaskWithInvalidStatusFile() {
+		convertAndAssert(
+			'''
+			<div class="ulist">
+			<ul>
+			<li>
+			<p>More: </p>
+			</li>
+			<li>
+			<p>One more: </p>
+			</li>
+			<li>
+			<p>Even more: </p>
+			</li>
+			</ul>
+			</div>
+			<div class="sidebarblock">
+			<div class="content">
+			<a href="https://github.com/NumberFour/N4JS/issues/123" title="IDE Bugs"><span class="image gray"><img src="github" alt=""></span>GH-123</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/234" title="IDE Bugs"><span class="image green"><img src="github" alt=""></span>GH-234</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/345" title="IDE Bugs"><span class="image red"><img src="github" alt=""></span>GH-345</a>
+			</div>
+			</div>''',
+			'''
+			«getConfigWithTaskStatusFile("status_invalid.txt")»
+			* More: task:GH-123[]
+			* One more: task:GH-234[]
+			* Even more: task:GH-345[]
+			'''
+		)
+	}
+	
+	@Test
+	public def void testTaskWithMissingStatusFile() {
+		convertAndAssert(
+			'''
+			<div class="ulist">
+			<ul>
+			<li>
+			<p>More: </p>
+			</li>
+			<li>
+			<p>One more: </p>
+			</li>
+			<li>
+			<p>Even more: </p>
+			</li>
+			</ul>
+			</div>
+			<div class="sidebarblock">
+			<div class="content">
+			<a href="https://github.com/NumberFour/N4JS/issues/123" title="IDE Bugs"><span class="image gray"><img src="github" alt=""></span>GH-123</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/234" title="IDE Bugs"><span class="image gray"><img src="github" alt=""></span>GH-234</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/345" title="IDE Bugs"><span class="image gray"><img src="github" alt=""></span>GH-345</a>
+			</div>
+			</div>''',
+			'''
+			«getConfigWithTaskStatusFile("status_missing.txt")»
+			* More: task:GH-123[]
+			* One more: task:GH-234[]
+			* Even more: task:GH-345[]
+			'''
+		)
 	}
 }
