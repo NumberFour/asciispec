@@ -37,6 +37,8 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 
 	// TODO: make this configurable
 	private final IssueAcceptor issueAcceptor = new IssuePrinter();
+	
+	private Map<String, RepositoryConfig> repositoryConfigs;
 
 	private class RepositoryConfig {
 		public final String prefix;
@@ -163,21 +165,23 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 	}
 
 	private Map<String, RepositoryConfig> getRepositoryConfigs(ContentNode document) {
-		Map<String, String> values = getMultiValuedAttribute(document, CONFIG_NAME_PREFIX);
-		if (values.isEmpty())
-			throw new IllegalArgumentException("Missing task configuration");
+		if (repositoryConfigs == null) {
+			Map<String, String> values = getMultiValuedAttribute(document, CONFIG_NAME_PREFIX);
+			if (values.isEmpty())
+				throw new IllegalArgumentException("Missing task configuration");
 
-		Map<String, RepositoryConfig> result = new HashMap<>();
+			repositoryConfigs = new HashMap<>();
 
-		for (Entry<String, String> entry : values.entrySet()) {
-			String prefix = entry.getKey().toLowerCase();
-			String configStr = entry.getValue();
-			result.put(prefix, parseRepositoryConfig(document, prefix, configStr));
+			for (Entry<String, String> entry : values.entrySet()) {
+				String prefix = entry.getKey().toLowerCase();
+				String configStr = entry.getValue();
+				repositoryConfigs.put(prefix, parseRepositoryConfig(document, prefix, configStr));
+			}
 		}
 
-		return result;
+		return repositoryConfigs;
 	}
-
+		
 	private RepositoryConfig parseRepositoryConfig(ContentNode node, String prefix, String configStr) {
 		String[] parts = configStr.split(";");
 		if (parts.length < 5 || parts.length > 6)
