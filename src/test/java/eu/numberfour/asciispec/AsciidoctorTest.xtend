@@ -10,6 +10,7 @@
  */
 package eu.numberfour.asciispec
 
+import eu.numberfour.asciispec.processors.ProcessorExtension
 import java.io.BufferedReader
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -21,15 +22,15 @@ import java.io.StringWriter
 import java.util.HashMap
 import java.util.Objects
 import org.asciidoctor.Asciidoctor
+import org.asciidoctor.Options
 import org.asciidoctor.OptionsBuilder
 import org.asciidoctor.SafeMode
+import org.asciidoctor.^extension.RubyExtensionRegistry
 import org.junit.After
 import org.junit.Before
 
 import static org.asciidoctor.OptionsBuilder.*
 import static org.junit.Assert.*
-import org.asciidoctor.Options
-import eu.numberfour.asciispec.processors.ProcessorExtension
 
 /**
  *
@@ -47,10 +48,13 @@ class AsciidoctorTest {
 	}
 
 	protected Asciidoctor doc;
+	protected RubyExtensionRegistry rubyRegistry;
 
 	@Before
 	public def void createDoctor() {
 		doc = Asciidoctor.Factory.create();
+		rubyRegistry = doc.rubyExtensionRegistry;
+		
 		/* By default the creation of an asciidoctor instance will register all extensions mentioned in
 		 * src/main/resources/META-INF/services/org.asciidoctor.extension.spi.ExtensionRegistry
 		 * However, for testing purposes we want to be able to selectively register extensions required for each test.
@@ -58,6 +62,18 @@ class AsciidoctorTest {
 		 * The required extensions will later be registered manually by each individual test.
 		 */
 		ProcessorExtension.unregisterAllExtensions(doc);
+	}
+
+	def void registerRubyExtensionBlock(String fileName, String extensionClassName, String macroName) {
+		val resStream = Class.getResourceAsStream(fileName)
+		rubyRegistry.loadClass(resStream);
+		rubyRegistry.block(macroName, extensionClassName);
+	}
+
+	def void registerRubyExtensionDocinfoProcessor(String fileName, String extensionClassName) {
+		val resStream = Class.getResourceAsStream(fileName)
+		rubyRegistry.loadClass(resStream);
+		rubyRegistry.docinfoProcessor(extensionClassName);
 	}
 
 	@After
