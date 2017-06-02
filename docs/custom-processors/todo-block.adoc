@@ -1,0 +1,48 @@
+= TODO Block
+
+== Usage
+
+[source,asciidoc]
+----
+// Simple use
+
+[TODO]
+Don't forget
+----
+
+===  Delimiters 
+
+Delimiters are required if the block contains empty lines or nested blocks. +
+The following delimiters may be used:
+
+[source,subs=macros]
+----
+====
+--
+pass:[++++]
+****
+pass:[----]
+----
+
+Examples:: 
+[source,asciidoc]
+----
+.Block Title (optional)
+[TODO]
+--
+Don't Forget!
+
+. Resolve an issue
+.. Don't break anything
+--
+
+// or 
+
+[TODO]
+++++
+Don't divide by zero.
+
+* Add 1 to infinity.
+++++
+
+----
