@@ -14,9 +14,7 @@ import static eu.numberfour.asciispec.AdocUtils.createLinkWithIcon;
 import static eu.numberfour.asciispec.AdocUtils.getMultiValuedAttribute;
 import static eu.numberfour.asciispec.AdocUtils.transformVariable;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -116,19 +114,7 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 	}
 
 	private static enum TaskStatus {
-		OPEN, CLOSED, UNKNOWN;
-
-		public String getIconRole() {
-			switch (this) {
-			case OPEN:
-				return "red";
-			case CLOSED:
-				return "green";
-			case UNKNOWN:
-			default:
-				return "gray";
-			}
-		}
+		OPEN, CLOSED, UNKNOWN
 	}
 
 	@Override
@@ -202,7 +188,7 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 		String iconName = repositoryConfig.icon;
 		
 		TaskStatus status = repositoryConfig.getTaskStatus(taskId);
-		String role = "status-" + status.toString();
+		String role = "status_" + status.toString();
 
 		return createLinkWithIcon(this, parent, taskUrl, taskText, taskTitle, role, iconName).convert();
 	}

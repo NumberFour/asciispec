@@ -104,7 +104,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/40" class="status-UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-40</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/40" class="status_UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-40</a>
 			</div>
 			</div>''',
 			'''
@@ -122,7 +122,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://jira.numberfour.eu/browse/IDE-2288" class="status-UNKNOWN" title="IDE Backlog"><span class="image"><img src="tasks" alt=""></span>IDE-2288</a>
+			<a href="https://jira.numberfour.eu/browse/IDE-2288" class="status_UNKNOWN" title="IDE Backlog"><span class="image"><img src="tasks" alt=""></span>IDE-2288</a>
 			</div>
 			</div>''',			
 			'''
@@ -140,8 +140,8 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/40" class="status-UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-40</a>
-			<a href="https://jira.numberfour.eu/browse/IDE-2288" class="status-UNKNOWN" title="IDE Backlog"><span class="image"><img src="tasks" alt=""></span>IDE-2288</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/40" class="status_UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-40</a>
+			<a href="https://jira.numberfour.eu/browse/IDE-2288" class="status_UNKNOWN" title="IDE Backlog"><span class="image"><img src="tasks" alt=""></span>IDE-2288</a>
 			</div>
 			</div>''',
 			'''
@@ -172,7 +172,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/456" class="status-UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-456</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/456" class="status_UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-456</a>
 			</div>
 			</div>
 			<div class="paragraph">
@@ -213,7 +213,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/456" class="status-UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-456</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/456" class="status_UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-456</a>
 			</div>
 			</div>
 			</li>
@@ -234,7 +234,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/567" class="status-UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-567</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/567" class="status_UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-567</a>
 			</div>
 			</div>
 			<div class="paragraph">
@@ -276,7 +276,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</table>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/456" class="status-UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-456</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/456" class="status_UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-456</a>
 			</div>
 			</div>
 			<div class="paragraph">
@@ -328,10 +328,10 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</table>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/456" class="status-UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-456</a>
-			<a href="https://github.com/NumberFour/N4JS/issues/123" class="status-UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-123</a>
-			<a href="https://github.com/NumberFour/N4JS/issues/234" class="status-UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-234</a>
-			<a href="https://github.com/NumberFour/N4JS/issues/345" class="status-UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-345</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/456" class="status_UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-456</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/123" class="status_UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-123</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/234" class="status_UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-234</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/345" class="status_UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-345</a>
 			</div>
 			</div>
 			<div class="paragraph">
@@ -450,9 +450,9 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/123" class="status-OPEN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-123</a>
-			<a href="https://github.com/NumberFour/N4JS/issues/234" class="status-CLOSED" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-234</a>
-			<a href="https://github.com/NumberFour/N4JS/issues/345" class="status-OPEN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-345</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/123" class="status_OPEN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-123</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/234" class="status_CLOSED" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-234</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/345" class="status_OPEN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-345</a>
 			</div>
 			</div>''',
 			'''
@@ -483,9 +483,9 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/123" class="status-UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-123</a>
-			<a href="https://github.com/NumberFour/N4JS/issues/234" class="status-CLOSED" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-234</a>
-			<a href="https://github.com/NumberFour/N4JS/issues/345" class="status-OPEN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-345</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/123" class="status_UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-123</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/234" class="status_CLOSED" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-234</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/345" class="status_OPEN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-345</a>
 			</div>
 			</div>''',
 			'''
@@ -516,9 +516,9 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/123" class="status-UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-123</a>
-			<a href="https://github.com/NumberFour/N4JS/issues/234" class="status-UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-234</a>
-			<a href="https://github.com/NumberFour/N4JS/issues/345" class="status-UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-345</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/123" class="status_UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-123</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/234" class="status_UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-234</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/345" class="status_UNKNOWN" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-345</a>
 			</div>
 			</div>''',
 			'''
