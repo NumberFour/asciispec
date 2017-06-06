@@ -53,4 +53,4 @@ PARAMETERS="-a icons=font $@"
 EXTENSIONS="-r $APP_HOME/res/ext/todo.rb"
 
 # Run AsciidoctorJ and pass on all commandline parameters.
-java -Dfile.encoding=UTF-8 -cp $CLASSPATH org.asciidoctor.cli.AsciidoctorInvoker $PARAMETERS $EXTENSIONS
+java -Dfile.encoding=UTF-8 -cp $CLASSPATH eu.numberfour.asciispec.cli.AsciiSpec $PARAMETERS $EXTENSIONS
