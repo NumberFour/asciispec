@@ -31,7 +31,6 @@ import org.junit.Before
 
 import static org.asciidoctor.OptionsBuilder.*
 import static org.junit.Assert.*
-import eu.numberfour.asciispec.hacks.HackJRuby
 
 /**
  *
@@ -53,7 +52,6 @@ class AsciidoctorTest {
 
 	@Before
 	public def void createDoctor() {
-		HackJRuby.disableSecureRandoms();
 		doc = Asciidoctor.Factory.create();
 		rubyRegistry = doc.rubyExtensionRegistry;
 		

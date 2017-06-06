@@ -40,7 +40,6 @@ import org.asciidoctor.internal.RubyObjectWrapper;
 
 import eu.numberfour.asciispec.AdocUtils;
 import eu.numberfour.asciispec.AttributeParser;
-import eu.numberfour.asciispec.hacks.HackProcessors;
 import eu.numberfour.asciispec.issue.IssueAcceptor;
 import eu.numberfour.asciispec.issue.IssuePrinter;
 import eu.numberfour.asciispec.transformer.ChildrenTransformer;
