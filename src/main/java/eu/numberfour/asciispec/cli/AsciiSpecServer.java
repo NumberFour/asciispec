@@ -91,7 +91,7 @@ public class AsciiSpecServer {
 		List<String> newArgs = new LinkedList<>();
 		for (int i = 0; i < args.length; i++) {
 			if (args[i].equals("-B")) {
-				setWorkingDir(args[(i + 1)]);
+				setWorkingDir(args[i + 1]);
 				i += 2;
 			}
 			if (i < args.length) {
@@ -101,8 +101,8 @@ public class AsciiSpecServer {
 		return newArgs.toArray(new String[newArgs.size()]);
 	}
 
-	private void setWorkingDir(String string) {
-		System.setProperty("user.dir", string);
+	private void setWorkingDir(String optionB) {
+		System.setProperty("user.dir", optionB);
 	}
 }
 

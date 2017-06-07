@@ -76,13 +76,13 @@ function usage () {
 	cat <<EOF
 Usage: asciispec-server.sh [-hdcstlu]
 	
-	-h		prints this help
-	-d [args]	direct execution using asciispec
-	-c [args]	commit message to server
-	-l [args]	commit message to server; starts server lazily
-	-s		start server on port 45115
-	-t		terminate process on port 45115
-	-u		check if port 45115 is used currently
+	help		prints this help
+	direct [args]	direct execution using asciispec
+	commit [args]	commit message to server
+	lazy [args]	commit message to server; starts server lazily
+	start		start server on port 45115
+	term		terminate process on port 45115
+	port		check if port 45115 is used currently
 
 EOF
 }
@@ -90,7 +90,7 @@ EOF
 
 function isUsedPort () {
 	set +e
-	exec 3<>$DEV_TCP
+	lsof -i:45115 -t >/dev/null
 
 	if [ "$?" -eq "0" ]; then
 		set -e
@@ -121,7 +121,7 @@ function startServer () {
 
 
 function commit () {
-	cmd="$EXTENSIONS $PARAMETERS $1"
+	cmd="$EXTENSIONS $PARAMETERS $@"
 
 	# establish connection
 	exec 3<>$DEV_TCP
@@ -139,7 +139,8 @@ function commit () {
 
 
 function asciispec () {
-	$CMD_ASCIISPEC $1
+	echo "rest $@"
+	$CMD_ASCIISPEC $@
 }
 
 
@@ -149,7 +150,7 @@ function lazyCommit () {
 		sleep 1
 	fi
 
-	commit $1
+	commit $@
 }
 
 
@@ -163,61 +164,51 @@ function terminate () {
 	echo "Killed process on port 45115."
 }
 
-while getopts ":hdcstlu" opt; do
-	case $opt in
+case ${1} in
 
-		h)
-			usage
-			exit 0
-			;;
+	help)
+		usage
+		exit 0
+		;;
 
-		d)
-			asciispec ${@:2}
-			exit 0
-			;;
+	direct)
+		asciispec ${@:2}
+		exit 0
+		;;
 
-		s)
-			startServer ${2}
-			exit 0
-			;;
-		
-		t)
-			terminate
-			exit 0
-			;;
-				
-		c)
-			commit ${@:2}
-			exit 0
-			;;
-				
-		l)
-			lazyCommit ${@:2}
-			exit 0
-			;;
-		
-		u)
-			if (isUsedPort;) then
-			    echo "Port in use."
-			else
-			    echo "Port free."
-			fi
+	start)
+		startServer ${2}
+		exit 0
+		;;
 
-			exit 0
-			;;
+	term)
+		terminate
+		exit 0
+		;;
 
+	commit)
+		commit ${@:2}
+		exit 0
+		;;
 
-		\?)
-			# If option unknown, give feedback, trigger 'usage' function
-			echo -e "[WARNING] Invalid option: -$OPTARG"
-			usage
-			exit 1
-			;;
-	esac
-done
+	lazy)
+		lazyCommit ${@:2}
+		exit 0
+		;;
+
+	port)
+		if (isUsedPort;) then
+		    echo "Port in use."
+		else
+		    echo "Port free."
+		fi
+
+		exit 0
+		;;
+esac
 
 
 # No option passed. Use default case.
-#lazyCommit ${@:1}
-asciispec ${@:1}
+lazyCommit ${@:1}
+#asciispec ${@:1}
 exit 0
