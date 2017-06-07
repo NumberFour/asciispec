@@ -113,8 +113,19 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 		}
 	}
 
-	private static enum TaskStatus {
-		OPEN, CLOSED, UNKNOWN
+	static enum TaskStatus {
+		OPEN, CLOSED, UNKNOWN;
+		
+		public String getRole() {
+			switch (this) {
+			case OPEN:
+				return "maroon strong";
+			case CLOSED:
+				return "green line-through";
+			default:
+				return "gray";
+			}
+		}
 	}
 
 	@Override
@@ -188,7 +199,7 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 		String iconName = repositoryConfig.icon;
 		
 		TaskStatus status = repositoryConfig.getTaskStatus(taskId);
-		String role = "status_" + status.toString();
+		String role = status.getRole();
 
 		return createLinkWithIcon(this, parent, taskUrl, taskText, taskTitle, role, iconName).convert();
 	}
