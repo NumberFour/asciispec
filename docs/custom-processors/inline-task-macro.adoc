@@ -5,7 +5,7 @@ Usage::
 [source,asciidoc]
 task:target[]
 
-The `inline task macro` creates hyperlinks to Jira task management and GitHub issue-tracking systems.
+The `inline task macro` creates hyperlinks to Jira task management and GitHub issue-tracking systems. Optionally, it will render the links differently to reflect the status of the tasks if a task status file is provided.
 
 Attributes::
 * *target:* The project prefix followed by a hyphen and the task number or ID (e.g. `AS-23`).
@@ -17,13 +17,13 @@ Attributes::
 Specifying which repository to link to is done by adding a URL pattern to the
 https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/userguide.adoc#configuration-file[config file] in the following format:
 
-`:task_def_<Prefix>: <Name>;<Description>;<URL-Pattern>;<Icon>;<TextPatterns>`
+`:task_def_<Prefix>: <Name>;<Description>;<URL-Pattern>;<Icon>;<TextPatterns>[;<TaskStatusFileURL>]`
 
 Example: ::
 
 [source,asciidoc]
 ----
-:task_def_AS-: GitHub;AsciiSpec Bugs;https://github.com/NumberFour/asciispec/issues/{TASK_ID};images/icons/github.png;AS-{TASK_ID}
+:task_def_AS-: GitHub;AsciiSpec Bugs;https://github.com/NumberFour/asciispec/issues/{TASK_ID};images/icons/github.png;AS-{TASK_ID};file://some/path/to/status_file.txt
 :task_def_JIRA-: Jira;My Jira Board;https://jira.myorg.com/browse/JIRA-{TASK_ID};images/icons/jira.png;JIRA-{TASK_ID}
 ----
 
@@ -34,6 +34,33 @@ Example: ::
 * *`{TASK_ID}`*: The suffix of the macro target (`40` in `task:AS-40[]`).
 <Icon>:: The relative path to an image used as an icon for the repository.
 <Text-Pattern>:: The text pattern to match to inline task macros in the AsciiDoc source - can also contain the *`{TASK_ID}`* placeholder.
+<TaskStatusFileURL>:: A URL to a file that contains the status of the tasks in the repository. The file format is explained in the next section. This parameter is optional.
+
+If a task status file URL is given, but does not contain the status of a task ID used with the task macro, the task ID will be rendered differently than the open and closed tasks.
+
+== Task Status File Format
+
+The task status contains a newline-separated list of task statuses. The format is as follows.
+
+```
+TASK_STATUS_FILE = { TASK_STATUS '\n' }
+TASK_STATUS      = TASK_ID ':' ( 'OPEN' | 'CLOSED' )
+TASK_ID          = CHAR { CHAR }
+```
+
+The character class `CHAR` contains every character except `:` and `\n`, which are used as control characters. Here is an example of a valid task status file:
+
+```
+494:OPEN
+493:OPEN
+492:OPEN
+491:OPEN
+490:CLOSED
+489:OPEN
+488:CLOSED
+487:CLOSED
+486:CLOSED
+```
 
 [.language-asciidoc]
 == Examples

@@ -115,8 +115,7 @@ public final class AdocUtils {
 	 *            the transformation function
 	 * @return the transformed lines
 	 */
-	public static List<String> processLines(Supplier<String> lineSupplier,
-			Function<String, List<String>> transform) {
+	public static List<String> processLines(Supplier<String> lineSupplier, Function<String, List<String>> transform) {
 
 		return new SourceProcessor(transform).process(lineSupplier);
 	}
@@ -160,7 +159,8 @@ public final class AdocUtils {
 				continue;
 
 			String nonCommentedPortion = line;
-			if (line.startsWith("//")) { // comments have to start at the beginning of a line
+			if (line.startsWith("//")) { // comments have to start at the
+											// beginning of a line
 				nonCommentedPortion = "";
 			}
 
@@ -198,13 +198,39 @@ public final class AdocUtils {
 	 *            the link text
 	 * @param linkTitle
 	 *            the link title
+	 * @param linkClass
+	 *            the role of the link
 	 * @param iconName
 	 *            the icon name
 	 * @return the phrase node
 	 */
 	public static PhraseNode createLinkWithIcon(Processor processor, ContentNode parent, String linkUrl,
-			String linkText,
-			String linkTitle, String iconName) {
+			String linkText, String linkTitle, String linkClass, String iconName) {
+		String iconText = createIcon(processor, parent, iconName).convert();
+		Map<String, Object> attrs = new HashMap<>();
+		attrs.put("role", linkClass);
+		return createLink(processor, parent, linkUrl, iconText + linkText, linkTitle, attrs);
+	}
+
+	/**
+	 * Creates a phrase node that will convert to a link with an icon.
+	 *
+	 * @param processor
+	 *            the processor to use as a node factory
+	 * @param parent
+	 *            the parent node in the document AST
+	 * @param linkUrl
+	 *            the link target URL
+	 * @param linkText
+	 *            the link text
+	 * @param linkTitle
+	 *            the link title
+	 * @param iconName
+	 *            the icon name
+	 * @return the phrase node
+	 */
+	public static PhraseNode createLinkWithIcon(Processor processor, ContentNode parent, String linkUrl,
+			String linkText, String linkTitle, String iconName) {
 		String iconText = createIcon(processor, parent, iconName).convert();
 		return createLink(processor, parent, linkUrl, iconText + linkText, linkTitle);
 	}
@@ -246,8 +272,8 @@ public final class AdocUtils {
 	 *            more attributes of the link
 	 * @return the phrase node
 	 */
-	public static PhraseNode createLink(Processor processor, ContentNode parent, String url, String text,
-			String title, Map<String, Object> moreAttrs) {
+	public static PhraseNode createLink(Processor processor, ContentNode parent, String url, String text, String title,
+			Map<String, Object> moreAttrs) {
 		Map<String, Object> attributes = new HashMap<>();
 		attributes.put("title", title);
 		attributes.putAll(moreAttrs);
@@ -334,10 +360,8 @@ public final class AdocUtils {
 		if (text.matches("[^\\\\][\\[\\]]|^\\[|^\\]"))
 			throw new IllegalArgumentException("Title must not contain square brackets");
 
-		return new StringBuilder("link:").append(target)
-				.append("[").append("\"").append(text).append("\"")
-				.append(",").append("title=").append("\"").append(title).append("\"")
-				.append("]").toString();
+		return new StringBuilder("link:").append(target).append("[").append("\"").append(text).append("\"").append(",")
+				.append("title=").append("\"").append(title).append("\"").append("]").toString();
 	}
 
 	/**
@@ -359,11 +383,9 @@ public final class AdocUtils {
 		if (title.matches("[^\\\\][\\[\\]]|^\\[|^\\]"))
 			throw new IllegalArgumentException("Title must not contain square brackets");
 
-		return new StringBuilder("image:").append(target)
-				.append("[").append("\"").append(title).append("\"")
-				.append(",").append("title=").append("\"").append(title).append("\"")
-				.append(",").append("link=").append("\"").append(linkUrl).append("\"")
-				.append("]").toString();
+		return new StringBuilder("image:").append(target).append("[").append("\"").append(title).append("\"")
+				.append(",").append("title=").append("\"").append(title).append("\"").append(",").append("link=")
+				.append("\"").append(linkUrl).append("\"").append("]").toString();
 	}
 
 	/**
@@ -482,10 +504,8 @@ public final class AdocUtils {
 	public static ListItem createListItem(org.asciidoctor.ast.List list, String text) {
 		Ruby rubyRuntime = JRubyRuntimeContext.get(list);
 
-		IRubyObject[] parameters = {
-				((ListImpl) list).getRubyObject(),
-				text != null ? rubyRuntime.newString(text) : rubyRuntime.getNil()
-		};
+		IRubyObject[] parameters = { ((ListImpl) list).getRubyObject(),
+				text != null ? rubyRuntime.newString(text) : rubyRuntime.getNil() };
 
 		return (ListItem) NodeConverter.createASTNode(rubyRuntime, NodeType.LIST_ITEM_CLASS, parameters);
 	}
@@ -604,8 +624,8 @@ public final class AdocUtils {
 	 *
 	 * @param document
 	 *            the document
-	 * @return the path to the folder that contains the given document or
-	 *         <code>null</code> if that path could not be determined
+	 * @return the path to the folder that contains the given document or <code>null</code> if that path could not be
+	 *         determined
 	 */
 	public static File getDocumentBaseFile(ContentNode document) {
 		String baseFileName = getAttributeAsString(Objects.requireNonNull(document), "docfile", null);
@@ -658,7 +678,9 @@ public final class AdocUtils {
 		}
 		final List<Path> matches = new LinkedList<>();
 		final Path docdir = getDocumentBasePath(document);
-		Path dir = docdir.toAbsolutePath(); // need absolute, so that Path#getParent() will find all parents up to root
+		Path dir = docdir.toAbsolutePath(); // need absolute, so that
+											// Path#getParent() will find all
+											// parents up to root
 		while (dir != null && (returnAllMatches || matches.isEmpty())) {
 			final Path candidate = dir.resolve(path);
 			if (candidate.toFile().exists()) {
@@ -667,7 +689,8 @@ public final class AdocUtils {
 			dir = dir.getParent();
 		}
 		// at this point, we know:
-		// matches.isEmpty() || for all p in matches: p.isAbsolute() && p.toFile().exists()
+		// matches.isEmpty() || for all p in matches: p.isAbsolute() &&
+		// p.toFile().exists()
 		return matches;
 	}
 
@@ -848,8 +871,7 @@ public final class AdocUtils {
 	 *             when the raw text could not be parsed.
 	 */
 	public static String getRawAttributeAsString(Map<String, Object> attributes, String name, int pos,
-			String defaultValue)
-			throws ParseException {
+			String defaultValue) throws ParseException {
 		String text = String.valueOf(attributes.get("text"));
 		Map<String, Object> textAttrs = AttributeParser.parse(text);
 		return getAttributeAsString(defaultValue, textAttrs, name, String.valueOf(pos));

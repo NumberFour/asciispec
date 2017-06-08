@@ -14,9 +14,13 @@ import static eu.numberfour.asciispec.AdocUtils.createLinkWithIcon;
 import static eu.numberfour.asciispec.AdocUtils.getMultiValuedAttribute;
 import static eu.numberfour.asciispec.AdocUtils.transformVariable;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Scanner;
 
 import org.asciidoctor.ast.ContentNode;
 import org.asciidoctor.extension.InlineMacroProcessor;
@@ -31,8 +35,10 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 
 	// TODO: make this configurable
 	private final IssueAcceptor issueAcceptor = new IssuePrinter();
+	
+	private Map<String, RepositoryConfig> repositoryConfigs;
 
-	private static class RepositoryConfig {
+	private class RepositoryConfig {
 		public final String prefix;
 		@SuppressWarnings("unused")
 		public final String name;
@@ -40,15 +46,85 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 		public final String urlPattern;
 		public final String icon;
 		public final String textPattern;
+		public final String taskStatusFileUrl;
+
+		private Map<String, TaskStatus> taskStatusCache;
 
 		public RepositoryConfig(String prefix, String name, String description, String urlPattern, String icon,
-				String textPattern) {
+				String textPattern, String taskStatusFileUrl) {
 			this.prefix = prefix;
 			this.name = name;
 			this.description = description;
 			this.urlPattern = urlPattern;
 			this.icon = icon;
 			this.textPattern = textPattern;
+			this.taskStatusFileUrl = taskStatusFileUrl;
+		}
+
+		public TaskStatus getTaskStatus(String taskId) {
+			TaskStatus status = taskStatusCache.get(taskId);
+			if (status == null)
+				status = TaskStatus.UNKNOWN;
+			return status;
+		}
+
+		public void initializeTaskStatusCache(ContentNode node) {
+			taskStatusCache = loadTaskStatusCache(node);
+		}
+
+		private Map<String, TaskStatus> loadTaskStatusCache(ContentNode node) {
+			Map<String, TaskStatus> result = new HashMap<>();
+
+			if (!taskStatusFileUrl.isEmpty()) {
+				try {
+					URL url = new URL(taskStatusFileUrl);
+					try (@SuppressWarnings("resource")
+					Scanner scanner = new Scanner(url.openStream()).useDelimiter("\\n")) {
+						int lineNumber = 1;
+						while (scanner.hasNext()) {
+							String line = scanner.next();
+							String[] parts = line.split(":");
+
+							if (parts.length == 2) {
+								String taskId = parts[0];
+								TaskStatus taskStatus = TaskStatus.valueOf(parts[1]);
+								if (taskStatus != null) {
+									result.put(taskId, taskStatus);
+								} else {
+									issueAcceptor.warn(node, "Unknown task status '" + parts[1] + "' in line "
+											+ lineNumber + " of task status file " + taskStatusFileUrl);
+								}
+							} else {
+								issueAcceptor.warn(node, "Malformed task status entry in line " + lineNumber
+										+ " of task status file " + taskStatusFileUrl);
+							}
+
+							lineNumber++;
+						}
+					}
+				} catch (MalformedURLException e) {
+					issueAcceptor.error(node, "Malformed task status file URL: " + taskStatusFileUrl);
+				} catch (IOException e) {
+					issueAcceptor.error(node, "Error while fetching task status file from URL " + taskStatusFileUrl
+							+ ": " + e.getMessage());
+				}
+			}
+			return result;
+		}
+	}
+
+	static enum TaskStatus {
+		OPEN, CLOSED, UNKNOWN;
+		
+		public String getRole() {
+			switch (this) {
+			case OPEN:
+				return "maroon strong";
+			case CLOSED:
+				return "green line-through";
+			default:
+				return "gray";
+			}
 		}
 	}
 
@@ -86,27 +162,33 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 	}
 
 	private Map<String, RepositoryConfig> getRepositoryConfigs(ContentNode document) {
-		Map<String, String> values = getMultiValuedAttribute(document, CONFIG_NAME_PREFIX);
-		if (values.isEmpty())
-			throw new IllegalArgumentException("Missing task configuration");
+		if (repositoryConfigs == null) {
+			Map<String, String> values = getMultiValuedAttribute(document, CONFIG_NAME_PREFIX);
+			if (values.isEmpty())
+				throw new IllegalArgumentException("Missing task configuration");
 
-		Map<String, RepositoryConfig> result = new HashMap<>();
+			repositoryConfigs = new HashMap<>();
 
-		for (Entry<String, String> entry : values.entrySet()) {
-			String prefix = entry.getKey().toLowerCase();
-			String configStr = entry.getValue();
-			result.put(prefix, parseRepositoryConfig(prefix, configStr));
+			for (Entry<String, String> entry : values.entrySet()) {
+				String prefix = entry.getKey().toLowerCase();
+				String configStr = entry.getValue();
+				repositoryConfigs.put(prefix, parseRepositoryConfig(document, prefix, configStr));
+			}
 		}
 
-		return result;
+		return repositoryConfigs;
 	}
-
-	private RepositoryConfig parseRepositoryConfig(String prefix, String configStr) {
+		
+	private RepositoryConfig parseRepositoryConfig(ContentNode node, String prefix, String configStr) {
 		String[] parts = configStr.split(";");
-		if (parts.length != 5)
+		if (parts.length < 5 || parts.length > 6)
 			throw new IllegalArgumentException("Invalid repository configuration string: '" + configStr + "'");
 
-		return new RepositoryConfig(prefix, parts[0], parts[1], parts[2], parts[3], parts[4]);
+		String taskStatusFileUrl = parts.length >= 6 ? parts[5] : "";
+		RepositoryConfig config = new RepositoryConfig(prefix, parts[0], parts[1], parts[2], parts[3], parts[4],
+				taskStatusFileUrl);
+		config.initializeTaskStatusCache(node);
+		return config;
 	}
 
 	private Object createTaskLink(ContentNode parent, String target, RepositoryConfig repositoryConfig) {
@@ -115,8 +197,11 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 		String taskText = getTaskText(taskId, repositoryConfig);
 		String taskTitle = repositoryConfig.description;
 		String iconName = repositoryConfig.icon;
+		
+		TaskStatus status = repositoryConfig.getTaskStatus(taskId);
+		String role = status.getRole();
 
-		return createLinkWithIcon(this, parent, taskUrl, taskText, taskTitle, iconName).convert();
+		return createLinkWithIcon(this, parent, taskUrl, taskText, taskTitle, role, iconName).convert();
 	}
 
 	private String getTaskId(String target, RepositoryConfig repositoryConfig) {
