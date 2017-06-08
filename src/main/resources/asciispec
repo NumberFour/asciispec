@@ -1,15 +1,44 @@
 #!/bin/bash
 
+
+# -e  == exit immediately
+# -x  == enable debug. (+x for disable)
+set -e +x
+
+
 # Set INVOCATION_HOME and APP_HOME
 INVOCATION_HOME="$(pwd)"
 cd "$(dirname $0)/.." >/dev/null
 APP_HOME="$(pwd -P)"
 cd "$INVOCATION_HOME" >/dev/null
 
+# The classpath is built from absolute paths since this script may be executed from anywhere.
+CLASSPATH="$APP_HOME/lib/asciispec-0.0.1-SNAPSHOT.jar"
+
+# Force use of Font Awesome icons & pass filename
+PARAMETERS="-a icons=font -B $INVOCATION_HOME"
+
+# Load Ruby extensions
+EXTENSIONS="-r $APP_HOME/res/ext/todo.rb"
+
+# Starts the AsciiSpec Server
+CMD_SERVER="java -Dfile.encoding=UTF-8 -cp $CLASSPATH eu.numberfour.asciispec.cli.AsciiSpecServer"
+
+# Executes asciispec directly
+CMD_ASCIISPEC="java -Dfile.encoding=UTF-8 -cp $CLASSPATH eu.numberfour.asciispec.cli.AsciiSpec $EXTENSIONS $PARAMETERS"
+
+# TCP connection
+DEV_TCP="/dev/tcp/localhost/45115"
+
+
+
+# DEPRECATED FUNCTIONS
 # Handle recursive calls. This assumes no output base path for the processed files, so that the genereated files are placed next to the original files.
 # All additional parameters are passed on to asciidoctor
 if [ "${1}" == "-R" ]; then
 	find . -name '*.adoc' -exec $0 {} ${@:2} \;
+	echo "The option '-R' is deprecated and will be removed soon."
+	echo "The option '-R' is deprecated and will be removed soon."
 	exit 0
 fi
 
@@ -24,6 +53,8 @@ if [[ ${1} == -R=* ]]; then
 		OUTPUT_BASEPATH="${OUTPUT_BASEPATH}/"
 	fi
 	find . -name '*.adoc' -exec $0 -RX "$OUTPUT_BASEPATH" "{}" ${@:2} \;
+	echo "The option '-R' is deprecated and will be removed soon."
+	echo "The option '-R' is deprecated and will be removed soon."
 	exit 0
 fi
 
@@ -37,20 +68,153 @@ if [ "${1}" == "-RX" ]; then
 	OUTPUT_PATH="${2}$(dirname $3)"
 	mkdir -p "${OUTPUT_PATH}"
 	exec $0 "$3" -D "$OUTPUT_PATH" ${@:4}
+	echo "The option '-R' is deprecated and will be removed soon."
+	echo "The option '-R' is deprecated and will be removed soon."
 	exit 0
 fi
+# END OF DEPRECATED FUNCTIONS
 
-# The classpath is built from absolute paths since this script may be executed from anywhere.
-CLASSPATH="$APP_HOME/lib/asciispec-0.0.1-SNAPSHOT.jar"
 
-# Inform user of what's being passed to AsciidoctorJ
-# echo "AsciiSpec: converting $@"
 
-# Force use of Font Awesome icons & pass filename
-PARAMETERS="-a icons=font $@"
+function usage () {
+	cat <<EOF
+Usage: asciispec-server.sh [-hdcstlu]
+	
+	help		prints this help
+	direct [args]	direct execution using asciispec
+	commit [args]	commit message to server
+	lazy [args]	commit message to server; starts server lazily
+	start		start server on port 45115
+	term		terminate process on port 45115
+	port		check if port 45115 is used currently
 
-# Load Ruby extensions
-EXTENSIONS="-r $APP_HOME/res/ext/todo.rb"
+EOF
+}
 
-# Run AsciidoctorJ and pass on all commandline parameters.
-java -Dfile.encoding=UTF-8 -cp $CLASSPATH org.asciidoctor.cli.AsciidoctorInvoker $PARAMETERS $EXTENSIONS
+
+function isUsedPort () {
+	set +e # disable immediate-exit since "port free" causes a failure
+	lsof -i:45115 -t >/dev/null
+
+	if [ "$?" -eq "0" ]; then
+		set -e
+	    return 0 #true
+	else
+		set -e
+	    return 1 #false
+	fi
+}
+
+
+function startServer () {
+	# check if already running
+	if isUsedPort; then
+	    echo "Server already started."
+	    return
+	fi
+
+	cmd=$CMD_SERVER $1
+	#nohup -p $!
+	nohup $cmd >/dev/null 2>&1 &
+	#nohup $cmd & tail -f nohup.out
+	#$cmd &
+	#wait
+	echo "Server started. PID: $!"
+	
+}
+
+
+function commit () {
+	cmd="$EXTENSIONS $PARAMETERS $@"
+
+	# establish connection
+	exec 3<>$DEV_TCP
+	# send query
+	echo "$cmd" >&3
+
+	# read and print results
+	set +e # disable immediate-exit since last read causes a failure
+	read -r msg_in <&3
+	while [ "$msg_in" != "" ];
+	do
+		echo -e "$msg_in"
+		read -r msg_in <&3
+	done
+	set -e
+}
+
+
+function asciispec () {
+	echo "rest $@"
+	$CMD_ASCIISPEC $@
+}
+
+
+function lazyCommit () {
+	if !(isUsedPort;) then
+	    startServer
+		sleep 1
+	fi
+
+	commit $@
+}
+
+
+function terminate () {
+	if !(isUsedPort;) then
+	    echo "No process running on port 45115."
+	    return
+	fi
+
+	kill -9 $(lsof -i:45115 -t)
+	echo "Killed process on port 45115."
+}
+
+case ${1} in
+
+	help)
+		usage
+		exit 0
+		;;
+
+	direct)
+		asciispec ${@:2}
+		exit 0
+		;;
+
+	start)
+		startServer ${2}
+		exit 0
+		;;
+
+	term)
+		terminate
+		exit 0
+		;;
+
+	commit)
+		commit ${@:2}
+		exit 0
+		;;
+
+	lazy)
+		lazyCommit ${@:2}
+		exit 0
+		;;
+
+	port)
+		if (isUsedPort;) then
+		    echo "Port in use."
+		else
+		    echo "Port free."
+		fi
+
+		exit 0
+		;;
+esac
+
+
+# No option passed. Use default case.
+lazyCommit ${@:1}
+#asciispec ${@:1}
+exit 0

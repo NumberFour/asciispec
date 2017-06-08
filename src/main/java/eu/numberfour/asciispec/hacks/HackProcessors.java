@@ -1,4 +1,4 @@
-package eu.numberfour.asciispec.processors;
+package eu.numberfour.asciispec.hacks;
 
 import java.lang.reflect.Field;
 
