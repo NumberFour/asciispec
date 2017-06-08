@@ -93,7 +93,7 @@ EOF
 
 
 function isUsedPort () {
-	set +e
+	set +e # disable immediate-exit since "port free" causes a failure
 	lsof -i:45115 -t >/dev/null
 
 	if [ "$?" -eq "0" ]; then
@@ -133,12 +133,14 @@ function commit () {
 	echo "$cmd" >&3
 
 	# read and print results
+	set +e # disable immediate-exit since last read causes a failure
 	read -r msg_in <&3
 	while [ "$msg_in" != "" ];
 	do
 		echo -e "$msg_in"
 		read -r msg_in <&3
 	done
+	set -e
 }
 
 
