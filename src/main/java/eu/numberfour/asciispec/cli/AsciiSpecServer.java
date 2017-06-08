@@ -36,7 +36,7 @@ public class AsciiSpecServer {
 			} catch (Throwable localThrowable) {
 			}
 		}
-		return 45115;
+		return PORT;
 	}
 
 	PrintStream sysOut = System.out;
@@ -61,7 +61,7 @@ public class AsciiSpecServer {
 		System.setOut(new PrintStream(os));
 		System.setErr(new PrintStream(os));
 		InputStream is = client.getInputStream();
-		BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+		BufferedReader br = new BufferedReader(new InputStreamReader(is, ENCODING));
 		return br;
 	}
 
@@ -69,7 +69,7 @@ public class AsciiSpecServer {
 		try {
 			String line = br.readLine();
 			System.out.println("asciispecSv: INFO: Job received: " + line);
-			String[] args = getArgs(line);
+			String[] args = parseAndFilterArgs(line);
 			AsciidoctorInvoker.main(args);
 			System.out.println("asciispecSv: INFO: Job finished");
 			client.close();
@@ -81,7 +81,7 @@ public class AsciiSpecServer {
 		sysOut.println("Asciispec Server: Client finished.");
 	}
 
-	private String[] getArgs(String line) {
+	private String[] parseAndFilterArgs(String line) {
 		String[] args = line.split("\\s");
 		args = consumeWorkingDir(args);
 		return args;
