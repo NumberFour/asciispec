@@ -36,8 +36,9 @@ DEV_TCP="/dev/tcp/localhost/45115"
 # Handle recursive calls. This assumes no output base path for the processed files, so that the genereated files are placed next to the original files.
 # All additional parameters are passed on to asciidoctor
 if [ "${1}" == "-R" ]; then
-	echo "The option '-R' is deprecated and will be removed soon."
 	find . -name '*.adoc' -exec $0 {} ${@:2} \;
+	echo "The option '-R' is deprecated and will be removed soon."
+	echo "The option '-R' is deprecated and will be removed soon."
 	exit 0
 fi
 
@@ -47,12 +48,13 @@ fi
 # $1: -R=some_path
 # All additional parameters are passed on to asciidoctor
 if [[ ${1} == -R=* ]]; then
-	echo "The option '-R' is deprecated and will be removed soon."
 	OUTPUT_BASEPATH="${1:3}"
 	if ! [[ "${OUTPUT_BASEPATH:-1}" == "/" ]]; then
 		OUTPUT_BASEPATH="${OUTPUT_BASEPATH}/"
 	fi
 	find . -name '*.adoc' -exec $0 -RX "$OUTPUT_BASEPATH" "{}" ${@:2} \;
+	echo "The option '-R' is deprecated and will be removed soon."
+	echo "The option '-R' is deprecated and will be removed soon."
 	exit 0
 fi
 
@@ -66,6 +68,8 @@ if [ "${1}" == "-RX" ]; then
 	OUTPUT_PATH="${2}$(dirname $3)"
 	mkdir -p "${OUTPUT_PATH}"
 	exec $0 "$3" -D "$OUTPUT_PATH" ${@:4}
+	echo "The option '-R' is deprecated and will be removed soon."
+	echo "The option '-R' is deprecated and will be removed soon."
 	exit 0
 fi
 # END OF DEPRECATED FUNCTIONS
