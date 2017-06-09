@@ -68,6 +68,25 @@ My Super Requirement
 My Super Requirement
 --
 
+
+
 endif::[]
 
 // end::req.block.example[]
+
+== Xrefs
+
+Cross-referencing requirements is done using the syntax `\<<Req-ID,Optional Link Text>>`, e.g. for the following requirement:
+
+[source,asciidoc]
+----
+[req,id=ROPR-14603,version=1]
+--
+...
+--
+----
+
+can be cross-referenced using the following syntax
+
+[source,adoc]
+See <<Req-ROPR-14603>>, or see also <<Req-ROPR-14603,confirm the booking>>.
