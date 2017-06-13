@@ -78,7 +78,6 @@ abstract class AbstractPQNParser extends SimpleParser {
 					cc = getCurrentChar();
 					if (cc == '#') {
 						readUntil("\n");
-						return createTokenFromSubstring(TokenType.COMMENT_LINE, position);
 					}
 					return createTokenFromSubstring(TokenType.NEWLINE, position);
 				case '/':
