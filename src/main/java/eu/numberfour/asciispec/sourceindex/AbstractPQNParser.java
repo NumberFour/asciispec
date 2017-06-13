@@ -24,10 +24,6 @@ import eu.numberfour.asciispec.SimpleParser;
 abstract class AbstractPQNParser extends SimpleParser {
 	static enum TokenType {
 		/**
-		 * A hash character.
-		 */
-		COMMENT_LINE,
-		/**
 		 * A tabulator character.
 		 */
 		TAB,
