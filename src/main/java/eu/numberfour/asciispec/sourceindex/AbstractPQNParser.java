@@ -24,11 +24,15 @@ import eu.numberfour.asciispec.SimpleParser;
 abstract class AbstractPQNParser extends SimpleParser {
 	static enum TokenType {
 		/**
-		 * A BibTex Entry, value is the string after the leading '@', the string is terminated by whitespace or '{'.
+		 * A hash character.
+		 */
+		COMMENT_LINE,
+		/**
+		 * A tabulator character.
 		 */
 		TAB,
 		/**
-		 * '{' character, used either as an entry delimiter or a string delimiter.
+		 * A newline character.
 		 */
 		NEWLINE,
 		/**
@@ -58,6 +62,7 @@ abstract class AbstractPQNParser extends SimpleParser {
 		protected Token<TokenType> readToken() throws ParseException {
 			while (!eof()) {
 				final char c = getCurrentChar();
+				char cc;
 				final TokenPosition position = getTokenPosition();
 
 				switch (c) {
@@ -70,11 +75,16 @@ abstract class AbstractPQNParser extends SimpleParser {
 					return createTokenFromSubstring(TokenType.TAB, position);
 				case '\n':
 					advance();
+					cc = getCurrentChar();
+					if (cc == '#') {
+						readUntil("\n");
+						return createTokenFromSubstring(TokenType.COMMENT_LINE, position);
+					}
 					return createTokenFromSubstring(TokenType.NEWLINE, position);
 				case '/':
 				case ':':
 					advance();
-					char cc = getCurrentChar();
+					cc = getCurrentChar();
 					if (cc == ':') {
 						advance();
 						cc = getCurrentChar();
