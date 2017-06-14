@@ -67,6 +67,52 @@ public class IndexFileParserTest {
 	}
 
 	@Test
+	public void parseOneEntryWithEmptyLines() {
+		LinkedList<String> expectedTQNs = CollectionLiterals.newLinkedList(
+				"stdlib_api:packages:eu.numberfour.stdlib.format.api:src/n4js:n4/format/StructuredText.n4js:StructuredText#asString:64:24:40");
+
+		String indexFileContent = "" +
+				"\n" +
+				"\n" +
+				"\n" +
+				"stdlib_api#packages\n" +
+				"\n" +
+				"	eu.numberfour.stdlib.format.api#src.n4js\n" +
+				"\n" +
+				"		n4.format\n" +
+				"\n" +
+				"			StructuredText.n4js\n" +
+				"\n" +
+				"				StructuredText#asString::64::24::40\n" +
+				"\n";
+
+		parseAndAssert(expectedTQNs, indexFileContent);
+	}
+
+	@Test
+	public void parseOneEntryWithComments() {
+		LinkedList<String> expectedTQNs = CollectionLiterals.newLinkedList(
+				"stdlib_api:packages:eu.numberfour.stdlib.format.api:src/n4js:n4/format/StructuredText.n4js:StructuredText#asString:64:24:40");
+
+		String indexFileContent = "" +
+				"# header comment no.1\n" +
+				"# header comment no.2\n" +
+				"# header comment no.3\n" +
+				"stdlib_api#packages\n" +
+				"# comment no.4\n" +
+				"	eu.numberfour.stdlib.format.api#src.n4js\n" +
+				"# comment no.5\n" +
+				"		n4.format\n" +
+				"# comment no.6\n" +
+				"			StructuredText.n4js\n" +
+				"# comment no.7\n" +
+				"				StructuredText#asString::64::24::40\n" +
+				"# last comment";
+
+		parseAndAssert(expectedTQNs, indexFileContent);
+	}
+
+	@Test
 	public void parseNoElement() {
 		LinkedList<String> expectedTQNs = CollectionLiterals.newLinkedList(
 				"stdlib_api:packages:eu.numberfour.stdlib.format.api:src/n4js:n4/format/StructuredText.n4js:StructuredText:64:24:40");

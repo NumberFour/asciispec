@@ -76,7 +76,7 @@ class MathBlockProcessorTest extends AsciidoctorTest {
 		 * The given math block contains a syntax error (note the missing closing brace) that is not handled
 		 * gracefully by SnuggleTex. Instead, it throws an exception which we catch and print out in an error message.
 		 */
-		convertAndAssert(
+		convertStringAndAssertErrorContains(
 			'''
 			<div class="openblock">
 			<div class="title">Some Mathematics</div>
@@ -112,6 +112,7 @@ class MathBlockProcessorTest extends AsciidoctorTest {
 			<: \lstnfjs{constructor\{_T_\}
 			++++
 			''',
+			"asciispec  : ERROR: Math syntax error [At '\\lstnfjs': TTEC00 - Undefined command \\{0}]",
 			Backend.HTML5
 		);
 	}
