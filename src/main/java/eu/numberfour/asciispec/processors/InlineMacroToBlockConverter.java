@@ -222,7 +222,8 @@ public class InlineMacroToBlockConverter extends Treeprocessor {
 
 						String newBlockLine = processMacro(parent, name, target, attributes);
 						if (newBlockLine != null)
-							newSiblingNodeContent.add(newBlockLine);
+							newSiblingNodeContent
+									.add(newBlockLine);
 					} catch (Exception e) {
 						issueAcceptor.error(parent, e.getMessage());
 						newNodeLineFragment.append(nodeLineFragment.substring(cur, matcher.end()));
@@ -358,7 +359,7 @@ public class InlineMacroToBlockConverter extends Treeprocessor {
 		processors.put(Objects.requireNonNull(macroName), Objects.requireNonNull(processor));
 		String macroNamesPattern = processors.keySet().stream().collect(Collectors.joining("|"));
 		macroPattern = Pattern
-				.compile("(" + macroNamesPattern + "):([^\\[\\s]*)\\[([^\\]]*)\\]");
+				.compile("(" + macroNamesPattern + ")::([^\\[\\s]*)\\[([^\\]]*)\\]");
 	}
 
 	@Override

@@ -3,13 +3,13 @@
 
 Usage::
 [source,asciidoc]
-task:target[]
+task:target[title]
 
-The `inline task macro` creates hyperlinks to Jira task management and GitHub issue-tracking systems. Optionally, it will render the links differently to reflect the status of the tasks if a task status file is provided.
+The `inline task macro` creates hyperlinks to Jira task management and GitHub issue-tracking systems. Optionally, it will render the links differently to reflect the status of the tasks if a task info file is provided.
 
 Attributes::
 * *target:* The project prefix followed by a hyphen and the task number or ID (e.g. `AS-23`).
-// * *taskTitle:* (optional) The title that will be displayed as an anchor in the generated hyperlink. - Currently Unused
+* *title:* (optional) The text that will be displayed as an anchor in the generated hyperlink.
 
 [.language-asciidoc]
 == URL Pattern
@@ -17,45 +17,52 @@ Attributes::
 Specifying which repository to link to is done by adding a URL pattern to the
 https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/userguide.adoc#configuration-file[config file] in the following format:
 
-`:task_def_<Prefix>: <Name>;<Description>;<URL-Pattern>;<Icon>;<TextPatterns>[;<TaskStatusFileURL>]`
+`:task_def_<Prefix>: <Name>;<Description>;<URL-Pattern>;<Icon>;<TextPatterns>[;<TaskInfoFileURL>]`
 
 Example: ::
 
 [source,asciidoc]
 ----
-:task_def_AS-: GitHub;AsciiSpec Bugs;https://github.com/NumberFour/asciispec/issues/{TASK_ID};images/icons/github.png;AS-{TASK_ID};file://some/path/to/status_file.txt
+:task_def_AS-: GitHub;AsciiSpec Bugs;https://github.com/NumberFour/asciispec/issues/{TASK_ID};images/icons/github.png;AS-{TASK_ID};file://some/path/to/info_file.txt
 :task_def_JIRA-: Jira;My Jira Board;https://jira.myorg.com/browse/JIRA-{TASK_ID};images/icons/jira.png;JIRA-{TASK_ID}
 ----
 
 <Prefix>:: The unique prefix by which this repository is identified (`AS-` in `task:AS-40[]`).
 <Name>:: The name of the repository.
-<Description>:: A description of the repository, used to generated a tooltip.
+<Description>:: A description of the repository, used to generated a default tooltip.
 <URL-Pattern>:: The pattern to generate in the links - can contain the following placeholders: +
 * *`{TASK_ID}`*: The suffix of the macro target (`40` in `task:AS-40[]`).
 <Icon>:: The relative path to an image used as an icon for the repository.
 <Text-Pattern>:: The text pattern to match to inline task macros in the AsciiDoc source - can also contain the *`{TASK_ID}`* placeholder.
-<TaskStatusFileURL>:: A URL to a file that contains the status of the tasks in the repository. The file format is explained in the next section. This parameter is optional.
+<TaskInfoFileURL>:: A URL to a file that contains the info of the tasks in the repository. The file format is explained in the next section. This parameter is optional.
 
-If a task status file URL is given, but does not contain the status of a task ID used with the task macro, the task ID will be rendered differently than the open and closed tasks.
+If a task info file URL is given, but does not contain the info of a task ID used with the task macro, the task ID will be rendered differently than the open and closed tasks.
 
-== Task Status File Format
+== Task Info File Format
 
-The task status contains a newline-separated list of task statuses. The format is as follows.
+The idea of the task info file is that it contains generated information from the repository for each task.
+It is structured as a newline-separated list of task infos.
+Each task info contains the task's status information.
+The optional tooltip will be displayed as a tooltip text of a hyperlink (alias 'href title').
+The format is as follows.
 
 ```
-TASK_STATUS_FILE = { TASK_STATUS '\n' }
-TASK_STATUS      = TASK_ID ':' ( 'OPEN' | 'CLOSED' )
-TASK_ID          = CHAR { CHAR }
+TASK_INFO_FILE = { TASK_INFO '\n' }
+TASK_INFO      = ID ':' STATUS (':' TITLE)?
+ID             = CHAR { CHAR }
+STATUS         = 'OPEN' | 'CLOSED'
+TOOLTIP        = CHAR { CHAR }
 ```
 
-The character class `CHAR` contains every character except `:` and `\n`, which are used as control characters. Here is an example of a valid task status file:
+The character class `CHAR` contains every character except `:` and `\n`, which are used as control characters.
+Here is an example of a valid task info file:
 
 ```
 494:OPEN
 493:OPEN
-492:OPEN
+492:OPEN:As a developer I need a fast computer
 491:OPEN
-490:CLOSED
+490:CLOSED:As a bee I need some flowers
 489:OPEN
 488:CLOSED
 487:CLOSED

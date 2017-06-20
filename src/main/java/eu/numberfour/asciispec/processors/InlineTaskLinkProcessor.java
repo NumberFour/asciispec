@@ -25,6 +25,7 @@ import java.util.Scanner;
 import org.asciidoctor.ast.ContentNode;
 import org.asciidoctor.extension.InlineMacroProcessor;
 
+import eu.numberfour.asciispec.AdocUtils;
 import eu.numberfour.asciispec.issue.IssueAcceptor;
 import eu.numberfour.asciispec.issue.IssuePrinter;
 
@@ -48,7 +49,7 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 		public final String textPattern;
 		public final String taskStatusFileUrl;
 
-		private Map<String, TaskStatus> taskStatusCache;
+		private Map<String, TaskInfo> taskInfoCache;
 
 		public RepositoryConfig(String prefix, String name, String description, String urlPattern, String icon,
 				String textPattern, String taskStatusFileUrl) {
@@ -62,45 +63,34 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 		}
 
 		public TaskStatus getTaskStatus(String taskId) {
-			TaskStatus status = taskStatusCache.get(taskId);
-			if (status == null)
-				status = TaskStatus.UNKNOWN;
+			TaskStatus status = TaskStatus.UNKNOWN;
+			if (taskInfoCache.containsKey(taskId))
+				status = taskInfoCache.get(taskId).status;
 			return status;
 		}
 
-		public void initializeTaskStatusCache(ContentNode node) {
-			taskStatusCache = loadTaskStatusCache(node);
+		public String getTaskTitle(String taskId) {
+			String title = null;
+			if (taskInfoCache.containsKey(taskId))
+				title = taskInfoCache.get(taskId).title;
+			return title;
 		}
 
-		private Map<String, TaskStatus> loadTaskStatusCache(ContentNode node) {
-			Map<String, TaskStatus> result = new HashMap<>();
+		public void initializeTaskStatusCache(ContentNode node) {
+			taskInfoCache = loadTaskInfoCache(node);
+		}
+
+		private Map<String, TaskInfo> loadTaskInfoCache(ContentNode node) {
+			Map<String, TaskInfo> result = new HashMap<>();
 
 			if (!taskStatusFileUrl.isEmpty()) {
 				try {
 					URL url = new URL(taskStatusFileUrl);
 					try (@SuppressWarnings("resource")
 					Scanner scanner = new Scanner(url.openStream()).useDelimiter("\\n")) {
-						int lineNumber = 1;
-						while (scanner.hasNext()) {
-							String line = scanner.next();
-							String[] parts = line.split(":");
 
-							if (parts.length == 2) {
-								String taskId = parts[0];
-								TaskStatus taskStatus = TaskStatus.valueOf(parts[1]);
-								if (taskStatus != null) {
-									result.put(taskId, taskStatus);
-								} else {
-									issueAcceptor.warn(node, "Unknown task status '" + parts[1] + "' in line "
-											+ lineNumber + " of task status file " + taskStatusFileUrl);
-								}
-							} else {
-								issueAcceptor.warn(node, "Malformed task status entry in line " + lineNumber
-										+ " of task status file " + taskStatusFileUrl);
-							}
+						readStatusFileContent(node, result, scanner);
 
-							lineNumber++;
-						}
 					}
 				} catch (MalformedURLException e) {
 					issueAcceptor.error(node, "Malformed task status file URL: " + taskStatusFileUrl);
@@ -110,6 +100,57 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 				}
 			}
 			return result;
+		}
+
+		private void readStatusFileContent(ContentNode node, Map<String, TaskInfo> result, Scanner scanner) {
+			int lineNumber = 0;
+			while (scanner.hasNext()) {
+				String line = scanner.next();
+				lineNumber++;
+
+				// limit=3, since the tooltip contains all the rest string
+				String[] parts = line.split(":", 3);
+
+				if (parts.length < 2) {
+					String msg = String.format("Malformed task status entry in line %d of task status file %s",
+							lineNumber, taskStatusFileUrl);
+					issueAcceptor.warn(node, msg);
+					continue;
+				}
+
+				String taskId = parts[0];
+				TaskStatus taskStatus = null;
+				if (parts[1] != null && !parts[1].isEmpty()) {
+					taskStatus = TaskStatus.valueOf(parts[1]);
+				}
+
+				if (taskStatus == null) {
+					String msg = String.format("Unknown task status '%s' in line %d of task status file %s", parts[1],
+							lineNumber, taskStatusFileUrl);
+					issueAcceptor.warn(node, msg);
+					continue;
+				}
+
+				String title = null;
+				if (parts.length > 2) {
+					title = parts[2]; // the title information is optional
+				}
+
+				TaskInfo info = new TaskInfo(taskId, taskStatus, title);
+				result.put(taskId, info);
+			}
+		}
+	}
+
+	static class TaskInfo {
+		final String id;
+		final TaskStatus status;
+		final String title;
+
+		TaskInfo(String id, TaskStatus status, String title) {
+			this.id = id;
+			this.status = status;
+			this.title = title;
 		}
 	}
 
@@ -138,7 +179,7 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 				return message;
 			}
 
-			return createTaskLink(parent, target, repositoryConfig);
+			return createTaskLink(parent, target, repositoryConfig, attributes);
 		} catch (IllegalArgumentException e) {
 			String message = e.getMessage();
 			issueAcceptor.error(parent, message);
@@ -191,17 +232,27 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 		return config;
 	}
 
-	private Object createTaskLink(ContentNode parent, String target, RepositoryConfig repositoryConfig) {
+	private Object createTaskLink(ContentNode parent, String target, RepositoryConfig repositoryConfig,
+			Map<String, Object> attributes) {
+
 		String taskId = getTaskId(target, repositoryConfig);
 		String taskUrl = getTaskUrl(taskId, repositoryConfig);
-		String taskText = getTaskText(taskId, repositoryConfig);
-		String taskTitle = repositoryConfig.description;
+		String taskText = getTaskText(taskId, repositoryConfig, attributes);
+		String taskTitle = getTitle(taskId, repositoryConfig);
 		String iconName = repositoryConfig.icon;
 		
 		TaskStatus status = repositoryConfig.getTaskStatus(taskId);
 		String role = status.getRole();
 
 		return createLinkWithIcon(this, parent, taskUrl, taskText, taskTitle, role, iconName).convert();
+	}
+
+	private String getTitle(String taskId, RepositoryConfig repositoryConfig) {
+		String defaultTitle = repositoryConfig.description;
+		String title = repositoryConfig.getTaskTitle(taskId);
+		title = (title == null) ? defaultTitle : defaultTitle + ": " + title;
+
+		return title;
 	}
 
 	private String getTaskId(String target, RepositoryConfig repositoryConfig) {
@@ -212,7 +263,14 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 		return transformVariable(repositoryConfig.urlPattern, TASK_ID_NAME, taskId);
 	}
 
-	private String getTaskText(String taskId, RepositoryConfig repositoryConfig) {
-		return transformVariable(repositoryConfig.textPattern, TASK_ID_NAME, taskId);
+	private String getTaskText(String taskId, RepositoryConfig repositoryConfig, Map<String, Object> attributes) {
+		String defaultText = transformVariable(repositoryConfig.textPattern, TASK_ID_NAME, taskId);
+
+		Map<String, Object> attrs = new HashMap<>();
+		for (Map.Entry<String, Object> e : attributes.entrySet())
+			attrs.put(e.getKey(), e.getValue());
+		String text = AdocUtils.getAttributeAsString(defaultText, attrs, "title", "0", "1");
+		return text;
 	}
+
 }
