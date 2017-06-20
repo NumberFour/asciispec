@@ -222,8 +222,7 @@ public class InlineMacroToBlockConverter extends Treeprocessor {
 
 						String newBlockLine = processMacro(parent, name, target, attributes);
 						if (newBlockLine != null)
-							newSiblingNodeContent
-									.add(newBlockLine);
+							newSiblingNodeContent.add(newBlockLine);
 					} catch (Exception e) {
 						issueAcceptor.error(parent, e.getMessage());
 						newNodeLineFragment.append(nodeLineFragment.substring(cur, matcher.end()));

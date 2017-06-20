@@ -48,7 +48,7 @@ The format is as follows.
 
 ```
 TASK_INFO_FILE = { TASK_INFO '\n' }
-TASK_INFO      = ID ':' STATUS (':' TITLE)?
+TASK_INFO      = ID ':' STATUS (':' TOOLTIP)?
 ID             = CHAR { CHAR }
 STATUS         = 'OPEN' | 'CLOSED'
 TOOLTIP        = CHAR { CHAR }

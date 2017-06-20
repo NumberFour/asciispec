@@ -47,19 +47,19 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 		public final String urlPattern;
 		public final String icon;
 		public final String textPattern;
-		public final String taskStatusFileUrl;
+		public final String taskInfoFileUrl;
 
 		private Map<String, TaskInfo> taskInfoCache;
 
 		public RepositoryConfig(String prefix, String name, String description, String urlPattern, String icon,
-				String textPattern, String taskStatusFileUrl) {
+				String textPattern, String taskInfoFileUrl) {
 			this.prefix = prefix;
 			this.name = name;
 			this.description = description;
 			this.urlPattern = urlPattern;
 			this.icon = icon;
 			this.textPattern = textPattern;
-			this.taskStatusFileUrl = taskStatusFileUrl;
+			this.taskInfoFileUrl = taskInfoFileUrl;
 		}
 
 		public TaskStatus getTaskStatus(String taskId) {
@@ -83,9 +83,9 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 		private Map<String, TaskInfo> loadTaskInfoCache(ContentNode node) {
 			Map<String, TaskInfo> result = new HashMap<>();
 
-			if (!taskStatusFileUrl.isEmpty()) {
+			if (!taskInfoFileUrl.isEmpty()) {
 				try {
-					URL url = new URL(taskStatusFileUrl);
+					URL url = new URL(taskInfoFileUrl);
 					try (@SuppressWarnings("resource")
 					Scanner scanner = new Scanner(url.openStream()).useDelimiter("\\n")) {
 
@@ -93,9 +93,9 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 
 					}
 				} catch (MalformedURLException e) {
-					issueAcceptor.error(node, "Malformed task status file URL: " + taskStatusFileUrl);
+					issueAcceptor.error(node, "Malformed task status file URL: " + taskInfoFileUrl);
 				} catch (IOException e) {
-					issueAcceptor.error(node, "Error while fetching task status file from URL " + taskStatusFileUrl
+					issueAcceptor.error(node, "Error while fetching task status file from URL " + taskInfoFileUrl
 							+ ": " + e.getMessage());
 				}
 			}
@@ -113,7 +113,7 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 
 				if (parts.length < 2) {
 					String msg = String.format("Malformed task status entry in line %d of task status file %s",
-							lineNumber, taskStatusFileUrl);
+							lineNumber, taskInfoFileUrl);
 					issueAcceptor.warn(node, msg);
 					continue;
 				}
@@ -126,7 +126,7 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 
 				if (taskStatus == null) {
 					String msg = String.format("Unknown task status '%s' in line %d of task status file %s", parts[1],
-							lineNumber, taskStatusFileUrl);
+							lineNumber, taskInfoFileUrl);
 					issueAcceptor.warn(node, msg);
 					continue;
 				}
@@ -238,7 +238,7 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 		String taskId = getTaskId(target, repositoryConfig);
 		String taskUrl = getTaskUrl(taskId, repositoryConfig);
 		String taskText = getTaskText(taskId, repositoryConfig, attributes);
-		String taskTitle = getTitle(taskId, repositoryConfig);
+		String taskTitle = getTaskTitle(taskId, repositoryConfig);
 		String iconName = repositoryConfig.icon;
 		
 		TaskStatus status = repositoryConfig.getTaskStatus(taskId);
@@ -247,7 +247,7 @@ public class InlineTaskLinkProcessor extends InlineMacroProcessor {
 		return createLinkWithIcon(this, parent, taskUrl, taskText, taskTitle, role, iconName).convert();
 	}
 
-	private String getTitle(String taskId, RepositoryConfig repositoryConfig) {
+	private String getTaskTitle(String taskId, RepositoryConfig repositoryConfig) {
 		String defaultTitle = repositoryConfig.description;
 		String title = repositoryConfig.getTaskTitle(taskId);
 		title = (title == null) ? defaultTitle : defaultTitle + ": " + title;
