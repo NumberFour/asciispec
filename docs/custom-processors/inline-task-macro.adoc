@@ -5,7 +5,10 @@ Usage::
 [source,asciidoc]
 task:target[title]
 
-The `inline task macro` creates hyperlinks to Jira task management and GitHub issue-tracking systems. Optionally, it will render the links differently to reflect the status of the tasks if a task info file is provided.
+The `inline task macro` creates hyperlinks to Jira task management and GitHub issue-tracking systems.
+Optionally, it will render the links differently to reflect the status of the tasks if a task info file is provided.
+
+Note that in case two colons are given instead of only one after `task`, the task link will be moved to the sidebar.
 
 Attributes::
 * *target:* The project prefix followed by a hyphen and the task number or ID (e.g. `AS-23`).
