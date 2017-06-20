@@ -14,6 +14,7 @@ eu.numberfour.asciispec.processors.MathBlockExtension
 eu.numberfour.asciispec.processors.DefinitionBlockExtension
 eu.numberfour.asciispec.processors.RequirementBlockExtension
 eu.numberfour.asciispec.processors.InlineWikiLinkExtension
+eu.numberfour.asciispec.processors.InlineRepoLinkExtension
 eu.numberfour.asciispec.processors.InlineRequirementLinkExtension
 eu.numberfour.asciispec.processors.CitationExtension
 eu.numberfour.asciispec.processors.SourceLinkExtension
