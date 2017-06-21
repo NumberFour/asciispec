@@ -9,6 +9,7 @@ package eu.numberfour.asciispec.processors;
 public class InlineTaskLinkExtension extends ProcessorExtension {
 	@Override
 	protected void register(JavaExtensionRegistry registry) {
+		registry.inlineMacro("task", InlineTaskLinkProcessor.class);
 		registry.inlineMacroToSiblingBlock("sidebar", "task", InlineTaskLinkProcessor.class);
 	}
 }

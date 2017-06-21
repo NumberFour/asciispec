@@ -1,0 +1,3 @@
+123:OPEN:As a developer I need a fast computer
+234:CLOSED:As a bee I need some flowers with blossoms
+345:OPEN:As a texter I need these characters: colons, etc.

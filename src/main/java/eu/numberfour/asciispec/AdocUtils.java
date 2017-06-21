@@ -788,7 +788,7 @@ public final class AdocUtils {
 		return getAttributeAsString(defaultValue, attributes, name);
 	}
 
-	private static String getAttributeAsString(String defaultValue, Map<String, Object> attributes, String... names) {
+	public static String getAttributeAsString(String defaultValue, Map<String, Object> attributes, String... names) {
 		Object value = null;
 		for (String name : names) {
 			value = attributes.get(name);

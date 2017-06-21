@@ -45,7 +45,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 
 	@Test
 	public def void testMissingConfiguration() {
-		convertAndAssert(
+		convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
 			<p>Lorem ipsum dolor sit  amet, consectetur adipiscing elit.</p>
@@ -56,13 +56,14 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			</div>''',
 			'''
-			Lorem ipsum dolor sit task:GM-40[] amet, consectetur adipiscing elit.'''
+			Lorem ipsum dolor sit task::GM-40[] amet, consectetur adipiscing elit.''',
+			"asciispec  : ERROR: Missing task configuration"
 		);
 	}
 
 	@Test
 	public def void testMissingInvalidConfiguration() {
-		convertAndAssert(
+		convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
 			<p>Lorem ipsum dolor sit  amet, consectetur adipiscing elit.</p>
@@ -74,13 +75,14 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>''',
 			'''
 			:task_def_GH-: GitHub;IDE Bugs;https://github.com/NumberFour/N4JS/issues/{TASK_ID}
-			Lorem ipsum dolor sit task:GM-40[] amet, consectetur adipiscing elit.'''
+			Lorem ipsum dolor sit task::GM-40[] amet, consectetur adipiscing elit.''',
+			"asciispec  : ERROR: Invalid repository configuration string: 'GitHub;IDE Bugs;https://github.com/NumberFour/N4JS/issues/{TASK_ID}'"
 		);
 	}
 
 	@Test
 	public def void testUnknownRepository() {
-		convertAndAssert(
+		convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
 			<p>Lorem ipsum dolor sit  amet, consectetur adipiscing elit.</p>
@@ -92,7 +94,8 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>''',
 			'''
 			«config»
-			Lorem ipsum dolor sit task:GM-40[] amet, consectetur adipiscing elit.'''
+			Lorem ipsum dolor sit task::GM-40[] amet, consectetur adipiscing elit.''',
+			"asciispec  : ERROR: Unknown task repository for task 'GM-40'"
 		);
 	}
 
@@ -110,7 +113,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>''',
 			'''
 			«config»
-			Lorem ipsum dolor sit task:GH-40[] amet, consectetur adipiscing elit.'''
+			Lorem ipsum dolor sit task::GH-40[] amet, consectetur adipiscing elit.'''
 		);
 	}
 
@@ -128,7 +131,79 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>''',
 			'''
 			«config»
-			Lorem ipsum dolor sit task:IDE-2288[] amet, consectetur adipiscing elit.'''
+			Lorem ipsum dolor sit task::IDE-2288[] amet, consectetur adipiscing elit.'''
+		);
+	}
+
+	@Test
+	public def void testProcessJiraTaskWithLabel() {
+		convertAndAssert(
+			'''
+			<div class="paragraph">
+			<p>Lorem ipsum dolor sit  amet, consectetur adipiscing elit.</p>
+			</div>
+			<div class="sidebarblock">
+			<div class="content">
+			<a href="https://jira.numberfour.eu/browse/IDE-2288" class="«TaskStatus.UNKNOWN.getRole()»" title="IDE Backlog"><span class="image"><img src="tasks" alt=""></span>My Title</a>
+			</div>
+			</div>''',
+			'''
+			«config»
+			Lorem ipsum dolor sit task::IDE-2288[title="My Title"] amet, consectetur adipiscing elit.'''
+		);
+	}
+
+	@Test
+	public def void testProcessJiraTaskWithLabelNoQM() {
+		convertAndAssert(
+			'''
+			<div class="paragraph">
+			<p>Lorem ipsum dolor sit  amet, consectetur adipiscing elit.</p>
+			</div>
+			<div class="sidebarblock">
+			<div class="content">
+			<a href="https://jira.numberfour.eu/browse/IDE-2288" class="«TaskStatus.UNKNOWN.getRole()»" title="IDE Backlog"><span class="image"><img src="tasks" alt=""></span>My Title</a>
+			</div>
+			</div>''',
+			'''
+			«config»
+			Lorem ipsum dolor sit task::IDE-2288[title=My Title] amet, consectetur adipiscing elit.'''
+		);
+	}
+
+	@Test
+	public def void testProcessJiraTaskWithLabelShorthand() {
+		convertAndAssert(
+			'''
+			<div class="paragraph">
+			<p>Lorem ipsum dolor sit  amet, consectetur adipiscing elit.</p>
+			</div>
+			<div class="sidebarblock">
+			<div class="content">
+			<a href="https://jira.numberfour.eu/browse/IDE-2288" class="«TaskStatus.UNKNOWN.getRole()»" title="IDE Backlog"><span class="image"><img src="tasks" alt=""></span>My Title</a>
+			</div>
+			</div>''',
+			'''
+			«config»
+			Lorem ipsum dolor sit task::IDE-2288[My Title] amet, consectetur adipiscing elit.'''
+		);
+	}
+
+	@Test
+	public def void testProcessJiraTaskWithLabelShorthandQM() {
+		convertAndAssert(
+			'''
+			<div class="paragraph">
+			<p>Lorem ipsum dolor sit  amet, consectetur adipiscing elit.</p>
+			</div>
+			<div class="sidebarblock">
+			<div class="content">
+			<a href="https://jira.numberfour.eu/browse/IDE-2288" class="«TaskStatus.UNKNOWN.getRole()»" title="IDE Backlog"><span class="image"><img src="tasks" alt=""></span>My Title</a>
+			</div>
+			</div>''',
+			'''
+			«config»
+			Lorem ipsum dolor sit task::IDE-2288["My Title"] amet, consectetur adipiscing elit.'''
 		);
 	}
 
@@ -147,7 +222,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>''',
 			'''
 			«config»
-			Lorem ipsum dolor sit task:GH-40[] amet, consectetur task:IDE-2288[] adipiscing elit.'''
+			Lorem ipsum dolor sit task::GH-40[] amet, consectetur task::IDE-2288[] adipiscing elit.'''
 		);
 	}
 
@@ -184,7 +259,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			This is a list:
 			
 			* First item
-			* Something task:gh-456[]
+			* Something task::gh-456[]
 			* Third item
 			
 			You're gonna fix this! End of!'''
@@ -247,9 +322,9 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			
 			* Item 1
 			** Item 1.1
-			** Item 1.2: The first task! task:gh-456[]
+			** Item 1.2: The first task! task::gh-456[]
 			* Item 2
-			* Item 3: Another task! task:gh-567[]
+			* Item 3: Another task! task::gh-567[]
 			** Item 3.1: Another nested list.
 			
 			You're gonna fix this! End of!'''
@@ -288,7 +363,7 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			This is a table:
 			
 			|===
-			a| Here's some task! task:gh-456[]
+			a| Here's some task! task::gh-456[]
 			|===
 			
 			You're gonna fix this! End of!'''
@@ -345,11 +420,11 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			[cols="1"]
 			|===
 			
-			a| Here's some tasks task:gh-456[]
+			a| Here's some tasks task::gh-456[]
 			
-			* More: task:GH-123[]
-			* One more: task:GH-234[]
-			* Even more: task:GH-345[]
+			* More: task::GH-123[]
+			* One more: task::GH-234[]
+			* Even more: task::GH-345[]
 			
 			|===
 			
@@ -458,16 +533,16 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>''',
 			'''
 				«getConfigWithTaskStatusFile("status_valid.txt")»
-				* More: task:GH-123[]
-				* One more: task:GH-234[]
-				* Even more: task:GH-345[]
+				* More: task::GH-123[]
+				* One more: task::GH-234[]
+				* Even more: task::GH-345[]
 			'''
 		)
 	}
 
 	@Test
 	public def void testTaskWithInvalidStatusFile() {
-		convertAndAssert(
+		convertStringAndAssertErrorContains(
 			'''
 			<div class="ulist">
 			<ul>
@@ -484,17 +559,18 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>
 			<div class="sidebarblock">
 			<div class="content">
-			<a href="https://github.com/NumberFour/N4JS/issues/123" class="«TaskStatus.UNKNOWN.getRole()»" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-123</a>
-			<a href="https://github.com/NumberFour/N4JS/issues/234" class="«TaskStatus.CLOSED.getRole()»" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-234</a>
-			<a href="https://github.com/NumberFour/N4JS/issues/345" class="«TaskStatus.OPEN.getRole()»" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-345</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/123" class="«TaskStatus.OPEN.getRole()»" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-123</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/234" class="«TaskStatus.UNKNOWN.getRole()»" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-234</a>
+			<a href="https://github.com/NumberFour/N4JS/issues/345" class="«TaskStatus.UNKNOWN.getRole()»" title="IDE Bugs"><span class="image"><img src="github" alt=""></span>GH-345</a>
 			</div>
 			</div>''',
 			'''
 				«getConfigWithTaskStatusFile("status_invalid.txt")»
-				* More: task:GH-123[]
-				* One more: task:GH-234[]
-				* Even more: task:GH-345[]
-			'''
+				* More: task::GH-123[]
+				* One more: task::GH-234[]
+				* Even more: task::GH-345[]
+			''',
+			"asciispec  : WARN: Malformed task status entry in line 2 of task status file"
 		)
 	}
 
@@ -524,10 +600,79 @@ class InlineTaskProcessorTest extends AsciidoctorTest {
 			</div>''',
 			'''
 				«getConfigWithTaskStatusFile("status_missing.txt")»
-				* More: task:GH-123[]
-				* One more: task:GH-234[]
-				* Even more: task:GH-345[]
+				* More: task::GH-123[]
+				* One more: task::GH-234[]
+				* Even more: task::GH-345[]
 			'''
 		)
+	}
+
+	@Test
+	public def void testInlineTask() {
+		convertAndAssert(
+			'''
+			<div class="paragraph">
+			<p>Lorem ipsum dolor sit <a href="https://jira.numberfour.eu/browse/IDE-2288" class="«TaskStatus.UNKNOWN.getRole()»" title="IDE Backlog"><span class="image"><img src="tasks" alt=""></span>IDE-2288</a> amet, consectetur adipiscing elit.</p>
+			</div>''',
+			'''
+			«config»
+			Lorem ipsum dolor sit task:IDE-2288[] amet, consectetur adipiscing elit.'''
+		);
+	}
+
+	@Test
+	public def void testTaskWithLabel() {
+		convertAndAssert(
+			'''
+			<div class="paragraph">
+			<p>Lorem ipsum dolor sit <a href="https://jira.numberfour.eu/browse/IDE-2288" class="«TaskStatus.UNKNOWN.getRole()»" title="IDE Backlog"><span class="image"><img src="tasks" alt=""></span>My Title</a> amet, consectetur adipiscing elit.</p>
+			</div>''',
+			'''
+			«config»
+			Lorem ipsum dolor sit task:IDE-2288[title="My Title"] amet, consectetur adipiscing elit.'''
+		);
+	}
+
+	@Test
+	public def void testTaskWithLabelShorthand() {
+		convertAndAssert(
+			'''
+			<div class="paragraph">
+			<p>Lorem ipsum dolor sit <a href="https://jira.numberfour.eu/browse/IDE-2288" class="«TaskStatus.UNKNOWN.getRole()»" title="IDE Backlog"><span class="image"><img src="tasks" alt=""></span>My Title</a> amet, consectetur adipiscing elit.</p>
+			</div>''',
+			'''
+			«config»
+			Lorem ipsum dolor sit task:IDE-2288["My Title"] amet, consectetur adipiscing elit.'''
+		);
+	}
+
+	@Test
+	public def void testTaskWithTitle() {
+		convertAndAssert(
+			'''
+			<div class="ulist">
+			<ul>
+			<li>
+			<p>More: </p>
+			</li>
+			<li>
+			<p>One more: <a href="https://github.com/NumberFour/N4JS/issues/234" class="«TaskStatus.CLOSED.getRole()»" title="IDE Bugs: As a bee I need some flowers with blossoms"><span class="image"><img src="github" alt=""></span>Mice</a></p>
+			</li>
+			<li>
+			<p>Even more: <a href="https://github.com/NumberFour/N4JS/issues/345" class="«TaskStatus.OPEN.getRole()»" title="IDE Bugs: As a texter I need these characters: colons, etc."><span class="image"><img src="github" alt=""></span>GH-345</a></p>
+			</li>
+			</ul>
+			</div>
+			<div class="sidebarblock">
+			<div class="content">
+			<a href="https://github.com/NumberFour/N4JS/issues/123" class="«TaskStatus.OPEN.getRole()»" title="IDE Bugs: As a developer I need a fast computer"><span class="image"><img src="github" alt=""></span>Developers</a>
+			</div>
+			</div>''',
+			'''
+			«getConfigWithTaskStatusFile("status_valid_with_title.txt")»
+			* More: task::GH-123[Developers]
+			* One more: task:GH-234[Mice]
+			* Even more: task:GH-345[]'''
+		);
 	}
 }
