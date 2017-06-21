@@ -62,7 +62,7 @@ class InlineMacroToBlockConverterTest extends AsciidoctorTest {
 			nop:some_target[]
 			</div>
 			</div>''',
-			'''this is one nop:some_target[] line'''
+			'''this is one nop::some_target[] line'''
 		)
 	}
 	
@@ -98,11 +98,11 @@ class InlineMacroToBlockConverterTest extends AsciidoctorTest {
 			'''
 			= This is a document
 			
-			Here's a macro: nop:in_preamble[].
+			Here's a macro: nop::in_preamble[].
 			
 			== Section
 			
-			Here's another one: nop:in_section[]
+			Here's another one: nop::in_section[]
 			'''
 		)
 	}
@@ -186,10 +186,10 @@ class InlineMacroToBlockConverterTest extends AsciidoctorTest {
 		convertAndAssert(
 			'''
 			<div class="paragraph">
-			<p>Hello!: nop:hello[]</p>
+			<p>Hello!: nop::hello[]</p>
 			</div>''',
 			'''
-			Hello!: +++nop:hello[]+++
+			Hello!: +++nop::hello[]+++
 			'''
 		)
 	}
@@ -201,7 +201,7 @@ class InlineMacroToBlockConverterTest extends AsciidoctorTest {
 			<div class="paragraph">
 			<p>Well, if this ain&#8217;t a pass block!</p>
 			</div>
-			Hello!: nop:hello[]
+			Hello!: nop::hello[]
 			<div class="paragraph">
 			<p>Yup, it was! Did it work?!</p>
 			</div>''',
@@ -209,7 +209,7 @@ class InlineMacroToBlockConverterTest extends AsciidoctorTest {
 			Well, if this ain't a pass block!
 			
 			++++
-			Hello!: nop:hello[]
+			Hello!: nop::hello[]
 			++++
 			
 			Yup, it was! Did it work?!

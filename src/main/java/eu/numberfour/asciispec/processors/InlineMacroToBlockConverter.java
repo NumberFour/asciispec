@@ -358,7 +358,7 @@ public class InlineMacroToBlockConverter extends Treeprocessor {
 		processors.put(Objects.requireNonNull(macroName), Objects.requireNonNull(processor));
 		String macroNamesPattern = processors.keySet().stream().collect(Collectors.joining("|"));
 		macroPattern = Pattern
-				.compile("(" + macroNamesPattern + "):([^\\[\\s]*)\\[([^\\]]*)\\]");
+				.compile("(" + macroNamesPattern + ")::([^\\[\\s]*)\\[([^\\]]*)\\]");
 	}
 
 	@Override

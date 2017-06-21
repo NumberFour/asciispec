@@ -25,30 +25,30 @@ The syntax of a PQN is defined by the following BNF specifications:
 
 [source,ebnf]
 ----
-PQN                   ::= (((((
-						  REPOSITORY_NAME ":")?
-						  REPOSITORY_PATH ":")?
-						  PROJECT_NAME ":")?
-						  SRC_FOLDER_SPEC "/")?
-						  MODULE_SPEC ":")?
+PQN                   = [[[[[
+						  REPOSITORY_NAME ":"]
+						  REPOSITORY_PATH ":"]
+						  PROJECT_NAME ":"]
+						  SRC_FOLDER_SPEC "/"]
+						  MODULE_SPEC ":"]
 						  LINKABLE_ELEMENT_SPEC
 
-LINKABLE_ELEMENT_SPEC ::= TOPLEVEL_ELEMENT_SPEC | LINKABLE_MEMBER_SPEC
-TOPLEVEL_ELEMENT_SPEC ::= CLASSIFIER_NAME | FUNCTION_NAME
-LINKABLE_MEMBER_SPEC  ::= ((CLASSIFIER_NAME)? DELIMITER)? MEMBER_NAME
-DELIMITER             ::= "#" | "#<" | "#>" | "@" | "@<" | "@>"
+LINKABLE_ELEMENT_SPEC = TOPLEVEL_ELEMENT_SPEC | LINKABLE_MEMBER_SPEC
+TOPLEVEL_ELEMENT_SPEC = CLASSIFIER_NAME | FUNCTION_NAME
+LINKABLE_MEMBER_SPEC  = [[CLASSIFIER_NAME] DELIMITER] MEMBER_NAME
+DELIMITER             = "#" | "#<" | "#>" | "@" | "@<" | "@>"
 
-REPOSITORY_PATH       ::= PATH
-SRC_FOLDER_SPEC       ::= PATH
-MODULE_SPEC           ::= PATH
+REPOSITORY_PATH       = PATH
+SRC_FOLDER_SPEC       = PATH
+MODULE_SPEC           = PATH
 
-PATH                  ::= PATH_ELEMENT ( "/" PATH_ELEMENT )*
-PATH_ELEMENT          ::= CHAR*
+PATH                  = PATH_ELEMENT ( "/" PATH_ELEMENT )*
+PATH_ELEMENT          = CHAR*
 
-REPOSITORY_NAME       ::= CHAR*
-PROJECT_NAME          ::= CHAR*
-CLASSIFIER_NAME       ::= CHAR*
-MEMBER_NAME           ::= CHAR*
+REPOSITORY_NAME       = CHAR*
+PROJECT_NAME          = CHAR*
+CLASSIFIER_NAME       = CHAR*
+MEMBER_NAME           = CHAR*
 
 ----
 
