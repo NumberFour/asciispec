@@ -1,0 +1,78 @@
+= Inline Repolnk Macro
+:toc:
+
+Usage::
+[source,asciidoc]
+repolnk:repo:branch:file[title="repolnkTitle"]
+
+The Inline Repolnk Macro creates hyperlinks to files on a SCM system.
+The string 'title=' and the quotation marks are optional.
+
+
+Attributes::
+* *repo:* Used to define the repository.
+* *branch:* (optional) The branch or commit hash. Shorthand commit hashes are supported. If no branch is declared, `master` will be used.
+* *file:* Used to define the file in the repository.
+* *title:* (optional) The title that will be displayed as an anchor in the generated hyperlink.
+If no title is declared, the `target` will be used instead.
+
+
+Examples::
+
+ifndef::env-github[]
+
+[example]
+Documented at **+++repolnk:aspec:docs/custom-processors/inline-repolnk-macro.adoc[]+++**...
+
+Documented at repolnk:aspec:docs/custom-processors/inline-repolnk-macro.adoc[]...
+
+[example]
+See the **+++repolnk:aspec:docs/custom-processors/inline-repolnk-macro.adoc[Repolnk Documentation]+++** to connect to...
+
+See the repolnk:aspec:docs/custom-processors/inline-repolnk-macro.adoc[Repolnk Documentation] to connect to...
+
+endif::[]
+
+ifdef::env-github[]
+
+[example]
+Documented at **+++repolnk:aspec:docs/custom-processors/inline-repolnk-macro.adoc[]+++** ...
+
+Documented at <span class="image"><a class="image" href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repolnk-macro.adoc"><img src="images/icons/github.png" alt="docs/custom-processors/inline-repolnk-macro.adoc" title="docs/custom-processors/inline-repolnk-macro.adoc"></a></span><a href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repolnk-macro.adoc" title="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repolnk-macro.adoc">docs/custom-processors/inline-repolnk-macro.adoc</a> ...
+
+[example]
+See the **+++repolnk:aspec:docs/custom-processors/inline-repolnk-macro.adoc[Repolnk Documentation]+++** to connect to...
+
+See the <span class="image"><a class="image" href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repolnk-macro.adoc"><img src="images/icons/github.png" alt="Repolnk Documentation" title="Repolnk Documentation"></a></span><a href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repolnk-macro.adoc" title="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repolnk-macro.adoc">Repolnk Documentation</a> to connect to...
+
+endif::[]
+
+
+[.language-asciidoc]
+== Configuration
+
+Specifying which repository to link to is done by adding a URL pattern to the
+https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/userguide.adoc#configuration-file[config file] in the following format:
+
+[source,asciidoc]
+----
+:repolnk_def_<Name>: <Repo-URL-Pattern>;<Icon>
+----
+
+<Name> :: Used to specify the repository identifier. This is used as the attribute `repo`.
+<Repo-URL-Pattern> :: Used to generate the target URL when a branch and file is specified - contains the placeholder `+++{BRANCH}+++` and `+++{FILE}+++`.
+<Icon> :: A path to an icon, e.g., `images/icons/github.png`. Can be omitted.
+
+
+Examples::
+
+Full configuration of the repolnk macro:
+
+[example]
+**+++:repolnk_def_aspec: https://github.com/NumberFour/asciispec/blob/{BRANCH}/{FILE};images/icons/github.png+++**
+
+
+No icons are used:
+
+[example]
+**+++:repolnk_def_n4js: https://github.com/NumberFour/n4js/blob/{BRANCH}/{FILE};+++**
