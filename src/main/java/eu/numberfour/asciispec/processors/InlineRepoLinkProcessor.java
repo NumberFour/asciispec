@@ -97,6 +97,9 @@ public class InlineRepoLinkProcessor extends MacroPreprocessor<String> {
 		Map<String, Object> rawAttrMap = new HashMap<>();
 		rawAttrMap.put("text", attrStr);
 		String linkText = AdocUtils.getRawAttributeAsString(rawAttrMap, "title", 0, file);
+		// the following line removes all occurrences of []-blocks
+		// since they are not supported in the image macro
+		String linkTitleSimple = linkText.replaceAll("((?<=[^\\\\])\\[|^\\[)((.*[^\\\\])\\]|\\])", "");
 
 		Map<String, String> templateVars = new HashMap<>();
 		templateVars.put("BRANCH", branch);
@@ -105,8 +108,8 @@ public class InlineRepoLinkProcessor extends MacroPreprocessor<String> {
 
 		String imgLink = "";
 		if (config.iconFile != null)
-			imgLink = AdocUtils.createImageWithLink(config.iconFile, url, url);
-		String txtLink = AdocUtils.createLinkWithTitle(url, linkText, url);
+			imgLink = AdocUtils.createImageWithLink(config.iconFile, linkTitleSimple, url);
+		String txtLink = AdocUtils.createLinkWithTitle(url, linkTitleSimple, url);
 
 		return imgLink + txtLink;
 	}

@@ -149,7 +149,7 @@ class InlineWikiLinkProcessorTest extends AsciidoctorTest {
 		convertAndAssert(
 			'''
 			<div class="paragraph">
-			<p>Some other text <span class="image"><a class="image" href="https://confluence.numberfour.eu/display/BR/Home"><img src="images/confluence.png" alt="AAA <code>code</code> AAA" title="AAA <code>code</code> AAA"></a></span><a href="https://confluence.numberfour.eu/display/BR/Home" title="AAA <code class=">Confluence entry: AAA <code>code</code> AAA</a> and more blablah.</p>
+			<p>Some other text <span class="image"><a class="image" href="https://confluence.numberfour.eu/display/BR/Home"><img src="images/confluence.png" alt="AAA <code>code</code> AAA" title="AAA <code>code</code> AAA"></a></span><a href="https://confluence.numberfour.eu/display/BR/Home" title="AAA <code>code</code> AAA">Confluence entry: AAA <code>code</code> AAA</a> and more blablah.</p>
 			</div>''',
 			'''
 			«config»
