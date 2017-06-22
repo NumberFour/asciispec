@@ -3,7 +3,7 @@
 
 Usage::
 [source,asciidoc]
-repo:repo:branch:file[title="repoTitle"]
+repo:branch:file[title="repoTitle"]
 
 The Inline Repo Macro creates hyperlinks to files on a SCM system.
 The string 'title=' and the quotation marks are optional.
