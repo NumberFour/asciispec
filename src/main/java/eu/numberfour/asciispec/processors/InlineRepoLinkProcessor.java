@@ -14,26 +14,26 @@ import eu.numberfour.asciispec.ParseException;
  */
 public class InlineRepoLinkProcessor extends MacroPreprocessor<String> {
 
-	private static final String REPOLNK_KEY = "repolnk";
+	private static final String REPO_KEY = "repo";
 	/** supports nested inline macros up to three levels */
-	private static final Pattern REPOLNK_PATTERN = Pattern.compile(REPOLNK_KEY
+	private static final Pattern REPO_PATTERN = Pattern.compile(REPO_KEY
 			+ ":(?<REPO>[^\\[\\]:]*):((?<BRANCH>[^\\[\\]:]*):)?(?<FILE>[^\\[\\]]*)(\\[(?<ATTRS>([^\\[\\]]*|\\[([^\\[\\]]*|\\[[^\\[\\]]*\\])*\\])*)\\])");
 
-	private static final String CONFIG_KEY = REPOLNK_KEY + "_def_";
+	private static final String CONFIG_KEY = REPO_KEY + "_def_";
 	private static final Pattern CONFIG_PATTERN = Pattern
 			.compile(":" + CONFIG_KEY + "(?<NAME>[^:]*):\\s*(?<URL>[^;]*)\\s*;\\s*(?<ICON>.*)");
 
 	private static final String VERIFY_CONFIG_KEY = CONFIG_KEY + "loose";
 	private static final Pattern VERIFY_CONFIG_PATTERN = Pattern.compile(":" + CONFIG_KEY + "(?<NAME>[^:]*):\\s*.*");
 
-	final private Map<String, RepolnkConfig> repolnkConfigs = new HashMap<>();
+	final private Map<String, RepolnkConfig> repoConfigs = new HashMap<>();
 
 
 	@Override
 	public void init(Document document) {
 		registerPattern(CONFIG_KEY, CONFIG_PATTERN);
 		registerPattern(VERIFY_CONFIG_KEY, VERIFY_CONFIG_PATTERN);
-		registerPattern(REPOLNK_KEY, REPOLNK_PATTERN);
+		registerPattern(REPO_KEY, REPO_PATTERN);
 	}
 
 	@Override
@@ -50,17 +50,17 @@ public class InlineRepoLinkProcessor extends MacroPreprocessor<String> {
 		case VERIFY_CONFIG_KEY:
 			boolean isConfigured = verifyConfiguration(matcher);
 			if (!isConfigured) {
-				return error(document, "Invalid repolnk configuration: " + fullMatch);
+				return error(document, "Invalid repo configuration: " + fullMatch);
 			}
 			return fullMatch;
-		case REPOLNK_KEY:
+		case REPO_KEY:
 
 			try {
 				return checkAndCreateLink(document, matcher);
 			} catch (IllegalArgumentException e) {
 				return error(document, e.getMessage());
 			} catch (Exception e) {
-				return error(document, "Could not parse repolnk link: " + fullMatch);
+				return error(document, "Could not parse repo macro: " + fullMatch);
 			}
 		}
 		return fullMatch;
@@ -73,13 +73,13 @@ public class InlineRepoLinkProcessor extends MacroPreprocessor<String> {
 		String attrStr = matcher.group("ATTRS").trim();
 
 		if (repo == null || repo.isEmpty()) {
-			throw new IllegalArgumentException("Missing repo in repolnk: '" + matcher.group(0) + "'");
+			throw new IllegalArgumentException("Missing attribute 'repo' in repo macro: '" + matcher.group(0) + "'");
 		}
 		if (file == null || file.isEmpty()) {
-			throw new IllegalArgumentException("Missing file in repolnk: '" + matcher.group(0) + "'");
+			throw new IllegalArgumentException("Missing attribute 'file' in repo macro: '" + matcher.group(0) + "'");
 		}
-		if (!repolnkConfigs.containsKey(repo)) {
-			throw new IllegalArgumentException("Missing repolnk configuration for repo: '" + repo + "'");
+		if (!repoConfigs.containsKey(repo)) {
+			throw new IllegalArgumentException("Missing repo_def configuration for repository name: '" + repo + "'");
 		}
 		if (branch == null) {
 			branch = "master";
@@ -87,7 +87,7 @@ public class InlineRepoLinkProcessor extends MacroPreprocessor<String> {
 			branch = branch.trim();
 		}
 
-		RepolnkConfig config = repolnkConfigs.get(repo);
+		RepolnkConfig config = repoConfigs.get(repo);
 		return createLink(config, repo, branch, file, attrStr);
 	}
 
@@ -119,13 +119,13 @@ public class InlineRepoLinkProcessor extends MacroPreprocessor<String> {
 		String urlTemplate = matcher.group("URL").trim();
 
 		if (name == null || name.isEmpty())
-			throw new IllegalArgumentException("Invalid repolnk configuration: 'NAME'");
+			throw new IllegalArgumentException("Invalid repo_def configuration: 'NAME' missing");
 		if (urlTemplate == null || urlTemplate.isEmpty())
-			throw new IllegalArgumentException("Invalid repolnk configuration: 'URL'");
+			throw new IllegalArgumentException("Invalid repo_def configuration: 'URL' missing");
 		if (!urlTemplate.contains("{BRANCH}"))
-			throw new IllegalArgumentException("Invalid repolnk configuration in URL: BRANCH placeholder missing");
+			throw new IllegalArgumentException("Invalid repo_def configuration in URL: BRANCH placeholder missing");
 		if (!urlTemplate.contains("{FILE}"))
-			throw new IllegalArgumentException("Invalid repolnk configuration in URL: FILE placeholder missing");
+			throw new IllegalArgumentException("Invalid repo_def configuration in URL: FILE placeholder missing");
 
 		String iconFile = matcher.group("ICON");
 		if (iconFile != null)
@@ -133,12 +133,12 @@ public class InlineRepoLinkProcessor extends MacroPreprocessor<String> {
 		if (iconFile.isEmpty())
 			iconFile = null;
 		RepolnkConfig config = new RepolnkConfig(name, urlTemplate, iconFile);
-		repolnkConfigs.put(config.name, config);
+		repoConfigs.put(config.name, config);
 	}
 
 	private boolean verifyConfiguration(Matcher matcher) {
 		String name = matcher.group("NAME");
-		boolean alreadyConfigured = repolnkConfigs.containsKey(name);
+		boolean alreadyConfigured = repoConfigs.containsKey(name);
 		return alreadyConfigured;
 	}
 

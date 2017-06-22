@@ -3,7 +3,7 @@
 
 Usage::
 [source,asciidoc]
-repolnk:repo:branch:file[title="repolnkTitle"]
+repo:repo:branch:file[title="repoTitle"]
 
 The Inline Repolnk Macro creates hyperlinks to files on a SCM system.
 The string 'title=' and the quotation marks are optional.
@@ -22,28 +22,28 @@ Examples::
 ifndef::env-github[]
 
 [example]
-Documented at **+++repolnk:aspec:docs/custom-processors/inline-repolnk-macro.adoc[]+++**...
+Documented at **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[]+++**...
 
-Documented at repolnk:aspec:docs/custom-processors/inline-repolnk-macro.adoc[]...
+Documented at repo:aspec:docs/custom-processors/inline-repo-macro.adoc[]...
 
 [example]
-See the **+++repolnk:aspec:docs/custom-processors/inline-repolnk-macro.adoc[Repolnk Documentation]+++** to connect to...
+See the **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[Repolnk Documentation]+++** to connect to...
 
-See the repolnk:aspec:docs/custom-processors/inline-repolnk-macro.adoc[Repolnk Documentation] to connect to...
+See the repo:aspec:docs/custom-processors/inline-repo-macro.adoc[Repolnk Documentation] to connect to...
 
 endif::[]
 
 ifdef::env-github[]
 
 [example]
-Documented at **+++repolnk:aspec:docs/custom-processors/inline-repolnk-macro.adoc[]+++** ...
+Documented at **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[]+++** ...
 
-Documented at <span class="image"><a class="image" href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repolnk-macro.adoc"><img src="images/icons/github.png" alt="docs/custom-processors/inline-repolnk-macro.adoc" title="docs/custom-processors/inline-repolnk-macro.adoc"></a></span><a href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repolnk-macro.adoc" title="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repolnk-macro.adoc">docs/custom-processors/inline-repolnk-macro.adoc</a> ...
+Documented at <span class="image"><a class="image" href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc"><img src="images/icons/github.png" alt="docs/custom-processors/inline-repo-macro.adoc" title="docs/custom-processors/inline-repo-macro.adoc"></a></span><a href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc" title="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc">docs/custom-processors/inline-repo-macro.adoc</a> ...
 
 [example]
-See the **+++repolnk:aspec:docs/custom-processors/inline-repolnk-macro.adoc[Repolnk Documentation]+++** to connect to...
+See the **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[Repolnk Documentation]+++** to connect to...
 
-See the <span class="image"><a class="image" href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repolnk-macro.adoc"><img src="images/icons/github.png" alt="Repolnk Documentation" title="Repolnk Documentation"></a></span><a href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repolnk-macro.adoc" title="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repolnk-macro.adoc">Repolnk Documentation</a> to connect to...
+See the <span class="image"><a class="image" href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc"><img src="images/icons/github.png" alt="Repolnk Documentation" title="Repolnk Documentation"></a></span><a href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc" title="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc">Repolnk Documentation</a> to connect to...
 
 endif::[]
 
@@ -56,7 +56,7 @@ https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/userguide.ado
 
 [source,asciidoc]
 ----
-:repolnk_def_<Name>: <Repo-URL-Pattern>;<Icon>
+:repo_def_<Name>: <Repo-URL-Pattern>;<Icon>
 ----
 
 <Name> :: Used to specify the repository identifier. This is used as the attribute `repo`.
@@ -66,13 +66,13 @@ https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/userguide.ado
 
 Examples::
 
-Full configuration of the repolnk macro:
+Full configuration of the repo macro:
 
 [example]
-**+++:repolnk_def_aspec: https://github.com/NumberFour/asciispec/blob/{BRANCH}/{FILE};images/icons/github.png+++**
+**+++:repo_def_aspec: https://github.com/NumberFour/asciispec/blob/{BRANCH}/{FILE};images/icons/github.png+++**
 
 
 No icons are used:
 
 [example]
-**+++:repolnk_def_n4js: https://github.com/NumberFour/n4js/blob/{BRANCH}/{FILE};+++**
+**+++:repo_def_n4js: https://github.com/NumberFour/n4js/blob/{BRANCH}/{FILE};+++**

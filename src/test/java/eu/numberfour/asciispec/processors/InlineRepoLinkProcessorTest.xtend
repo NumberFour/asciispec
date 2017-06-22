@@ -26,7 +26,7 @@ class InlineRepoLinkProcessorTest extends AsciidoctorTest {
 
 	private def getConfig() '''
 			:linkattrs:
-			:repolnk_def_aspec: https://github.com/NumberFour/asciispec/blob/{BRANCH}/{FILE};images/icons/github.png
+			:repo_def_aspec: https://github.com/NumberFour/asciispec/blob/{BRANCH}/{FILE};images/icons/github.png
 			
 		'''
 
@@ -35,16 +35,16 @@ class InlineRepoLinkProcessorTest extends AsciidoctorTest {
 		convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
-			<p>This is some inline text <mark>[Error: Missing repolnk configuration for repo: 'aspec']</mark> and so on.</p>
+			<p>This is some inline text <mark>[Error: Missing repo_def configuration for repository name: 'aspec']</mark> and so on.</p>
 			</div>
 			<div class="paragraph">
 			<p>More lines for good measure.</p>
 			</div>''',
 			'''
-			This is some inline text repolnk:aspec:docs/custom-processors/inline-cwiki-macro.adoc[] and so on.
+			This is some inline text repo:aspec:docs/custom-processors/inline-cwiki-macro.adoc[] and so on.
 
 			More lines for good measure.''',
-			"asciispec  : ERROR: line 1: Missing repolnk configuration for repo: 'aspec'"
+			"asciispec  : ERROR: line 1: Missing repo_def configuration for repository name: 'aspec'"
 		);
 	}
 
@@ -53,22 +53,22 @@ class InlineRepoLinkProcessorTest extends AsciidoctorTest {
 		convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
-			<p><mark>[Error: Invalid repolnk configuration: :repolnk_def_aspec: <a href="https://github.com/NumberFour/asciispec/blob/{BRANCH}/{FILE}" class="bare">https://github.com/NumberFour/asciispec/blob/{BRANCH}/{FILE}</a>]</mark></p>
+			<p><mark>[Error: Invalid repo configuration: :repo_def_aspec: <a href="https://github.com/NumberFour/asciispec/blob/{BRANCH}/{FILE}" class="bare">https://github.com/NumberFour/asciispec/blob/{BRANCH}/{FILE}</a>]</mark></p>
 			</div>
 			<div class="paragraph">
-			<p>This is some inline text <mark>[Error: Missing repolnk configuration for repo: 'aspec']</mark> and so on.</p>
+			<p>This is some inline text <mark>[Error: Missing repo_def configuration for repository name: 'aspec']</mark> and so on.</p>
 			</div>
 			<div class="paragraph">
 			<p>More lines for good measure.</p>
 			</div>''',
 			'''
 			:linkattrs:
-			:repolnk_def_aspec: https://github.com/NumberFour/asciispec/blob/{BRANCH}/{FILE}
+			:repo_def_aspec: https://github.com/NumberFour/asciispec/blob/{BRANCH}/{FILE}
 			
-			This is some inline text repolnk:aspec:docs/custom-processors/inline-cwiki-macro.adoc[] and so on.
+			This is some inline text repo:aspec:docs/custom-processors/inline-cwiki-macro.adoc[] and so on.
 
 			More lines for good measure.''',
-			"asciispec  : ERROR: line 2: Invalid repolnk configuration: :repolnk_def_aspec: https://github.com/NumberFour/asciispec/blob/{BRANCH}/{FILE}"
+			"asciispec  : ERROR: line 2: Invalid repo configuration: :repo_def_aspec: https://github.com/NumberFour/asciispec/blob/{BRANCH}/{FILE}"
 		);
 	}
 
@@ -77,22 +77,22 @@ class InlineRepoLinkProcessorTest extends AsciidoctorTest {
 		convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
-			<p><mark>[Error: Invalid repolnk configuration in URL: BRANCH placeholder missing]</mark></p>
+			<p><mark>[Error: Invalid repo_def configuration in URL: BRANCH placeholder missing]</mark></p>
 			</div>
 			<div class="paragraph">
-			<p>This is some inline text <mark>[Error: Missing repolnk configuration for repo: 'aspec']</mark> and so on.</p>
+			<p>This is some inline text <mark>[Error: Missing repo_def configuration for repository name: 'aspec']</mark> and so on.</p>
 			</div>
 			<div class="paragraph">
 			<p>More lines for good measure.</p>
 			</div>''',
 			'''
 			:linkattrs:
-			:repolnk_def_aspec: https://github.com/NumberFour/asciispec/blob/{FILE};
+			:repo_def_aspec: https://github.com/NumberFour/asciispec/blob/{FILE};
 			
-			This is some inline text repolnk:aspec:docs/custom-processors/inline-cwiki-macro.adoc[] and so on.
+			This is some inline text repo:aspec:docs/custom-processors/inline-cwiki-macro.adoc[] and so on.
 
 			More lines for good measure.''',
-			"asciispec  : ERROR: line 2: Invalid repolnk configuration in URL: BRANCH placeholder missing"
+			"asciispec  : ERROR: line 2: Invalid repo_def configuration in URL: BRANCH placeholder missing"
 		);
 	}
 
@@ -101,22 +101,22 @@ class InlineRepoLinkProcessorTest extends AsciidoctorTest {
 		convertStringAndAssertErrorContains(
 			'''
 			<div class="paragraph">
-			<p><mark>[Error: Invalid repolnk configuration in URL: FILE placeholder missing]</mark></p>
+			<p><mark>[Error: Invalid repo_def configuration in URL: FILE placeholder missing]</mark></p>
 			</div>
 			<div class="paragraph">
-			<p>This is some inline text <mark>[Error: Missing repolnk configuration for repo: 'aspec']</mark> and so on.</p>
+			<p>This is some inline text <mark>[Error: Missing repo_def configuration for repository name: 'aspec']</mark> and so on.</p>
 			</div>
 			<div class="paragraph">
 			<p>More lines for good measure.</p>
 			</div>''',
 			'''
 			:linkattrs:
-			:repolnk_def_aspec: https://github.com/NumberFour/asciispec/blob/{BRANCH}/docs/;
+			:repo_def_aspec: https://github.com/NumberFour/asciispec/blob/{BRANCH}/docs/;
 			
-			This is some inline text repolnk:aspec:docs/custom-processors/inline-cwiki-macro.adoc[] and so on.
+			This is some inline text repo:aspec:docs/custom-processors/inline-cwiki-macro.adoc[] and so on.
 
 			More lines for good measure.''',
-			"asciispec  : ERROR: line 2: Invalid repolnk configuration in URL: FILE placeholder missing"
+			"asciispec  : ERROR: line 2: Invalid repo_def configuration in URL: FILE placeholder missing"
 		);
 	}
 
@@ -133,7 +133,7 @@ class InlineRepoLinkProcessorTest extends AsciidoctorTest {
 			'''
 			«config»
 
-			This is some inline text repolnk:aspec:docs/custom-processors/inline-cwiki-macro.adoc[] and so on.
+			This is some inline text repo:aspec:docs/custom-processors/inline-cwiki-macro.adoc[] and so on.
 
 			More lines for good measure.'''
 		);
@@ -152,7 +152,7 @@ class InlineRepoLinkProcessorTest extends AsciidoctorTest {
 			'''
 			«config»
 
-			This is some inline text repolnk:aspec:AS-1:docs/custom-processors/inline-cwiki-macro.adoc[] and so on.
+			This is some inline text repo:aspec:AS-1:docs/custom-processors/inline-cwiki-macro.adoc[] and so on.
 
 			More lines for good measure.'''
 		);
@@ -171,7 +171,7 @@ class InlineRepoLinkProcessorTest extends AsciidoctorTest {
 			'''
 			«config»
 
-			This is some inline text repolnk:aspec:06ebaaa29954b2b0f4deeb6188804badd7e4ffea:src/test/java/eu/numberfour/asciispec/processors/InlineRepoLinkProcessorTest.xtend[] and so on.
+			This is some inline text repo:aspec:06ebaaa29954b2b0f4deeb6188804badd7e4ffea:src/test/java/eu/numberfour/asciispec/processors/InlineRepoLinkProcessorTest.xtend[] and so on.
 
 			More lines for good measure.'''
 		);
@@ -190,7 +190,7 @@ class InlineRepoLinkProcessorTest extends AsciidoctorTest {
 			'''
 			«config»
 
-			This is some inline text repolnk:aspec:06ebaaa:src/test/java/eu/numberfour/asciispec/processors/InlineRepoLinkProcessorTest.xtend[] and so on.
+			This is some inline text repo:aspec:06ebaaa:src/test/java/eu/numberfour/asciispec/processors/InlineRepoLinkProcessorTest.xtend[] and so on.
 
 			More lines for good measure.'''
 		);
@@ -205,7 +205,7 @@ class InlineRepoLinkProcessorTest extends AsciidoctorTest {
 			</div>''',
 			'''
 			«config»
-			This is some inline text repolnk:aspec:AS-1:docs/custom-processors/inline-cwiki-macro.adoc[title=inline-cwiki-macro.adoc] and so on.'''
+			This is some inline text repo:aspec:AS-1:docs/custom-processors/inline-cwiki-macro.adoc[title=inline-cwiki-macro.adoc] and so on.'''
 		);
 	}
 
@@ -218,7 +218,7 @@ class InlineRepoLinkProcessorTest extends AsciidoctorTest {
 			</div>''',
 			'''
 			«config»
-			This is some inline text repolnk:aspec:AS-1:docs/custom-processors/inline-cwiki-macro.adoc[inline-cwiki-macro.adoc] and so on.'''
+			This is some inline text repo:aspec:AS-1:docs/custom-processors/inline-cwiki-macro.adoc[inline-cwiki-macro.adoc] and so on.'''
 		);
 	}
 
@@ -231,7 +231,7 @@ class InlineRepoLinkProcessorTest extends AsciidoctorTest {
 			</div>''',
 			'''
 			«config»
-			This is some inline text repolnk:aspec:AS-1:docs/custom-processors/inline-cwiki-macro.adoc["inline-cwiki-macro.adoc", Test] and so on.'''
+			This is some inline text repo:aspec:AS-1:docs/custom-processors/inline-cwiki-macro.adoc["inline-cwiki-macro.adoc", Test] and so on.'''
 		);
 	}
 
@@ -244,7 +244,7 @@ class InlineRepoLinkProcessorTest extends AsciidoctorTest {
 			</div>''',
 			'''
 			«config»
-			Some other text repolnk:aspec:AS-1:docs/custom-processors/inline-cwiki-macro.adoc["AAA [.N4JS]`code` AAA"] and more blablah.'''
+			Some other text repo:aspec:AS-1:docs/custom-processors/inline-cwiki-macro.adoc["AAA [.N4JS]`code` AAA"] and more blablah.'''
 		);
 	}
 
