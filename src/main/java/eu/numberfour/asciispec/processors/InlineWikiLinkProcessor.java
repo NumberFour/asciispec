@@ -75,17 +75,17 @@ public class InlineWikiLinkProcessor extends MacroPreprocessor<String> {
 		String linkTitle = AdocUtils.getRawAttributeAsString(rawAttrMap, "title", 0, target);
 		// the following line removes all occurrences of []-blocks
 		// since they are not supported in the image macro
-		String imageTitle = linkTitle.replaceAll("((?<=[^\\\\])\\[|^\\[)((.*[^\\\\])\\]|\\])", "");
+		String linkTitleSimple = linkTitle.replaceAll("((?<=[^\\\\])\\[|^\\[)((.*[^\\\\])\\]|\\])", "");
 
 		String url = AdocUtils.transformVariable(pathTemplate, "PATH", target);
 		if (target.matches("\\d+")) {
 			url = AdocUtils.transformVariable(pageTemplate, "PAGE_ID", target);
 		}
 
-		String linkText = AdocUtils.transformVariable(titleTemplate, "TITLE", imageTitle);
+		String linkText = AdocUtils.transformVariable(titleTemplate, "TITLE", linkTitleSimple);
 
-		String imgLink = AdocUtils.createImageWithLink(iconTemplate, imageTitle, url);
-		String txtLink = AdocUtils.createLinkWithTitle(url, linkText, linkTitle);
+		String imgLink = AdocUtils.createImageWithLink(iconTemplate, linkTitleSimple, url);
+		String txtLink = AdocUtils.createLinkWithTitle(url, linkText, linkTitleSimple);
 		return imgLink + txtLink;
 	}
 

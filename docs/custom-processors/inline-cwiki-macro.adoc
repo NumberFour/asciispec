@@ -16,7 +16,7 @@ Attributes::
 If no title is declared, the `target` will be used instead.
 
 [.language-asciidoc]
-== URL Pattern
+== Configuration
 
 With most Confluence pages, the *URL path* is derived from the page title, like so:
 

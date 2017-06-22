@@ -15,7 +15,7 @@ Attributes::
 * *title:* (optional) The text that will be displayed as an anchor in the generated hyperlink.
 
 [.language-asciidoc]
-== URL Pattern
+== Configuration
 
 Specifying which repository to link to is done by adding a URL pattern to the
 https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/userguide.adoc#configuration-file[config file] in the following format:
