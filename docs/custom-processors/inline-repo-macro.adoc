@@ -1,11 +1,11 @@
-= Inline Repolnk Macro
+= Inline Repo Macro
 :toc:
 
 Usage::
 [source,asciidoc]
 repo:repo:branch:file[title="repoTitle"]
 
-The Inline Repolnk Macro creates hyperlinks to files on a SCM system.
+The Inline Repo Macro creates hyperlinks to files on a SCM system.
 The string 'title=' and the quotation marks are optional.
 
 
@@ -27,9 +27,9 @@ Documented at **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[]+++
 Documented at repo:aspec:docs/custom-processors/inline-repo-macro.adoc[]...
 
 [example]
-See the **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[Repolnk Documentation]+++** to connect to...
+See the **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[Repo Documentation]+++** to connect to...
 
-See the repo:aspec:docs/custom-processors/inline-repo-macro.adoc[Repolnk Documentation] to connect to...
+See the repo:aspec:docs/custom-processors/inline-repo-macro.adoc[Repo Documentation] to connect to...
 
 endif::[]
 
@@ -41,9 +41,9 @@ Documented at **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[]+++
 Documented at <span class="image"><a class="image" href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc"><img src="images/icons/github.png" alt="docs/custom-processors/inline-repo-macro.adoc" title="docs/custom-processors/inline-repo-macro.adoc"></a></span><a href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc" title="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc">docs/custom-processors/inline-repo-macro.adoc</a> ...
 
 [example]
-See the **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[Repolnk Documentation]+++** to connect to...
+See the **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[Repo Documentation]+++** to connect to...
 
-See the <span class="image"><a class="image" href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc"><img src="images/icons/github.png" alt="Repolnk Documentation" title="Repolnk Documentation"></a></span><a href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc" title="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc">Repolnk Documentation</a> to connect to...
+See the <span class="image"><a class="image" href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc"><img src="images/icons/github.png" alt="Repo Documentation" title="Repo Documentation"></a></span><a href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc" title="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc">Repo Documentation</a> to connect to...
 
 endif::[]
 
