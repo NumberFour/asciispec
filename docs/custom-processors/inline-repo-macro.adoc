@@ -17,6 +17,9 @@ Attributes::
 If no title is declared, the `target` will be used instead.
 
 
+Note::
+This macro needs the `:linkattrs:` enabled.
+
 Examples::
 
 ifndef::env-github[]
@@ -27,9 +30,9 @@ Documented at **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[]+++
 Documented at repo:aspec:docs/custom-processors/inline-repo-macro.adoc[]...
 
 [example]
-See the **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[Repo Documentation]+++** to connect to...
+See the **+++repo:aspec:IDE-2760:docs/custom-processors/inline-repo-macro.adoc[Repo Documentation]+++** to connect to...
 
-See the repo:aspec:docs/custom-processors/inline-repo-macro.adoc[Repo Documentation] to connect to...
+See the repo:aspec:IDE-2760:docs/custom-processors/inline-repo-macro.adoc[Repo Documentation] to connect to...
 
 endif::[]
 
