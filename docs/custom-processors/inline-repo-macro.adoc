@@ -1,3 +1,5 @@
+:linkattrs:
+
 = Inline Repo Macro
 :toc:
 
@@ -5,7 +7,7 @@ Usage::
 [source,asciidoc]
 repo:branch:file[title="repoTitle"]
 
-The Inline Repo Macro creates hyperlinks to files on a SCM system.
+The Inline Repo Macro creates hyperlinks to files on an SCM system.
 The string 'title=' and the quotation marks are optional.
 
 
@@ -41,12 +43,12 @@ ifdef::env-github[]
 [example]
 Documented at **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[]+++** ...
 
-Documented at <span class="image"><a class="image" href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc"><img src="images/icons/github.png" alt="docs/custom-processors/inline-repo-macro.adoc" title="docs/custom-processors/inline-repo-macro.adoc"></a></span><a href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc" title="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc">docs/custom-processors/inline-repo-macro.adoc</a> ...
+Documented at link:https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-cwiki-macro.adoc[docs/custom-processors/inline-repo-macro.adoc] ...
 
 [example]
 See the **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[Repo Documentation]+++** to connect to...
 
-See the <span class="image"><a class="image" href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc"><img src="images/icons/github.png" alt="Repo Documentation" title="Repo Documentation"></a></span><a href="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc" title="https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-repo-macro.adoc">Repo Documentation</a> to connect to...
+See the link:https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-cwiki-macro.adoc[Repo Documentation] to connect to...
 
 endif::[]
 
@@ -64,7 +66,7 @@ https://github.numberfour.eu/NumberFour/asciispec/blob/master/docs/userguide.ado
 
 <Name> :: Used to specify the repository identifier. This is used as the attribute `repo`.
 <Repo-URL-Pattern> :: Used to generate the target URL when a branch and file is specified - contains the placeholder `+++{BRANCH}+++` and `+++{FILE}+++`.
-<Icon> :: A path to an icon, e.g., `images/icons/github.png`. Can be omitted.
+<Icon> :: (optional) A path to an icon, e.g., `images/icons/github.png`.
 
 
 Examples::

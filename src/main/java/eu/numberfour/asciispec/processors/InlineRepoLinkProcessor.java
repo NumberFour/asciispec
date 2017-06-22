@@ -1,5 +1,7 @@
 package eu.numberfour.asciispec.processors;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -72,10 +74,10 @@ public class InlineRepoLinkProcessor extends MacroPreprocessor<String> {
 		String file = matcher.group("FILE").trim();
 		String attrStr = matcher.group("ATTRS").trim();
 
-		if (repo == null || repo.isEmpty()) {
+		if (isNullOrEmpty(repo)) {
 			throw new IllegalArgumentException("Missing attribute 'repo' in repo macro: '" + matcher.group(0) + "'");
 		}
-		if (file == null || file.isEmpty()) {
+		if (isNullOrEmpty(file)) {
 			throw new IllegalArgumentException("Missing attribute 'file' in repo macro: '" + matcher.group(0) + "'");
 		}
 		if (!repoConfigs.containsKey(repo)) {
@@ -118,7 +120,7 @@ public class InlineRepoLinkProcessor extends MacroPreprocessor<String> {
 		String name = matcher.group("NAME").trim();
 		String urlTemplate = matcher.group("URL").trim();
 
-		if (name == null || name.isEmpty())
+		if (isNullOrEmpty(name))
 			throw new IllegalArgumentException("Invalid repo_def configuration: 'NAME' missing");
 		if (urlTemplate == null || urlTemplate.isEmpty())
 			throw new IllegalArgumentException("Invalid repo_def configuration: 'URL' missing");
