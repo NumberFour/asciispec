@@ -5,16 +5,16 @@
 
 Usage::
 [source,asciidoc]
-repo:branch:file[title="repoTitle"]
+repo:reponame:branch:file[title="repoTitle"]
 
 The Inline Repo Macro creates hyperlinks to files on an SCM system.
 The string 'title=' and the quotation marks are optional.
 
 
 Attributes::
-* *repo:* Used to define the repository.
-* *branch:* (optional) The branch or commit hash. Shorthand commit hashes are supported. If no branch is declared, `master` will be used.
-* *file:* Used to define the file in the repository.
+* *reponame:* Used to define the repository.
+* *branch:* (optional) The branch or commit hash. Shorthand commit hashes are supported. If no branch is declared, `master` will be used. Also, if no branch is declared, its trailing colon must not be used.
+* *file:* Used to define the file including its absolute path in the repository.
 * *title:* (optional) The title that will be displayed as an anchor in the generated hyperlink.
 If no title is declared, the `target` will be used instead.
 
@@ -26,10 +26,15 @@ Examples::
 
 ifndef::env-github[]
 
+The following example omits the branch and title attributes.
+
 [example]
 Documented at **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[]+++**...
 
 Documented at repo:aspec:docs/custom-processors/inline-repo-macro.adoc[]...
+
+
+The following example specifies the branch and title attributes.
 
 [example]
 See the **+++repo:aspec:IDE-2760:docs/custom-processors/inline-repo-macro.adoc[Repo Documentation]+++** to connect to...
@@ -40,10 +45,15 @@ endif::[]
 
 ifdef::env-github[]
 
+The following example omits the branch and title attributes.
+
 [example]
 Documented at **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[]+++** ...
 
 Documented at link:https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-cwiki-macro.adoc[docs/custom-processors/inline-repo-macro.adoc] ...
+
+
+The following example specifies the branch and title attributes.
 
 [example]
 See the **+++repo:aspec:docs/custom-processors/inline-repo-macro.adoc[Repo Documentation]+++** to connect to...
