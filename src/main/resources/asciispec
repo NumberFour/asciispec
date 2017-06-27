@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 # -e  == exit immediately
 # -x  == enable debug. (+x for disable)
 set -e +x
@@ -29,52 +27,6 @@ CMD_ASCIISPEC="java -Dfile.encoding=UTF-8 -cp $CLASSPATH eu.numberfour.asciispec
 
 # TCP connection
 DEV_TCP="/dev/tcp/localhost/45115"
-
-
-
-# DEPRECATED FUNCTIONS
-# Handle recursive calls. This assumes no output base path for the processed files, so that the genereated files are placed next to the original files.
-# All additional parameters are passed on to asciidoctor
-if [ "${1}" == "-R" ]; then
-	find . -name '*.adoc' -exec $0 {} ${@:2} \;
-	echo "The option '-R' is deprecated and will be removed soon."
-	echo "The option '-R' is deprecated and will be removed soon."
-	exit 0
-fi
-
-# If an output base path was given, handle this by calling this script again with -RX as the first parameter. If the output directory does not exist,
-# it will be created.
-# The following parameters are expected
-# $1: -R=some_path
-# All additional parameters are passed on to asciidoctor
-if [[ ${1} == -R=* ]]; then
-	OUTPUT_BASEPATH="${1:3}"
-	if ! [[ "${OUTPUT_BASEPATH:-1}" == "/" ]]; then
-		OUTPUT_BASEPATH="${OUTPUT_BASEPATH}/"
-	fi
-	find . -name '*.adoc' -exec $0 -RX "$OUTPUT_BASEPATH" "{}" ${@:2} \;
-	echo "The option '-R' is deprecated and will be removed soon."
-	echo "The option '-R' is deprecated and will be removed soon."
-	exit 0
-fi
-
-# This is a result of a call to this script with -R=some_path. The actual output path for a specific input file will be created automatically.
-# The following parameters are expected:
-# $1: -RX
-# $2: the output base path that was given in the original call to this script
-# $3: the path to the file that is to be processed
-# All additional parameters are passed on to asciidoctor
-if [ "${1}" == "-RX" ]; then
-	OUTPUT_PATH="${2}$(dirname $3)"
-	mkdir -p "${OUTPUT_PATH}"
-	exec $0 "$3" -D "$OUTPUT_PATH" ${@:4}
-	echo "The option '-R' is deprecated and will be removed soon."
-	echo "The option '-R' is deprecated and will be removed soon."
-	exit 0
-fi
-# END OF DEPRECATED FUNCTIONS
-
-
 
 function usage () {
 	cat <<EOF
@@ -212,7 +164,6 @@ case ${1} in
 		exit 0
 		;;
 esac
-
 
 # No option passed. Use default case.
 lazyCommit ${@:1}
