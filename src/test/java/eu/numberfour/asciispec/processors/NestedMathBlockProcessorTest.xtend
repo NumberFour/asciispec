@@ -20,11 +20,31 @@ import org.junit.Test
 class NestedMathBlockProcessorTest extends AsciidoctorTest {
 	@Before
 	public def void registerExtensions() {
+		new MathIncludeExtension().register(doc);
+		new InlineMathExtension().register(doc);
 		new MathBlockExtension().register(doc);
 		new DefinitionBlockExtension().register(doc);
 		new RequirementBlockExtension().register(doc);
 	}
 
+
+	@Test
+	public def void testMathInSourceCodeBlock() {
+		convertAndAssert(
+			'''
+			<programlisting role="small" language="bash" linenumbering="unnumbered">$e=mc^2$</programlisting>
+			<simpara><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>e</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></math></simpara>''',
+			'''
+			[source,bash,role=small]
+			----
+			$e=mc^2$
+			----
+			$e=mc^2$
+			''',
+			Backend.DOCBOOK
+		);
+	}
+	
 	@Test
 	public def void testMathWithinRequirementBlock() {
 		convertAndAssert(

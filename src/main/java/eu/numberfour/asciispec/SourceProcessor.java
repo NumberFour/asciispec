@@ -22,18 +22,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Processes asciidoctor source while respecting commonly used methods to escape content. The following methods of
- * escaping content from processing are supported:
+ * Processes asciidoctor source while respecting commonly used methods to escape
+ * content. The following methods of escaping content from processing are
+ * supported:
  *
  * <ul>
  * <li>Block comment (delimited with <code>////</code>)</li>
  * <li>Inline comment (introduced by <code>//</code>)</li>
  * <li>Inline pass (e.g. <code>+++ this is ignored +++</code>)</li>
- * <li>Pass macro (e.g. <code>pass:[this is ignored]</code>) - note that the ignored text must not contain square
- * brackets!</li>
+ * <li>Pass macro (e.g. <code>pass:[this is ignored]</code>) - note that the
+ * ignored text must not contain square brackets!</li>
  * <li>Pass block (delimited with <code>++++</code>)</li>
  * <li>Source block (delimited with <code>```</code>)</li>
- * <li>Source block (delimited with <code>[source]</code> and / or <code>----</code>
+ * <li>Source block (delimited with <code>[source]</code> and / or
+ * <code>----</code>
  * </ul>
  */
 public class SourceProcessor {
@@ -41,8 +43,7 @@ public class SourceProcessor {
 	private final Set<String> ignoredBlockTypes = new HashSet<>();
 
 	private static final Pattern BLOCK_NAME_PATTERN = Pattern.compile("\\s*\\[([^,\\]]+).*?\\]\\s*");
-	private static final Pattern[] BLOCK_PATTERNS = {
-			Pattern.compile("\\s*(////)\\s*"), // Comment
+	private static final Pattern[] BLOCK_PATTERNS = { Pattern.compile("\\s*(////)\\s*"), // Comment
 			Pattern.compile("\\s*(====)\\s*"), // Example
 			Pattern.compile("\\s*(```).*"), // Fenced block with parameter
 			Pattern.compile("\\s*(----)\\s*"), // Listing
@@ -55,8 +56,9 @@ public class SourceProcessor {
 	};
 
 	/**
-	 * A very simple implementation of the state pattern is used to track ignored blocks. The subclasses of this class
-	 * represent the different types of ignored blocks.
+	 * A very simple implementation of the state pattern is used to track
+	 * ignored blocks. The subclasses of this class represent the different
+	 * types of ignored blocks.
 	 */
 	private abstract class BlockType {
 		public abstract boolean isIgnored();
@@ -108,8 +110,8 @@ public class SourceProcessor {
 	}
 
 	/**
-	 * An anonymous block indicates that the last line was part of a block that was delimited by any of the
-	 * preconfigured asciidoctor block delimiters.
+	 * An anonymous block indicates that the last line was part of a block that
+	 * was delimited by any of the preconfigured asciidoctor block delimiters.
 	 */
 	private class AnonymousBlockType extends BlockType {
 		private final Pattern pattern;
@@ -132,8 +134,9 @@ public class SourceProcessor {
 	}
 
 	/**
-	 * A named block indicates that the last line was a named block declaration. The next line will immediately leave
-	 * this block, since it will either be a delimiter of an anonymous block or the default block.
+	 * A named block indicates that the last line was a named block declaration.
+	 * The next line will immediately leave this block, since it will either be
+	 * a delimiter of an anonymous block or the default block.
 	 */
 	private class NamedBlockType extends BlockType {
 		@Override
@@ -151,8 +154,9 @@ public class SourceProcessor {
 	}
 
 	/*
-	 * The pass macro will not work with nested macros, e.g. <code>pass:[task:GH-40[]]</code>. Nested structures like
-	 * that cannot be parsed with regular expressions.
+	 * The pass macro will not work with nested macros, e.g.
+	 * <code>pass:[task:GH-40[]]</code>. Nested structures like that cannot be
+	 * parsed with regular expressions.
 	 */
 	private static final Pattern INLINE_IGNORE_PATTERN = Pattern
 			.compile("\\+\\+\\+.*?\\+\\+\\+|pass:[^\\[]*\\[[^\\]]*\\]");
@@ -189,6 +193,23 @@ public class SourceProcessor {
 		ignoredBlockTypes.add("----");
 	}
 
+	public boolean isIgnoringCurrentBlock() {
+		return currentBlock.isIgnored();
+	}
+
+	/**
+	 * Toggles whether the current block is ignored or not (see
+	 * {@link #isIgnoringCurrentBlock()}). When using
+	 * {@link #processManually(String, Function)}, the line input is not used
+	 * for checking whether the current block needs to be ignored. This checking
+	 * can be done using this method instead.
+	 * 
+	 * @param line
+	 */
+	public void checkForIngnoredBlocks(String line) {
+		updateBlockState(line);
+	}
+
 	/**
 	 * Processes the given lines and returns the processed result.
 	 *
@@ -222,7 +243,7 @@ public class SourceProcessor {
 
 		LinkedList<String> result = new LinkedList<>();
 		for (String line = lineSupplier.get(); line != null; line = lineSupplier.get()) {
-			if (shouldProcess(line)) {
+			if (shouldProcess(line, true)) {
 				processLine(line, transform, result);
 			} else {
 				result.add(line);
@@ -232,26 +253,23 @@ public class SourceProcessor {
 	}
 
 	/**
-	 * Processes the given line and returns the processed result.
+	 * Processes the given line and returns the processed result. The transform
+	 * function is given as a parameter.
+	 * <p>
+	 * 
+	 * <b>Note:</b> The line input is not used for checking whether the current
+	 * block needs to be ignored. Thus, the escaping mechanism has to be toggled
+	 * manually using the method {@link #checkForIngnoredBlocks(String)}.
 	 *
 	 * @param line
 	 *            a line to process
+	 * @param transform
+	 *            the transform function
 	 * @return the processed lines
 	 */
-	public List<String> process(String line) {
-		return process(line, transform);
-	}
-
-	/**
-	 * Processes the given line and returns the processed result.
-	 *
-	 * @param line
-	 *            a line to process
-	 * @return the processed lines
-	 */
-	public List<String> process(String line, Function<String, List<String>> transform) {
+	public List<String> processManually(String line, Function<String, List<String>> transform) {
 		LinkedList<String> result = new LinkedList<>();
-		if (shouldProcess(line)) {
+		if (shouldProcess(line, false)) {
 			processLine(line, transform, result);
 		} else {
 			result.add(line);
@@ -320,9 +338,10 @@ public class SourceProcessor {
 		}
 	}
 
-	private boolean shouldProcess(String line) {
+	private boolean shouldProcess(String line, boolean toggle) {
 		boolean wasIgnored = currentBlock.isIgnored();
-		updateBlockState(line);
+		if (toggle)
+			updateBlockState(line);
 		return !(wasIgnored || currentBlock.isIgnored());
 	}
 
