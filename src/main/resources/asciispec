@@ -17,7 +17,7 @@ CLASSPATH="$APP_HOME/lib/asciispec-0.0.1-SNAPSHOT.jar"
 PARAMETERS="-a icons=font -B $INVOCATION_HOME"
 
 # Load Ruby extensions
-EXTENSIONS="-r $APP_HOME/res/ext/todo.rb"
+EXTENSIONS="-r $APP_HOME/res/ext/todo.rb -r $APP_HOME/res/ext/callout.rb"
 
 # Starts the AsciiSpec Server
 CMD_SERVER="java -Dfile.encoding=UTF-8 -cp $CLASSPATH eu.numberfour.asciispec.cli.AsciiSpecServer"
