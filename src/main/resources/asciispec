@@ -11,19 +11,24 @@ APP_HOME="$(pwd -P)"
 cd "$INVOCATION_HOME" >/dev/null
 
 # The classpath is built from absolute paths since this script may be executed from anywhere.
-CLASSPATH="$APP_HOME/lib/asciispec-0.0.1-SNAPSHOT.jar"
+CLASSPATH="$APP_HOME/lib/asciispec-0.0.10.jar"
 
 # Force use of Font Awesome icons & pass filename
 PARAMETERS="-a icons=font -B $INVOCATION_HOME"
 
-# Load Ruby extensions
-EXTENSIONS="-r $APP_HOME/res/ext/todo.rb -r $APP_HOME/res/ext/callout.rb"
+# ==== Ruby Extensions ==== 
+# https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/todo-block.adoc
+TODO="$APP_HOME/res/ext/todo.rb"
+# https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-callout-macro.adoc
+CALLOUT="$APP_HOME/res/ext/callout.rb"
+
+REQUIRE="-r $TODO -r $CALLOUT -r asciidoctor-diagram"
 
 # Starts the AsciiSpec Server
 CMD_SERVER="java -Dfile.encoding=UTF-8 -cp $CLASSPATH eu.numberfour.asciispec.cli.AsciiSpecServer"
 
 # Executes asciispec directly
-CMD_ASCIISPEC="java -Dfile.encoding=UTF-8 -cp $CLASSPATH eu.numberfour.asciispec.cli.AsciiSpec $EXTENSIONS $PARAMETERS"
+CMD_ASCIISPEC="java -Dfile.encoding=UTF-8 -cp $CLASSPATH eu.numberfour.asciispec.cli.AsciiSpec $REQUIRE $PARAMETERS"
 
 # TCP connection
 DEV_TCP="/dev/tcp/localhost/45115"
