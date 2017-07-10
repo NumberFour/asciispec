@@ -1,0 +1,37 @@
+= Inline Cwiki Macro
+
+Usage::
+[source,asciidoc]
+call:1[]
+
+The Inline Callout Macro arbitrarily adds callouts to any section of a document. 
+The benefit here is adding support for the use of callouts beyond only `[source]` blocks.
+
+NOTE: Callouts using the built-in syntax `<1>` are counted and validated. 
+With the callout macro, validation is not implemented and they can be indiscriminately added in any order. 
+
+== Examples
+
+[example]
+====
+
+.Callout Macros Inside a Table
+[source]
+----
+Considerations:
+
+|===
+| Make sure to jack into the mainframe call:1[]
+| Download call:2[] the internet 
+...
+| In its 2012 annual report, AOL showed it still collects around US$700 million in fees from dial-up users call:15[] 
+|===
+call:1[] The preferred method is 56k modem +
+call:2[] You may also upload it +
+call:15[] About three million people
+
+----
+
+NOTE: Not the `+` symbol required to separate new lines after the table as the macro is not treated as a list item like regular callouts.
+
+====
