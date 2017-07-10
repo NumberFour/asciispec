@@ -16,19 +16,14 @@ CLASSPATH="$APP_HOME/lib/asciispec-0.0.10.jar"
 # Force use of Font Awesome icons & pass filename
 PARAMETERS="-a icons=font -B $INVOCATION_HOME"
 
-# ==== Ruby Extensions ==== 
-# https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/todo-block.adoc
-TODO="$APP_HOME/res/ext/todo.rb"
-# https://github.com/NumberFour/asciispec/blob/master/docs/custom-processors/inline-callout-macro.adoc
-CALLOUT="$APP_HOME/res/ext/callout.rb"
-
-REQUIRE="-r $TODO -r $CALLOUT -r asciidoctor-diagram"
+# Ruby Extensions
+EXTENSIONS="-r $APP_HOME/res/ext/todo.rb -r $APP_HOME/res/ext/callout.rb -r asciidoctor-diagram"
 
 # Starts the AsciiSpec Server
 CMD_SERVER="java -Dfile.encoding=UTF-8 -cp $CLASSPATH eu.numberfour.asciispec.cli.AsciiSpecServer"
 
 # Executes asciispec directly
-CMD_ASCIISPEC="java -Dfile.encoding=UTF-8 -cp $CLASSPATH eu.numberfour.asciispec.cli.AsciiSpec $REQUIRE $PARAMETERS"
+CMD_ASCIISPEC="java -Dfile.encoding=UTF-8 -cp $CLASSPATH eu.numberfour.asciispec.cli.AsciiSpec $EXTENSIONS $PARAMETERS"
 
 # TCP connection
 DEV_TCP="/dev/tcp/localhost/45115"
