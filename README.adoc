@@ -12,7 +12,8 @@ A documentation toolchain based on http://asciidoctor.org/[AsciiDoctor]. It impl
 *<<docs/custom-processors/inline-math-macro#,math:[ ] - Inline Math>>*: Inserting math expressions. +
 *<<docs/custom-processors/math-block#,[math] - Math Block>>*: Add long math formulae. +
 *<<docs/custom-processors/requirements-block#,[req] - Requirement Block>>*: Add requirements with custom formatting. +
-*<<docs/custom-processors/todo-block#,[TODO] - Todo Block>>*: Add a custom TODO admonition block. 
+*<<docs/custom-processors/todo-block#,[TODO] - Todo Block>>*: Add a custom TODO admonition block. +
+*<<docs/custom-processors/inline-callout-macro#,call:[ ] - Inline Callout Macro>>*: Arbitrarily add numbered callouts. 
 
 
 ==  Prerequisites
