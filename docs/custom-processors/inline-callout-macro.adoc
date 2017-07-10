@@ -1,4 +1,4 @@
-= Inline Cwiki Macro
+= Inline Callout Macro
 
 Usage::
 [source,asciidoc]
