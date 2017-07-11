@@ -61,6 +61,20 @@ class InlineMathPreProcessorTest extends AsciidoctorTest {
 	}
 
 	@Test
+	public def void testMathInSourceCodeBlock() {
+		convertAndAssert(
+			'''<programlisting role="small" language="bash" linenumbering="unnumbered">$e=mc^2$</programlisting>''',
+			'''
+			[source,bash,role=small]
+			----
+			$e=mc^2$
+			----
+			''',
+			Backend.DOCBOOK
+		);
+	}
+
+	@Test
 	public def void testEmptyShorthandExpression() {
 		// must not be picked up because it may be used as a math block delimiter
 		convertAndAssert(

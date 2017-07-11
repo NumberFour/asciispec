@@ -107,6 +107,7 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 			return;
 		if (cps.isEmpty()) {
 			result.add(newLine);
+			sp.updateBlockState(newLine);
 			return;
 		}
 
@@ -114,12 +115,13 @@ public class HostPreprocessor extends Preprocessor implements DirectoriesMixin {
 		List<ClientPreprocessor> tail = new LinkedList<>(cps);
 		tail.remove(0);
 
-		List<String> processedLines = sp.process(newLine, (String ll) -> {
+		List<String> processedLines = sp.processWithoutUpdate(newLine, (String ll) -> {
 			final List<String> replacement;
 			if (cp.isEnabled()) {
 				replacement = cp.processLine(document, ll);
 			} else {
 				replacement = Collections.emptyList();
+				replacement.add(ll);
 			}
 			return replacement;
 		});

@@ -224,7 +224,7 @@ class AsciidoctorTest {
 	}
 
 	protected def OptionsBuilder getOptions(HashMap<String, Object> options, File baseDir, File inputFile, Backend backend) {
-		val attributes = if (options == null)
+		val attributes = if (options === null)
 							new HashMap<String, Object>()
 						else
 							options;

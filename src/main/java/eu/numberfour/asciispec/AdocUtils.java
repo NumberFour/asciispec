@@ -121,21 +121,6 @@ public final class AdocUtils {
 	}
 
 	/**
-	 * Applies the given transformation function to the given line, taking into account comments.
-	 *
-	 * @see SourceProcessor
-	 *
-	 * @param line
-	 *            the line to transform
-	 * @param transform
-	 *            the transformation function
-	 * @return the transformed lines
-	 */
-	public static List<String> processLine(String line, Function<String, List<String>> transform) {
-		return new SourceProcessor(transform).process(line);
-	}
-
-	/**
 	 * Searches the given lines using the given matcher and returns the matcher's non-<code>null</code> result. The
 	 * given matcher function is not applied to any commented parts of the given lines. The result of this function is
 	 * the first non-<code>null</code> result of the given matcher function, which is repeatedly invoked for each line.
