@@ -198,19 +198,6 @@ public class SourceProcessor {
 	}
 
 	/**
-	 * Toggles whether the current block is ignored or not (see
-	 * {@link #isIgnoringCurrentBlock()}). When using
-	 * {@link #processManually(String, Function)}, the line input is not used
-	 * for checking whether the current block needs to be ignored. This checking
-	 * can be done using this method instead.
-	 * 
-	 * @param line
-	 */
-	public void checkForIngnoredBlocks(String line) {
-		updateBlockState(line);
-	}
-
-	/**
 	 * Processes the given lines and returns the processed result.
 	 *
 	 * @param lines
@@ -232,7 +219,8 @@ public class SourceProcessor {
 	}
 
 	/**
-	 * Processes the given lines and returns the processed result.
+	 * Processes the given lines and returns the processed result. Regions such
+	 * as comments are ignored automatically.
 	 *
 	 * @param lineSupplier
 	 *            supplies the lines to process
@@ -257,9 +245,10 @@ public class SourceProcessor {
 	 * function is given as a parameter.
 	 * <p>
 	 * 
-	 * <b>Note:</b> The line input is not used for checking whether the current
-	 * block needs to be ignored. Thus, the escaping mechanism has to be toggled
-	 * manually using the method {@link #checkForIngnoredBlocks(String)}.
+	 * <b>Note:</b> The line input is not used for updating the current block
+	 * ignored state. Thus, the update has to be toggled manually using the
+	 * method {@link #updateBlockState(String)} to enable escaping for e.g.
+	 * comment regions.
 	 *
 	 * @param line
 	 *            a line to process
@@ -267,7 +256,7 @@ public class SourceProcessor {
 	 *            the transform function
 	 * @return the processed lines
 	 */
-	public List<String> processManually(String line, Function<String, List<String>> transform) {
+	public List<String> processWithoutUpdate(String line, Function<String, List<String>> transform) {
 		LinkedList<String> result = new LinkedList<>();
 		if (shouldProcess(line, false)) {
 			processLine(line, transform, result);
@@ -340,12 +329,22 @@ public class SourceProcessor {
 
 	private boolean shouldProcess(String line, boolean toggle) {
 		boolean wasIgnored = currentBlock.isIgnored();
-		if (toggle)
+		if (toggle) {
 			updateBlockState(line);
+		}
 		return !(wasIgnored || currentBlock.isIgnored());
 	}
 
-	private void updateBlockState(String line) {
+	/**
+	 * Toggles whether the current block is ignored or not (see
+	 * {@link #isIgnoringCurrentBlock()}). When using
+	 * {@link #processWithoutUpdate(String, Function)}, the block state is not
+	 * updated automatically. This update can be done using this method.
+	 * 
+	 * @param line
+	 *            a line to process
+	 */
+	public void updateBlockState(String line) {
 		currentBlock = currentBlock.next(line);
 	}
 }
