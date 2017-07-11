@@ -20,11 +20,13 @@ import org.junit.Test
 class NestedMathBlockProcessorTest extends AsciidoctorTest {
 	@Before
 	public def void registerExtensions() {
+		new MathIncludeExtension().register(doc);
+		new InlineMathExtension().register(doc);
 		new MathBlockExtension().register(doc);
 		new DefinitionBlockExtension().register(doc);
 		new RequirementBlockExtension().register(doc);
 	}
-
+	
 	@Test
 	public def void testMathWithinRequirementBlock() {
 		convertAndAssert(
