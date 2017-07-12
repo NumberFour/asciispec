@@ -11,7 +11,7 @@ APP_HOME="$(pwd -P)"
 cd "$INVOCATION_HOME" >/dev/null
 
 # The classpath is built from absolute paths since this script may be executed from anywhere.
-CLASSPATH="$APP_HOME/lib/asciispec-0.0.10.jar"
+CLASSPATH="$APP_HOME/lib/asciispec-0.0.1-SNAPSHOT.jar"
 
 # Force use of Font Awesome icons & pass filename
 PARAMETERS="-a icons=font -B $INVOCATION_HOME"

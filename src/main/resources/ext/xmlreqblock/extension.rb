@@ -17,9 +17,11 @@ class XmlReqBlock < Extensions::BlockProcessor
 
     begin
       # downcase the title and replace spaces with underscores.
-      #    Also replacing double quotes with single quotes to stop xml from breaking
-      #    in the case where the title contains a quote symbol
-      formatted_title = attrs['title'].downcase.tr(" ", "_").tr("\"", "'")
+      #    Also replacing special HTML entities:
+      #    &quot; = "
+      #    &amp;  = &
+      downcased_title = attrs['title'].downcase.tr(" ", "_").gsub("\"", "&quot;")
+      san_title = attrs['title'].gsub(/&/, '&amp;')    
     
     rescue Exception => msg
       puts msg
@@ -31,7 +33,7 @@ class XmlReqBlock < Extensions::BlockProcessor
 
     anchor = "<anchor xml:id=\"Req-#{id}\" xreflabel=\"[Req-#{id}]\"/>"
     req_prefix = "<emphasis role=\"strong\">Requirement: #{id}:</emphasis>"
-    link = "<link linkend=\"Req-#{id}\">#{attrs['title']}</link> (ver. #{attrs['version']})</simpara>
+    link = "<link linkend=\"Req-#{id}\">#{san_title}</link> (ver. #{attrs['version']})</simpara>
     <simpara>"
     
     # concatenate all generated lines and prepend before the original content

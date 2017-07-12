@@ -14,14 +14,14 @@ class XmlDefBlock < Extensions::BlockProcessor
     attrs['caption'] = 'Definition: '
     
     # downcase the title and replace spaces with underscores.
-    #    Also replacing double quotes with single quotes to stop xml from breaking
-    #    in the case where the title contains a quote symbol
-    formatted_title = attrs['title'].downcase.tr(" ", "_").tr("\"", "'")
+    #    Also replacing special HTML entities:
+    #    &quot; = "
+    #    &amp;  = &
+    formatted_title = attrs['title'].downcase.tr(" ", "_").gsub(/&/, '&amp;').gsub(/"/, '&quot;')
+    #  Sanitize the unformatted title string
+    san_title = attrs['title'].gsub(/&/, '&amp;').gsub(/"/, '&quot;')
 
-    # TODO try and use the built-in behaviour of generating anchors:
-    #    link = (create_anchor parent, attrs['title'], type: :link, target: attrs['title']).render
-    #    not working due to missing 'linkend' property.  
-    link = "<link linkend=\"#{formatted_title}\">#{attrs['title']}</link></simpara>\n<simpara>"
+    link = "<link linkend=\"#{formatted_title}\">#{san_title}</link></simpara>\n<simpara>"
     anchor = "<anchor xml:id=\"#{formatted_title}\" xreflabel=\"[#{formatted_title}]\"/>"
     def_prefix = "<emphasis role=\"strong\">Definition:</emphasis>"
 
