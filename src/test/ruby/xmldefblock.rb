@@ -17,8 +17,8 @@ class TestDefBlock < Test::Unit::TestCase
 		" class=\"paragraph\">\n<p>\n<anchor xml:id=\"the_title_of_my_definition\" "\
 		"xreflabel=\"[the_title_of_my_definition]\"/>\n<emphasis role=\"strong\">"\
 		"Definition:</emphasis>\n<link linkend=\"the_title_of_my_definition\">The "\
-		"Title Of MY Definition</link>\n\nMy Amazing Definition</p>\n</div>\n</td>\n"\
-		"</tr>\n</table>\n</div>", 
+		"Title Of MY Definition</link></simpara>\n<simpara>\n\nMy Amazing Definition"\
+		"</p>\n</div>\n</td>\n</tr>\n</table>\n</div>", 
 		Asciidoctor::Document.new(input).render)
 	end
 
