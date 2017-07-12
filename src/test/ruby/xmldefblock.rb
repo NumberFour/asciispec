@@ -25,7 +25,10 @@ class TestDefBlock < Test::Unit::TestCase
 		input = ".The so called \"title\"\n[def]\n--\nThe Definitive Test\n--"
 		doc = Asciidoctor::Document.new ("#{input}"), :backend => 'docbook'
 
-	assert_equal("<definition>\n<title>The so called \"title\"</title>\n<simpara>\n<anchor xml:id=\"the_so_called_&quot;title&quot;\" xreflabel=\"[the_so_called_&quot;title&quot;]\"/>\n<emphasis role=\"strong\">Definition:</emphasis>\n<link linkend=\"the_so_called_&quot;title&quot;\">The so called &quot;title&quot;</link></simpara>\n<simpara>\n\nThe Definitive Test</simpara>\n</definition>", 
+	assert_equal("<definition>\n<title>The so called \"title\"</title>\n<simpara>\n<anchor xml:id=\""\
+		"the_so_called_&quot;title&quot;\" xreflabel=\"[the_so_called_&quot;title&quot;]\"/>\n<emphasis"\
+		" role=\"strong\">Definition:</emphasis>\n<link linkend=\"the_so_called_&quot;title&quot;\">The "\
+		"so called &quot;title&quot;</link></simpara>\n<simpara>\n\nThe Definitive Test</simpara>\n</definition>", 
 		doc.render)
 	end
 
