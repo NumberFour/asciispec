@@ -2,7 +2,7 @@ require 'asciidoctor'
 require_relative "../../main/resources/ext/xmlreqblock.rb"
 require "test/unit"
 
-# Register the TODO block processor
+# Register the Req block processor
 Extensions.register do
 	block XmlReqBlock
 end
