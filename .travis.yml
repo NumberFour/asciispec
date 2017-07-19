@@ -1,0 +1,11 @@
+language: java
+
+cache:
+  directories:
+    - $HOME/.m2
+
+jobs: 
+  install:
+    - mvn clean package
+
+script: ruby src/test/ruby/suite.rb
